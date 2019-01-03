@@ -1,5 +1,7 @@
 const path = require("path");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = {
     entry: {
@@ -16,7 +18,27 @@ module.exports = {
         fs: 'empty'
     },
     plugins: [
-      new CopyWebpackPlugin([ { from: 'src/images', to: 'assets' } ])
+      new CleanWebpackPlugin(["extension"]),
+      new CopyWebpackPlugin([ 
+          { 
+            from: 'src/images', 
+            to: 'assets' 
+          },
+          {
+            from: 'src/manifest.json',
+            to: ''
+          } 
+        ]),
+      new HtmlWebpackPlugin({
+        template: 'src/options.html',
+        inject: false,
+        filename: 'options.html'
+      }),
+      new HtmlWebpackPlugin({
+        template: 'src/popup.html',
+        inject: false,
+        filename: 'popup.html'
+      })
     ],
     module: {
         rules: [
@@ -38,6 +60,6 @@ module.exports = {
     },
     devServer: {
         port: 3000,
-        contentBase: "./extension"
+        contentBase: "./extensions"
     }
 };
