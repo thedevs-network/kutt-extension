@@ -3,7 +3,6 @@ import axios from "axios";
 async function getShortURL(URLtoShorten) {
     let shortLink;
     const API_key = "????????????????????????????????????";
-    console.log(URLtoShorten);
     try {
         const rawData = await axios({
             method: "POST",
@@ -15,21 +14,21 @@ async function getShortURL(URLtoShorten) {
             data: { target: URLtoShorten }
         });
         shortLink = rawData.data.shortUrl;
-        console.log(shortLink);
     } catch (error) {
         console.log(error);
     }
+    // returns the promise
     return shortLink;
 };
 
 chrome.runtime.onMessage.addListener(
+    // receive the message
     (request, sender, sendResponse) => {
         if(request.msg == "start") {
             let shortLink;
-            // returns the promise
+            // consume the promise
             getShortURL(request.pageUrl).then((data) => {
                 shortLink = data;
-                console.log("short url = "+ shortLink);
                 sendResponse({ shortUrl: `${shortLink}` });
             });
             return true;

@@ -1,22 +1,28 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    let longUrl, shortUrl, qrSrc = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=';
+    let longUrl, shortUrl, start, qrSrc = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=';
 
     // 1. Pass the message and receive response
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, (tabs) => {
        longUrl = tabs[0].url;
-       chrome.runtime.sendMessage({ msg: "start", pageUrl: `${longUrl}` }, (response) => {
-           console.log(response);
-           console.log(response.shortUrl); 
-           shortUrl = response.shortUrl;
-           // update the content with shortened link
-           document.getElementById('text').textContent = shortUrl;
-           // fetch qrcode from http://goqr.me
-           document.getElementById('qr_code').src = `${qrSrc}${shortUrl}`;
-           show('button__copy');
-           show('button__details');
-           show('button__qrcode');
-        });
+       start = longUrl.substr(0, 6);
+       if(start !== 'chrome') {
+           // send start message to background.js and accept response
+           chrome.runtime.sendMessage({ msg: "start", pageUrl: `${longUrl}` }, (response) => {
+               // store the shortened link
+               shortUrl = response.shortUrl;
+               // update the content with shortened link
+               document.getElementById('text').textContent = shortUrl;
+               // fetch qrcode from http://goqr.me
+               document.getElementById('qr_code').src = `${qrSrc}${shortUrl}`;
+               // show buttons
+               show('button__copy');
+               show('button__details');
+               show('button__qrcode');
+            });
+       } else {
+        document.getElementById('text').textContent = 'Not Valid URL!!';
+       }
     });
 
     // 2. Copy Function
