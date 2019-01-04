@@ -8,7 +8,7 @@
     "start": "webpack-dev-server --mode development --open"
   },
   "author": "abhijithvijayan",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
@@ -35,5 +35,17 @@
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0"
   },
-  "description": ""
+  "description": "<div align=\"center\"><img width=\"100\" src=\"src/assets/logo.png\" /></div>\r <h1 align=\"center\">kuttURL-Chrome</h1>\r <p align=\"center\">Chrome extension to to shorten URLs</p>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhijithvijayan/kuttUrl-Chrome.git"
+  },
+  "keywords": [
+    "url",
+    "shortener"
+  ],
+  "bugs": {
+    "url": "https://github.com/abhijithvijayan/kuttUrl-Chrome/issues"
+  },
+  "homepage": "https://github.com/abhijithvijayan/kuttUrl-Chrome#readme"
 }

@@ -8,13 +8,30 @@
       <link rel="stylesheet" href="css/popup.css" />
   </head>
   <body>
-    
-      <h3 id="text">Shortening...</h3>
-      <button id="button__copy" style="display: none;">Copy</button>
-      <button id="button__details" style="display: none;">Details</button>
-      <button id="button__qrcode" style="display: none;">QR Code</button>
-      <img id="qr_code" src="#" alt="QRCode" style="display: none;"/>
-      
+    <section id="home">
+        <div class="container">
+            <nav class="navbar">
+              <ul class="navbar__main">
+                <li>
+                  <img class="main__logo" src="assets/logo.png" width="30" height="30">
+                </li>
+                <li>
+                  <a href="options.html" target="_blank" rel="noopener"><img class="settings__logo" src="assets/settings.svg" width="20" height="20"></a>
+                </li>
+                <li>
+                  <a href="https://github.com/abhijithvijayan/kuttUrl-Chrome/" target="_blank" rel="noopener"><img class="github__logo" src="assets/github.svg" width="20" height="20"></a>
+                </li>
+              </ul>
+            </nav>
+            
+            <h3 id="text">Shortening...</h3>
+            <div><button id="button__copy" style="display: none;">Copy</button></div>
+            <div><button id="button__details" style="display: none;">Details</button></div>
+            <div><button id="button__qrcode" style="display: none;">QR Code</button></div>
+            <div><img id="qr_code" src="#" alt="QRCode" style="display: none;"/></div>
+        </div>
+    </section>
+
     <script src="js/popup.js"></script>
   </body>
 </html>

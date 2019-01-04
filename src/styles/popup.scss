@@ -1,5 +1,29 @@
-@import "variables";
+@import "modules/reset";
+@import "modules/variables";
+@import "modules/layout";
 
 body {
     color: $color-black;
+    width: 13em;
+}
+
+.container {
+    width: 80%;
+    margin: 10px 10%;
+}
+
+ul {
+    padding-left: 0;
+    li {
+        display: inline;
+    }
+}
+
+.navbar__main {
+    .main__logo {
+        float: left;
+    }
+    .settings__logo {
+        margin-left: auto;
+    }
 }
