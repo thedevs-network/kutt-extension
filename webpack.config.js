@@ -7,11 +7,13 @@ module.exports = {
     entry: {
       options: "./src/scripts/options.js",
       popup: "./src/scripts/popup.js",
-      background: "./src/scripts/background.js"
+      background: "./src/scripts/background.js",
+      optionsCSS: './src/styles/options.scss',
+      popupCSS: './src/styles/popup.scss'
     },
     output: {
       path: path.resolve(__dirname, "extension"),
-      filename: "scripts/[name].js",
+      filename: "js/[name].js",
       publicPath: ""
     },
     node: {
@@ -55,7 +57,47 @@ module.exports = {
                 attrs: [':data-src']
               }
             }
-          }  
+          },
+          {
+            test: /\.scss$/,
+            use: [
+                {
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].css',
+                        context: './src/styles/',
+                        outputPath: 'css/',
+                        publicPath: '../'
+                    }
+                },
+                {
+                    loader: 'extract-loader'
+                },
+                {
+                    loader: 'css-loader',
+                    options: {
+                        sourceMap: true
+                    }
+                },
+                {
+                    loader: 'resolve-url-loader'
+                },
+                {
+                    loader: 'postcss-loader',
+                    options: {
+                      plugins: function () {
+                        return [
+                          require('precss'),
+                          require('autoprefixer')
+                        ];
+                      }
+                    }
+                },
+                {
+                    loader: 'sass-loader',
+                }
+              ]
+            }  
         ]
     },
     devServer: {
