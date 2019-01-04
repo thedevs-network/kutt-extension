@@ -21,8 +21,8 @@ module.exports = {
       new CleanWebpackPlugin(["extension"]),
       new CopyWebpackPlugin([ 
           { 
-            from: 'src/images', 
-            to: 'images' 
+            from: 'src/assets', 
+            to: 'assets' 
           },
           {
             from: 'src/manifest.json',
@@ -55,6 +55,10 @@ module.exports = {
                 attrs: [':data-src']
               }
             }
+          },
+          {
+            test: /\.svg$/,
+            loader: 'url-loader'
           },
           {
             test: /\.scss$/,
