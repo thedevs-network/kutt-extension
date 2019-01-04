@@ -9,9 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
            console.log(response);
            console.log(response.shortUrl); 
            shortUrl = response.shortUrl;
+           // update the content with shortened link
            document.getElementById('text').textContent = shortUrl;
            // fetch qrcode from http://goqr.me
            document.getElementById('qr_code').src = `${qrSrc}${shortUrl}`;
+           show('button__copy');
+           show('button__details');
+           show('button__qrcode');
         });
     });
 
@@ -41,7 +45,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. QR Code
     document.getElementById('button__qrcode').addEventListener('click', () => {
         document.getElementById('button__qrcode').style = "display: none;";
-        document.getElementById('qr_code').style = '';
+        show('qr_code');
     });
 
+    // 5. elements visiblity function
+    function show(param) {
+        document.getElementById(param).style = '';
+    }
 });
