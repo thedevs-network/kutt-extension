@@ -1,5 +1,5 @@
 {
-    "name": "kuttUrl",
+    "name": "kuttUrl - Shorten URLs",
     "version": "1.0",
     "description": "URL Shortener",
     "background": {

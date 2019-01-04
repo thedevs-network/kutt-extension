@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     let longUrl, shortUrl;
 
+    // 1. Pass the message and receive response
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, (tabs) => {
        longUrl = tabs[0].url;
        chrome.runtime.sendMessage({ msg: "start", pageUrl: `${longUrl}` }, (response) => {
@@ -12,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // 2. Copy Function
     document.getElementById('button__copy').addEventListener("click", () => {
         try {
             let copyTextarea = `${shortUrl}`;
@@ -26,6 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
         catch (error) {
           console.log('Oops, unable to copy');
         }
+    });
+
+    // 3. Details button
+    document.getElementById('button__details').addEventListener('click', () => {
+        let win = window.open(`${shortUrl}+`, '_blank');
+        win.focus();
     });
 
 

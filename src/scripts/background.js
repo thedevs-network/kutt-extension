@@ -26,6 +26,7 @@ chrome.runtime.onMessage.addListener(
     (request, sender, sendResponse) => {
         if(request.msg == "start") {
             let shortLink;
+            // returns the promise
             getShortURL(request.pageUrl).then((data) => {
                 shortLink = data;
                 console.log("short url = "+ shortLink);
