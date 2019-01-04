@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    let longUrl, shortUrl;
+    let longUrl, shortUrl, qrSrc = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=';
 
     // 1. Pass the message and receive response
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, (tabs) => {
@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
            console.log(response.shortUrl); 
            shortUrl = response.shortUrl;
            document.getElementById('text').textContent = shortUrl;
+           // fetch qrcode from http://goqr.me
+           document.getElementById('qr_code').src = `${qrSrc}${shortUrl}`;
         });
     });
 
@@ -36,5 +38,10 @@ document.addEventListener('DOMContentLoaded', () => {
         win.focus();
     });
 
+    // 4. QR Code
+    document.getElementById('button__qrcode').addEventListener('click', () => {
+        document.getElementById('button__qrcode').style = "display: none;";
+        document.getElementById('qr_code').style = '';
+    });
 
 });
