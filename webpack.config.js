@@ -5,11 +5,9 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = {
     entry: {
-      options: "./src/scripts/options.js",
-      popup: "./src/scripts/popup.js",
-      background: "./src/scripts/background.js",
-      optionsCSS: './src/styles/options.scss',
-      popupCSS: './src/styles/popup.scss'
+      options: ["./src/scripts/options.js", './src/styles/options.scss'],
+      popup: ["./src/scripts/popup.js", './src/styles/popup.scss'],
+      background: "./src/scripts/background.js"
     },
     output: {
       path: path.resolve(__dirname, "extension"),
