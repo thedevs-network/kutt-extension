@@ -7,7 +7,7 @@ module.exports = {
     entry: {
       options: ["./src/scripts/options.js", './src/styles/options.scss'],
       popup: ["./src/scripts/popup.js", './src/styles/popup.scss'],
-      background: "./src/scripts/background.js"
+      background: ["babel-polyfill", "./src/scripts/background.js"]
     },
     output: {
       path: path.resolve(__dirname, "extension"),

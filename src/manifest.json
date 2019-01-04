@@ -7,8 +7,9 @@
         "persistent": false
     },
     "permissions": ["activeTab", "declarativeContent", "storage"],
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
     "manifest_version": 2,
-    "page_action": {
+    "browser_action": {
         "default_popup": "popup.html",
         "default_icon": {
             "16": "assets/icon_16.png",
