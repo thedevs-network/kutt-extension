@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "background.js",
   "scripts": {
-    "dev": "webpack --mode development",
+    "dev": "webpack --watch --mode development",
     "build": "webpack --mode production",
     "start": "webpack-dev-server --mode development --open"
   },

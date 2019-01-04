@@ -1,6 +1,6 @@
 const path = require("path");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = {
@@ -22,7 +22,7 @@ module.exports = {
       new CopyWebpackPlugin([ 
           { 
             from: 'src/images', 
-            to: 'assets' 
+            to: 'images' 
           },
           {
             from: 'src/manifest.json',
