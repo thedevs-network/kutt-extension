@@ -1,7 +1,6 @@
 {
   "name": "kutturl",
   "version": "1.0.0",
-  "description": "",
   "main": "background.js",
   "scripts": {
     "dev": "webpack --mode development",
@@ -30,5 +29,7 @@
     "webpack": "^4.28.3",
     "webpack-cli": "^3.2.0",
     "webpack-dev-server": "^3.1.14"
-  }
+  },
+  "dependencies": {},
+  "description": ""
 }
