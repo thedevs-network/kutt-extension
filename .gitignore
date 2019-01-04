@@ -62,5 +62,4 @@ typings/
 .DS_Store
 
 ## scripts build
-extension/scripts
-extension/assets
+extension/
