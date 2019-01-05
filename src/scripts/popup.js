@@ -1,26 +1,39 @@
 document.addEventListener('DOMContentLoaded', () => {
     
     let longUrl, shortUrl, start, qrSrc = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=';
+    let API_key;
+    
+    // Get api key from options page
+    chrome.storage.local.get(['key'], function(result) {
+        console.log('current API Key is ' + result.key);
+        API_key = `${result.key}`;
+    });
 
     // 1. Pass the message and receive response
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, (tabs) => {
        longUrl = tabs[0].url;
        start = longUrl.substr(0, 6);
        if(start !== 'chrome') {
-           // send start message to background.js and accept response
-           chrome.runtime.sendMessage({ msg: "start", pageUrl: `${longUrl}` }, (response) => {
+           // send start message to background.js and receive response
+           chrome.runtime.sendMessage({ msg: "start", API_key: `${API_key}`, pageUrl: `${longUrl}` }, (response) => {
                // store the shortened link
                shortUrl = response.shortUrl;
-               // update the content with shortened link
-               document.getElementById('url__content-inner').textContent = shortUrl;
-               // fetch qrcode from http://goqr.me
-               document.getElementById('qr_code').src = `${qrSrc}${shortUrl}`;
-               // show buttons
-               show('button__copy');
-               show('button__details');
-               show('button__qrcode');
+               // invalid response
+               if(shortUrl === 'undefined') {
+                document.getElementById('url__content-inner').textContent = "API Error!!";
+               } else {
+                   // update the content with shortened link
+                   document.getElementById('url__content-inner').textContent = shortUrl;
+                   // fetch qrcode from http://goqr.me
+                   document.getElementById('qr_code').src = `${qrSrc}${shortUrl}`;
+                   // show buttons
+                   show('button__copy');
+                   show('button__details');
+                   show('button__qrcode');
+               }
             });
        } else {
+        // starts with 'chrome://
         document.getElementById('url__content-inner').textContent = 'Not Valid URL!!';
        }
     });

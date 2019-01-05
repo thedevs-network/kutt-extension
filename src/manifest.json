@@ -6,7 +6,7 @@
         "scripts": ["js/background.js"],
         "persistent": false
     },
-    "permissions": ["tabs", "clipboardWrite", "clipboardRead"],
+    "permissions": ["tabs", "storage", "clipboardWrite", "clipboardRead"],
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
     "manifest_version": 2,
     "browser_action": {

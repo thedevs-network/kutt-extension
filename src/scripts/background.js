@@ -1,9 +1,9 @@
 import axios from "axios";
 
-async function getShortURL(URLtoShorten) {
+// Shorten url
+async function getShortURL(API_key, URLtoShorten) {
     let shortLink;
     const api_url = 'https://kutt.it/api/url/submit';
-    const API_key = "????????????????????????????????????";
     try {
         const rawData = await axios({
             method: "POST",
@@ -21,13 +21,14 @@ async function getShortURL(URLtoShorten) {
     return shortLink;
 };
 
+// Calling function
 chrome.runtime.onMessage.addListener(
     // receive the message
     (request, sender, sendResponse) => {
         if(request.msg == "start") {
             let shortLink;
             // consume the promise
-            getShortURL(request.pageUrl).then((data) => {
+            getShortURL(request.API_key, request.pageUrl).then((data) => {
                 shortLink = data;
                 sendResponse({ shortUrl: `${shortLink}` });
             });

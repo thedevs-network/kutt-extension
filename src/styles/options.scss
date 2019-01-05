@@ -42,7 +42,12 @@ body {
                 .api__key--holder {
                     width: 100%;
                     padding: 10px;
+                    border-radius: 4px;
+                    border: 1px solid $color-light-blue;
                     margin-bottom: 1em;
+                    &:active {
+                        border-radius: 4px;
+                    }
                 }
                 .button__submit {
                     display: block;
