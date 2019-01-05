@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Get api key from options page
     chrome.storage.local.get(['key'], function(result) {
-        console.log('current API Key is ' + result.key);
         API_key = `${result.key}`;
     });
 
@@ -13,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, (tabs) => {
        longUrl = tabs[0].url;
        start = longUrl.substr(0, 6);
-       if(start !== 'chrome') {
+       if(start !== 'chrome' && API_key !== '') {
            // send start message to background.js and receive response
            chrome.runtime.sendMessage({ msg: "start", API_key: `${API_key}`, pageUrl: `${longUrl}` }, (response) => {
                // store the shortened link
@@ -32,9 +31,12 @@ document.addEventListener('DOMContentLoaded', () => {
                    show('button__qrcode');
                }
             });
-       } else {
-        // starts with 'chrome://
-        document.getElementById('url__content-inner').textContent = 'Not Valid URL!!';
+       } else if (start === 'chrome') {
+            // starts with 'chrome://
+            document.getElementById('url__content-inner').textContent = 'Not a Valid URL!!';
+       } else if (API_key === '') {
+            // no api key set
+            document.getElementById('url__content-inner').textContent = 'Set API Key in Settings!';
        }
     });
 

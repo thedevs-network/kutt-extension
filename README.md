@@ -17,5 +17,13 @@
 - `npm run build` to build the extension.
 - Load extension via `chrome://extensions` as unpacked from `extension/` directory.
 
+## TODO list
+
+- [ ] UI Improvements
+- [ ] Custom Domain Support
+- [ ] Password
+- [x] API Key Page
+- [ ] Logo Change
+
 ## Licence
 Code released under the [MIT License](LICENSE).
