@@ -1,29 +1,87 @@
-@import "modules/reset";
-@import "modules/variables";
-@import "modules/layout";
+@import "variables";
+
+html, body {
+    padding: 0;
+    border: 0;
+    margin: 0;
+}
 
 body {
     color: $color-black;
-    width: 13em;
+    min-width: 14em;
 }
 
-.container {
-    width: 80%;
-    margin: 10px 10%;
-}
-
-ul {
-    padding-left: 0;
-    li {
-        display: inline;
-    }
-}
-
-.navbar__main {
-    .main__logo {
-        float: left;
-    }
-    .settings__logo {
-        margin-left: auto;
+#home {
+    width: 180px;
+    .container {
+        width: 88%;
+        margin: 10px 6%;
+        .navbar {
+            .navbar__main {
+                margin-bottom: 0px;
+                padding-left: 0;
+                list-style-type: none;
+                li {
+                    display: inline-block;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .logo__content--holder {
+                    .main__logo {
+                        width: 23px;
+                        height: 23px;
+                    }
+                }
+                .options__content-holder {
+                    float: right;
+                    padding: 0 10px;
+                    .settings__logo {
+                        width: 17px; 
+                        height: 17px;
+                    }
+                }
+                .github__content-holder {
+                    float: right;
+                    .github__logo {
+                        width: 17px; 
+                        height: 17px;
+                    }
+                }
+            }
+        }
+        .content__holder {
+            .url__content--holder {
+                margin: 1em 0;
+                #url__content-inner {
+                    margin: 0;
+                    font-size: 14px;
+                }
+            }
+            .copy__content--holder,
+            .details__content--holder,
+            .qrbtn__content--holder {
+                margin-bottom: 0.3em;
+            }
+            .copy__content--holder {
+                #button__copy {
+                    font-size: 15px;
+                }
+            }
+            .details__content--holder {
+                #button__details {
+                    font-size: 15px;
+                }
+            }
+            .qrbtn__content--holder {
+                #button__qrcode {
+                    font-size: 15px;   
+                }
+            }
+            .qrcode__content--holder {
+                #qr_code {
+                    padding-top: 0.3em;
+                }
+            }
+        }
     }
 }

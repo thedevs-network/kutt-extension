@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
                // store the shortened link
                shortUrl = response.shortUrl;
                // update the content with shortened link
-               document.getElementById('text').textContent = shortUrl;
+               document.getElementById('url__content-inner').textContent = shortUrl;
                // fetch qrcode from http://goqr.me
                document.getElementById('qr_code').src = `${qrSrc}${shortUrl}`;
                // show buttons
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
                show('button__qrcode');
             });
        } else {
-        document.getElementById('text').textContent = 'Not Valid URL!!';
+        document.getElementById('url__content-inner').textContent = 'Not Valid URL!!';
        }
     });
 

@@ -2,12 +2,12 @@ import axios from "axios";
 
 async function getShortURL(URLtoShorten) {
     let shortLink;
+    const api_url = 'https://kutt.it/api/url/submit';
     const API_key = "????????????????????????????????????";
     try {
         const rawData = await axios({
             method: "POST",
-            url:
-            "https://kutt.it/api/url/submit",
+            url: api_url,
             headers: { 
                 'X-API-Key': API_key 
             },
@@ -15,7 +15,7 @@ async function getShortURL(URLtoShorten) {
         });
         shortLink = rawData.data.shortUrl;
     } catch (error) {
-        console.log(error);
+        console.log(error); 
     }
     // returns the promise
     return shortLink;
