@@ -1,4 +1,4 @@
-<div align="center"><img width="100" src="src/assets/logo.png" /></div>
+<div align="center"><img width="150" src="src/assets/logo-kutt.png" /></div>
 <h1 align="center">kuttURL-Chrome</h1>
 <p align="center">Chrome extension to to shorten URLs</p>
 

@@ -1,12 +1,62 @@
 @import "variables";
 
-body {
-    color: $color-black;
+html, body {
+    padding: 0;
+    border: 0;
+    margin: 0;
 }
 
-button {
-    height: 30px;
-    width: 30px;
-    outline: none;
-    margin: 10px;
+body {
+    color: $color-black;
+    background-color: $color-light;
+}
+
+#options {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    .options__content--holder {
+        padding-top: 5em;
+        background-color: $color-white;
+        .head__content--holder {
+            text-align: center;
+            .head__content--logo {
+                width: 100px;
+                height: 100px;
+            }
+            .head__content--title {
+                margin: 0;
+                font-size: 40px;
+            }
+        }
+        .form__content--holder {
+            margin-top: 4em;
+            .form__content {
+                padding: 0px 100px 100px;
+                width: 600px;
+                .api__key--label {
+                    font-size: 16px;
+                    display: block;
+                    margin-bottom: 0.8em;
+                }
+                .api__key--holder {
+                    width: 100%;
+                    padding: 10px;
+                    margin-bottom: 1em;
+                }
+                .button__submit {
+                    display: block;
+                    color: $color-white;
+                    width: 100%;
+                    background-color: $color-blue;
+                    border: none;
+                    padding: 12px;
+                    margin-top: 1.4em;
+                    &:hover {
+                        background-color: $color-light-blue;
+                    }
+                }
+            }
+        }
+    }
 }

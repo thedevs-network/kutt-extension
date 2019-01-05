@@ -1,3 +1,10 @@
 // Colors
-$color-black:   #111111;
-$color-white:   #ffffff;
+$color-black:       #111111;
+$color-white:       #ffffff;
+$color-light:       #fcfcfc;
+$color-blue:        #4d5be7;
+$color-light-blue:  #4d5bfa;
+
+*, *:before, *:after {
+    box-sizing: border-box;
+}
