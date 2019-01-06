@@ -10,7 +10,7 @@ body {
     justify-content: center;
     height: 100vh;
     .options__content--holder {
-        padding-top: 5em;
+        padding-top: 8em;
         background-color: $color-white;
         .head__content--holder {
             text-align: center;
@@ -34,6 +34,7 @@ body {
                     margin-bottom: 0.8em;
                 }
                 .api__key--holder {
+                    font-family: $font-montserrat;
                     width: 100%;
                     padding: 10px;
                     border-radius: 4px;
@@ -43,14 +44,19 @@ body {
                         border-radius: 4px;
                     }
                 }
+                .saved__alert {
+                    padding-left: 0.5em;
+                }
                 .button__submit {
+                    font-family: $font-montserrat;
+                    font-size: 18px;
                     display: block;
                     color: $color-white;
                     width: 100%;
                     background-color: $color-blue;
                     border: none;
                     padding: 12px;
-                    margin-top: 1.4em;
+                    margin-top: 1.2em;
                     &:hover {
                         cursor: pointer;
                         background-color: $color-light-blue;

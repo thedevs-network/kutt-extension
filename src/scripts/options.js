@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+
 // Store new API Key on save click
 document.getElementById('button__submit').addEventListener('click', () => {
     let API_KEY = document.getElementById('api__key--value').value;
@@ -19,4 +20,13 @@ document.getElementById('button__submit').addEventListener('click', () => {
     chrome.storage.local.set({key: API_KEY}, function() {
         console.log('Value is set to ' + API_KEY);
     });
+});
+
+// Saved Alert
+document.getElementById('button__submit').addEventListener('click', () => {
+    let element = document.querySelector('.saved__alert');
+    element.classList.toggle('v-none');
+    setTimeout(() => {
+        element.classList.toggle('v-none');
+    }, 1300);
 });

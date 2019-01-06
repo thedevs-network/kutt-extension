@@ -20,6 +20,10 @@ $font-weight-bold:      600;
     display: none !important;
 }
 
+.v-none {
+    visibility: hidden !important;
+}
+
 html, body {
     padding: 0;
     border: 0;

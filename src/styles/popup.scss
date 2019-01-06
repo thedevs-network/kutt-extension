@@ -2,14 +2,11 @@
 
 body {
     color: $color-black;
-    // min-width: 14em;
 }
 
 #home {
-    // width: 180px;
     min-width: 210px;
     .container {
-        // width: 88%;
         padding: 10px;
         .navbar {
             .navbar__main {
@@ -69,6 +66,9 @@ body {
                         height: 22px;
                     }
                 }
+            }
+            .copy__alert {
+                text-align: center;
             }
             .qrcode__content--holder {
                 text-align: center;

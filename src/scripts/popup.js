@@ -61,6 +61,10 @@ document.addEventListener('DOMContentLoaded', () => {
             input.select();
             document.execCommand('copy');
             input.remove();    
+            toggleDisplay('.copy__alert');
+            setTimeout(() => {
+                toggleDisplay('.copy__alert');
+            }, 1300);
         } 
         catch (error) {
           console.log('Oops, unable to copy');
