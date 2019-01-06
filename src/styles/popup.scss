@@ -1,21 +1,16 @@
 @import "variables";
 
-html, body {
-    padding: 0;
-    border: 0;
-    margin: 0;
-}
-
 body {
     color: $color-black;
-    min-width: 14em;
+    // min-width: 14em;
 }
 
 #home {
-    width: 180px;
+    // width: 180px;
+    min-width: 210px;
     .container {
-        width: 88%;
-        margin: 10px 6%;
+        // width: 88%;
+        padding: 10px;
         .navbar {
             .navbar__main {
                 margin: 0;
@@ -51,10 +46,12 @@ body {
         }
         .content__holder {
             .url__content--holder {
-                margin: 1em 0;
+                margin: 1.5em 0;
+                text-align: center;
                 #url__content-inner {
                     margin: 0;
-                    font-size: 14px;
+                    font-size: 18px;
+                    font-weight: $font-weight-bold;
                 }
             }
             .buttons__content--holder {
@@ -69,11 +66,12 @@ body {
                     cursor: pointer;
                     #button__copy, #button__details, #button__qrcode {
                         width: 22px;
-                        height: 22px;;
+                        height: 22px;
                     }
                 }
             }
             .qrcode__content--holder {
+                text-align: center;
                 #qr_code {
                     padding-top: 0.3em;
                 }
