@@ -16,30 +16,32 @@
                   <img class="main__logo" src="assets/logo.png">
                 </li>
                 <li class="github__content-holder">
-                  <a href="https://github.com/abhijithvijayan/kuttUrl-Chrome/" target="_blank" rel="noopener">
+                  <a href="https://github.com/abhijithvijayan/kuttUrl-Chrome/" target="_blank" rel="noopener" title="GitHub">
                       <img class="github__logo" src="assets/github.svg"></a>
                 </li>
-                <li class="options__content-holder" id="options__content-holder">
+                <li class="options__content-holder" id="options__content-holder" title="Options">
                   <a href="options.html" target="_blank" rel="noopener">
                       <img class="settings__logo" src="assets/settings.svg"></a>
                 </li>
               </ul>
             </nav>
             <div class="content__holder">
-              <div class="url__content--holder">
-                <h4 id="url__content-inner">Shortening...</h4>
-              </div>
-              <div class="copy__content--holder">
-                <button id="button__copy" style="display: none;">Copy</button>
-              </div>
-              <div class="details__content--holder">
-                <button id="button__details" style="display: none;">Details</button>
-              </div>
-              <div class="qrbtn__content--holder">
-                <button id="button__qrcode" style="display: none;">QR Code</button>
-              </div>
-              <div class="qrcode__content--holder">
-                <img id="qr_code" src="#" alt="QRCode" style="display: none;" />
+                <div class="url__content--holder">
+                  <h4 id="url__content-inner">Shortening...</h4>
+                </div>
+                <ul class="buttons__content--holder d-none">
+                  <li class="copy__content--holder">
+                    <img id="button__copy" src="assets/copy.svg" alt="copy" title="Copy"/>
+                  </li>
+                  <li class="details__content--holder">
+                    <img id="button__details" src="assets/arrow.svg" alt="copy" title="Details" />
+                  </li>
+                  <li class="qrbtn__content--holder">
+                    <img id="button__qrcode" src="assets/qrcode.svg" alt="copy" title="QR code" />
+                  </li>
+                </ul>
+              <div class="qrcode__content--holder d-none">
+                  <img id="qr_code" src="#" alt="QRCode" />
               </div>
             </div>
         </div>
