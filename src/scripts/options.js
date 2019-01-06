@@ -2,11 +2,17 @@
 document.addEventListener('DOMContentLoaded', () => {
     // replace the input value with current value on load
     chrome.storage.local.get(['key'], function(result) {
-        document.getElementById('api__key--value').value = result.key;
+        // to string
+        let API_KEY = `${result.key}`;
+        if (API_KEY === 'undefined') {
+            document.getElementById('api__key--value').value = '';
+        } else {
+            document.getElementById('api__key--value').value = API_KEY;
+        }
     });
 });
 
-// Store new API Key
+// Store new API Key on save click
 document.getElementById('button__submit').addEventListener('click', () => {
     let API_KEY = document.getElementById('api__key--value').value;
     // store value locally
