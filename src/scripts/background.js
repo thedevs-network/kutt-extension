@@ -3,7 +3,7 @@ import axios from "axios";
 // Shorten url
 async function getShortURL(API_key, URLtoShorten) {
     let shortLink;
-    const api_url = 'https://kutt.it/api/url/submit';
+    const api_url = 'https://cors-anywhere.herokuapp.com/https://kutt.it/api/url/submit';
     try {
         const rawData = await axios({
             method: "POST",

@@ -10,6 +10,11 @@
   <img width="250" src="https://i.imgur.com/KfjauzY.gif" alt="image3" />
 </div>
 
+Note: 
+
+Until Kutt.it provides CORS Support, a CORS Proxy is used temporarily: 
+- https://cors-anywhere.herokuapp.com/
+
 ## How to use
 - Download and Extract the latest zip file from [here](https://github.com/abhijithvijayan/kuttUrl-Chrome-extension/releases/latest)
 - Load extension via `chrome://extensions` as unpacked from extracted directory.
