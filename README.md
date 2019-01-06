@@ -1,29 +1,23 @@
 <div align="center"><img width="150" src="src/assets/logo-kutt.png" /></div>
 <h1 align="center">kuttURL-Chrome</h1>
-<p align="center">Chrome extension to to shorten URLs</p>
+<p align="center">Chrome browser extension to to shorten URLs for <a href="https://kutt.it">Kutt.it</a></p>
 
 ## Screenshots
 
 <div align="center">
-  <img width="250" src="https://i.imgur.com/nnZsZAl.gif" />
-  <img width="300" src="https://i.imgur.com/akuqBHs.png" />
-  <img width="250" src="https://i.imgur.com/KfjauzY.gif" />
+  <img width="250" src="https://i.imgur.com/nnZsZAl.gif" alt="image1" />
+  <img width="300" src="https://i.imgur.com/akuqBHs.png" alt="image2" />
+  <img width="250" src="https://i.imgur.com/KfjauzY.gif" alt="image3" />
 </div>
 
 ## How to use
+- Download and Extract the latest zip file from [here](https://github.com/abhijithvijayan/kuttUrl-Chrome-extension/releases/latest)
+- Load extension via `chrome://extensions` as unpacked from extracted directory.
 - You'll need to generate an API Key from <a href="https://kutt.it">`https://kutt.it/`</a>. (Settings page)
 - Paste and Save this `Key` in extension's `options page`.
-- `npm run dev` to to watch file changes in developement.
-- `npm run build` to build the extension.
-- Load extension via `chrome://extensions` as unpacked from `extension/` directory.
 
-## TODO list
-
-- [ ] UI Improvements
-- [ ] Custom Domain Support
-- [ ] Password
-- [x] API Key Page
-- [ ] Logo Change
+## How to contribute
+View the Contributing guidelines [here](CONTRIBUTING.md).
 
 ## Licence
 Code released under the [MIT License](LICENSE).
