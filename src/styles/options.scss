@@ -58,6 +58,7 @@ body {
                     padding: 12px;
                     margin-top: 1.4em;
                     &:hover {
+                        cursor: pointer;
                         background-color: $color-light-blue;
                     }
                 }

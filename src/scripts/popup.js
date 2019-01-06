@@ -29,10 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         document.getElementById('url__content-inner').textContent = shortUrl;
                         // fetch qrcode from http://goqr.me
                         document.getElementById('qr_code').src = `${qrcode__src}${shortUrl}`;
-                        // show buttons
-                        show('button__copy');
-                        show('button__details');
-                        show('button__qrcode');
+                        // show buttons                        
+                        toggleDisplay('.buttons__content--holder');
                     }
                 });
             }
@@ -80,12 +78,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. QR Code
     document.getElementById('button__qrcode').addEventListener('click', () => {
         // document.getElementById('button__qrcode').style = "display: none;";
-        show('qr_code');
+        toggleDisplay('.qrcode__content--holder');
     });
 
-
+    
     // 5. elements visiblity function
-    function show(id) {
-        document.getElementById(id).style = '';
+    function toggleDisplay(className) {
+        let element = document.querySelector(className);
+        element.classList.toggle('d-none');
     }
+
 });

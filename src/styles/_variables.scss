@@ -8,3 +8,7 @@ $color-light-blue:  #4d5bfa;
 *, *:before, *:after {
     box-sizing: border-box;
 }
+
+.d-none {
+    display: none !important;
+}
