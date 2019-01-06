@@ -1,0 +1,28 @@
+{
+    "name": "kuttUrl - Shorten URLs",
+    "version": "1.0",
+    "description": "URL Shortener",
+    "background": {
+        "scripts": ["js/background.js"],
+        "persistent": false
+    },
+    "permissions": ["tabs", "storage", "clipboardWrite", "clipboardRead"],
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "manifest_version": 2,
+    "browser_action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "assets/icon_16.png",
+            "32": "assets/icon_32.png",
+            "48": "assets/icon_48.png",
+            "128": "assets/icon_128.png"
+        }
+    },
+    "options_page": "options.html",
+    "icons": {
+        "16": "assets/icon_16.png",
+        "32": "assets/icon_32.png",
+        "48": "assets/icon_48.png",
+        "128": "assets/icon_128.png"
+    }
+  }
