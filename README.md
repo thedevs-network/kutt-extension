@@ -1,4 +1,4 @@
-<div align="center"><img width="150" src="src/assets/logo-kutt.png" /></div>
+<div align="center"><img width="150" src="src/assets/logo.png" /></div>
 <h1 align="center">kuttURL-Chrome</h1>
 <p align="center">Chrome browser extension to to shorten URLs for <a href="https://kutt.it">Kutt.it</a></p>
 
