@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600');
+
 // Colors
 $color-black:       #111111;
 $color-white:       #ffffff;
@@ -5,10 +7,25 @@ $color-light:       #fcfcfc;
 $color-blue:        #4d5be7;
 $color-light-blue:  #4d5bfa;
 
+$font-montserrat: 'Montserrat', sans-serif;
+
+$font-weight-regular:   400;
+$font-weight-bold:      600;
+
 *, *:before, *:after {
     box-sizing: border-box;
 }
 
 .d-none {
     display: none !important;
+}
+
+html, body {
+    padding: 0;
+    border: 0;
+    margin: 0;
+}
+
+body {
+    font-family: $font-montserrat;
 }
