@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 4. QR Code
     document.getElementById('button__qrcode').addEventListener('click', () => {
-        document.getElementById('button__qrcode').style = "display: none;";
+        // document.getElementById('button__qrcode').style = "display: none;";
         show('qr_code');
     });
 

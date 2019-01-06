@@ -57,24 +57,20 @@ body {
                     font-size: 14px;
                 }
             }
-            .copy__content--holder,
-            .details__content--holder,
-            .qrbtn__content--holder {
-                margin-bottom: 0.3em;
-            }
-            .copy__content--holder {
-                #button__copy {
-                    font-size: 15px;
-                }
-            }
-            .details__content--holder {
-                #button__details {
-                    font-size: 15px;
-                }
-            }
-            .qrbtn__content--holder {
-                #button__qrcode {
-                    font-size: 15px;   
+            .buttons__content--holder {
+                list-style-type: none;
+                display: flex;
+                justify-content: space-evenly;
+                padding-left: 0;
+                .copy__content--holder,
+                .details__content--holder,
+                .qrbtn__content--holder {
+                    display: inline;
+                    cursor: pointer;
+                    #button__copy, #button__details, #button__qrcode {
+                        width: 22px;
+                        height: 22px;;
+                    }
                 }
             }
             .qrcode__content--holder {
