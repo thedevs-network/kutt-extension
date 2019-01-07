@@ -36,3 +36,12 @@ document.getElementById('button__submit').addEventListener('click', () => {
         element.classList.toggle('v-none');
     }, 1300);
 });
+
+document.getElementById('password__view--checkbox').addEventListener('click', () => {
+    let element = document.getElementById('password--value');
+    if (element.type === "password") {
+        element.type = "text";
+    } else {
+        element.type = "password";
+    }
+});

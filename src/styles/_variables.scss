@@ -2,6 +2,7 @@
 
 // Colors
 $color-black:       #111111;
+$color-grey-white:  #f3f3f3;
 $color-white:       #ffffff;
 $color-light:       #fcfcfc;
 $color-blue:        #4d5be7;
@@ -14,6 +15,10 @@ $font-weight-bold:      600;
 
 *, *:before, *:after {
     box-sizing: border-box;
+}
+
+input:focus {
+    outline:none;
 }
 
 .d-none {

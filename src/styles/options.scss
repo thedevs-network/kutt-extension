@@ -2,7 +2,7 @@
 
 body {
     color: $color-black;
-    background-color: $color-light;
+    background-color: $color-grey-white;
 }
 
 #options {
@@ -11,7 +11,6 @@ body {
     height: 100vh;
     .options__content--holder {
         padding-top: 4.8em;
-        background-color: $color-white;
         .head__content--holder {
             .head__content--logo {
                 width: 80px;
@@ -74,21 +73,25 @@ body {
                 }
                 .api__key--holder, .password--holder {
                     font-family: $font-montserrat;
-                    font-size: 16px;
                     width: 100%;
-                    padding: 10px;
-                    border-radius: 4px;
-                    border: 1px solid $color-light-blue;
+                    border-radius: 100px;
+                    background-color: $color-white;
+                    border: none;
                     margin-bottom: 1em;
-                    &:active {
-                        border-radius: 4px;
-                    }
+                }
+                .api__key--holder {
+                    padding: 12px 25px 12px 25px;
+                    font-size: 16px;
                 }
                 .password--holder {
                     font-size: 20px;
-                    padding: 8px;
+                    padding: 8px 25px 8px 25px;
+                }
+                .password__check--holder {
+                    display: flex;
                 }
                 .saved__alert {
+                    margin-top: 2em;
                     padding-left: 0.5em;
                 }
                 .button__submit {
@@ -100,7 +103,7 @@ body {
                     background-color: $color-blue;
                     border: none;
                     padding: 12px;
-                    margin-top: 1em;
+                    margin: 1em 0;
                     &:hover {
                         cursor: pointer;
                         background-color: $color-light-blue;

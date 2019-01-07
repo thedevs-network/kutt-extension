@@ -30,8 +30,8 @@
 
 <div align="center">
   <img width="250" src="https://i.imgur.com/x7tGr7J.gif" alt="image1" />
-  <img width="300" src="https://i.imgur.com/wCH7REF.png" alt="image2" />
-  <img width="250" src="https://i.imgur.com/bSSA31p.gif" alt="image3" />
+  <img width="300" src="https://i.imgur.com/Ckyefhz.png" alt="image2" />
+  <img width="250" src="https://i.imgur.com/Ha3YvZB.gif" alt="image3" />
 </div>
 
 ## How to use
