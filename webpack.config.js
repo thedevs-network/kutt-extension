@@ -1,7 +1,9 @@
 const path = require("path");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -17,29 +19,6 @@ module.exports = {
     node: {
         fs: 'empty'
     },
-    plugins: [
-      new CleanWebpackPlugin(["extension"]),
-      new CopyWebpackPlugin([ 
-          { 
-            from: 'src/assets', 
-            to: 'assets' 
-          },
-          {
-            from: 'src/manifest.json',
-            to: ''
-          } 
-        ]),
-      new HtmlWebpackPlugin({
-        template: 'src/options.html',
-        inject: false,
-        filename: 'options.html'
-      }),
-      new HtmlWebpackPlugin({
-        template: 'src/popup.html',
-        inject: false,
-        filename: 'popup.html'
-      })
-    ],
     module: {
         rules: [
           {
@@ -101,6 +80,52 @@ module.exports = {
               ]
             }  
         ]
+    },
+    plugins: [
+      new CleanWebpackPlugin(["extension"]),
+      new CopyWebpackPlugin([ 
+          { 
+            from: 'src/assets', 
+            to: 'assets' 
+          },
+          {
+            from: 'src/manifest.json',
+            to: ''
+          } 
+      ]),
+      new HtmlWebpackPlugin({
+        template: 'src/options.html',
+        inject: false,
+        minify: true,
+        filename: 'options.html'
+      }),
+      new HtmlWebpackPlugin({
+        template: 'src/popup.html',
+        inject: false,
+        minify: true,
+        filename: 'popup.html'
+      })
+    ],
+    optimization: {
+      minimizer: [
+        new OptimizeCssAssetsPlugin({
+          assetNameRegExp: /\.css$/g,
+          cssProcessor: require('cssnano'),
+          cssProcessorOptions: { 
+            map: false
+          },
+          cssProcessorPluginOptions: {
+            preset: ['default', { discardComments: { removeAll: true } }],
+          },
+          canPrint: true
+        }),
+        new UglifyJsPlugin({
+          cache: true,
+          parallel: true,
+          sourceMap: false,
+          extractComments: false
+        }),
+      ]
     },
     devServer: {
         port: 3000,
