@@ -1,7 +1,8 @@
 const path = require("path");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -17,29 +18,6 @@ module.exports = {
     node: {
         fs: 'empty'
     },
-    plugins: [
-      new CleanWebpackPlugin(["extension"]),
-      new CopyWebpackPlugin([ 
-          { 
-            from: 'src/assets', 
-            to: 'assets' 
-          },
-          {
-            from: 'src/manifest.json',
-            to: ''
-          } 
-        ]),
-      new HtmlWebpackPlugin({
-        template: 'src/options.html',
-        inject: false,
-        filename: 'options.html'
-      }),
-      new HtmlWebpackPlugin({
-        template: 'src/popup.html',
-        inject: false,
-        filename: 'popup.html'
-      })
-    ],
     module: {
         rules: [
           {
@@ -101,6 +79,41 @@ module.exports = {
               ]
             }  
         ]
+    },
+    plugins: [
+      new CleanWebpackPlugin(["extension"]),
+      new CopyWebpackPlugin([ 
+          { 
+            from: 'src/assets', 
+            to: 'assets' 
+          },
+          {
+            from: 'src/manifest.json',
+            to: ''
+          } 
+      ]),
+      new HtmlWebpackPlugin({
+        template: 'src/options.html',
+        inject: false,
+        filename: 'options.html'
+      }),
+      new HtmlWebpackPlugin({
+        template: 'src/popup.html',
+        inject: false,
+        filename: 'popup.html'
+      })
+    ],
+    optimization: {
+      minimizer: [
+        new OptimizeCssAssetsPlugin({
+          assetNameRegExp: /\.css$/g,
+          cssProcessor: require('cssnano'),
+          cssProcessorPluginOptions: {
+            preset: ['default', { discardComments: { removeAll: true } }],
+          },
+          canPrint: true
+        }),
+      ]
     },
     devServer: {
         port: 3000,
