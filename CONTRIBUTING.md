@@ -14,13 +14,5 @@
 
 `npm run build` builds the extension to `extension/` directory.
 
-## TODO list
-
-- [ ] UI Improvements
-- [ ] Custom Domain Support
-- [ ] Password
-- [x] API Key Page
-- [ ] Logo Change
-
 ## Note:
 Shortening may take a while, it's not the issue with the extension but with <a href="https://github.com/thedevs-network/kutt">Kutt.it's API</a>.
