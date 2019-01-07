@@ -89,6 +89,10 @@ body {
                 }
                 .password__check--holder {
                     display: flex;
+                    #password__view--checkbox {
+                        margin-right: 0.5em;
+                        cursor: pointer;
+                    }
                 }
                 .saved__alert {
                     margin-top: 2em;
@@ -102,6 +106,7 @@ body {
                     width: 100%;
                     background-color: $color-blue;
                     border: none;
+                    border-radius: 100px;
                     padding: 12px;
                     margin: 1em 0;
                     &:hover {

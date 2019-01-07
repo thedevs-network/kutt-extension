@@ -43,8 +43,12 @@
 ## Note:
 <a href="https://kutt.it">Kutt.it</a> API permits **50** URLs shortening per day using the API Key. Upgrade to Paid plan for more.
 
-## How to contribute
+## Contributing and Support
 View the Contributing guidelines [here](CONTRIBUTING.md).
+
+If you like my work, you can 
+
+<a href="https://www.buymeacoffee.com/abhijithvijayan" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 
 ## Licence
 Code released under the [MIT License](LICENSE).
