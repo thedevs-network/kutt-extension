@@ -29,9 +29,9 @@
 ## Screenshots
 
 <div align="center">
-  <img width="250" src="https://i.imgur.com/6WKLJQB.gif" alt="image1" />
+  <img width="250" src="https://i.imgur.com/x7tGr7J.gif" alt="image1" />
   <img width="300" src="https://i.imgur.com/wCH7REF.png" alt="image2" />
-  <img width="250" src="https://i.imgur.com/ju7Vrc5.gif" alt="image3" />
+  <img width="250" src="https://i.imgur.com/bSSA31p.gif" alt="image3" />
 </div>
 
 ## How to use

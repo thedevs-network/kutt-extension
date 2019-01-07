@@ -1,6 +1,6 @@
 {
     "name": "kuttUrl - Shorten URLs",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "description": "URL Shortener",
     "background": {
         "scripts": ["js/background.js"],
