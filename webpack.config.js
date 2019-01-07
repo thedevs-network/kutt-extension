@@ -3,6 +3,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -112,6 +113,12 @@ module.exports = {
             preset: ['default', { discardComments: { removeAll: true } }],
           },
           canPrint: true
+        }),
+        new UglifyJsPlugin({
+          cache: true,
+          parallel: true,
+          sourceMap: false,
+          extractComments: false
         }),
       ]
     },
