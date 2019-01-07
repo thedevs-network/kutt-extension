@@ -96,11 +96,13 @@ module.exports = {
       new HtmlWebpackPlugin({
         template: 'src/options.html',
         inject: false,
+        minify: true,
         filename: 'options.html'
       }),
       new HtmlWebpackPlugin({
         template: 'src/popup.html',
         inject: false,
+        minify: true,
         filename: 'popup.html'
       })
     ],
@@ -109,6 +111,9 @@ module.exports = {
         new OptimizeCssAssetsPlugin({
           assetNameRegExp: /\.css$/g,
           cssProcessor: require('cssnano'),
+          cssProcessorOptions: { 
+            map: false
+          },
           cssProcessorPluginOptions: {
             preset: ['default', { discardComments: { removeAll: true } }],
           },
