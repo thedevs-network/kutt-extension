@@ -1,3 +1,5 @@
+@import "fonts";
+@import "reset";
 @import "variables";
 
 body {
@@ -12,7 +14,6 @@ body {
             .navbar__main {
                 margin: 0;
                 padding-left: 0;
-                list-style-type: none;
                 li {
                     display: inline-block;
                     justify-content: center;
@@ -51,10 +52,10 @@ body {
                 }
             }
             .buttons__content--holder {
-                list-style-type: none;
                 display: flex;
                 justify-content: space-evenly;
                 padding-left: 0;
+                margin: 1em 0; 
                 .copy__content--holder,
                 .details__content--holder,
                 .qrbtn__content--holder {
@@ -65,6 +66,9 @@ body {
                         height: 22px;
                     }
                 }
+            }
+            .copy__alert {
+                margin: 1em 0;
             }
             .qrcode__content--holder {
                 #qr_code {
