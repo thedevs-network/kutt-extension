@@ -44,7 +44,6 @@ body {
         .content__holder {
             .url__content--holder {
                 margin: 1.5em 0;
-                text-align: center;
                 #url__content-inner {
                     margin: 0;
                     font-size: 18px;
@@ -67,11 +66,7 @@ body {
                     }
                 }
             }
-            .copy__alert {
-                text-align: center;
-            }
             .qrcode__content--holder {
-                text-align: center;
                 #qr_code {
                     padding-top: 0.3em;
                 }
