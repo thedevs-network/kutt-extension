@@ -14,29 +14,43 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// Store new API Key on save click
-document.getElementById('button__submit').addEventListener('click', () => {
+// Store Data and alert message
+let saveData = () => {
     let API_KEY = document.getElementById('api__key--value').value;
     let password = document.getElementById('password--value').value;
 
     if(!password) {
-        console.log("No password Set");
+   //     console.log("No password Set");
     }
     // store value locally
     chrome.storage.local.set({key: API_KEY, pwd: password}, function() {
-        console.log('API Key set to ' + API_KEY);
+    //    console.log('API Key set to ' + API_KEY);
     });
-});
 
-// Saved Alert
-document.getElementById('button__submit').addEventListener('click', () => {
+    // Saved Alert
     let element = document.querySelector('.saved__alert');
     element.classList.toggle('v-none');
     setTimeout(() => {
         element.classList.toggle('v-none');
     }, 1300);
+};
+
+
+// on save button click
+document.getElementById('button__submit').addEventListener('click', () => {
+    saveData();
 });
 
+
+// on enter key press
+document.addEventListener('keypress', (e) => {
+    if(e.keyCode === 13) {
+        saveData();
+    }
+});
+
+
+// Show Password Function
 document.getElementById('password__view--checkbox').addEventListener('click', () => {
     let element = document.getElementById('password--value');
     if (element.type === "password") {

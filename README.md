@@ -30,7 +30,7 @@
 
 <div align="center">
   <img width="250" src="https://i.imgur.com/x7tGr7J.gif" alt="image1" />
-  <img width="300" src="https://i.imgur.com/Ckyefhz.png" alt="image2" />
+  <img width="250" src="https://i.imgur.com/6qsNUbf.png" alt="image2" />
   <img width="250" src="https://i.imgur.com/Ha3YvZB.gif" alt="image3" />
 </div>
 
