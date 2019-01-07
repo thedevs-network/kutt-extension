@@ -1,13 +1,14 @@
 // update UI - API Key on options page load
 document.addEventListener('DOMContentLoaded', () => {
     // replace the input value with current value on load
-    chrome.storage.local.get(['key'], function(result) {
-        // to string
-        let API_KEY = `${result.key}`;
+    chrome.storage.local.get(['key', 'pwd'], function(result) {
+        // to strings
+        let API_KEY = `${result.key}`, pwd = `${result.pwd}`;
         if (API_KEY === 'undefined') {
             document.getElementById('api__key--value').value = '';
         } else {
             document.getElementById('api__key--value').value = API_KEY;
+            document.getElementById('password--value').value = pwd;
         }
     });
 });
@@ -16,9 +17,14 @@ document.addEventListener('DOMContentLoaded', () => {
 // Store new API Key on save click
 document.getElementById('button__submit').addEventListener('click', () => {
     let API_KEY = document.getElementById('api__key--value').value;
+    let password = document.getElementById('password--value').value;
+
+    if(!password) {
+        console.log("No password Set");
+    }
     // store value locally
-    chrome.storage.local.set({key: API_KEY}, function() {
-        console.log('Value is set to ' + API_KEY);
+    chrome.storage.local.set({key: API_KEY, pwd: password}, function() {
+        console.log('API Key set to ' + API_KEY);
     });
 });
 

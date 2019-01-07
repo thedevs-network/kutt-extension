@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Shorten url
-async function getShortURL(API_key, URLtoShorten) {
+async function getShortURL(API_key, URLtoShorten, password) {
     let shortLink;
     const api_url = 'https://cors-anywhere.herokuapp.com/https://kutt.it/api/url/submit';
     try {
@@ -11,8 +11,12 @@ async function getShortURL(API_key, URLtoShorten) {
             headers: { 
                 'X-API-Key': API_key 
             },
-            data: { target: URLtoShorten }
+            data: { 
+                target: URLtoShorten, 
+                password: password
+            }
         });
+        // console.log(rawData);
         shortLink = rawData.data.shortUrl;
     } catch (error) {
         console.log(error); 
@@ -28,7 +32,7 @@ chrome.runtime.onMessage.addListener(
         if(request.msg == "start") {
             let shortLink;
             // consume the promise
-            getShortURL(request.API_key, request.pageUrl).then((data) => {
+            getShortURL(request.API_key, request.pageUrl, request.password).then((data) => {
                 shortLink = data;
                 sendResponse({ shortUrl: `${shortLink}` });
             });

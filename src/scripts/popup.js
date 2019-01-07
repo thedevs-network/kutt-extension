@@ -6,19 +6,20 @@ document.addEventListener('DOMContentLoaded', () => {
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, (tabs) => {
             
         let longUrl, start, qrcode__src = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=';
-        let API_key;
+        let API_key, password;
 
         longUrl = tabs[0].url;
         start = longUrl.substr(0, 6);
         
         // i) Get api key from options page
-        chrome.storage.local.get(['key'], function(result) {
+        chrome.storage.local.get(['key', 'pwd'], function(result) {
 
             API_key = result.key;
+            password = result.pwd;
             
             if(start !== 'chrome' && API_key !== '' && API_key !== undefined) {
                 // send start message to background.js and receive response
-                chrome.runtime.sendMessage({ msg: "start", API_key: `${API_key}`, pageUrl: `${longUrl}` }, (response) => {
+                chrome.runtime.sendMessage({ msg: "start", API_key: `${API_key}`, pageUrl: `${longUrl}`, password: `${password}` }, (response) => {
                     // store the shortened link
                     shortUrl = response.shortUrl;
                     // invalid response
