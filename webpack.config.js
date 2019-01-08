@@ -5,7 +5,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
-module.exports = {
+module.exports = (env, options) => ({
     entry: {
       options: ["./src/scripts/options.js", './src/styles/options.scss'],
       popup: ["./src/scripts/popup.js", './src/styles/popup.scss'],
@@ -96,13 +96,13 @@ module.exports = {
       new HtmlWebpackPlugin({
         template: 'src/options.html',
         inject: false,
-        minify: true,
+        minify: options.mode === "production" ? true : false,
         filename: 'options.html'
       }),
       new HtmlWebpackPlugin({
         template: 'src/popup.html',
         inject: false,
-        minify: true,
+        minify: options.mode === "production" ? true : false,
         filename: 'popup.html'
       })
     ],
@@ -131,4 +131,4 @@ module.exports = {
         port: 3000,
         contentBase: "./extensions"
     }
-};
+});
