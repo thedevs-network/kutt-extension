@@ -33,10 +33,12 @@ browser.runtime.onMessage.addListener(
         if(request.msg == "start") {
             let shortLink;
             // consume the promise
-            return getShortURL(request.API_key, request.pageUrl, request.password).then((data) => {
+            getShortURL(request.API_key, request.pageUrl, request.password).then((data) => {
                 shortLink = data;
-                return shortLink;
+                console.log(shortLink);
+                sendResponse({ shortUrl: `${shortLink}` });
             });
+            return true;
         }
     }
 );

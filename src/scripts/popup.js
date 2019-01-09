@@ -23,9 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 // send start message to background.js and receive response
                 browser.runtime.sendMessage({ msg: "start", API_key: `${API_key}`, pageUrl: `${longUrl}`, password: `${password}` }).then(response => {
                     // store the shortened link
-                    shortUrl = response;
+                    shortUrl = response.shortUrl;
+                    console.log(shortUrl);
                     // invalid response
-                    if(shortUrl === null) {
+                    if(shortUrl === undefined) {
                         document.getElementById('url__content-inner').textContent = "API Error!!";
                     } else {
                         // update the content with shortened link
