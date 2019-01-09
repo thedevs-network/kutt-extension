@@ -91,7 +91,12 @@ module.exports = (env, options) => ({
           {
             from: 'src/manifest.json',
             to: ''
-          } 
+          }, 
+          // {
+          //   from: 'node_modules/webextension-polyfill/dist/browser-polyfill.min.js',
+          //   to: 'js/browser-polyfill.js', 
+          //   flatten: true,
+          // },
       ]),
       new HtmlWebpackPlugin({
         template: 'src/options.html',
@@ -119,12 +124,12 @@ module.exports = (env, options) => ({
           },
           canPrint: true
         }),
-        new UglifyJsPlugin({
-          cache: true,
-          parallel: true,
-          sourceMap: false,
-          extractComments: false
-        }),
+        // new UglifyJsPlugin({
+        //   cache: true,
+        //   parallel: true,
+        //   sourceMap: false,
+        //   extractComments: false
+        // }),
       ]
     },
     devServer: {

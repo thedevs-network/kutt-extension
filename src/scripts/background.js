@@ -1,4 +1,5 @@
 import axios from "axios";
+import browser from "webextension-polyfill";
 
 // Shorten url
 async function getShortURL(API_key, URLtoShorten, password) {
@@ -26,7 +27,7 @@ async function getShortURL(API_key, URLtoShorten, password) {
 };
 
 // Calling function
-chrome.runtime.onMessage.addListener(
+browser.runtime.onMessage.addListener(
     // receive the message
     (request, sender, sendResponse) => {
         if(request.msg == "start") {
@@ -34,6 +35,7 @@ chrome.runtime.onMessage.addListener(
             // consume the promise
             getShortURL(request.API_key, request.pageUrl, request.password).then((data) => {
                 shortLink = data;
+                console.log(shortLink);
                 sendResponse({ shortUrl: `${shortLink}` });
             });
             return true;
