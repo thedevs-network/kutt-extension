@@ -1,26 +1,27 @@
 <div align="center"><img width="150" src="src/assets/logo.png" /></div>
-<h1 align="center">kuttURL-Chrome</h1>
-<p align="center">Chrome browser extension to to shorten URLs for <a href="https://kutt.it">Kutt.it</a></p>
+<h1 align="center">kuttURL-browser-extension</h1>
+<p align="center">Browser extension to to shorten URLs for <a href="https://kutt.it">Kutt.it</a></p>
 
 <div align="center">
-  <a href="https://travis-ci.org/abhijithvijayan/kuttUrl-Chrome-extension">
-    <img src="https://travis-ci.org/abhijithvijayan/kuttUrl-Chrome-extension.svg?branch=master" alt="Travis Build" />
+  <a href="https://travis-ci.org/abhijithvijayan/kuttUrl-browser-extension">
+    <img src="https://travis-ci.org/abhijithvijayan/kuttUrl-browser-extension.svg?branch=master" alt="Travis Build" />
   </a>
-  <a href="https://github.com/abhijithvijayan/kuttUrl-Chrome-extension/issues?q=is%3Aopen+is%3Aissue">
-    <img src="https://img.shields.io/github/issues-raw/abhijithvijayan/kuttUrl-Chrome-extension.svg?colorB=blue" alt="Open Issues" />
+  <a href="https://github.com/abhijithvijayan/kuttUrl-browser-extension/issues?q=is%3Aopen+is%3Aissue">
+    <img src="https://img.shields.io/github/issues-raw/abhijithvijayan/kuttUrl-browser-extension.svg?colorB=blue" alt="Open Issues" />
   </a>
-  <a href="https://github.com/abhijithvijayan/kuttUrl-Chrome-extension/issues?q=is%3Aissue+is%3Aclosed">
-    <img src="https://img.shields.io/github/issues-closed-raw/abhijithvijayan/kuttUrl-Chrome-extension.svg?colorB=red" alt="Closed Issues" />
+  <a href="https://github.com/abhijithvijayan/kuttUrl-browser-extension/issues?q=is%3Aissue+is%3Aclosed">
+    <img src="https://img.shields.io/github/issues-closed-raw/abhijithvijayan/kuttUrl-browser-extension.svg?colorB=red" alt="Closed Issues" />
   </a>
-  <a href="https://david-dm.org/abhijithvijayan/kuttUrl-Chrome-extension">
-    <img src="https://img.shields.io/david/abhijithvijayan/kuttUrl-Chrome-extension.svg?colorB=orange" alt="DEPENDENCIES" />
+  <a href="https://david-dm.org/abhijithvijayan/kuttUrl-browser-extension">
+    <img src="https://img.shields.io/david/abhijithvijayan/kuttUrl-browser-extension.svg?colorB=orange" alt="DEPENDENCIES" />
   </a>
-  <a href="https://github.com/abhijithvijayan/kuttUrl-Chrome-extension">
-    <img src="https://img.shields.io/github/license/abhijithvijayan/kuttUrl-Chrome-extension.svg" alt="LICENSE" />
+  <a href="https://github.com/abhijithvijayan/kuttUrl-browser-extension">
+    <img src="https://img.shields.io/github/license/abhijithvijayan/kuttUrl-browser-extension.svg" alt="LICENSE" />
   </a>
 </div>
 
 ## Features
+- WebExtensions API
 - Clean UI
 - Instant QR Code
 - Supports Password for URLs
@@ -35,13 +36,13 @@
 </div>
 
 ## How to use
-- Download and Extract the latest zip file from [here](https://github.com/abhijithvijayan/kuttUrl-Chrome-extension/releases/latest)
+- Download and Extract the latest zip file from [here](https://github.com/abhijithvijayan/kuttUrl-browser-extension/releases/latest)
 - Load extension via `chrome://extensions` as unpacked from extracted directory.
 - You'll need to generate an API Key from <a href="https://kutt.it">`https://kutt.it/`</a>. (Settings page)
 - Paste and Save this `Key` in extension's `options page`.
 
 ## Note:
-<a href="https://kutt.it">Kutt.it</a> API permits **50** URLs shortening per day using the API Key. Upgrade to Paid plan for more.
+<a href="https://kutt.it">Kutt.it</a> API permits **50** URLs shortening per day using the API Key.
 
 ## Contributing and Support
 View the Contributing guidelines [here](CONTRIBUTING.md).
