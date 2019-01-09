@@ -1,9 +1,11 @@
+import browser from "webextension-polyfill";
+
 let shortUrl;
 
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 1. Pass the message and receive response
-    chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, (tabs) => {
+    // 1. Initialize
+    browser.tabs.query({'active': true, 'lastFocusedWindow': true}).then(tabs => {
             
         let longUrl, start, qrcode__src = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=';
         let API_key, password;
@@ -12,18 +14,18 @@ document.addEventListener('DOMContentLoaded', () => {
         start = longUrl.substr(0, 6);
         
         // i) Get api key from options page
-        chrome.storage.local.get(['key', 'pwd'], function(result) {
+        browser.storage.local.get(['key', 'pwd']).then(result => {
 
             API_key = result.key;
             password = result.pwd;
             
             if(start !== 'chrome' && API_key !== '' && API_key !== undefined) {
                 // send start message to background.js and receive response
-                chrome.runtime.sendMessage({ msg: "start", API_key: `${API_key}`, pageUrl: `${longUrl}`, password: `${password}` }, (response) => {
+                browser.runtime.sendMessage({ msg: "start", API_key: `${API_key}`, pageUrl: `${longUrl}`, password: `${password}` }).then(response => {
                     // store the shortened link
-                    shortUrl = response.shortUrl;
+                    shortUrl = response;
                     // invalid response
-                    if(shortUrl === 'undefined') {
+                    if(shortUrl === null) {
                         document.getElementById('url__content-inner').textContent = "API Error!!";
                     } else {
                         // update the content with shortened link

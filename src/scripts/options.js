@@ -1,7 +1,9 @@
+import browser from "webextension-polyfill";
+
 // update UI - API Key on options page load
 document.addEventListener('DOMContentLoaded', () => {
     // replace the input value with current value on load
-    chrome.storage.local.get(['key', 'pwd'], function(result) {
+    browser.storage.local.get(['key', 'pwd']).then(result => {
         // to strings
         let API_KEY = `${result.key}`, pwd = `${result.pwd}`;
         if (API_KEY === 'undefined') {
@@ -23,7 +25,7 @@ let saveData = () => {
    //     console.log("No password Set");
     }
     // store value locally
-    chrome.storage.local.set({key: API_KEY, pwd: password}, function() {
+    browser.storage.local.set({key: API_KEY, pwd: password}).then(() => {
     //    console.log('API Key set to ' + API_KEY);
     });
 
