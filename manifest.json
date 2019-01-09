@@ -16,17 +16,20 @@
             "32": "assets/favicon-32.png",
             "48": "assets/favicon-48.png",
             "128": "assets/favicon-128.png" 
-        }
+        },
+        "browser_style": true
     },
     "author": "abhijithvijayan",
     "background": {
-        "persistent": false,
-        "scripts": ["js/background.js"]
+        "scripts": [
+            "js/background.js"
+        ]
     },
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-    "homepage_url": "https://github.com/abhijithvijayan/kuttUrl-Chrome",
-    "offline_enabled": false,
-    "options_page": "options.html",
+    "homepage_url": "https://github.com/abhijithvijayan/kuttUrl-Chrome",    	
+    "options_ui": {
+        "page": "options.html"
+    },
     "permissions": ["tabs", "storage", "clipboardWrite", "clipboardRead", "https://kutt.it/*/*"],
     "short_name": "kuttUrl"
   }
