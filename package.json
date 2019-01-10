@@ -1,6 +1,6 @@
 {
-  "name": "kutturl",
-  "version": "1.0.0",
+  "name": "kutturl-browser-extension",
+  "version": "1.0.1",
   "main": "background.js",
   "scripts": {
     "dev": "webpack --watch --mode=development",
@@ -35,20 +35,19 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "babel-polyfill": "^6.26.0",
-    "webextension-polyfill": "^0.3.1"
+    "babel-polyfill": "^6.26.0"
   },
-  "description": "<div align=\"center\"><img width=\"100\" src=\"src/assets/logo.png\" /></div>\r <h1 align=\"center\">kuttURL-Chrome</h1>\r <p align=\"center\">Chrome extension to to shorten URLs</p>",
+  "description": "kuttUrl webextension",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/abhijithvijayan/kuttUrl-Chrome.git"
+    "url": "git+https://github.com/abhijithvijayan/kuttUrl-browser-extension.git"
   },
   "keywords": [
     "url",
     "shortener"
   ],
   "bugs": {
-    "url": "https://github.com/abhijithvijayan/kuttUrl-Chrome/issues"
+    "url": "https://github.com/abhijithvijayan/kuttUrl-browser-extension/issues"
   },
-  "homepage": "https://github.com/abhijithvijayan/kuttUrl-Chrome#readme"
+  "homepage": "https://github.com/abhijithvijayan/kuttUrl-browser-extension#readme"
 }
