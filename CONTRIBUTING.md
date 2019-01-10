@@ -14,6 +14,13 @@
 
 `npm run build` builds the extension to `extension/` directory.
 
+## Testing
+Download latest `Pre-Release`
+
+[<img src=".github/assets/direct-download.png"
+alt="Direct download"
+height="70">](https://github.com/abhijithvijayan/kuttUrl-browser-extension/releases)
+
 ## ToDO
 
 - [ ] Switch to Promise return Method

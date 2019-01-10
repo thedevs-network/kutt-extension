@@ -6,8 +6,11 @@
   <a href="https://travis-ci.org/abhijithvijayan/kuttUrl-browser-extension">
     <img src="https://travis-ci.org/abhijithvijayan/kuttUrl-browser-extension.svg?branch=master" alt="Travis Build" />
   </a>
+  <a href="https://github.com/abhijithvijayan/kuttUrl-browser-extension/releases/latest">
+    <img src="https://img.shields.io/github/release/abhijithvijayan/kuttUrl-browser-extension.svg?colorB=blue" alt="Releases" />
+  </a>
   <a href="https://github.com/abhijithvijayan/kuttUrl-browser-extension/issues?q=is%3Aopen+is%3Aissue">
-    <img src="https://img.shields.io/github/issues-raw/abhijithvijayan/kuttUrl-browser-extension.svg?colorB=blue" alt="Open Issues" />
+    <img src="https://img.shields.io/github/issues-raw/abhijithvijayan/kuttUrl-browser-extension.svg?colorB=lightgrey" alt="Open Issues" />
   </a>
   <a href="https://github.com/abhijithvijayan/kuttUrl-browser-extension/issues?q=is%3Aissue+is%3Aclosed">
     <img src="https://img.shields.io/github/issues-closed-raw/abhijithvijayan/kuttUrl-browser-extension.svg?colorB=red" alt="Closed Issues" />
@@ -21,6 +24,7 @@
 </div>
 
 ## Features
+- Cross Browser Support
 - WebExtensions API
 - Clean UI
 - Instant QR Code
@@ -36,7 +40,14 @@
 </div>
 
 ## How to use
-- Download and Extract the latest zip file [here](https://github.com/abhijithvijayan/kuttUrl-browser-extension/releases/latest)
+
+
+- Download and Extract the latest `stable` release `zip` file 
+
+  [<img src=".github/assets/direct-download.png"
+        alt="Direct download"
+        height="70">](https://github.com/abhijithvijayan/kuttUrl-browser-extension/releases/latest)
+        
 - Install in browser
     - ### Chrome
       - Go to the browser address bar and type `chrome://extensions`
