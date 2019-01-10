@@ -36,10 +36,35 @@
 </div>
 
 ## How to use
-- Download and Extract the latest zip file from [here](https://github.com/abhijithvijayan/kuttUrl-browser-extension/releases/latest)
-- Load extension via `chrome://extensions` as unpacked from extracted directory.
-- You'll need to generate an API Key from <a href="https://kutt.it">`https://kutt.it/`</a>. (Settings page)
-- Paste and Save this `Key` in extension's `options page`.
+- Download and Extract the latest zip file [here](https://github.com/abhijithvijayan/kuttUrl-browser-extension/releases/latest)
+- Install in browser
+    - ### Chrome
+      - Go to the browser address bar and type `chrome://extensions`
+      - Check the `Developer Mode` button to enable it.
+      - Click on the `Load Unpacked Extension…` button.
+      - Select your extension’s extracted directory.
+
+        <img width="400" src="https://i.imgur.com/dJRL7By.png" />
+
+    - ### Firefox
+      - Load the Add-on via `about:debugging` as temporary Add-on.
+      - Choose the `manifest.json` file in the extracted directory
+
+        <img width="400" src="https://i.imgur.com/aAL5dQg.png" />
+
+    - ### Opera
+      - Load the extension via `opera:extensions`
+      - Check the `Developer Mode` and load as unpacked from extension’s extracted directory.
+
+        <img width="400" src="https://i.imgur.com/qUwfSNJ.png" />
+
+- Generate an API Key from <a href="https://kutt.it">`https://kutt.it/`</a>. (Settings page)
+
+  <img width="400" src="https://i.imgur.com/qQwqeH5.png" />
+
+- Paste and Save this `Key` in extension's `options page` when asked.
+
+  <img width="250" src="https://i.imgur.com/6qsNUbf.png" alt="image2" />
 
 ## Note:
 <a href="https://kutt.it">Kutt.it</a> API permits **50** URLs shortening per day using the API Key.
