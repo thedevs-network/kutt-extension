@@ -91,12 +91,7 @@ module.exports = (env, options) => ({
           {
             from: 'src/manifest.json',
             to: ''
-          }, 
-          {
-            from: 'src/scripts/vendor/browser-polyfill.js',
-            to: 'js/browser-polyfill.js', 
-            flatten: true,
-          },
+          }
       ]),
       new HtmlWebpackPlugin({
         template: 'src/options.html',
