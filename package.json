@@ -36,7 +36,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.2.0",
-    "axios": "^0.18.0"
+    "axios": "^0.18.0",
+    "webextension-polyfill": "^0.3.1"
   },
   "description": "kuttUrl webextension",
   "repository": {

@@ -1,4 +1,4 @@
-import browser from "../scripts/vendor/browser-polyfill";
+import browser from "webextension-polyfill";
 
 let shortUrl;
 

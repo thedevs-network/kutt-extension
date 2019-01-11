@@ -1,5 +1,5 @@
 import axios from "axios";
-import browser from "../scripts/vendor/browser-polyfill";
+import browser from "webextension-polyfill";
 
 // Shorten url
 async function getShortURL(API_key, URLtoShorten, password) {

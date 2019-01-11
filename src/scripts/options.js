@@ -1,4 +1,4 @@
-import browser from "../scripts/vendor/browser-polyfill";
+import browser from "webextension-polyfill";
 
 // update UI - API Key on options page load
 document.addEventListener('DOMContentLoaded', () => {
