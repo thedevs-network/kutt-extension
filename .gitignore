@@ -63,3 +63,6 @@ typings/
 
 ## scripts build
 extension/
+chrome/
+firefox/
+opera/

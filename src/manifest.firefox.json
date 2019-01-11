@@ -1,7 +1,14 @@
 {
+    "manifest_version": 2,
     "name": "kuttUrl - Shorten URLs",
     "version": "0.5.0",
-    "manifest_version": 2,
+
+    "browser_specific_settings": {
+        "gecko": {
+          "id": "addon@example.com"
+        }
+    },
+
     "description": "URL Shortener",
     "icons": {
         "16": "assets/favicon-16.png",
@@ -9,6 +16,7 @@
         "48": "assets/favicon-48.png",
         "128": "assets/favicon-128.png"
     },
+
     "browser_action": {
         "default_popup": "popup.html",
         "default_icon": {
@@ -17,16 +25,18 @@
             "48": "assets/favicon-48.png",
             "128": "assets/favicon-128.png" 
         },
+        "default_title": "kuttUrl - Shorten URLs",
         "browser_style": false
     },
+    
     "author": "abhijithvijayan",
     "background": {
         "scripts": [
             "js/background.js"
         ]
     },
-    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-    "homepage_url": "https://github.com/abhijithvijayan/kuttUrl-Chrome",    	
+    "homepage_url": "https://github.com/abhijithvijayan/kuttUrl-browser-extension",  
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",  	
     "options_ui": {
         "page": "options.html",
         "open_in_tab": true

@@ -6,13 +6,20 @@
 
 ## Development
 - `npm install` to install dependencies.
-- `npm run dev` to to watch file changes in developement 
-    - (Reload Extension Manually in the browser)
-- Load extension as unpacked from `extension/` directory.
+- To watch file changes in developement
+    - Chrome
+        - `npm run dev-chrome`
+    - Firefox
+        - `npm run dev-firefox`       
+    - Opera
+        - `npm run dev-opera`  
+
+    (Reload Extension Manually in the browser)
+- Load extension as unpacked from `chrome|firefox|opera/` directory.
 - Generate an API Key from <a href="https://kutt.it">`https://kutt.it/`</a> (Settings page)
 - Paste and Save the `Key` in extension's `options page`.
 
-`npm run build` builds the extension to `extension/` directory.
+`npm run build-all` builds the extension to `chrome|firefox|opera` directory.
 
 ## Testing
 Download latest `Pre-Release`

@@ -82,15 +82,15 @@ module.exports = (env, options) => ({
         ]
     },
     plugins: [
-      new CleanWebpackPlugin(["extension"]),
+      new CleanWebpackPlugin([`${options.outputPath}`]),
       new CopyWebpackPlugin([ 
           { 
             from: 'src/assets', 
             to: 'assets' 
           },
           {
-            from: 'src/manifest.json',
-            to: ''
+            from: `src/manifest.${options.outputPath}.json`,
+            to: 'manifest.json'
           }
       ]),
       new HtmlWebpackPlugin({
