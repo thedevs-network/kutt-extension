@@ -29,11 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById('url__content-inner').textContent = "Error!!";
 
                     // invalid response
-                    if(shortUrl === undefined) {
-                        document.getElementById('url__content-inner').textContent = "API Error!!";
-                    } 
-                    else if (shortUrl === null) {
-                        document.getElementById('url__content-inner').textContent = "Something's wrong!!";
+                    if (shortUrl === null) {
+                        document.getElementById('url__content-inner').textContent = "Invalid Response!";
+                    } else if(shortUrl === 429) {
+                        document.getElementById('url__content-inner').textContent = "API Limit Exceeded!";
                     }
                     else {
                         // update the content with shortened link
