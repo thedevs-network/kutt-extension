@@ -2037,10 +2037,21 @@ async function getShortURL(API_key, URLtoShorten, password) {
     });
     shortLink = rawData.data.shortUrl; // returns the promise
 
-    console.log("Returning Promise!");
     return shortLink;
   } catch (error) {
-    console.log(error);
+    // https://gist.github.com/fgilio/230ccd514e9381fafa51608fcf137253
+    if (error.response) {
+      console.log(error.response.data);
+      console.log(error.response.status); // return error code
+
+      return error.response.status;
+    } else if (error.request) {
+      console.log(error.request);
+    } else {
+      console.log('Error', error.message);
+    }
+
+    console.log(error.config);
   }
 }
 
@@ -2050,7 +2061,6 @@ _scripts_vendor_browser_polyfill__WEBPACK_IMPORTED_MODULE_1___default.a.runtime.
   if (request.msg == "start") {
     // consume the promise
     return getShortURL(request.API_key, request.pageUrl, request.password).then(shortLink => {
-      console.log("URL:" + shortLink);
       return shortLink;
     }).catch(err => {
       console.log("Error Occured!");
