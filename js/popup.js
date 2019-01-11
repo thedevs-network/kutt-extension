@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 13);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -798,7 +798,8 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
       class DefaultWeakMap extends WeakMap {
-        constructor(createItem, items = undefined) {
+        constructor(createItem) {
+          let items = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
           super(items);
           this.createItem = createItem;
         }
@@ -854,7 +855,11 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
       const makeCallback = (promise, metadata) => {
-        return (...callbackArgs) => {
+        return function () {
+          for (var _len = arguments.length, callbackArgs = new Array(_len), _key = 0; _key < _len; _key++) {
+            callbackArgs[_key] = arguments[_key];
+          }
+
           if (chrome.runtime.lastError) {
             promise.reject(chrome.runtime.lastError);
           } else if (metadata.singleCallbackArg || callbackArgs.length <= 1) {
@@ -891,7 +896,11 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
       const wrapAsyncFunction = (name, metadata) => {
-        return function asyncFunctionWrapper(target, ...args) {
+        return function asyncFunctionWrapper(target) {
+          for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+            args[_key2 - 1] = arguments[_key2];
+          }
+
           if (args.length < metadata.minArgs) {
             throw new Error(`Expected at least ${metadata.minArgs} ${pluralizeArguments(metadata.minArgs)} for ${name}(), got ${args.length}`);
           }
@@ -986,7 +995,9 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
        * @returns {Proxy<object>}
        */
 
-      const wrapObject = (target, wrappers = {}, metadata = {}) => {
+      const wrapObject = function wrapObject(target) {
+        let wrappers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        let metadata = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
         let cache = Object.create(null);
         let handlers = {
           has(proxyTarget, prop) {
@@ -1099,7 +1110,11 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
       const wrapEvent = wrapperMap => ({
-        addListener(target, listener, ...args) {
+        addListener(target, listener) {
+          for (var _len3 = arguments.length, args = new Array(_len3 > 2 ? _len3 - 2 : 0), _key3 = 2; _key3 < _len3; _key3++) {
+            args[_key3 - 2] = arguments[_key3];
+          }
+
           target.addListener(wrapperMap.get(listener), ...args);
         },
 
@@ -1142,7 +1157,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
           let didCallSendResponse = false;
           let wrappedSendResponse;
           let sendResponsePromise = new Promise(resolve => {
-            wrappedSendResponse = function (response) {
+            wrappedSendResponse = function wrappedSendResponse(response) {
               if (!loggedSendResponseDeprecationWarning) {
                 console.warn(SEND_RESPONSE_DEPRECATION_WARNING, new Error().stack);
                 loggedSendResponseDeprecationWarning = true;
@@ -1211,10 +1226,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
         };
       });
 
-      const wrappedSendMessageCallback = ({
-        reject,
-        resolve
-      }, reply) => {
+      const wrappedSendMessageCallback = (_ref, reply) => {
+        let reject = _ref.reject,
+            resolve = _ref.resolve;
+
         if (chrome.runtime.lastError) {
           // Detect when none of the listeners replied to the sendMessage call and resolve
           // the promise to undefined as in Firefox.
@@ -1233,7 +1248,11 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
         }
       };
 
-      const wrappedSendMessage = (name, metadata, apiNamespaceObj, ...args) => {
+      const wrappedSendMessage = function wrappedSendMessage(name, metadata, apiNamespaceObj) {
+        for (var _len4 = arguments.length, args = new Array(_len4 > 3 ? _len4 - 3 : 0), _key4 = 3; _key4 < _len4; _key4++) {
+          args[_key4 - 3] = arguments[_key4];
+        }
+
         if (args.length < metadata.minArgs) {
           throw new Error(`Expected at least ${metadata.minArgs} ${pluralizeArguments(metadata.minArgs)} for ${name}(), got ${args.length}`);
         }
@@ -1308,16 +1327,16 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 12:
+/***/ 13:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(13);
-module.exports = __webpack_require__(14);
+__webpack_require__(14);
+module.exports = __webpack_require__(15);
 
 
 /***/ }),
 
-/***/ 13:
+/***/ 14:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1416,7 +1435,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /***/ }),
 
-/***/ 14:
+/***/ 15:
 /***/ (function(module, exports) {
 
 module.exports = "../popup.css";
