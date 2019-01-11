@@ -1,4 +1,4 @@
-import browser from "webextension-polyfill";
+import browser from "../scripts/vendor/browser-polyfill";
 
 let shortUrl;
 
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let API_key, password;
 
         longUrl = tabs[0].url;
-        start = longUrl.substr(0, 6);
+        start = longUrl.substr(0, 4);
         
         // i) Get api key from options page
         browser.storage.local.get(['key', 'pwd']).then(result => {
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
             API_key = result.key;
             password = result.pwd;
             
-            if(start !== 'chrome' && API_key !== '' && API_key !== undefined) {
+            if(start === 'http' && API_key !== '' && API_key !== undefined) {
                 // send start message to background.js and receive response
 
                 browser.runtime.sendMessage({ msg: "start", API_key: `${API_key}`, pageUrl: `${longUrl}`, password: `${password}` }).then(response => {
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
             }
-            else if (start === 'chrome') {
+            else if (start !== 'http') {
                 document.getElementById('url__content-inner').textContent = 'Not a Valid URL!!';
             }
             else if (API_key === '' || API_key === undefined) {

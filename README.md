@@ -1,26 +1,31 @@
 <div align="center"><img width="150" src="src/assets/logo.png" /></div>
-<h1 align="center">kuttURL-Chrome</h1>
-<p align="center">Chrome browser extension to to shorten URLs for <a href="https://kutt.it">Kutt.it</a></p>
+<h1 align="center">kuttURL-browser-extension</h1>
+<p align="center">Browser extension to to shorten URLs for <a href="https://kutt.it">Kutt.it</a></p>
 
 <div align="center">
-  <a href="https://travis-ci.org/abhijithvijayan/kuttUrl-Chrome-extension">
-    <img src="https://travis-ci.org/abhijithvijayan/kuttUrl-Chrome-extension.svg?branch=master" alt="Travis Build" />
+  <a href="https://travis-ci.org/abhijithvijayan/kuttUrl-browser-extension">
+    <img src="https://travis-ci.org/abhijithvijayan/kuttUrl-browser-extension.svg?branch=master" alt="Travis Build" />
   </a>
-  <a href="https://github.com/abhijithvijayan/kuttUrl-Chrome-extension/issues?q=is%3Aopen+is%3Aissue">
-    <img src="https://img.shields.io/github/issues-raw/abhijithvijayan/kuttUrl-Chrome-extension.svg?colorB=blue" alt="Open Issues" />
+  <a href="https://github.com/abhijithvijayan/kuttUrl-browser-extension/releases/latest">
+    <img src="https://img.shields.io/github/release/abhijithvijayan/kuttUrl-browser-extension.svg?colorB=blue" alt="Releases" />
   </a>
-  <a href="https://github.com/abhijithvijayan/kuttUrl-Chrome-extension/issues?q=is%3Aissue+is%3Aclosed">
-    <img src="https://img.shields.io/github/issues-closed-raw/abhijithvijayan/kuttUrl-Chrome-extension.svg?colorB=red" alt="Closed Issues" />
+  <a href="https://github.com/abhijithvijayan/kuttUrl-browser-extension/issues?q=is%3Aopen+is%3Aissue">
+    <img src="https://img.shields.io/github/issues-raw/abhijithvijayan/kuttUrl-browser-extension.svg?colorB=lightgrey" alt="Open Issues" />
   </a>
-  <a href="https://david-dm.org/abhijithvijayan/kuttUrl-Chrome-extension">
-    <img src="https://img.shields.io/david/abhijithvijayan/kuttUrl-Chrome-extension.svg?colorB=orange" alt="DEPENDENCIES" />
+  <a href="https://github.com/abhijithvijayan/kuttUrl-browser-extension/issues?q=is%3Aissue+is%3Aclosed">
+    <img src="https://img.shields.io/github/issues-closed-raw/abhijithvijayan/kuttUrl-browser-extension.svg?colorB=red" alt="Closed Issues" />
   </a>
-  <a href="https://github.com/abhijithvijayan/kuttUrl-Chrome-extension">
-    <img src="https://img.shields.io/github/license/abhijithvijayan/kuttUrl-Chrome-extension.svg" alt="LICENSE" />
+  <a href="https://david-dm.org/abhijithvijayan/kuttUrl-browser-extension">
+    <img src="https://img.shields.io/david/abhijithvijayan/kuttUrl-browser-extension.svg?colorB=orange" alt="DEPENDENCIES" />
+  </a>
+  <a href="https://github.com/abhijithvijayan/kuttUrl-browser-extension">
+    <img src="https://img.shields.io/github/license/abhijithvijayan/kuttUrl-browser-extension.svg" alt="LICENSE" />
   </a>
 </div>
 
 ## Features
+- Cross Browser Support
+- WebExtensions API
 - Clean UI
 - Instant QR Code
 - Supports Password for URLs
@@ -35,13 +40,45 @@
 </div>
 
 ## How to use
-- Download and Extract the latest zip file from [here](https://github.com/abhijithvijayan/kuttUrl-Chrome-extension/releases/latest)
-- Load extension via `chrome://extensions` as unpacked from extracted directory.
-- You'll need to generate an API Key from <a href="https://kutt.it">`https://kutt.it/`</a>. (Settings page)
-- Paste and Save this `Key` in extension's `options page`.
+
+
+- Download and Extract the latest `stable` release `zip` file 
+
+  [<img src=".github/assets/direct-download.png"
+        alt="Direct download"
+        height="70">](https://github.com/abhijithvijayan/kuttUrl-browser-extension/releases/latest)
+        
+- Install in browser
+    - ### Chrome
+      - Go to the browser address bar and type `chrome://extensions`
+      - Check the `Developer Mode` button to enable it.
+      - Click on the `Load Unpacked Extension…` button.
+      - Select your extension’s extracted directory.
+
+        <img width="400" src="https://i.imgur.com/dJRL7By.png" />
+
+    - ### Firefox
+      - Load the Add-on via `about:debugging` as temporary Add-on.
+      - Choose the `manifest.json` file in the extracted directory
+
+        <img width="400" src="https://i.imgur.com/aAL5dQg.png" />
+
+    - ### Opera
+      - Load the extension via `opera:extensions`
+      - Check the `Developer Mode` and load as unpacked from extension’s extracted directory.
+
+        <img width="400" src="https://i.imgur.com/qUwfSNJ.png" />
+
+- Generate an API Key from <a href="https://kutt.it">`https://kutt.it/`</a>. (Settings page)
+
+  <img width="400" src="https://i.imgur.com/qQwqeH5.png" />
+
+- Paste and Save this `Key` in extension's `options page` when asked.
+
+  <img width="250" src="https://i.imgur.com/6qsNUbf.png" alt="image2" />
 
 ## Note:
-<a href="https://kutt.it">Kutt.it</a> API permits **50** URLs shortening per day using the API Key. Upgrade to Paid plan for more.
+<a href="https://kutt.it">Kutt.it</a> API permits **50** URLs shortening per day using the API Key.
 
 ## Contributing and Support
 View the Contributing guidelines [here](CONTRIBUTING.md).
