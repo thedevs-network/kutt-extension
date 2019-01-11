@@ -9,7 +9,7 @@ module.exports = (env, options) => ({
     entry: {
       options: ["./src/scripts/options.js", './src/styles/options.scss'],
       popup: ["./src/scripts/popup.js", './src/styles/popup.scss'],
-      background: ["babel-polyfill", "./src/scripts/background.js"]
+      background: ["./src/scripts/background.js"]
     },
     output: {
       path: path.resolve(__dirname, "extension"),
@@ -24,7 +24,7 @@ module.exports = (env, options) => ({
           {
             test: /\.js$/,
             exclude: /(node_modules|bower_components)/,
-            loader: "babel-loader"
+            loader: 'babel-loader'
           },  
           {
             test: /\.(html)$/,
@@ -119,12 +119,12 @@ module.exports = (env, options) => ({
           },
           canPrint: true
         }),
-        new UglifyJsPlugin({
-          cache: true,
-          parallel: true,
-          sourceMap: false,
-          extractComments: false
-        }),
+        // new UglifyJsPlugin({
+        //   cache: true,
+        //   parallel: true,
+        //   sourceMap: false,
+        //   extractComments: false
+        // }),
       ]
     },
     devServer: {

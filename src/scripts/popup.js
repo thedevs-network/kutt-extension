@@ -20,15 +20,22 @@ document.addEventListener('DOMContentLoaded', () => {
             password = result.pwd;
             
             if(start === 'http' && API_key !== '' && API_key !== undefined) {
+                
                 // send start message to background.js and receive response
                 browser.runtime.sendMessage({ msg: "start", API_key: `${API_key}`, pageUrl: `${longUrl}`, password: `${password}` }).then(response => {
                     // store the shortened link
-                    shortUrl = response.shortUrl;
-                    console.log(shortUrl);
+                    shortUrl = response;
+
+                    document.getElementById('url__content-inner').textContent = "Error!!";
+
                     // invalid response
                     if(shortUrl === undefined) {
                         document.getElementById('url__content-inner').textContent = "API Error!!";
-                    } else {
+                    } 
+                    else if (shortUrl === null) {
+                        document.getElementById('url__content-inner').textContent = "Something's wrong!!";
+                    }
+                    else {
                         // update the content with shortened link
                         document.getElementById('url__content-inner').textContent = shortUrl;
                         // fetch qrcode from http://goqr.me
@@ -37,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         toggleDisplay('.buttons__content--holder');
                     }
                 });
+
             }
             else if (start !== 'http') {
                 document.getElementById('url__content-inner').textContent = 'Not a Valid URL!!';

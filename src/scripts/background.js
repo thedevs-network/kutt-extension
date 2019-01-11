@@ -17,28 +17,28 @@ async function getShortURL(API_key, URLtoShorten, password) {
                 password: password
             }
         });
-        // console.log(rawData);
         shortLink = rawData.data.shortUrl;
+
+        // returns the promise
+        console.log("Returning Promise!");
+        return shortLink;
     } catch (error) {
         console.log(error); 
     }
-    // returns the promise
-    return shortLink;
 };
 
+
 // Calling function
-browser.runtime.onMessage.addListener(
-    // receive the message
-    (request, sender, sendResponse) => {
-        if(request.msg == "start") {
-            let shortLink;
-            // consume the promise
-            getShortURL(request.API_key, request.pageUrl, request.password).then((data) => {
-                shortLink = data;
-                console.log(shortLink);
-                sendResponse({ shortUrl: `${shortLink}` });
+browser.runtime.onMessage.addListener(async (request, sender, response) => {
+    if(request.msg == "start") {
+        // consume the promise
+        return getShortURL(request.API_key, request.pageUrl, request.password)
+            .then(shortLink => {
+                console.log("URL:" + shortLink);
+                return shortLink;
+            })
+            .catch(err => {
+                console.log("Error Occured!");
             });
-            return true;
-        }
     }
-);
+});
