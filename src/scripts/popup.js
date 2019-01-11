@@ -20,14 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
             password = result.pwd;
             
             if(start === 'http' && API_key !== '' && API_key !== undefined) {
+                
                 // send start message to background.js and receive response
-
                 browser.runtime.sendMessage({ msg: "start", API_key: `${API_key}`, pageUrl: `${longUrl}`, password: `${password}` }).then(response => {
                     // store the shortened link
-
-                    console.log("Returning to UI!");
-                    console.log(response);
-                    console.log(typeof(response));
                     shortUrl = response;
 
                     document.getElementById('url__content-inner').textContent = "Error!!";

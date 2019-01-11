@@ -18,7 +18,7 @@
   <a href="https://david-dm.org/abhijithvijayan/kuttUrl-browser-extension">
     <img src="https://img.shields.io/david/abhijithvijayan/kuttUrl-browser-extension.svg?colorB=orange" alt="DEPENDENCIES" />
   </a>
-  <a href="https://github.com/abhijithvijayan/kuttUrl-browser-extension">
+  <a href="https://github.com/abhijithvijayan/kuttUrl-browser-extension/blob/master/LICENSE">
     <img src="https://img.shields.io/github/license/abhijithvijayan/kuttUrl-browser-extension.svg" alt="LICENSE" />
   </a>
 </div>
@@ -46,7 +46,7 @@
 
   [<img src=".github/assets/direct-download.png"
         alt="Direct download"
-        height="70">](https://github.com/abhijithvijayan/kuttUrl-browser-extension/releases/latest)
+        height="50">](https://github.com/abhijithvijayan/kuttUrl-browser-extension/releases/latest)
         
 - Install in browser
     - ### Chrome

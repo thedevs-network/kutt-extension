@@ -22,27 +22,23 @@ async function getShortURL(API_key, URLtoShorten, password) {
         // returns the promise
         console.log("Returning Promise!");
         return shortLink;
-
     } catch (error) {
         console.log(error); 
     }
 };
 
 
-function isShortened(request, sender, response) {
+// Calling function
+browser.runtime.onMessage.addListener(async (request, sender, response) => {
     if(request.msg == "start") {
         // consume the promise
-        getShortURL(request.API_key, request.pageUrl, request.password).then(
-            shortLink => {
+        return getShortURL(request.API_key, request.pageUrl, request.password)
+            .then(shortLink => {
                 console.log("URL:" + shortLink);
                 return shortLink;
-            }
-        );
-        console.log("Now here!");
-        return true;
+            })
+            .catch(err => {
+                console.log("Error Occured!");
+            });
     }
-}
-
-
-// Calling function
-browser.runtime.onMessage.addListener(isShortened);
+});
