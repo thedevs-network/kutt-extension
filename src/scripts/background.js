@@ -6,7 +6,7 @@ async function getShortURL(API_key, URLtoShorten, password) {
     let shortLink;
     const api_url = 'https://kutt.it/api/url/submit';
     try {
-        const rawData = await axios({
+        const json = await axios({
             method: "POST",
             url: api_url,
             headers: { 
@@ -17,12 +17,11 @@ async function getShortURL(API_key, URLtoShorten, password) {
                 password: password
             }
         });
-        shortLink = rawData.data.shortUrl;
-
+        shortLink = json.data.shortUrl;
         // returns the promise
         return shortLink;
-    } catch (error) {
-        // https://gist.github.com/fgilio/230ccd514e9381fafa51608fcf137253
+    } 
+    catch (error) {
         if (error.response) {
             console.log(error.response.data);
             console.log(error.response.status);
@@ -40,7 +39,7 @@ async function getShortURL(API_key, URLtoShorten, password) {
 
 // Calling function
 browser.runtime.onMessage.addListener(async (request, sender, response) => {
-    if(request.msg == "start") {
+    if (request.msg == "start") {
         // consume the promise
         return getShortURL(request.API_key, request.pageUrl, request.password)
             .then(shortLink => {

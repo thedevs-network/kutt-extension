@@ -8,7 +8,7 @@
 - `npm install` to install dependencies.
 - `npm run dev` to to watch file changes in developement 
     - (Reload Extension Manually in the browser)
-- Load extension via as unpacked from `extension/` directory.
+- Load extension as unpacked from `extension/` directory.
 - Generate an API Key from <a href="https://kutt.it">`https://kutt.it/`</a> (Settings page)
 - Paste and Save the `Key` in extension's `options page`.
 
@@ -21,9 +21,9 @@ Download latest `Pre-Release`
 alt="Direct download"
 height="50">](https://github.com/abhijithvijayan/kuttUrl-browser-extension/releases)
 
-## ToDO
+## ToDo
 
-- [ ] Switch to Promise return Method
+- [x] Switch to Promise return Method
 - [ ] Fix UI issues in Firefox
 - [ ] Using Node-Kutt package(feature request)
 

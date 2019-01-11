@@ -21,13 +21,12 @@ let saveData = () => {
     let API_KEY = document.getElementById('api__key--value').value;
     let password = document.getElementById('password--value').value;
 
-    if(!password) {
-   //     console.log("No password Set");
-    }
+    // if(!password) {
+    //    console.log("No password Set");
+    // }
+
     // store value locally
-    browser.storage.local.set({key: API_KEY, pwd: password}).then(() => {
-    //    console.log('API Key set to ' + API_KEY);
-    });
+    browser.storage.local.set({key: API_KEY, pwd: password}).then(() => {});
 
     // Saved Alert
     let element = document.querySelector('.saved__alert');
@@ -46,13 +45,13 @@ document.getElementById('button__submit').addEventListener('click', () => {
 
 // on enter key press
 document.addEventListener('keypress', (e) => {
-    if(e.keyCode === 13) {
+    if (e.keyCode === 13) {
         saveData();
     }
 });
 
 
-// Show Password Function
+// Show Password
 document.getElementById('password__view--checkbox').addEventListener('click', () => {
     let element = document.getElementById('password--value');
     if (element.type === "password") {

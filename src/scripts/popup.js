@@ -26,8 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     // store the shortened link
                     shortUrl = response;
 
-                    document.getElementById('url__content-inner').textContent = "Error!!";
-
                     // invalid response
                     if (shortUrl === null) {
                         document.getElementById('url__content-inner').textContent = "Invalid Response!";
@@ -50,10 +48,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             else if (API_key === '' || API_key === undefined) {
                 // no api key set
-                document.getElementById('url__content-inner').textContent = 'Set API Key in Settings!';
+                document.getElementById('url__content-inner').textContent = 'Set API Key in Options!';
             }
             else {
-                document.getElementById('url__content-inner').textContent = 'Error!!!';
+                document.getElementById('url__content-inner').textContent = 'Unknown Error!!!';
             }
 
        });
@@ -92,7 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 4. QR Code
     document.getElementById('button__qrcode').addEventListener('click', () => {
-        // document.getElementById('button__qrcode').style = "display: none;";
         toggleDisplay('.qrcode__content--holder');
     });
 
