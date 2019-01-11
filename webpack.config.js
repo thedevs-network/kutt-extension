@@ -3,7 +3,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = (env, options) => ({
     entry: {
@@ -119,12 +119,10 @@ module.exports = (env, options) => ({
           },
           canPrint: true
         }),
-        // new UglifyJsPlugin({
-        //   cache: true,
-        //   parallel: true,
-        //   sourceMap: false,
-        //   extractComments: false
-        // }),
+        new TerserPlugin({
+          cache: true,
+          parallel: true
+        }),
       ]
     },
     devServer: {
