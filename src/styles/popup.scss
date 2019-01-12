@@ -7,7 +7,7 @@ body {
 }
 
 #home {
-    min-width: 210px;
+    min-width: 340px;
     .container {
         padding: 10px;
         .navbar {
@@ -21,49 +21,62 @@ body {
                 }
                 .logo__content--holder {
                     .main__logo {
-                        width: 23px;
-                        height: 23px;
+                        width: 22px;
+                        height: 22px;
                     }
                 }
                 .options__content-holder {
                     float: right;
                     padding: 0 10px;
                     .settings__logo {
-                        width: 17px; 
-                        height: 17px;
+                        width: 16px; 
+                        height: 16px;
                     }
                 }
                 .github__content-holder {
                     float: right;
                     .github__logo {
-                        width: 17px; 
-                        height: 17px;
+                        width: 16px; 
+                        height: 16px;
                     }
                 }
             }
         }
         .content__holder {
             .url__content--holder {
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 margin: 1.5em 0;
                 #url__content-inner {
                     margin: 0;
-                    font-size: 18px;
+                    font-size: 20px;
+                    color: #333;    
                     font-weight: $font-weight-bold;
                 }
             }
             .buttons__content--holder {
                 display: flex;
-                justify-content: space-evenly;
-                padding-left: 0;
-                margin: 1em 0; 
+                align-items: center;
+                padding: 0;
+                margin: 0 0 0 16px; 
                 .copy__content--holder,
                 .details__content--holder,
                 .qrbtn__content--holder {
-                    display: inline;
                     cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 28px;
+                    height: 28px;
+                    margin: 0 6px;
+                    border-radius: 100%;
+                    box-shadow: rgba(100, 100, 100, 0.1) 0px 2px 4px;
+                    background-color: rgb(222, 222, 222);
+
                     #button__copy, #button__details, #button__qrcode {
-                        width: 22px;
-                        height: 22px;
+                        width: 13px;
+                        height: 13px;
                     }
                 }
             }
