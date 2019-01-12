@@ -83,7 +83,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 3. Details button
     document.getElementById('button__details').addEventListener('click', () => {
-        let win = window.open(`${shortUrl}+`, '_blank');
+        let [id] = shortUrl.split('/').reverse();
+        let win = window.open(`https://kutt.it/stats?id=${id}&domain=kutt.it`, '_blank');
         win.focus();
     });
 
