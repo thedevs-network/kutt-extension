@@ -35,8 +35,7 @@
 
 <div align="center">
   <img width="350" src="https://i.imgur.com/n44Eytz.gif" alt="image1" />
-  <img width="230" src="https://i.imgur.com/fJasvmv.png" alt="image2" />
-  <img width="350" src="https://i.imgur.com/FJJ2FPU.gif" alt="image3" />
+  <img width="350" src="https://i.imgur.com/FJJ2FPU.gif" alt="image2" />
 </div>
 
 ## How to use

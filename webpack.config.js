@@ -83,7 +83,10 @@ module.exports = () => ({
         ]
     },
     plugins: [
-      new CleanWebpackPlugin([`extension/${process.env.TARGET}`]),
+      new CleanWebpackPlugin([
+        `extension/${process.env.TARGET}`,
+        `extension/${process.env.TARGET}.zip`
+      ]),
       new CopyWebpackPlugin([ 
           { 
             from: 'src/assets', 
@@ -123,6 +126,7 @@ module.exports = () => ({
           parallel: true
         }),
         new ZipPlugin({
+          path: path.resolve(__dirname, "extension"),
           filename: `${process.env.TARGET}.zip`
         })        
       ]
