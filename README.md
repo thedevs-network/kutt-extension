@@ -34,9 +34,8 @@
 ## Screenshots
 
 <div align="center">
-  <img width="250" src="https://i.imgur.com/x7tGr7J.gif" alt="image1" />
-  <img width="250" src="https://i.imgur.com/6qsNUbf.png" alt="image2" />
-  <img width="250" src="https://i.imgur.com/Ha3YvZB.gif" alt="image3" />
+  <img width="350" src="https://i.imgur.com/n44Eytz.gif" alt="image1" />
+  <img width="230" src="https://i.imgur.com/fJasvmv.png" alt="image2" />
 </div>
 
 ## How to use

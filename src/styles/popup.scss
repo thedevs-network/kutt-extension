@@ -33,13 +33,6 @@ body {
                         height: 16px;
                     }
                 }
-                .github__content-holder {
-                    float: right;
-                    .github__logo {
-                        width: 16px; 
-                        height: 16px;
-                    }
-                }
             }
         }
         .content__holder {
@@ -51,7 +44,7 @@ body {
                 #url__content-inner {
                     margin: 0;
                     font-size: 20px;
-                    color: #333;    
+                    color: $color-dark-grey;    
                     font-weight: $font-weight-bold;
                 }
             }
@@ -71,8 +64,8 @@ body {
                     height: 28px;
                     margin: 0 6px;
                     border-radius: 100%;
-                    box-shadow: rgba(100, 100, 100, 0.1) 0px 2px 4px;
-                    background-color: rgb(222, 222, 222);
+                    box-shadow: $color-shadow-light 0px 2px 4px;
+                    background-color: $color-less-white;
 
                     #button__copy, #button__details, #button__qrcode {
                         width: 13px;
@@ -81,7 +74,7 @@ body {
                 }
             }
             .copy__alert {
-                margin: 1em 0;
+                margin: 8px 0 1px 0;
             }
             .qrcode__content--holder {
                 #qr_code {

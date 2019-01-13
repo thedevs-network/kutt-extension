@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // 2. Copy Function
-    document.getElementById('button__copy').addEventListener("click", () => {
+    document.getElementById('button__copy--holder').addEventListener("click", () => {
         try {
             let copyTextarea = `${shortUrl}`;
             let input = document.createElement('textarea');
@@ -82,15 +82,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // 3. Details button
-    document.getElementById('button__details').addEventListener('click', () => {
-        let [id] = shortUrl.split('/').reverse();
-        let win = window.open(`https://kutt.it/stats?id=${id}&domain=kutt.it`, '_blank');
-        win.focus();
-    });
+    // document.getElementById('button__details').addEventListener('click', () => {
+    //     let [id] = shortUrl.split('/').reverse();
+    //     let win = window.open(`https://kutt.it/stats?id=${id}&domain=kutt.it`, '_blank');
+    //     win.focus();
+    // });
 
 
     // 4. QR Code
-    document.getElementById('button__qrcode').addEventListener('click', () => {
+    document.getElementById('button__qrcode--holder').addEventListener('click', () => {
         toggleDisplay('.qrcode__content--holder');
     });
 
