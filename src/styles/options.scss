@@ -13,20 +13,27 @@ body {
     height: 100vh;
     .options__content--holder {
         padding-top: 4.8em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         .head__content--holder {
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
             .head__content--logo {
-                width: 80px;
-                height: 80px;
+                width: 38px;
+                height: 38px;
             }
             .head__content--title {
-                margin: 0.2em 0 0 0;
-                font-size: 40px;
+                padding: 0;
+                margin: 0 0 0 0.4em;
+                font-size: 34px;
             }
         }
         .form__content--holder {
             margin-top: 3em;
             .form__content {
-                padding: 0px 100px 100px;
+                padding: 0px 100px 40px;
                 width: 600px;
                 .api__key--label, .password--label {
                     font-size: 16px;
@@ -74,12 +81,20 @@ body {
                     }
                 }
                 .api__key--holder, .password--holder {
-                    font-family: $font-montserrat;
+                    font-family: $font-nunito;
                     width: 100%;
                     border-radius: 100px;
                     background-color: $color-white;
                     border: none;
-                    margin-bottom: 1em;
+                    margin-bottom: 2em;
+                    box-shadow: rgba(50, 50, 50, 0.1) 0px 10px 35px;
+                    color: rgb(68, 68, 68);
+                    box-sizing: border-box;
+                    border-color: currentcolor currentcolor rgb(245, 245, 245);
+                    border-style: none none solid;
+                    border-width: medium medium 4px;
+                    border-image: none 100% / 1 / 0 stretch;
+                    height: 54px;
                 }
                 .api__key--holder {
                     padding: 12px 25px 12px 25px;
@@ -101,12 +116,13 @@ body {
                     padding-left: 0.5em;
                 }
                 .button__submit {
-                    font-family: $font-montserrat;
+                    font-family: $font-nunito;
                     font-size: 18px;
                     display: block;
                     color: $color-white;
                     width: 100%;
-                    background-color: $color-blue;
+                    background: rgba(0, 0, 0, 0) linear-gradient(to right, rgb(66, 165, 245), rgb(41, 121, 255)) repeat scroll 0% 0%;
+                    box-shadow: rgba(66, 165, 245, 0.5) 0px 5px 6px;
                     border: none;
                     border-radius: 100px;
                     padding: 12px;
@@ -119,8 +135,7 @@ body {
             }
         }
         .footer__text--holder {
-            font-size: 14px;
-            letter-spacing: 1px;    
+            font-size: 11px;
             .github__repo--link {
                 border-bottom:  1px dotted black;
                 text-decoration: none;

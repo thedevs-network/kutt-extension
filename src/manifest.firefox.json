@@ -1,6 +1,6 @@
 {
     "manifest_version": 2,
-    "name": "kuttUrl - Shorten URLs",
+    "name": "Kutt",
     "version": "0.5.0",
 
     "browser_specific_settings": {
@@ -25,7 +25,7 @@
             "48": "assets/favicon-48.png",
             "128": "assets/favicon-128.png" 
         },
-        "default_title": "kuttUrl - Shorten URLs",
+        "default_title": "Kutt",
         "browser_style": false
     },
     
@@ -35,12 +35,12 @@
             "js/background.js"
         ]
     },
-    "homepage_url": "https://github.com/abhijithvijayan/kuttUrl-browser-extension",  
+    "homepage_url": "https://github.com/abhijithvijayan/kutt-extension",  
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",  	
     "options_ui": {
         "page": "options.html",
         "open_in_tab": true
     },
     "permissions": ["tabs", "storage", "clipboardWrite", "clipboardRead", "https://kutt.it/*/*"],
-    "short_name": "kuttUrl"
+    "short_name": "Kutt"
   }
