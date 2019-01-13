@@ -14,7 +14,7 @@
         - `npm run dev-opera`  
 
     (Reload Extension Manually in the browser)
-- Load extension as unpacked from `chrome|firefox|opera/` directory.
+- Load extension as unpacked from `extension/chrome|firefox|opera/` directory.
 - Generate an API Key from <a href="https://kutt.it">`https://kutt.it/`</a> (Settings page)
 - Paste and Save the `Key` in extension's `options page`.
 

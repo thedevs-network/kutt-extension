@@ -8,12 +8,12 @@ git:
   depth: 3
 script:
   - npm run build-all 
-# deploy:
-#   provider: pages
-#   skip-cleanup: true
-#   keep-history: true
-#   github-token: $GITHUB_TOKEN
-#   local-dir: extension
-#   target-branch: extension
-#   on:
-#     branch: master
+deploy:
+  provider: pages
+  skip-cleanup: true
+  keep-history: true
+  github-token: $GITHUB_TOKEN
+  local-dir: extension
+  target-branch: extension
+  on:
+    branch: master

@@ -6,14 +6,14 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const ZipPlugin = require('zip-webpack-plugin');
 
-module.exports = (env, options) => ({
+module.exports = () => ({
     entry: {
       options: ["./src/scripts/options.js", './src/styles/options.scss'],
       popup: ["./src/scripts/popup.js", './src/styles/popup.scss'],
       background: ["./src/scripts/background.js"]
     },
     output: {
-      path: path.resolve(__dirname, "extension"),
+      path: path.resolve(__dirname, "extension", process.env.TARGET),
       filename: "js/[name].js",
       publicPath: ""
     },
@@ -83,31 +83,26 @@ module.exports = (env, options) => ({
         ]
     },
     plugins: [
-      new CleanWebpackPlugin([`${options.outputPath}`]),
+      new CleanWebpackPlugin([`extension/${process.env.TARGET}`]),
       new CopyWebpackPlugin([ 
           { 
             from: 'src/assets', 
             to: 'assets' 
           },
           {
-            from: `src/manifest.${options.outputPath}.json`,
+            from: `src/manifest.${process.env.TARGET}.json`,
             to: 'manifest.json'
           }
       ]),
       new HtmlWebpackPlugin({
         template: 'src/options.html',
         inject: false,
-        minify: options.mode === "production" ? true : false,
         filename: 'options.html'
       }),
       new HtmlWebpackPlugin({
         template: 'src/popup.html',
         inject: false,
-        minify: options.mode === "production" ? true : false,
         filename: 'popup.html'
-      }),
-      new ZipPlugin({
-        filename: `${options.outputPath}.zip`
       })
     ],
     optimization: {
@@ -127,6 +122,9 @@ module.exports = (env, options) => ({
           cache: true,
           parallel: true
         }),
+        new ZipPlugin({
+          filename: `${process.env.TARGET}.zip`
+        })        
       ]
     },
     devServer: {
