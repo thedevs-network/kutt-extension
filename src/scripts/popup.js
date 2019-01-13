@@ -18,6 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             API_key = result.key;
             password = result.pwd;
+
+            // update DOM
+            let updateContent = (value) => {
+                document.getElementById('url__content-inner').textContent = value;
+            };    
             
             if(start === 'http' && API_key !== '' && API_key !== undefined) {
                 
@@ -26,15 +31,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     // store the shortened link
                     shortUrl = response;
 
+                    let statusCodes = [400, 401, 429];        
+
                     // invalid response
                     if (shortUrl === null) {
-                        document.getElementById('url__content-inner').textContent = "Invalid Response!";
-                    } else if(shortUrl === 429) {
-                        document.getElementById('url__content-inner').textContent = "API Limit Exceeded!";
-                    }
+                        updateContent('Invalid Response!');
+                    } else if (!isNaN(shortUrl)) {
+                        if (shortUrl === 429) {
+                            updateContent('API Limit Exceeded!');
+                        } else if (shortUrl === 401) {
+                            updateContent('Invalid API Key');
+                        } else if (shortUrl === 400) {
+                            updateContent('Link too Long! (Max length: 3000)');
+                        } else {
+                            updateContent('Unknown Error!!!');
+                        }
+                    } 
                     else {
                         // update the content with shortened link
-                        document.getElementById('url__content-inner').textContent = shortUrl;
+                        updateContent(shortUrl);
                         // fetch qrcode from http://goqr.me
                         document.getElementById('qr_code').src = `${qrcode__src}${shortUrl}`;
                         // show buttons                        
@@ -44,14 +59,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             }
             else if (start !== 'http') {
-                document.getElementById('url__content-inner').textContent = 'Not a Valid URL!!';
+                updateContent('Not a Valid URL!!');
             }
             else if (API_key === '' || API_key === undefined) {
                 // no api key set
-                document.getElementById('url__content-inner').textContent = 'Set API Key in Options!';
-            }
-            else {
-                document.getElementById('url__content-inner').textContent = 'Unknown Error!!!';
+                updateContent('Set API Key in Options!');
             }
 
        });
