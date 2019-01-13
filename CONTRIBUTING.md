@@ -2,7 +2,6 @@
 
 ## Assets
 - [kutt.it API](https://github.com/thedevs-network/kutt#api) is used to retreive shortened URLs.
-- QR Code is generated using <a href="http://goqr.me/">`http://goqr.me/`</a> API
 
 ## Development
 - `npm install` to install dependencies.
@@ -31,7 +30,7 @@ height="50">](https://github.com/abhijithvijayan/kutt-extension/releases)
 ## ToDo
 
 - [x] Switch to Promise return Method
-- [ ] Fix UI issues in Firefox
+- [x] Fix UI issues in Firefox
 - [ ] Using Node-Kutt package(feature request)
 
 
