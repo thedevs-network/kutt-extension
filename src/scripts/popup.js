@@ -1,4 +1,5 @@
 import browser from "webextension-polyfill";
+import QRCode from 'qrcode';
 
 let shortUrl;
 
@@ -31,8 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     // store the shortened link
                     shortUrl = response;
 
-                    let statusCodes = [400, 401, 429];        
-
                     // invalid response
                     if (shortUrl === null) {
                         updateContent('Invalid Response!');
@@ -48,12 +47,23 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     } 
                     else {
-                        // update the content with shortened link
+                        // 1. update the content with shortened link
                         updateContent(shortUrl);
-                        // fetch qrcode from http://goqr.me
-                        document.getElementById('qr_code').src = `${qrcode__src}${shortUrl}`;
-                        // show buttons                        
+
+                        // 2. show buttons                        
                         toggleDisplay('.buttons__content--holder');
+
+                        // 3. QR Code Generation
+                        QRCode.toDataURL(shortUrl)
+                        .then(url => {
+                            document.getElementById('qr_code').src = url;
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            // fetch qrcode from http://goqr.me
+                            document.getElementById('qr_code').src = `${qrcode__src}${shortUrl}`;
+                        });
+
                     }
                 });
 
