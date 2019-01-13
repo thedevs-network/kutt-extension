@@ -25,6 +25,8 @@ body {
                 height: 38px;
             }
             .head__content--title {
+                color: $color-black;
+                font-weight: $font-weight-bold; 
                 padding: 0;
                 margin: 0 0 0 0.4em;
                 font-size: 34px;
@@ -40,17 +42,18 @@ body {
                     display: block;
                     margin-bottom: 0.8em;
                 }
-                .password--label {
-                    margin-top: 0.2em;
-                    .password__label--optional {
+                .password--label, .api__key--label {
+                    .password__label--optional, .api__label--Qmark {
+                        cursor: default;
                         position: relative;
                         display: inline-block;
                         border-bottom: 1px dotted black;
-                        &:hover .password__label--tooltiptext {
+                        &:hover .password__label--tooltiptext, &:hover .api__label--tooltiptext {
                             visibility: visible;
                             opacity: 1;
                         }
-                        .password__label--tooltiptext {
+                        .password__label--tooltiptext, .api__label--tooltiptext {
+                            cursor: pointer;
                             visibility: hidden;
                             font-size: 13px;
                             width: 180px;
@@ -129,7 +132,7 @@ body {
                     margin: 1em 0;
                     &:hover {
                         cursor: pointer;
-                        background-color: $color-light-blue;
+                        background: $color-null-black linear-gradient(to right, $color-grad-dark-blue, $color-light-blue) repeat scroll 0% 0%;
                     }
                 }
             }
