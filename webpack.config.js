@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const ZipPlugin = require('zip-webpack-plugin');
 
 module.exports = (env, options) => ({
     entry: {
@@ -104,6 +105,9 @@ module.exports = (env, options) => ({
         inject: false,
         minify: options.mode === "production" ? true : false,
         filename: 'popup.html'
+      }),
+      new ZipPlugin({
+        filename: `${options.outputPath}.zip`
       })
     ],
     optimization: {
