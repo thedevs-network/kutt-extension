@@ -40,35 +40,12 @@
 
 ## How to use
 
+- Download for browser
+  - Firefox:  [Kutt :: Add-ons for Firefox](https://addons.mozilla.org/firefox/addon/kutt/)
+  - [Chrome](CONTRIBUTING.md#chrome)
+  - [Opera](CONTRIBUTING.md#opera)
 
-- Download and Extract the latest `stable` release `zip` file 
-
-  [<img src=".github/assets/direct-download.png"
-        alt="Direct download"
-        height="50">](https://github.com/abhijithvijayan/kutt-extension/releases/latest)
-        
-- Install in browser
-    - ### Chrome
-      - Go to the browser address bar and type `chrome://extensions`
-      - Check the `Developer Mode` button to enable it.
-      - Click on the `Load Unpacked Extension…` button.
-      - Select your extension’s extracted directory.
-
-        <img width="400" src="https://i.imgur.com/dJRL7By.png" />
-
-    - ### Firefox
-      - Load the Add-on via `about:debugging` as temporary Add-on.
-      - Choose the `manifest.json` file in the extracted directory
-
-        <img width="400" src="https://i.imgur.com/aAL5dQg.png" />
-
-    - ### Opera
-      - Load the extension via `opera:extensions`
-      - Check the `Developer Mode` and load as unpacked from extension’s extracted directory.
-
-        <img width="400" src="https://i.imgur.com/qUwfSNJ.png" />
-
-- Generate an API Key from <a href="https://kutt.it">`https://kutt.it/`</a>. (Settings page)
+- Generate an API Key from <a href="https://kutt.it">`https://kutt.it/`</a> after signing up. (Settings page)
 
   <img width="400" src="https://i.imgur.com/qQwqeH5.png" />
 

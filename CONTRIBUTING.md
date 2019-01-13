@@ -14,14 +14,34 @@
         - `npm run dev-opera`  
 
     (Reload Extension Manually in the browser)
-- Load extension as unpacked from `extension/chrome|firefox|opera/` directory.
+- Load extension in browser
+    - ### Chrome
+      - Go to the browser address bar and type `chrome://extensions`
+      - Check the `Developer Mode` button to enable it.
+      - Click on the `Load Unpacked Extension…` button.
+      - Select your extension’s extracted directory.
+
+        <img width="400" src="https://i.imgur.com/dJRL7By.png" />
+
+    - ### Firefox
+      - Load the Add-on via `about:debugging` as temporary Add-on.
+      - Choose the `manifest.json` file in the extracted directory
+
+        <img width="400" src="https://i.imgur.com/aAL5dQg.png" />
+
+    - ### Opera
+      - Load the extension via `opera:extensions`
+      - Check the `Developer Mode` and load as unpacked from extension’s extracted directory.
+
+        <img width="400" src="https://i.imgur.com/qUwfSNJ.png" />
+
 - Generate an API Key from <a href="https://kutt.it">`https://kutt.it/`</a> (Settings page)
 - Paste and Save the `Key` in extension's `options page`.
 
-`npm run build` builds the extension to `chrome|firefox|opera` directory.
+`npm run build` builds the extension for all the browsers to `extension/(browser)` directory respectively.
 
 ## Testing
-Download latest `Pre-Release`
+Download latest `Release`
 
 [<img src=".github/assets/direct-download.png"
 alt="Direct download"
@@ -35,4 +55,4 @@ height="50">](https://github.com/abhijithvijayan/kutt-extension/releases)
 
 
 ## Note:
-Shortening may take a while, it's not the issue with the extension but with <a href="https://github.com/thedevs-network/kutt">Kutt.it's API</a>.
+Shortening might take a while, it's not the issue with the extension but with <a href="https://github.com/thedevs-network/kutt">Kutt.it's API</a>.
