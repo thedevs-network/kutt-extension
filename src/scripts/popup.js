@@ -41,8 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         } else if (shortUrl === 401) {
                             updateContent('Invalid API Key');
                         } else if (shortUrl === 400) {
-                            updateContent('Link too Long! (Max length: 3000)');
-                        } else {
                             updateContent('Unknown Error!!!');
                         }
                     } 
@@ -103,21 +101,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    // 3. Details button
-    // document.getElementById('button__details').addEventListener('click', () => {
-    //     let [id] = shortUrl.split('/').reverse();
-    //     let win = window.open(`https://kutt.it/stats?id=${id}&domain=kutt.it`, '_blank');
-    //     win.focus();
-    // });
-
-
-    // 4. QR Code
+    // 3. QR Code
     document.getElementById('button__qrcode--holder').addEventListener('click', () => {
         toggleDisplay('.qrcode__content--holder');
     });
 
     
-    // 5. elements visiblity function
+    // 4. elements visiblity function
     function toggleDisplay(className) {
         let element = document.querySelector(className);
         element.classList.toggle('d-none');

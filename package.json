@@ -9,7 +9,7 @@
     "build-chrome": "cross-env NODE_ENV=production cross-env TARGET=chrome webpack --mode=production",
     "build-firefox": "cross-env NODE_ENV=production cross-env TARGET=firefox webpack --mode=production",
     "build-opera": "cross-env NODE_ENV=production cross-env TARGET=opera webpack --mode=production",
-    "build-all": "npm run build-chrome && npm run build-firefox && npm run build-opera"
+    "build": "npm run build-chrome && npm run build-firefox && npm run build-opera"
   },
   "author": "abhijithvijayan",
   "license": "MIT",

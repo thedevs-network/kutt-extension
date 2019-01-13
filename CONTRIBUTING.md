@@ -18,7 +18,7 @@
 - Generate an API Key from <a href="https://kutt.it">`https://kutt.it/`</a> (Settings page)
 - Paste and Save the `Key` in extension's `options page`.
 
-`npm run build-all` builds the extension to `chrome|firefox|opera` directory.
+`npm run build` builds the extension to `chrome|firefox|opera` directory.
 
 ## Testing
 Download latest `Pre-Release`
