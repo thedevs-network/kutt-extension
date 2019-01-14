@@ -31,11 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 browser.runtime.sendMessage({ msg: "start", API_key: `${API_key}`, pageUrl: `${longUrl}`, password: `${password}` }).then(response => {
                     // store the shortened link
                     shortUrl = response;
-
-                    // invalid response
-                    if (shortUrl === null) {
-                        updateContent('Invalid Response!');
-                    } else if (!isNaN(shortUrl)) {
+                    // status codes
+                    if (!isNaN(shortUrl)) {
                         if (shortUrl === 429) {
                             updateContent('API Limit Exceeded!');
                         } else if (shortUrl === 401) {
@@ -44,13 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
                             updateContent('Unknown Error!!!');
                         }
                     } 
-                    else {
+                    // valid response
+                    else if (shortUrl !== null) {
                         // 1. update the content with shortened link
                         updateContent(shortUrl);
-
                         // 2. show buttons                        
                         toggleDisplay('.buttons__content--holder');
-
                         // 3. QR Code Generation
                         QRCode.toDataURL(shortUrl)
                         .then(url => {
@@ -60,18 +56,25 @@ document.addEventListener('DOMContentLoaded', () => {
                             console.error(err);
                             // fetch qrcode from http://goqr.me
                             document.getElementById('qr_code').src = `${qrcode__src}${shortUrl}`;
-                        });
-
+                        });                    
+                    }
+                    else {
+                        updateContent('Invalid Response!');
                     }
                 });
 
             }
-            else if (start !== 'http') {
-                updateContent('Not a Valid URL!!');
-            }
             else if (API_key === '' || API_key === undefined) {
                 // no api key set
                 updateContent('Set API Key in Options!');
+                // open options page
+                setTimeout(() => {
+                    browser.runtime.openOptionsPage();
+                }, 900);
+
+            }
+            else if (start !== 'http') {
+                updateContent('Not a Valid URL!!');
             }
 
        });
