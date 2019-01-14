@@ -2,7 +2,6 @@
     "manifest_version": 2,
     "name": "Kutt",
     "version": "0.6.1",
-
     "description": "URL Shortener",
     "developer": {
         "name": "abhijithvijayan"
@@ -13,7 +12,6 @@
         "48": "assets/favicon-48.png",
         "128": "assets/favicon-128.png"
     },
-
     "browser_action": {
         "default_popup": "popup.html",
         "default_icon": {
@@ -25,7 +23,6 @@
         "default_title": "Kutt",
         "browser_style": false
     },
-
     "background": {
         "persistent": false,
         "scripts": [
