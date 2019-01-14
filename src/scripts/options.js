@@ -1,4 +1,4 @@
-import browser from "webextension-polyfill";
+import browser from 'webextension-polyfill';
 
 // update UI - API Key on options page load
 document.addEventListener('DOMContentLoaded', () => {
@@ -21,12 +21,8 @@ let saveData = () => {
     let API_KEY = document.getElementById('api__key--value').value;
     let password = document.getElementById('password--value').value;
 
-    // if(!password) {
-    //    console.log("No password Set");
-    // }
-
     // store value locally
-    browser.storage.local.set({key: API_KEY, pwd: password}).then(() => {});
+    browser.storage.local.set({ key: API_KEY, pwd: password }).then(() => { });
 
     // Saved Alert
     let element = document.querySelector('.saved__alert');
@@ -54,9 +50,9 @@ document.addEventListener('keypress', (e) => {
 // Show Password
 document.getElementById('password__view--checkbox').addEventListener('click', () => {
     let element = document.getElementById('password--value');
-    if (element.type === "password") {
-        element.type = "text";
+    if (element.type === 'password') {
+        element.type = 'text';
     } else {
-        element.type = "password";
+        element.type = 'password';
     }
 });

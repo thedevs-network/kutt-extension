@@ -1,19 +1,19 @@
-import browser from "webextension-polyfill";
+import browser from 'webextension-polyfill';
 import QRCode from 'qrcode';
 
 let shortUrl;
 
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     // 1. Initialize
-    browser.tabs.query({'active': true, 'lastFocusedWindow': true}).then(tabs => {
-            
+    browser.tabs.query({ 'active': true, 'lastFocusedWindow': true }).then(tabs => {
+
         let longUrl, start, qrcode__src = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=';
         let API_key, password;
 
         longUrl = tabs[0].url;
         start = longUrl.substr(0, 4);
-        
+
         // i) Get api key from options page
         browser.storage.local.get(['key', 'pwd']).then(result => {
 
@@ -23,12 +23,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // update DOM
             let updateContent = (value) => {
                 document.getElementById('url__content-inner').textContent = value;
-            };    
-            
-            if(start === 'http' && API_key !== '' && API_key !== undefined) {
-                
+            };
+
+            if (start === 'http' && API_key !== '' && API_key !== undefined) {
+
                 // send start message to background.js and receive response
-                browser.runtime.sendMessage({ msg: "start", API_key: `${API_key}`, pageUrl: `${longUrl}`, password: `${password}` }).then(response => {
+                browser.runtime.sendMessage({ msg: 'start', API_key: `${API_key}`, pageUrl: `${longUrl}`, password: `${password}` }).then(response => {
                     // store the shortened link
                     shortUrl = response;
                     // status codes
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         } else if (shortUrl === 400) {
                             updateContent('Unknown Error!!!');
                         }
-                    } 
+                    }
                     // valid response
                     else if (shortUrl !== null) {
                         // 1. update the content with shortened link
@@ -49,14 +49,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         toggleDisplay('.buttons__content--holder');
                         // 3. QR Code Generation
                         QRCode.toDataURL(shortUrl)
-                        .then(url => {
-                            document.getElementById('qr_code').src = url;
-                        })
-                        .catch(err => {
-                            console.error(err);
-                            // fetch qrcode from http://goqr.me
-                            document.getElementById('qr_code').src = `${qrcode__src}${shortUrl}`;
-                        });                    
+                            .then(url => {
+                                document.getElementById('qr_code').src = url;
+                            })
+                            .catch(err => {
+                                // fetch qrcode from http://goqr.me
+                                document.getElementById('qr_code').src = `${qrcode__src}${shortUrl}`;
+                            });
                     }
                     else {
                         updateContent('Invalid Response!');
@@ -77,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateContent('Not a Valid URL!!');
             }
 
-       });
+        });
 
     });
 
@@ -92,14 +91,14 @@ document.addEventListener('DOMContentLoaded', () => {
             input.focus();
             input.select();
             document.execCommand('copy');
-            input.remove();    
+            input.remove();
             toggleDisplay('.copy__alert');
             setTimeout(() => {
                 toggleDisplay('.copy__alert');
             }, 1300);
-        } 
+        }
         catch (error) {
-          console.log('Oops, unable to copy');
+            // console.log('Oops, unable to copy');
         }
     });
 
@@ -109,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleDisplay('.qrcode__content--holder');
     });
 
-    
+
     // 4. elements visiblity function
     function toggleDisplay(className) {
         let element = document.querySelector(className);
