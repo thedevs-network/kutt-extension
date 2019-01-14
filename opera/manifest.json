@@ -5,7 +5,7 @@
     "description": "URL Shortener",
     "developer": {
         "name": "abhijithvijayan"
-     },
+    },
     "icons": {
         "16": "assets/favicon-16.png",
         "32": "assets/favicon-32.png",
@@ -18,7 +18,7 @@
             "16": "assets/favicon-16.png",
             "32": "assets/favicon-32.png",
             "48": "assets/favicon-48.png",
-            "128": "assets/favicon-128.png" 
+            "128": "assets/favicon-128.png"
         },
         "default_title": "Kutt",
         "browser_style": false
@@ -29,7 +29,7 @@
             "js/background.js"
         ]
     },
-    "homepage_url": "https://github.com/abhijithvijayan/kutt-extension",  
+    "homepage_url": "https://github.com/abhijithvijayan/kutt-extension",
     "minimum_opera_version": "42",
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
     "options_page": "options.html",
@@ -37,6 +37,11 @@
         "page": "options.html",
         "open_in_tab": true
     },
-    "permissions": ["tabs", "storage", "clipboardRead", "https://kutt.it/*/*"],
+    "permissions": [
+        "tabs",
+        "storage",
+        "clipboardRead",
+        "https://kutt.it/*/*"
+    ],
     "short_name": "Kutt"
-  }
+}
