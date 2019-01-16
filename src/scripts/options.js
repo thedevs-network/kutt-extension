@@ -29,7 +29,11 @@ let saveData = () => {
     element.classList.toggle('v-none');
     setTimeout(() => {
         element.classList.toggle('v-none');
-    }, 1300);
+        // close current tab
+        browser.tabs.getCurrent().then((tabInfo) => {
+            browser.tabs.remove(tabInfo.id);
+        });
+    }, 1250);
 };
 
 

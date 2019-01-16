@@ -21,7 +21,7 @@
             "128": "assets/favicon-128.png"
         },
         "default_title": "Kutt",
-        "browser_style": false
+        "chrome_style": false
     },
     "background": {
         "persistent": false,
