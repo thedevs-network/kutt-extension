@@ -27,7 +27,7 @@ async function getShortURL(API_key, URLtoShorten, password) {
             return error.response.status;
         } 
     }
-};
+}
 
 
 // Calling function

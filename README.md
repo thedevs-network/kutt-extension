@@ -31,19 +31,12 @@
 - Free and Open Source
 - WebExtensions API
 
-## Screenshots
-
-<div align="center">
-  <img width="350" src="https://i.imgur.com/n44Eytz.gif" alt="image1" />
-  <img width="350" src="https://i.imgur.com/FJJ2FPU.gif" alt="image2" />
-</div>
-
 ## How to use
 
-- Download for browser
+- Download for browser(s)
+  - Chrome:  [Kutt :: Chrome Web Store](https://chrome.google.com/webstore/detail/kutt/pklakpjfiegjacoppcodencchehlfnpd)
   - Firefox:  [Kutt :: Add-ons for Firefox](https://addons.mozilla.org/firefox/addon/kutt/)
-  - [Chrome](CONTRIBUTING.md#chrome)
-  - [Opera](CONTRIBUTING.md#opera)
+  - Opera [Kutt :: Opera addons](CONTRIBUTING.md#for-opera-users)
 
 - Generate an API Key from <a href="https://kutt.it">`https://kutt.it/`</a> after signing up. (Settings page)
 
@@ -53,8 +46,16 @@
 
   <img width="250" src="https://i.imgur.com/fJasvmv.png" alt="image2" />
 
+## Screenshots
+
+<div align="center">
+  <img width="350" src="https://i.imgur.com/n44Eytz.gif" alt="image1" />
+  <img width="350" src="https://i.imgur.com/FJJ2FPU.gif" alt="image2" />
+</div>
+
 ## Note:
-<a href="https://kutt.it">Kutt.it</a> API permits **50** URLs shortening per day using the API Key.
+- <a href="https://kutt.it">Kutt.it</a> API permits **50** URLs shortening per day using the API Key.
+- Delay in the shortening might be the issue with Kutt.it API and not with the extension's.
 
 ## Contributing and Support
 View the Contributing guidelines [here](CONTRIBUTING.md).

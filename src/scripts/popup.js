@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // 2. Copy Function
-    document.getElementById('button__copy--holder').addEventListener("click", () => {
+    document.getElementById('button__copy--holder').addEventListener('click', () => {
         try {
             let copyTextarea = `${shortUrl}`;
             let input = document.createElement('textarea');

@@ -56,3 +56,12 @@ height="50">](https://github.com/abhijithvijayan/kutt-extension/releases)
 
 ## Note:
 Shortening might take a while, it's not the issue with the extension but with <a href="https://github.com/thedevs-network/kutt">Kutt.it's API</a>.
+
+### For Opera Users
+In order to install this extension from Chrome Web Store, another opera extension called **Install Chrome Extension** should be installed first.
+
+- [Opera addon :: Install Chrome Extension](https://addons.opera.com/en/extensions/details/install-chrome-extensions/)
+- [Opera addon :: Kutt](https://chrome.google.com/webstore/detail/kutt/pklakpjfiegjacoppcodencchehlfnpd)
+
+![](https://i.imgur.com/TJTisdC.png)
+ 
