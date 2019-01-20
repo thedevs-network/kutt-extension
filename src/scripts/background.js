@@ -8,6 +8,7 @@ async function getShortURL(API_key, URLtoShorten, password) {
     try {
         const json = await axios({
             method: 'POST',
+            timeout: 20000,
             url: api_url,
             headers: {
                 'X-API-Key': API_key
@@ -22,10 +23,14 @@ async function getShortURL(API_key, URLtoShorten, password) {
         return shortLink;
     }
     catch (error) {
-        if (error.response) {
+        // time out
+        if (error.code === 'ECONNABORTED') {
+            return 504;
+        }
+        else if (error.response) {
             // return error code
             return error.response.status;
-        } 
+        }
     }
 }
 
