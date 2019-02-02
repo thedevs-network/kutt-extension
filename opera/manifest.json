@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Kutt",
-    "version": "0.6.2",
+    "version": "0.7.0",
     "description": "URL Shortener",
     "developer": {
         "name": "abhijithvijayan"
@@ -30,7 +30,7 @@
         ]
     },
     "homepage_url": "https://github.com/abhijithvijayan/kutt-extension",
-    "minimum_opera_version": "42",
+    "minimum_opera_version": "36",
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
     "options_page": "options.html",
     "options_ui": {
