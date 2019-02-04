@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             updateContent('API Limit Exceeded!');
                         } else if (shortUrl === 401) {
                             updateContent('Invalid API Key');
-                        // } else if (shortUrl === 400) {
-                        //     updateContent('Unknown Error!!!');
+                            // } else if (shortUrl === 400) {
+                            //     updateContent('Unknown Error!!!');
                         } else if (shortUrl === 504) {
                             updateContent('Time-out!');
                         } else {

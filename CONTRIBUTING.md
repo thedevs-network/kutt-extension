@@ -51,7 +51,8 @@ height="50">](https://github.com/abhijithvijayan/kutt-extension/releases)
 
 - [x] Switch to Promise return Method
 - [x] Fix UI issues in Firefox
-- [ ] Using Node-Kutt package(feature request)
+- [x] Using Node-Kutt package(feature request)
+- [ ] History Feature
 
 
 ## Note:

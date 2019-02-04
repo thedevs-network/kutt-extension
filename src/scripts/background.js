@@ -11,12 +11,11 @@ async function getShortURL(API_key, URLtoShorten, password) {
         password: password
     };
 
-    try{
+    try {
         const response = await kutt.submit(data);
-
         // Returning shortlink
         return response.shortUrl;
-    }catch (e) {
+    } catch (e) {
         // time out
         if (e.code === 'ECONNABORTED') {
             return 504;
