@@ -44,6 +44,7 @@
   "dependencies": {
     "@babel/runtime": "^7.3.1",
     "axios": "^0.18.0",
+    "kutt": "^1.0.3",
     "qrcode": "^1.3.3",
     "webextension-polyfill": "^0.3.1"
   },

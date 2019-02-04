@@ -1,35 +1,29 @@
-import axios from 'axios';
+import Kutt from 'kutt';
 import browser from 'webextension-polyfill';
 
 // Shorten url
 async function getShortURL(API_key, URLtoShorten, password) {
-    let shortLink;
-    const api_url = 'https://kutt.it/api/url/submit';
-    try {
-        const json = await axios({
-            method: 'POST',
-            timeout: 20000,
-            url: api_url,
-            headers: {
-                'X-API-Key': API_key
-            },
-            data: {
-                target: URLtoShorten,
-                password: password
-            }
-        });
-        shortLink = json.data.shortUrl;
-        // returns the promise
-        return shortLink;
-    }
-    catch (error) {
+    const kutt = new Kutt();
+    kutt.setKey(API_key);
+
+    const data = {
+        target: URLtoShorten,
+        password: password
+    };
+
+    try{
+        const response = await kutt.submit(data);
+
+        // Returning shortlink
+        return response.shortUrl;
+    }catch (e) {
         // time out
-        if (error.code === 'ECONNABORTED') {
+        if (e.code === 'ECONNABORTED') {
             return 504;
         }
-        else if (error.response) {
+        else if (e.response) {
             // return error code
-            return error.response.status;
+            return e.response.status;
         }
     }
 }
