@@ -39,13 +39,14 @@ $font-weight-bold:      600;
 }
 
 .selectDisable {
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -o-user-select: none;
     user-select: none;
 }
 
 body {
     font-family: $font-nunito;
+}
+
+.icon__img {
+    width: 12px;
+    height: 12px;
 }

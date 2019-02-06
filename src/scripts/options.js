@@ -22,7 +22,7 @@ let saveData = () => {
     let password = document.getElementById('password--value').value;
 
     // store value locally
-    browser.storage.local.set({ key: API_KEY, pwd: password }).then(() => { });
+    browser.storage.local.set({ key: API_KEY, pwd: password });
 
     // Saved Alert
     let element = document.querySelector('.saved__alert');

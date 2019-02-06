@@ -2,6 +2,7 @@ import browser from 'webextension-polyfill';
 import QRCode from 'qrcode';
 
 let shortUrl;
+browser.storage.local.set({ count: 0 });
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -9,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     browser.tabs.query({ 'active': true, 'lastFocusedWindow': true }).then(tabs => {
 
         let longUrl, start, qrcode__src = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=';
-        let API_key, password;
+        let API_key, password, URLs;
 
         longUrl = tabs[0].url;
         start = longUrl.substr(0, 4);
@@ -60,6 +61,15 @@ document.addEventListener('DOMContentLoaded', () => {
                                 // fetch qrcode from http://goqr.me
                                 document.getElementById('qr_code').src = `${qrcode__src}${shortUrl}`;
                             });
+                        // 4. Add to history
+                        URLs = {
+                            longUrl: `${longUrl}`, 
+                            shortUrl: `${shortUrl}`
+                        };
+                        // pass the object
+                        browser.storage.local.get(['count']).then(result => {                            
+                            browser.runtime.sendMessage({ msg: 'store', URLs: URLs, count: result.count });
+                        });
                     }
                     else {
                         updateContent('Invalid Response!');
