@@ -2,48 +2,52 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Kutt</title>
-  <link rel="stylesheet" href="css/popup.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Kutt</title>
+    <link rel="stylesheet" href="css/popup.css" />
 </head>
 
 <body>
-  <section id="home">
-    <div class="container">
-      <nav class="navbar">
-        <ul class="navbar__main">
-          <li class="logo__content--holder">
-            <img class="main__logo selectDisable" src="assets/logo.png">
-          </li>
-          <li class="options__content-holder" id="options__content-holder" title="Options">
-            <a href="options.html" target="_blank" rel="noopener">
-              <img class="settings__logo selectDisable" src="assets/settings.svg"></a>
-          </li>
-        </ul>
-      </nav>
-      <div class="content__holder">
-        <div class="url__content--holder text-center">
-          <h4 id="url__content-inner">Shortening...</h4>
-          <ul class="buttons__content--holder d-none">
-            <li class="copy__content--holder" id="button__copy--holder" title="Copy">
-              <img id="button__copy" class="selectDisable" src="assets/copy.svg" alt="copy" />
-            </li>
-            <li class="qrbtn__content--holder" id="button__qrcode--holder" title="QR code">
-              <img id="button__qrcode" class="selectDisable" src="assets/qrcode.svg" alt="QR Code" />
-            </li>
-          </ul>
+    <section id="home">
+        <div class="container">
+            <nav class="navbar">
+                <ul class="navbar__main">
+                    <li class="logo__content--holder">
+                        <img class="main__logo selectDisable" src="assets/logo.png">
+                    </li>
+                    <li class="options__content-holder" id="options__content-holder" title="History">
+                        <a href="history.html" target="_blank" rel="noopener">
+                            <img class="settings__logo selectDisable" src="assets/history.svg"></a>
+                    </li>
+                    <li class="options__content-holder" id="options__content-holder" title="Options">
+                        <a href="options.html" target="_blank" rel="noopener">
+                            <img class="settings__logo selectDisable" src="assets/settings.svg"></a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="content__holder">
+                <div class="url__content--holder text-center">
+                    <h4 id="url__content-inner">Shortening...</h4>
+                    <ul class="buttons__content--holder d-none">
+                        <li class="copy__content--holder" id="button__copy--holder" title="Copy">
+                            <img id="button__copy" class="selectDisable" src="assets/copy.svg" alt="copy" />
+                        </li>
+                        <li class="qrbtn__content--holder" id="button__qrcode--holder" title="QR code">
+                            <img id="button__qrcode" class="selectDisable" src="assets/qrcode.svg" alt="QR Code" />
+                        </li>
+                    </ul>
+                </div>
+                <p class="copy__alert text-center d-none">Copied!!!</p>
+                <div class="qrcode__content--holder text-center d-none">
+                    <img id="qr_code" src="#" alt="QRCode" />
+                </div>
+            </div>
         </div>
-        <p class="copy__alert text-center d-none">Copied!!!</p>
-        <div class="qrcode__content--holder text-center d-none">
-          <img id="qr_code" src="#" alt="QRCode" />
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <script src="js/popup.js"></script>
+    <script src="js/popup.js"></script>
 </body>
 
 </html>

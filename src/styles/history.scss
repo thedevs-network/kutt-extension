@@ -1,0 +1,274 @@
+@import "fonts";
+@import "reset";
+@import "variables";
+
+body {
+    color: $color-black;
+    background-color: $color-grey-white;
+}
+
+button > * {
+    pointer-events: none;
+}
+
+#history {
+    .history__content--holder {
+        min-height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        box-sizing: border-box;
+        flex: 0 0 auto;
+        .table__content--holder {
+            width: 1200px;
+            max-width: 95%;
+            display: flex;
+            flex-direction: column;
+            margin: 40px 0px 120px;
+            .table__content--title {
+                font-size: 24px;
+                margin: 0.83em 0;
+            }
+            .table__content--wrapper {
+                display: flex;
+                flex-direction: column;
+                background-color: white;
+                box-shadow: rgba(50, 50, 50, 0.2) 0px 6px 30px;
+                flex: 1 1 auto;
+                border-radius: 12px;
+                .table__content--head {
+                    display: flex;
+                    flex-direction: column;
+                    background-color: rgb(241, 241, 241);
+                    border-top-right-radius: 12px;
+                    border-top-left-radius: 12px;
+                    flex: 1 1 auto;
+                    .table__head--holder {
+                        display: flex;
+                        justify-content: space-between;
+                        flex: 1 1 auto;
+                        padding: 0px 24px;
+                        border-bottom: 1px solid rgb(234, 234, 234);
+                        th {
+                            position: relative;
+                            display: flex;
+                            align-items: center;
+                            padding: 16px 0px;
+                        }
+                        .table__head--longURL {
+                            justify-content: flex-start;
+                            align-items: center;
+                            flex: 2 2 0px;
+                            font-size: 16px;
+                            line-height: 1.45;
+                        }
+                        .table__head--shortURL {
+                            display: flex;
+                            justify-content: flex-start;
+                            align-items: center;
+                            flex: 1 1 0px;
+                            font-size: 16px;
+                            line-height: 1.45;
+                        }
+                        .table__head--clearAll {
+                            display: flex;
+                            position: relative;
+                            align-items: center;
+                            padding: 16px 0px;
+                            .table__list--clearAll {
+                                .table__listItem--clear {
+                                    .table__clearAll--btn {
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                        height: 26px;
+                                        box-shadow: rgba(100, 100, 100, 0.1) 0px 2px 4px;
+                                        background-color: rgb(222, 222, 222);
+                                        cursor: pointer;
+                                        width: auto;
+                                        margin: 0px 2px 0px 12px;
+                                        border-width: initial;
+                                        border-style: none;
+                                        border-color: initial;
+                                        border-image: initial;
+                                        outline: none;
+                                        transition: all 0.2s ease-out 0s;
+                                        padding: 0px 12px;
+                                        border-radius: 100px;
+                                        img {
+                                            margin: 1px 0px 3px 6px;
+                                        }
+                                        &:hover {
+                                            transform: translateY(-3px);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .table__content--body {
+                    display: flex;
+                    flex-direction: column;
+                    flex: 1 1 auto;
+                    .table__body--holder {
+                        display: flex;
+                        justify-content: space-between;
+                        flex: 1 1 auto;
+                        padding: 0px 24px;
+                        border-bottom: 1px solid rgb(234, 234, 234);
+                        td {
+                            position: relative;
+                            display: flex;
+                            align-items: center;
+                            padding: 16px 0px;
+                        }
+                        .table__body--original {
+                            white-space: nowrap;
+                            overflow: hidden;
+                            flex: 2 2 0px;
+                            position: relative;
+                            .table__body--originalURL {
+                                color: rgb(33, 150, 243);
+                                box-sizing: border-box;
+                                text-decoration: none;
+                                border-bottom: 1px dotted transparent;
+                                transition: all 0.2s ease-out 0s;
+                                font-size: 16px;
+                                line-height: 1.45;
+                                &:hover {
+                                    border-bottom: 1px dotted black;
+                                }
+                            }
+                            &::after {
+                                content: "";
+                                position: absolute;
+                                right: 0px;
+                                top: 0px;
+                                height: 100%;
+                                width: 56px;
+                                background: linear-gradient(to left, white, white, transparent);
+                            }
+                        }
+                        .table__body--shortened {
+                            white-space: nowrap;
+                            overflow: hidden;
+                            flex: 1 1 23px;
+                            position: relative;
+                            &::after {
+                                content: "";
+                                position: absolute;
+                                right: 0px;
+                                top: 0px;
+                                height: 100%;
+                                width: 56px;
+                                background: linear-gradient(to left, white, white, transparent);
+                            }
+                            .table__body--shortenBody {
+                                display: flex;
+                                align-items: center;
+                                .table__body--shortenURL {
+                                    color: rgb(33, 150, 243);
+                                    box-sizing: border-box;
+                                    text-decoration: none;
+                                    border-bottom: 1px dotted transparent;
+                                    transition: all 0.2s ease-out 0s;
+                                    font-size: 16px;
+                                    line-height: 1.45;
+                                    &:hover {
+                                        border-bottom: 1px dotted black;
+                                    }
+                                }
+                            }
+                        }
+                        .table__body--functionBtns {
+                            .table__body--btnHolder {
+                                display: flex;
+                                justify-content: flex-end;
+                                align-items: center;                              
+                                .table__body--qrcode, .table__body--copy  {
+                                    margin: 0px 2px 0px 12px;
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    width: 26px;
+                                    height: 26px;
+                                    box-shadow: rgba(100, 100, 100, 0.1) 0px 2px 4px;
+                                    background-color: rgb(222, 222, 222);
+                                    cursor: pointer;
+                                    margin: 0px 12px 0px 2px;
+                                    padding: 0px;
+                                    border-width: initial;
+                                    border-style: none;
+                                    border-color: initial;
+                                    border-image: initial;
+                                    outline: none;
+                                    border-radius: 100%;
+                                    transition: all 0.2s ease-out 0s;
+                                    &:hover {
+                                        transform: translateY(-3px);
+                                    }
+                                }
+                            }
+                            .table__qrcodePopup--div {
+                                position: fixed;
+                                width: 100%;
+                                height: 100%;
+                                top: 0px;
+                                left: 0px;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                background-color: rgba(50, 50, 50, 0.8);
+                                z-index: 1000;
+                                .table__qrcode--popup {
+                                    text-align: center;
+                                    background-color: white;
+                                    padding: 48px 64px;
+                                    border-radius: 8px;
+                                    .table__qrcode--holder {
+                                        #table__qrcode {
+                                            height: 196px;
+                                            width: 196px;
+                                        }
+                                    }
+                                    .table__closebtn--holder {
+                                        display: flex;
+                                        justify-content: center;
+                                        margin-top: 40px;
+                                        .table__closebtn--inner {
+                                            margin: 0px 16px;
+                                            position: relative;
+                                            height: 40px;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+                                            font-size: 13px;
+                                            font-weight: normal;
+                                            text-align: center;
+                                            line-height: 1;
+                                            word-break: keep-all;
+                                            cursor: pointer;
+                                            color: black;
+                                            box-shadow: rgba(160, 160, 160, 0.5) 0px 5px 6px;
+                                            padding: 0px 32px;
+                                            border-width: initial;
+                                            border-style: none;
+                                            border-color: initial;
+                                            border-image: initial;
+                                            border-radius: 100px;
+                                            transition: all 0.4s ease-out 0s;
+                                            overflow: hidden;
+                                            background: linear-gradient(to right, rgb(224, 224, 224), rgb(189, 189, 189));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

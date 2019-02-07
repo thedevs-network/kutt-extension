@@ -2,6 +2,7 @@
 
 ## Assets
 - [kutt.it API](https://github.com/thedevs-network/kutt#api) is used to retreive shortened URLs.
+- [node-kutt](https://github.com/ardalanamini/node-kutt) is used for API calls
 
 ## Development
 - `npm install` to install dependencies.
@@ -53,6 +54,9 @@ height="50">](https://github.com/abhijithvijayan/kutt-extension/releases)
 - [x] Fix UI issues in Firefox
 - [x] Using Node-Kutt package(feature request)
 - [ ] History Feature
+- [ ] Context Menu
+- [ ] Auto Copy Clipboard
+- [ ] Toggleable Options
 
 
 ## Note:

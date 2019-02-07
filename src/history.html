@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>History: Kutt</title>
+  <link rel="stylesheet" href="css/history.css" />
+</head>
+
+<body>
+    <section id="history">
+      <div class="container history__content--holder">
+          <div class="table__content--holder">
+              <h2 class="table__content--title">Recent shortened links.</h2>
+                <table class="table__content--wrapper" id="URL_table">
+                    <thead class="table__content--head">
+                        <tr class="table__head--holder">
+                            <th class="table__head--longURL">
+                                Original URL
+                            </th>
+                            <th class="table__head--shortURL">
+                                Short URL
+                            </th>
+                            <th class="table__head--clearAll">
+                                <ul class="table__list--clearAll">
+                                    <li class="table__listItem--clear">
+                                        <button class="table__clearAll--btn" id="table__clearAll--btn" title="Delete All">
+                                            Clear All <img class="selectDisable icon__img" src="assets/delete.svg" alt="Delete All" />
+                                        </button>
+                                    </li>
+                                </ul>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="table__content--body" id="delegation__element">
+                        <!-- TEMPLATE TO USE -->
+                        <!-- <tr class="table__body--holder">
+                            <td class="table__body--original">
+                                <a href="#" class="table__body--originalURL" target="_blank" rel="noopener">https://google.com</a>
+                            </td>
+                            <td class="table__body--shortened">
+                                <div class="table__body--shortenBody">
+                                    <a href="#" class="table__body--shortenURL" target="_blank" rel="noopener">https://kutt.it/abc</a>
+                                </div>
+                            </td>
+                            <td class="table__body--functionBtns">
+                                <div class="table__body--btnHolder">
+                                    <button class="table__body--copy" title="Copy">
+                                        <img class="selectDisable icon__img" src="assets/copy.svg" alt="copy" />
+                                    </button>                                       
+                                    <button class="table__body--qrcode" title="QR Code">
+                                        <img class="selectDisable icon__img" src="assets/qrcode.svg" alt="QR Code" />
+                                    </button>                                 
+                                </div>
+                                <div class="table__qrcodePopup--div">
+                                    <div class="table__qrcode--popup">
+                                        <div class="table__qrcode--holder">
+                                            <img id="table__qrcode" src="#" alt="QRCode" />
+                                        </div>
+                                        <div class="table__closebtn--holder">
+                                            <button class="table__closebtn--inner">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr> -->
+                    </tbody>
+                </table>
+          </div>
+      </div>
+    </section>
+    
+    <script src="js/history.js"></script>
+</body>
+
+</html>

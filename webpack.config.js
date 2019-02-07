@@ -10,6 +10,7 @@ module.exports = () => ({
     entry: {
         options: ['./src/scripts/options.js', './src/styles/options.scss'],
         popup: ['./src/scripts/popup.js', './src/styles/popup.scss'],
+        history: ['./src/scripts/history.js', './src/styles/history.scss'],
         background: ['./src/scripts/background.js']
     },
     output: {
@@ -106,7 +107,12 @@ module.exports = () => ({
             template: 'src/popup.html',
             inject: false,
             filename: 'popup.html'
-        })
+        }),
+        new HtmlWebpackPlugin({
+            template: 'src/history.html',
+            inject: false,
+            filename: 'history.html'
+        })        
     ],
     optimization: {
         minimizer: [

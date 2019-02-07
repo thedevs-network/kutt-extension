@@ -53,6 +53,8 @@
 - Paste and Save this `Key` in extension's `options page` when asked.
 
   <img width="250" src="https://i.imgur.com/fJasvmv.png" alt="image2" />
+  
+ <hr />
 
 ## Screenshots
 
