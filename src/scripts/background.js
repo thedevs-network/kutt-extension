@@ -1,7 +1,7 @@
 import Kutt from 'kutt';
 import browser from 'webextension-polyfill';
 
-let count = 0, URLs_array = [];
+let URLs_array = [];
 
 // Shorten url
 async function getShortURL(API_key, URLtoShorten, password) {
@@ -42,20 +42,14 @@ browser.runtime.onMessage.addListener(async (request, sender, response) => {
     }
     // store urls to history
     if (request.msg === 'store') {
-        // console.log(request.URLs);
-        // console.log(count);
-        if (count >= 10) {
+        if (request.count >= 10) {
             // delete first element
             URLs_array.shift();
-            --count;
-            browser.storage.local.set({ count: count });
+            browser.storage.local.set({ count: --request.count });
         }
-        if (count < 10) {
+        if (request.count < 10) {
             URLs_array.push(request.URLs);
-            browser.storage.local.set({ URL_array: URLs_array, count: ++count });
-            // console.log(URLs_array);
-        } 
+            browser.storage.local.set({ URL_array: URLs_array, count: ++request.count });
+        }
     }
-
-
 });

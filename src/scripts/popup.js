@@ -2,7 +2,6 @@ import browser from 'webextension-polyfill';
 import QRCode from 'qrcode';
 
 let shortUrl;
-browser.storage.local.set({ count: 0 });
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -63,11 +62,11 @@ document.addEventListener('DOMContentLoaded', () => {
                             });
                         // 4. Add to history
                         URLs = {
-                            longUrl: `${longUrl}`, 
+                            longUrl: `${longUrl}`,
                             shortUrl: `${shortUrl}`
                         };
                         // pass the object
-                        browser.storage.local.get(['count']).then(result => {                            
+                        browser.storage.local.get(['count']).then(result => {
                             browser.runtime.sendMessage({ msg: 'store', URLs: URLs, count: result.count });
                         });
                     }

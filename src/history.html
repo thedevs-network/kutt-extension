@@ -23,9 +23,18 @@
                             <th class="table__head--shortURL">
                                 Short URL
                             </th>
+                            <th class="table__head--clearAll">
+                                <ul class="table__list--clearAll">
+                                    <li class="table__listItem--clear">
+                                        <button class="table__clearAll--btn" id="table__clearAll--btn" title="Delete All">
+                                            Clear All <img class="selectDisable icon__img" src="assets/delete.svg" alt="Delete All" />
+                                        </button>
+                                    </li>
+                                </ul>
+                            </th>
                         </tr>
                     </thead>
-                    <tbody class="table__content--body">
+                    <tbody class="table__content--body" id="delegation__element">
                         <!-- TEMPLATE TO USE -->
                         <!-- <tr class="table__body--holder">
                             <td class="table__body--original">
@@ -33,20 +42,27 @@
                             </td>
                             <td class="table__body--shortened">
                                 <div class="table__body--shortenBody">
-                                    <button class="table__body--copyBtn" title="Copy">
-                                        <img id="" class="selectDisable icon__img" src="assets/copy.svg" alt="copy" />
-                                    </button>
                                     <a href="#" class="table__body--shortenURL" target="_blank" rel="noopener">https://kutt.it/abc</a>
                                 </div>
                             </td>
                             <td class="table__body--functionBtns">
                                 <div class="table__body--btnHolder">
+                                    <button class="table__body--copy" title="Copy">
+                                        <img class="selectDisable icon__img" src="assets/copy.svg" alt="copy" />
+                                    </button>                                       
                                     <button class="table__body--qrcode" title="QR Code">
-                                        <img id="" class="selectDisable icon__img" src="assets/qrcode.svg" alt="QR Code" />
-                                    </button>
-                                    <button class="table__body--delete" title="Delete">
-                                        <img id="" class="selectDisable icon__img" src="assets/delete.svg" alt="Delete" />
-                                    </button>
+                                        <img class="selectDisable icon__img" src="assets/qrcode.svg" alt="QR Code" />
+                                    </button>                                 
+                                </div>
+                                <div class="table__qrcodePopup--div">
+                                    <div class="table__qrcode--popup">
+                                        <div class="table__qrcode--holder">
+                                            <img id="table__qrcode" src="#" alt="QRCode" />
+                                        </div>
+                                        <div class="table__closebtn--holder">
+                                            <button class="table__closebtn--inner">Close</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </td>
                         </tr> -->
