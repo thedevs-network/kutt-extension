@@ -20,10 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
 let saveData = () => {
     let API_KEY = document.getElementById('api__key--value').value;
     let password = document.getElementById('password--value').value;
-    let emptyArray = [];
 
     // store value locally
-    browser.storage.local.set({ key: API_KEY, pwd: password, URL_array: emptyArray, count: 0 }).then(() => {
+    browser.storage.local.set({ key: API_KEY, pwd: password, count: 0, URL_array: [] }).then(() => {
         // Saved Alert
         let element = document.querySelector('.saved__alert');
         element.classList.toggle('v-none');

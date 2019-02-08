@@ -28,6 +28,7 @@
 - Minimal UI
 - Instant QR Code
 - Supports Password for URLs
+- History Feature
 - Free and Open Source
 - WebExtensions API
 
@@ -51,17 +52,18 @@
   <img width="400" src="https://i.imgur.com/qQwqeH5.png" />
 
 - Paste and Save this `Key` in extension's `options page` when asked.
-
-  <img width="250" src="https://i.imgur.com/fJasvmv.png" alt="image2" />
   
  <hr />
 
 ## Screenshots
 
-<div align="center">
+<div>
   <img width="350" src="https://i.imgur.com/n44Eytz.gif" alt="image1" />
   <img width="350" src="https://i.imgur.com/FJJ2FPU.gif" alt="image2" />
 </div>
+<img width="500" src="https://i.imgur.com/Tlkxbav.png" alt="image3" />
+<img width="500" src="https://i.imgur.com/tgLecm2.png" alt="image4" />
+<img width="500" src="https://i.imgur.com/kjHY6aa.png" alt="image5" />
 
 ## Note:
 - <a href="https://kutt.it">Kutt.it</a> API permits **50** URLs shortening per day using the API Key.

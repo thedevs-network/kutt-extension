@@ -71,6 +71,14 @@ button > * {
                             font-size: 16px;
                             line-height: 1.45;
                         }
+                        .table__head--actions {
+                            display: flex;
+                            justify-content: flex-start;
+                            align-items: center;
+                            padding-right: 24px;
+                            font-size: 16px;
+                            line-height: 1.45;
+                        }
                         .table__head--clearAll {
                             display: flex;
                             position: relative;
@@ -153,8 +161,9 @@ button > * {
                         }
                         .table__body--shortened {
                             white-space: nowrap;
+                            flex: 1 1 0px;
+                            // flex: 1 1 23px;
                             overflow: hidden;
-                            flex: 1 1 23px;
                             position: relative;
                             &::after {
                                 content: "";

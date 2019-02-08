@@ -8,19 +8,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Initialize
     browser.tabs.query({ 'active': true, 'lastFocusedWindow': true }).then(tabs => {
 
-        let longUrl, start, qrcode__src = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=';
-        let API_key, password, URLs;
+        let longUrl, start, qrcode__backup = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=';  // in case package fails
+        let API_key, password;
 
+        // extract page url
         longUrl = tabs[0].url;
+        // extract first 4 chars
         start = longUrl.substr(0, 4);
 
-        // i) Get api key from options page
+        // i) Get api key from storage
         browser.storage.local.get(['key', 'pwd']).then(result => {
 
             API_key = result.key;
             password = result.pwd;
 
-            // update DOM
+            // update DOM function
             let updateContent = (value) => {
                 document.getElementById('url__content-inner').textContent = value;
             };
@@ -57,18 +59,22 @@ document.addEventListener('DOMContentLoaded', () => {
                                 document.getElementById('qr_code').src = url;
                             })
                             .catch(err => {
-                                // fetch qrcode from http://goqr.me
-                                document.getElementById('qr_code').src = `${qrcode__src}${shortUrl}`;
+                                // fetch qrcode from http://goqr.me (in case package fails)
+                                document.getElementById('qr_code').src = `${qrcode__backup}${shortUrl}`;
                             });
                         // 4. Add to history
-                        URLs = {
-                            longUrl: `${longUrl}`,
-                            shortUrl: `${shortUrl}`
+                        let long_short_URLs = {
+                            longUrl: longUrl,
+                            shortUrl: shortUrl
                         };
-                        // pass the object
-                        browser.storage.local.get(['count']).then(result => {
-                            browser.runtime.sendMessage({ msg: 'store', URLs: URLs, count: result.count });
-                        });
+                        // pass the object of URLs
+                        browser.storage.local.get(['count'])
+                            .then(result => {
+                                browser.runtime.sendMessage({ msg: 'store', mix_URLs: long_short_URLs, count: result.count });
+                            })
+                            .catch(err => {
+                                console.log('localstorage_warning : Failed to Fetch.' + err);
+                            });
                     }
                     else {
                         updateContent('Invalid Response!');

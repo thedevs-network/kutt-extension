@@ -7,20 +7,27 @@ document.addEventListener('DOMContentLoaded', () => {
     let updatedHTML, html;
     html = '<tr class="table__body--holder" id="table__body-%num%"><td class="table__body--original"><a href="%longLink%" class="table__body--originalURL" target="_blank" rel="noopener">%longLink%</a></td><td class="table__body--shortened"><div class="table__body--shortenBody"><a href="%shortLink%" id="shortUrl-%num%" class="table__body--shortenURL" target="_blank" rel="noopener">%shortLink%</a></div></td><td class="table__body--functionBtns"><div class="table__body--btnHolder" id="btns-%num%"><button class="table__body--copy" id="copy-%num%" title="Copy"><img class="selectDisable icon__img" src="assets/copy.svg" alt="copy" /></button><button class="table__body--qrcode" id="qrcode-%num%" title="QR Code"><img class="selectDisable icon__img" src="assets/qrcode.svg" alt="QR Code" /></button></div></td></tr>';
     // get longURL, shortURL
-    browser.storage.local.get(['URL_array', 'count']).then(result => {
-        // update DOM
-        if (result.count > 0) {
-            let pass = 0;
-            for (let el of result.URL_array) {
-                // Regular Expression Based Implementation
-                updatedHTML = html.replace(/%longLink%/g, el.longUrl);
-                updatedHTML = updatedHTML.replace(/%num%/g, ++pass);
-                updatedHTML = updatedHTML.replace(/%shortLink%/g, el.shortUrl);
-                // inject to DOM
-                document.getElementById('delegation__element').insertAdjacentHTML('afterbegin', updatedHTML);
+    browser.storage.local.get(['URL_array', 'count'])
+        .then(result => {
+            // console.log(`count in history ${result.count}`);
+            // update DOM
+            if (result.count > 0) {
+                let pass = 0;
+                for (let el of result.URL_array) {
+                    // Regular Expression Based Implementation
+                    updatedHTML = html.replace(/%longLink%/g, el.longUrl);
+                    updatedHTML = updatedHTML.replace(/%num%/g, ++pass);
+                    updatedHTML = updatedHTML.replace(/%shortLink%/g, el.shortUrl);
+                    // inject to DOM
+                    document.getElementById('delegation__element').insertAdjacentHTML('afterbegin', updatedHTML);
+                }
+            } else {
+                console.log('Empty History');
             }
-        }
-    });
+        })
+        .catch(err => {
+            console.log('localstorage_warning : Failed to Fetch.');
+        });
 });
 
 
@@ -60,23 +67,6 @@ function buttonAction(type, id) {
 }
 
 
-// Clear all history
-document.getElementById('table__clearAll--btn').addEventListener('click', () => {
-    browser.storage.local.get(['count']).then(result => {
-        let emptyArray = [];
-        if (result.count > 0) {
-            // empty array in storage and set count to 0
-            let count = 0;
-            browser.storage.local.set({ URL_array: emptyArray, count: count }).then(() => {
-                // remove children
-                let el = document.getElementById('delegation__element');
-                el.parentNode.removeChild(el);
-            });
-        }
-    });
-});
-
-
 // get the delegation id
 function getButtonDetails(e) {
     let eventId, splitId, type, id;
@@ -92,3 +82,29 @@ function getButtonDetails(e) {
 
 // Button Action (qrcode / copy)
 document.getElementById('delegation__element').addEventListener('click', getButtonDetails);
+
+
+// Clear all history
+// document.getElementById('table__clearAll--btn').addEventListener('click', () => {
+//     browser.storage.local.get(['count'])
+//         .then(result => {
+//             console.log('count = ' + result.count);
+//             // empty the array
+//             let emptyArray = [];
+//             emptyArray.splice(0, emptyArray.length);
+//             // let emptyArray = result.URL_array.length = 0;
+//             // console(emptyArray);
+//             if (result.count > 0) {
+//                 // empty array in storage and set count to 0
+//                 browser.storage.local.remove(['URL_array', 'count']).then(() => {
+//                     browser.storage.local.set({ URL_array: emptyArray, count: 0 });
+//                     // remove children
+//                     let el = document.getElementById('delegation__element');
+//                     el.parentNode.removeChild(el);
+//                 });
+//             }
+//         })
+//         .catch(err => {
+//             console.log('localstorage_warning: Failed to Fetch.');
+//         });
+// });
