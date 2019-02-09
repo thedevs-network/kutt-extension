@@ -7,6 +7,7 @@ let targetURLs = [];
 async function getShortURL(API_key, URLtoShorten, password) {
     const kutt = new Kutt();
     kutt.setKey(API_key);
+    kutt.setTimeout(15000);
 
     const data = {
         target: URLtoShorten,
