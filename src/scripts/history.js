@@ -7,11 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let updatedHTML, html;
     html = '<tr class="table__body--holder" id="table__body-%num%"><td class="table__body--original"><a href="%longLink%" class="table__body--originalURL" target="_blank" rel="noopener">%longLink%</a></td><td class="table__body--shortened"><div class="table__body--shortenBody"><a href="%shortLink%" id="shortUrl-%num%" class="table__body--shortenURL" target="_blank" rel="noopener">%shortLink%</a></div></td><td class="table__body--functionBtns"><div class="table__body--btnHolder" id="btns-%num%"><button class="table__body--copy" id="copy-%num%" title="Copy"><img class="selectDisable icon__img" src="assets/copy.svg" alt="copy" /></button><button class="table__body--qrcode" id="qrcode-%num%" title="QR Code"><img class="selectDisable icon__img" src="assets/qrcode.svg" alt="QR Code" /></button></div></td></tr>';
     // get longURL, shortURL
-    browser.storage.local.get(['URL_array', 'count'])
+    browser.storage.local.get(['URL_array'])
         .then(result => {
-            // console.log(`count in history ${result.count}`);
+            console.log(result.URL_array);
+            let count = result.URL_array.length;
+            console.log(`count in history ${count}`);
             // update DOM
-            if (result.count > 0) {
+            if (count > 0) {
                 let pass = 0;
                 for (let el of result.URL_array) {
                     // Regular Expression Based Implementation
@@ -27,6 +29,20 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(err => {
             console.log('localstorage_warning : Failed to Fetch.');
+        });
+});
+
+
+
+// Clear all history
+document.getElementById('table__clearAll--btn').addEventListener('click', () => {
+    browser.storage.local.set({ URL_array: [] })
+        .then(() => {
+            let el = document.getElementById('delegation__element');
+            el.parentNode.removeChild(el);
+        })
+        .catch(err => {
+            console.log('localstorage_warning: Failed to Fetch.');
         });
 });
 
@@ -82,29 +98,3 @@ function getButtonDetails(e) {
 
 // Button Action (qrcode / copy)
 document.getElementById('delegation__element').addEventListener('click', getButtonDetails);
-
-
-// Clear all history
-// document.getElementById('table__clearAll--btn').addEventListener('click', () => {
-//     browser.storage.local.get(['count'])
-//         .then(result => {
-//             console.log('count = ' + result.count);
-//             // empty the array
-//             let emptyArray = [];
-//             emptyArray.splice(0, emptyArray.length);
-//             // let emptyArray = result.URL_array.length = 0;
-//             // console(emptyArray);
-//             if (result.count > 0) {
-//                 // empty array in storage and set count to 0
-//                 browser.storage.local.remove(['URL_array', 'count']).then(() => {
-//                     browser.storage.local.set({ URL_array: emptyArray, count: 0 });
-//                     // remove children
-//                     let el = document.getElementById('delegation__element');
-//                     el.parentNode.removeChild(el);
-//                 });
-//             }
-//         })
-//         .catch(err => {
-//             console.log('localstorage_warning: Failed to Fetch.');
-//         });
-// });

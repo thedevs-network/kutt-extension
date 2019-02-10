@@ -2,6 +2,11 @@ import browser from 'webextension-polyfill';
 
 // update UI - API Key on options page load
 document.addEventListener('DOMContentLoaded', () => {
+
+    browser.storage.local.get().then(result => {
+        console.log(result);
+    });
+
     // replace the input value with current value on load
     browser.storage.local.get(['key', 'pwd']).then(result => {
         // to strings
@@ -22,7 +27,7 @@ let saveData = () => {
     let password = document.getElementById('password--value').value;
 
     // store value locally
-    browser.storage.local.set({ key: API_KEY, pwd: password, count: 0, URL_array: [] }).then(() => {
+    browser.storage.local.set({ key: API_KEY, pwd: password, URL_array: [] }).then(() => {
         // Saved Alert
         let element = document.querySelector('.saved__alert');
         element.classList.toggle('v-none');
