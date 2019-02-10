@@ -68,9 +68,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             shortUrl: shortUrl
                         };
                         // pass the object of URLs
-                        browser.storage.local.get(['count'])
+                        browser.storage.local.get(['URL_array'])
                             .then(result => {
-                                browser.runtime.sendMessage({ msg: 'store', mix_URLs: long_short_URLs, count: result.count });
+                                browser.runtime.sendMessage({ msg: 'store', mix_URLs: long_short_URLs, URL_array: result.URL_array });
                             })
                             .catch(err => {
                                 console.log('localstorage_warning : Failed to Fetch.' + err);
