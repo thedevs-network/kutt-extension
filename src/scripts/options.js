@@ -2,11 +2,6 @@ import browser from 'webextension-polyfill';
 
 // update UI - API Key on options page load
 document.addEventListener('DOMContentLoaded', () => {
-
-    browser.storage.local.get().then(result => {
-        console.log(result);
-    });
-
     // replace the input value with current value on load
     browser.storage.local.get(['key', 'pwd']).then(result => {
         // to strings

@@ -117,7 +117,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 1300);
         }
         catch (error) {
-            // console.log('Oops, unable to copy');
+            toggleDisplay('.failed__alert');
+            setTimeout(() => {
+                toggleDisplay('.failed__alert');
+            }, 1300);
         }
     });
 

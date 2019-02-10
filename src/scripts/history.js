@@ -1,17 +1,14 @@
 import browser from 'webextension-polyfill';
 import QRCode from 'qrcode';
 
-
 // on page load
 document.addEventListener('DOMContentLoaded', () => {
     let updatedHTML, html;
-    html = '<tr class="table__body--holder" id="table__body-%num%"><td class="table__body--original"><a href="%longLink%" class="table__body--originalURL" target="_blank" rel="noopener">%longLink%</a></td><td class="table__body--shortened"><div class="table__body--shortenBody"><a href="%shortLink%" id="shortUrl-%num%" class="table__body--shortenURL" target="_blank" rel="noopener">%shortLink%</a></div></td><td class="table__body--functionBtns"><div class="table__body--btnHolder" id="btns-%num%"><button class="table__body--copy" id="copy-%num%" title="Copy"><img class="selectDisable icon__img" src="assets/copy.svg" alt="copy" /></button><button class="table__body--qrcode" id="qrcode-%num%" title="QR Code"><img class="selectDisable icon__img" src="assets/qrcode.svg" alt="QR Code" /></button></div></td></tr>';
+    html = '<tr class="table__body--holder" id="table__body-%num%"><td class="table__body--original"><a href="%longLink%" class="table__body--originalURL" target="_blank" rel="noopener">%longLink%</a></td><td class="table__body--shortened" id="table__shortened-%num%"><div class="table__body--shortenBody"><a href="%shortLink%" id="shortUrl-%num%" class="table__body--shortenURL" target="_blank" rel="noopener">%shortLink%</a></div></td><td class="table__body--functionBtns"><div class="table__body--btnHolder" id="btns-%num%"><button type="button" class="table__body--copy" id="copy-%num%" title="Copy"><img class="selectDisable icon__img" src="assets/copy.svg" alt="copy" /></button><button type="button" class="table__body--qrcode" id="qrcode-%num%" title="QR Code"><img class="selectDisable icon__img" src="assets/qrcode.svg" alt="QR Code" /></button></div></td></tr>';
     // get longURL, shortURL
     browser.storage.local.get(['URL_array'])
         .then(result => {
-            console.log(result.URL_array);
             let count = result.URL_array.length;
-            console.log(`count in history ${count}`);
             // update DOM
             if (count > 0) {
                 let pass = 0;
@@ -23,15 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     // inject to DOM
                     document.getElementById('delegation__element').insertAdjacentHTML('afterbegin', updatedHTML);
                 }
-            } else {
-                console.log('Empty History');
             }
         })
         .catch(err => {
             console.log('localstorage_warning : Failed to Fetch.');
         });
 });
-
 
 
 // Clear all history
@@ -48,17 +42,39 @@ document.getElementById('table__clearAll--btn').addEventListener('click', () => 
 
 
 function buttonAction(type, id) {
+    function flashCopy(flashHTML) {
+        document.getElementById(`table__shortened-${id}`).insertAdjacentHTML('afterbegin', flashHTML);
+        setTimeout(() => {
+            let el = document.getElementById('flash_copy');
+            el.parentNode.removeChild(el);
+        }, 1300);
+    }
     if (type === 'copy') {
         // copy button
         // 1. get url
+        let shortLink = document.getElementById(`shortUrl-${id}`).textContent;
         // 2, add to clipboard
-        // 3. show tooltip
-        // console.log('requested copying');
+        try {
+            let copyTextarea = `${shortLink}`;
+            let input = document.createElement('textarea');
+            document.body.appendChild(input);
+            input.value = copyTextarea;
+            input.focus();
+            input.select();
+            document.execCommand('copy');
+            input.remove();
+            let flashHTML = '<div class="table_body--flashCopy" id="flash_copy">Copied to clipboard!</div>';
+            flashCopy(flashHTML);
+        }
+        catch (error) {
+            let flashHTML = '<div class="table_body--flashCopy" id="flash_copy">Error while Copying!!</div>';
+            flashCopy(flashHTML);
+        }
     }
     else if (type === 'qrcode') {
         // inject template
         let updatedHTML;
-        let html = '<div class="table__qrcodePopup--div" id="qrcode__template"><div class="table__qrcode--popup"><div class="table__qrcode--holder"><img id="table__qrcode" src="%qrcodeLink%" alt="QRCode" /></div><div class="table__closebtn--holder"><button class="table__closebtn--inner" id="close__btn-%num%">Close</button></div></div></div>';
+        let html = '<div class="table__qrcodePopup--div" id="qrcode__template"><div class="table__qrcode--popup"><div class="table__qrcode--holder"><img id="table__qrcode" src="%qrcodeLink%" alt="QRCode" /></div><div class="table__closebtn--holder"><button type="button" class="table__closebtn--inner" id="close__btn-%num%">Close</button></div></div></div>';
         // 1. get short link
         let shortUrl = document.getElementById(`shortUrl-${id}`).textContent;
         // 2. generate qrcode
@@ -95,6 +111,14 @@ function getButtonDetails(e) {
     }
 }
 
-
 // Button Action (qrcode / copy)
 document.getElementById('delegation__element').addEventListener('click', getButtonDetails);
+
+// prevent enter key press
+document.addEventListener('keypress', (e) => {
+    let keyCode = e.which || e.keyCode;
+    // enter key
+    if (keyCode === 13) {
+        e.preventDefault();
+    }
+});

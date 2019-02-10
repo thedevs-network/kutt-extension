@@ -165,6 +165,13 @@ button > * {
                                 width: 56px;
                                 background: linear-gradient(to left, white, white, transparent);
                             }
+                            .table_body--flashCopy {
+                                position: absolute;
+                                left: 0px;
+                                top: 0px;
+                                color: green;
+                                font-size: 11px;
+                            }
                             .table__body--shortenBody {
                                 display: flex;
                                 align-items: center;

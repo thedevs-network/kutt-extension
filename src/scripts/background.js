@@ -50,6 +50,5 @@ browser.runtime.onMessage.addListener(async (request, sender, response) => {
         }
         targetURLs.push(request.mix_URLs);
         browser.storage.local.set({ URL_array: targetURLs });
-        console.log(targetURLs);
     }
 });
