@@ -111,8 +111,10 @@ function getButtonDetails(e) {
     }
 }
 
+
 // Button Action (qrcode / copy)
 document.getElementById('delegation__element').addEventListener('click', getButtonDetails);
+
 
 // prevent enter key press
 document.addEventListener('keypress', (e) => {

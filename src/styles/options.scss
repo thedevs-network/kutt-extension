@@ -37,9 +37,9 @@ body {
             .form__content {
                 padding: 0px 100px 40px;
                 width: 600px;
-                .api__key--label, .password--label {
+                .api__key--label, .password--label, .copy--label {
                     font-size: 16px;
-                    display: block;
+                    display: inline-block;
                     margin-bottom: 0.8em;
                 }
                 .password--label, .api__key--label {
@@ -82,14 +82,16 @@ body {
                             }
                         }
                     }
+                    .api__label--Qmark {
+                        cursor: pointer;
+                    }
                 }
                 .api__key--holder, .password--holder {
                     font-family: $font-nunito;
                     width: 100%;
                     border-radius: 100px;
                     background-color: $color-white;
-                    border: none;
-                    margin-bottom: 2em;
+                    border: none;    
                     box-shadow: $color-shadow-black 0px 10px 35px;
                     color: $color-medium-grey;
                     box-sizing: border-box;
@@ -100,6 +102,7 @@ body {
                     height: 54px;
                 }
                 .api__key--holder {
+                    margin-bottom: 3em;
                     padding: 12px 25px 12px 25px;
                     font-size: 16px;
                 }
@@ -107,11 +110,17 @@ body {
                     font-size: 20px;
                     padding: 8px 25px 8px 25px;
                 }
-                .password__check--holder {
-                    display: flex;
-                    #password__view--checkbox {
-                        margin-right: 0.5em;
-                        cursor: pointer;
+                .view__password--eye {
+                    cursor: pointer;
+                    position: relative;
+                    float: right;
+                    margin-top: -37px;
+                    z-index: 2;
+                    .show__pwd--eye {
+                        margin-right: 20px;
+                        height: 19px;
+                        width: 19px;
+                        pointer-events: none;
                     }
                 }
                 .saved__alert {
@@ -129,7 +138,7 @@ body {
                     border: none;
                     border-radius: 100px;
                     padding: 12px;
-                    margin: 1em 0;
+                    margin: 2.5em 0 1em 0;
                     &:hover {
                         cursor: pointer;
                         background: $color-null-black linear-gradient(to right, $color-grad-dark-blue, $color-light-blue) repeat scroll 0% 0%;
@@ -138,7 +147,8 @@ body {
             }
         }
         .footer__text--holder {
-            font-size: 11px;
+            font-size: 12px;
+            padding-top: 20px;
             letter-spacing: 1px;
             .github__repo--link {
                 border-bottom:  1px dotted $color-black;
