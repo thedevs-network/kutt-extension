@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     browser.tabs.query({ 'active': true, 'lastFocusedWindow': true }).then(tabs => {
 
         let longUrl, start, qrcode__backup = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=';  // in case package fails
-        let API_key, password;
+        let API_key, password, keepHistory, autoCopy;
 
         // extract page url
         longUrl = tabs[0].url;
@@ -63,17 +63,31 @@ document.addEventListener('DOMContentLoaded', () => {
                                 document.getElementById('qr_code').src = `${qrcode__backup}${shortUrl}`;
                             });
                         // 4. Add to history
-                        let long_short_URLs = {
-                            longUrl: longUrl,
-                            shortUrl: shortUrl
-                        };
-                        // pass the object of URLs
-                        browser.storage.local.get(['URL_array'])
+                        browser.storage.local.get(['userOptions'])
                             .then(result => {
-                                browser.runtime.sendMessage({ msg: 'store', mix_URLs: long_short_URLs, URL_array: result.URL_array });
+                                keepHistory = result.userOptions.keepHistory;
+                                autoCopy = result.userOptions.autoCopy;
+                                // auto copy
+                                if (autoCopy) {
+                                    copyLink();
+                                }
+                                if (keepHistory) {
+                                    // pass the object of URLs
+                                    let long_short_URLs = {
+                                        longUrl: longUrl,
+                                        shortUrl: shortUrl
+                                    };
+                                    browser.storage.local.get(['URL_array'])
+                                        .then(result => {
+                                            browser.runtime.sendMessage({ msg: 'store', mix_URLs: long_short_URLs, URL_array: result.URL_array });
+                                        })
+                                        .catch(err => {
+                                            console.log('localstorage_warning : Failed to Fetch.' + err);
+                                        });
+                                }
                             })
                             .catch(err => {
-                                console.log('localstorage_warning : Failed to Fetch.' + err);
+                                console.log('localstorage_warning : Failed to Fetch.');
                             });
                     }
                     else {
@@ -85,6 +99,14 @@ document.addEventListener('DOMContentLoaded', () => {
             else if (API_key === '' || API_key === undefined) {
                 // no api key set
                 updateContent('Set API Key in Options!');
+
+                let defaultOptions = {
+                    pwdForUrls: false,
+                    autoCopy: false,
+                    keepHistory: true
+                };
+                browser.storage.local.set({ userOptions: defaultOptions });
+
                 // open options page
                 setTimeout(() => {
                     browser.runtime.openOptionsPage();
@@ -100,8 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    // 2. Copy Function
-    document.getElementById('button__copy--holder').addEventListener('click', () => {
+    function copyLink() {
         try {
             let copyTextarea = `${shortUrl}`;
             let input = document.createElement('textarea');
@@ -122,7 +143,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 toggleDisplay('.failed__alert');
             }, 1300);
         }
-    });
+    }
+
+
+    // 2. Copy Function
+    document.getElementById('button__copy--holder').addEventListener('click', copyLink);
 
 
     // 3. QR Code
