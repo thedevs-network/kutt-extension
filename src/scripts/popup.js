@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (start === 'http' && API_key !== '' && API_key !== undefined) {
 
                 // send start message to background.js and receive response
-                browser.runtime.sendMessage({ msg: 'start', API_key: `${API_key}`, pageUrl: `${longUrl}`, password: `${password}` }).then(response => {
+                browser.runtime.sendMessage({ msg: 'start', API_key: API_key, pageUrl: longUrl, password: password }).then(response => {
                     // store the shortened link
                     shortUrl = response;
                     // status codes
@@ -80,15 +80,15 @@ document.addEventListener('DOMContentLoaded', () => {
                                     browser.storage.local.get(['URL_array'])
                                         .then(result => {
                                             browser.runtime.sendMessage({ msg: 'store', mix_URLs: long_short_URLs, URL_array: result.URL_array });
-                                        })
-                                        .catch(err => {
-                                            console.log('localstorage_warning : Failed to Fetch.' + err);
                                         });
+                                    // .catch(err => {
+                                    //     console.log('localstorage_warning : Failed to Fetch.' + err);
+                                    // });
                                 }
-                            })
-                            .catch(err => {
-                                console.log('localstorage_warning : Failed to Fetch.');
                             });
+                        // .catch(err => {
+                        //     console.log('localstorage_warning : Failed to Fetch.');
+                        // });
                     }
                     else {
                         updateContent('Invalid Response!');
@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     autoCopy: false,
                     keepHistory: true
                 };
-                browser.storage.local.set({ userOptions: defaultOptions });
+                browser.storage.local.set({ userOptions: defaultOptions, URL_array: [] });
 
                 // open options page
                 setTimeout(() => {
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function copyLink() {
         try {
-            let copyTextarea = `${shortUrl}`;
+            let copyTextarea = shortUrl;
             let input = document.createElement('textarea');
             document.body.appendChild(input);
             input.value = copyTextarea;

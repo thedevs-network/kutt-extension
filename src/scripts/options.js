@@ -3,25 +3,37 @@ import browser from 'webextension-polyfill';
 // update UI - API Key on options page load
 document.addEventListener('DOMContentLoaded', () => {
     // replace the input value with current value on load
-    browser.storage.local.get(['key', 'pwd', 'userOptions']).then(result => {
-        // to strings
-        let API_KEY = `${result.key}`, pwd = `${result.pwd}`;
-        if (API_KEY === 'undefined') {
-            document.getElementById('api__key--value').value = '';
-        } else {
-            document.getElementById('api__key--value').value = API_KEY;
-            document.getElementById('password__label--checkbox').checked = result.userOptions.pwdForUrls;
-            // if disabled -> delete save password
-            if (!result.userOptions.pwdForUrls) {
-                pwd = '';
+    browser.storage.local.get(['key', 'pwd', 'userOptions'])
+        .then(result => {
+            // to string
+            let API_KEY = `${result.key}`, pwd = result.pwd;
+            if (API_KEY === 'undefined') {
+                document.getElementById('api__key--value').value = '';
+            } else {
+                document.getElementById('api__key--value').value = API_KEY;
+                document.getElementById('password__label--checkbox').checked = result.userOptions.pwdForUrls;
+                // if disabled -> delete save password
+                if (!result.userOptions.pwdForUrls) {
+                    pwd = '';
+                }
+                document.getElementById('password--value').value = pwd;
+                // view password holder
+                toggleView(result.userOptions.pwdForUrls);
             }
-            document.getElementById('password--value').value = pwd;
-            // view password holder
-            toggleView(result.userOptions.pwdForUrls);
-        }
-        document.getElementById('autocopy__label--checkbox').checked = result.userOptions.autoCopy;
-        document.getElementById('history__label--checkbox').checked = result.userOptions.keepHistory;
-    });
+            document.getElementById('autocopy__label--checkbox').checked = result.userOptions.autoCopy;
+            document.getElementById('history__label--checkbox').checked = result.userOptions.keepHistory;
+        })
+        .catch(err => {
+            // to be removed on the next major release
+            browser.storage.local.get(['pwd']).then(result => {
+                if (result.pwd.length > 0) {
+                    document.getElementById('password--value').value = result.pwd;
+                    document.getElementById('password__label--checkbox').checked = true;
+                    // view password holder
+                    toggleView(true);
+                }
+            });
+        });
 });
 
 

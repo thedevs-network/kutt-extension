@@ -23,7 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         })
         .catch(err => {
-            console.log('localstorage_warning : Failed to Fetch.');
+            // console.log('localstorage_warning : Failed to Fetch.');
+            alert('Enable History from Options Page');
+            // open options page
+            browser.runtime.openOptionsPage();
         });
 });
 
@@ -34,10 +37,10 @@ document.getElementById('table__clearAll--btn').addEventListener('click', () => 
         .then(() => {
             let el = document.getElementById('delegation__element');
             el.parentNode.removeChild(el);
-        })
-        .catch(err => {
-            console.log('localstorage_warning: Failed to Fetch.');
         });
+    // .catch(err => {
+    //     console.log('localstorage_warning: Failed to Fetch.');
+    // });
 });
 
 
@@ -55,7 +58,7 @@ function buttonAction(type, id) {
         let shortLink = document.getElementById(`shortUrl-${id}`).textContent;
         // 2, add to clipboard
         try {
-            let copyTextarea = `${shortLink}`;
+            let copyTextarea = shortLink;
             let input = document.createElement('textarea');
             document.body.appendChild(input);
             input.value = copyTextarea;
