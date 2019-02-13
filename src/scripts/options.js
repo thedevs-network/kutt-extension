@@ -91,12 +91,13 @@ document.addEventListener('keypress', (e) => {
 // Show Password
 document.getElementById('view__password--eye').addEventListener('click', () => {
     let element = document.getElementById('password--value');
+    let view = document.getElementById('view__password--eye');
     if (element.type === 'password') {
         element.type = 'text';
-        document.querySelector('.show__pwd--eye').src = 'assets/eye-slash.svg';
+        view.textContent = 'HIDE';
     } else {
         element.type = 'password';
-        document.querySelector('.show__pwd--eye').src = 'assets/eye.svg';
+        view.textContent = 'SHOW';
     }
 });
 

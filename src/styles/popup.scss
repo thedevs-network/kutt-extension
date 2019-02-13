@@ -41,41 +41,47 @@ body {
                 align-items: center;
                 justify-content: center;
                 margin: 1.5em 0;
-                #url__content-inner {
-                    margin: 0;
-                    font-size: 20px;
-                    color: $color-dark-grey;    
-                    font-weight: $font-weight-bold;
-                    letter-spacing: 0.03em;
-                }
-            }
-            .buttons__content--holder {
-                display: flex;
-                align-items: center;
-                padding: 0;
-                margin: 0 0 0 16px; 
-                .copy__content--holder,
-                .qrbtn__content--holder {
-                    cursor: pointer;
+                .url__content--url {
                     display: flex;
                     align-items: center;
-                    justify-content: center;
-                    width: 28px;
-                    height: 28px;
-                    margin: 0 6px;
-                    border-radius: 100%;
-                    box-shadow: $color-shadow-light 0px 2px 4px;
-                    background-color: $color-less-white;
-
-                    #button__copy, #button__qrcode {
-                        width: 13px;
-                        height: 13px;
+                    #url__content-inner {
+                        margin: 0;
+                        font-size: 20px;
+                        color: $color-dark-grey;    
+                        font-weight: $font-weight-bold;
+                        letter-spacing: 0.03em;
+                    }
+                    #copy__alert {
+                        position: absolute;
+                        padding-bottom: 3.6em;
+                        color: green;
+                        font-size: 11px;
                     }
                 }
-            }
-            .copy__alert, .failed__alert {
-                margin: 8px 0 1px 0;
-            }
+                .buttons__content--holder {
+                    display: flex;
+                    align-items: center;
+                    padding: 0;
+                    margin: 0 0 0 16px; 
+                    .copy__content--holder,
+                    .qrbtn__content--holder {
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 28px;
+                        height: 28px;
+                        margin: 0 6px;
+                        border-radius: 100%;
+                        box-shadow: $color-shadow-light 0px 2px 4px;
+                        background-color: $color-less-white;
+                        #button__copy, #button__qrcode {
+                            width: 13px;
+                            height: 13px;
+                        }
+                    }
+                }
+            }            
         }
     }
 }

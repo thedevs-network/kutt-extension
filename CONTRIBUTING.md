@@ -51,12 +51,12 @@ height="50">](https://github.com/abhijithvijayan/kutt-extension/releases)
 ## ToDo
 
 - [x] Switch to Promise return Method
-- [x] Fix UI issues in Firefox
-- [x] Using Node-Kutt package(feature request)
-- [ ] History Feature
+- [x] Using Node-Kutt package
+- [x] History Feature
+- [x] Auto Copy Clipboard
+- [x] Toggleable Options
 - [ ] Context Menu
-- [ ] Auto Copy Clipboard
-- [ ] Toggleable Options
+- [ ] Keyboard Shortcut
 
 
 ## Note:

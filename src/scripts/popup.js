@@ -69,7 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
                                 autoCopy = result.userOptions.autoCopy;
                                 // auto copy
                                 if (autoCopy) {
-                                    copyLink();
+                                    setTimeout(() => {
+                                        copyLink();
+                                    }, 500);
                                 }
                                 if (keepHistory) {
                                     // pass the object of URLs
@@ -132,15 +134,18 @@ document.addEventListener('DOMContentLoaded', () => {
             input.select();
             document.execCommand('copy');
             input.remove();
-            toggleDisplay('.copy__alert');
+            flasher('copy__alert');
             setTimeout(() => {
-                toggleDisplay('.copy__alert');
+                flasher('copy__alert');
             }, 1300);
         }
         catch (error) {
-            toggleDisplay('.failed__alert');
+            let el = document.getElementById('copy__alert');
+            el.textContent = 'Error while Copying!';
+            flasher('copy__alert');
             setTimeout(() => {
-                toggleDisplay('.failed__alert');
+                flasher('copy__alert');
+                el.textContent = 'Copied to clipboard!';
             }, 1300);
         }
     }
@@ -156,10 +161,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    // 4. elements visiblity function
+    // 4. elements display function
     function toggleDisplay(className) {
         let element = document.querySelector(className);
         element.classList.toggle('d-none');
+    }
+
+
+    function flasher(id) {
+        let element = document.getElementById(id);
+        element.classList.toggle('v-none');
     }
 
 });

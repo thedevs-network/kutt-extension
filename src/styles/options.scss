@@ -111,17 +111,13 @@ body {
                     padding: 8px 25px 8px 25px;
                 }
                 .view__password--eye {
+                    text-transform: uppercase;
                     cursor: pointer;
                     position: relative;
                     float: right;
-                    margin-top: -37px;
+                    margin-right: 20px;
+                    margin-top: -36px;
                     z-index: 2;
-                    .show__pwd--eye {
-                        margin-right: 20px;
-                        height: 19px;
-                        width: 19px;
-                        pointer-events: none;
-                    }
                 }
                 .saved__alert {
                     margin-top: 2em;
