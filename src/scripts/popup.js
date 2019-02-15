@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Initialize
     browser.tabs.query({ 'active': true, 'lastFocusedWindow': true }).then(tabs => {
 
-        let longUrl, start, qrcode__backup = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=';  // in case package fails
-        let API_key, password, keepHistory, autoCopy;
+        let longUrl, start, API_key, password, keepHistory, autoCopy;
+        const qrcode__backup = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=';  // in case package fails
 
         // extract page url
         longUrl = tabs[0].url;
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
             password = result.pwd;
 
             // update DOM function
-            let updateContent = (value) => {
+            const updateContent = (value) => {
                 document.getElementById('url__content-inner').textContent = value;
             };
 
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 }
                                 if (keepHistory) {
                                     // pass the object of URLs
-                                    let long_short_URLs = {
+                                    const long_short_URLs = {
                                         longUrl: longUrl,
                                         shortUrl: shortUrl
                                     };
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // no api key set
                 updateContent('Set API Key in Options!');
 
-                let defaultOptions = {
+                const defaultOptions = {
                     pwdForUrls: false,
                     autoCopy: false,
                     keepHistory: true
@@ -126,8 +126,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function copyLink() {
         try {
-            let copyTextarea = shortUrl;
-            let input = document.createElement('textarea');
+            const copyTextarea = shortUrl;
+            const input = document.createElement('textarea');
             document.body.appendChild(input);
             input.value = copyTextarea;
             input.focus();
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 1300);
         }
         catch (error) {
-            let el = document.getElementById('copy__alert');
+            const el = document.getElementById('copy__alert');
             el.textContent = 'Error while Copying!';
             flasher('copy__alert');
             setTimeout(() => {
@@ -163,13 +163,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 4. elements display function
     function toggleDisplay(className) {
-        let element = document.querySelector(className);
+        const element = document.querySelector(className);
         element.classList.toggle('d-none');
     }
 
 
     function flasher(id) {
-        let element = document.getElementById(id);
+        const element = document.getElementById(id);
         element.classList.toggle('v-none');
     }
 

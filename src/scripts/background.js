@@ -42,8 +42,8 @@ browser.runtime.onMessage.addListener(async (request, sender, response) => {
     }
     // store urls to history
     else if (request.msg === 'store') {
-        let targetURLs = request.URL_array;
-        let counter = targetURLs.length;
+        const targetURLs = request.URL_array;
+        const counter = targetURLs.length;
         if (counter >= 10) {
             // delete first element
             targetURLs.shift();

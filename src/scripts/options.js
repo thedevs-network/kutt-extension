@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     browser.storage.local.get(['key', 'pwd', 'userOptions'])
         .then(result => {
             // to string
-            let API_KEY = `${result.key}`, pwd = result.pwd;
+            const API_KEY = `${result.key}`;
+            let pwd = result.pwd;
             if (API_KEY === 'undefined') {
                 document.getElementById('api__key--value').value = '';
             } else {
@@ -38,12 +39,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // Store Data and alert message
-let saveData = () => {
+const saveData = () => {
     let password = document.getElementById('password--value').value;
-    let API_KEY = document.getElementById('api__key--value').value;
+    const API_KEY = document.getElementById('api__key--value').value;
     let pwdForUrls = document.getElementById('password__label--checkbox').checked;
-    let autoCopy = document.getElementById('autocopy__label--checkbox').checked;
-    let keepHistory = document.getElementById('history__label--checkbox').checked;
+    const autoCopy = document.getElementById('autocopy__label--checkbox').checked;
+    const keepHistory = document.getElementById('history__label--checkbox').checked;
 
     if (password == '') {
         pwdForUrls = false;
@@ -52,7 +53,7 @@ let saveData = () => {
         password = '';
     }
 
-    let userOptions = {
+    const userOptions = {
         pwdForUrls: pwdForUrls,
         autoCopy: autoCopy,
         keepHistory: keepHistory
@@ -61,7 +62,7 @@ let saveData = () => {
     // store value locally
     browser.storage.local.set({ key: API_KEY, pwd: password, URL_array: [], userOptions: userOptions }).then(() => {
         // Saved Alert
-        let element = document.getElementById('button__submit');
+        const element = document.getElementById('button__submit');
         element.textContent = 'Saved!';
         setTimeout(() => {
             element.textContent = 'Save';
@@ -75,9 +76,7 @@ let saveData = () => {
 
 
 // on save button click
-document.getElementById('button__submit').addEventListener('click', () => {
-    saveData();
-});
+document.getElementById('button__submit').addEventListener('click', saveData);
 
 
 // on enter key press
@@ -90,8 +89,8 @@ document.addEventListener('keypress', (e) => {
 
 // Show Password
 document.getElementById('view__password--eye').addEventListener('click', () => {
-    let element = document.getElementById('password--value');
-    let view = document.getElementById('view__password--eye');
+    const element = document.getElementById('password--value');
+    const view = document.getElementById('view__password--eye');
     if (element.type === 'password') {
         element.type = 'text';
         view.textContent = 'HIDE';
@@ -104,7 +103,7 @@ document.getElementById('view__password--eye').addEventListener('click', () => {
 
 // Password Holder View Toggle
 function toggleView(checked) {
-    let pwdHolder = document.getElementById('pwd__holder');
+    const pwdHolder = document.getElementById('pwd__holder');
     if (checked) {
         pwdHolder.classList.remove('d-none');
     } else {
@@ -115,6 +114,6 @@ function toggleView(checked) {
 
 // Password Option toggle key press
 document.getElementById('password__label--switch').addEventListener('click', () => {
-    let checked = document.getElementById('password__label--checkbox').checked;
+    const checked = document.getElementById('password__label--checkbox').checked;
     toggleView(checked);
 });
