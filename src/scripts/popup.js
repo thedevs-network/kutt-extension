@@ -83,14 +83,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                         .then(result => {
                                             browser.runtime.sendMessage({ msg: 'store', mix_URLs: long_short_URLs, URL_array: result.URL_array });
                                         });
-                                    // .catch(err => {
-                                    //     console.log('localstorage_warning : Failed to Fetch.' + err);
-                                    // });
                                 }
                             });
-                        // .catch(err => {
-                        //     console.log('localstorage_warning : Failed to Fetch.');
-                        // });
                     }
                     else {
                         updateContent('Invalid Response!');
@@ -107,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     autoCopy: false,
                     keepHistory: true
                 };
+                // set defaults
                 browser.storage.local.set({ userOptions: defaultOptions, URL_array: [] });
 
                 // open options page

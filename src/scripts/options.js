@@ -23,17 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             document.getElementById('autocopy__label--checkbox').checked = result.userOptions.autoCopy;
             document.getElementById('history__label--checkbox').checked = result.userOptions.keepHistory;
-        })
-        .catch(err => {
-            // to be removed on the next major release
-            browser.storage.local.get(['pwd']).then(result => {
-                if (result.pwd.length > 0) {
-                    document.getElementById('password--value').value = result.pwd;
-                    document.getElementById('password__label--checkbox').checked = true;
-                    // view password holder
-                    toggleView(true);
-                }
-            });
         });
 });
 

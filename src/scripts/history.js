@@ -6,27 +6,27 @@ document.addEventListener('DOMContentLoaded', () => {
     let updatedHTML;
     const html = '<tr class="table__body--holder" id="table__body-%num%"><td class="table__body--original"><a href="%longLink%" class="table__body--originalURL" target="_blank" rel="noopener">%longLink%</a></td><td class="table__body--shortened" id="table__shortened-%num%"><div class="table__body--shortenBody"><a href="%shortLink%" id="shortUrl-%num%" class="table__body--shortenURL" target="_blank" rel="noopener">%shortLink%</a></div></td><td class="table__body--functionBtns"><div class="table__body--btnHolder" id="btns-%num%"><button type="button" class="table__body--copy" id="copy-%num%" title="Copy"><img class="selectDisable icon__img" src="assets/copy.svg" alt="copy" /></button><button type="button" class="table__body--qrcode" id="qrcode-%num%" title="QR Code"><img class="selectDisable icon__img" src="assets/qrcode.svg" alt="QR Code" /></button></div></td></tr>';
     // get longURL, shortURL
-    browser.storage.local.get(['URL_array'])
+    browser.storage.local.get(['userOptions', 'URL_array'])
         .then(result => {
-            const count = result.URL_array.length;
-            // update DOM
-            if (count > 0) {
-                let pass = 0;
-                for (let el of result.URL_array) {
-                    // Regular Expression Based Implementation
-                    updatedHTML = html.replace(/%longLink%/g, el.longUrl);
-                    updatedHTML = updatedHTML.replace(/%num%/g, ++pass);
-                    updatedHTML = updatedHTML.replace(/%shortLink%/g, el.shortUrl);
-                    // inject to DOM
-                    document.getElementById('delegation__element').insertAdjacentHTML('afterbegin', updatedHTML);
+            if (result.userOptions.keepHistory === true) {
+                const count = result.URL_array.length;
+                // update DOM
+                if (count > 0) {
+                    let pass = 0;
+                    for (let el of result.URL_array) {
+                        // Regular Expression Based Implementation
+                        updatedHTML = html.replace(/%longLink%/g, el.longUrl);
+                        updatedHTML = updatedHTML.replace(/%num%/g, ++pass);
+                        updatedHTML = updatedHTML.replace(/%shortLink%/g, el.shortUrl);
+                        // inject to DOM
+                        document.getElementById('delegation__element').insertAdjacentHTML('afterbegin', updatedHTML);
+                    }
                 }
+            } else {
+                alert('Enable History from Options Page');
+                // open options page
+                browser.runtime.openOptionsPage();
             }
-        })
-        .catch(err => {
-            // console.log('localstorage_warning : Failed to Fetch.');
-            alert('Enable History from Options Page');
-            // open options page
-            browser.runtime.openOptionsPage();
         });
 });
 
@@ -38,9 +38,6 @@ document.getElementById('table__clearAll--btn').addEventListener('click', () => 
             const el = document.getElementById('delegation__element');
             el.parentNode.removeChild(el);
         });
-    // .catch(err => {
-    //     console.log('localstorage_warning: Failed to Fetch.');
-    // });
 });
 
 
@@ -53,7 +50,6 @@ function buttonAction(type, id) {
         }, 1300);
     }
     if (type === 'copy') {
-        // copy button
         // 1. get url
         const shortLink = document.getElementById(`shortUrl-${id}`).textContent;
         // 2, add to clipboard
