@@ -75,6 +75,7 @@ View the Contributing guidelines [here](CONTRIBUTING.md).
 If you like my work, you can 
 
 <a href="https://www.buymeacoffee.com/abhijithvijayan" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+<a href="https://www.patreon.com/join/abhijithvijayan?" target="_blank"><img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become A Patron" style="height: 37px !important;width: auto !important; margin-left: 10px;" ></a>
 
 ## Licence
 Code released under the [MIT License](LICENSE).

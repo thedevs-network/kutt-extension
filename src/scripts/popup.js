@@ -1,15 +1,20 @@
 import browser from 'webextension-polyfill';
 import QRCode from 'qrcode';
 
-let shortUrl;
 
+let shortUrl, longUrl, start, API_key, password, keepHistory, autoCopy;
+const qrcode__holder = document.getElementById('qr_code'),
+    url__holder = document.getElementById('url__content-inner'),
+    copy__btn = document.getElementById('button__copy--holder'),
+    qrcode__btn = document.getElementById('button__qrcode--holder'),
+    qrcode__api = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=';
+
+
+// Initialize
 document.addEventListener('DOMContentLoaded', () => {
 
-    // 1. Initialize
+    // 1. KuttUrl
     browser.tabs.query({ 'active': true, 'lastFocusedWindow': true }).then(tabs => {
-
-        let longUrl, start, API_key, password, keepHistory, autoCopy;
-        const qrcode__backup = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=';  // in case package fails
 
         // extract page url
         longUrl = tabs[0].url;
@@ -24,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // update DOM function
             const updateContent = (value) => {
-                document.getElementById('url__content-inner').textContent = value;
+                url__holder.textContent = value;
             };
 
             if (start === 'http' && API_key !== '' && API_key !== undefined) {
@@ -39,8 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             updateContent('API Limit Exceeded!');
                         } else if (response === 401) {
                             updateContent('Invalid API Key');
-                            // } else if (response === 400) {
-                            //     updateContent('Unknown Error!!!');
                         } else if (response === 504) {
                             updateContent('Time-out!');
                         } else {
@@ -56,11 +59,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         // 3. QR Code Generation
                         QRCode.toDataURL(shortUrl)
                             .then(url => {
-                                document.getElementById('qr_code').src = url;
+                                qrcode__holder.src = url;
                             })
                             .catch(err => {
                                 // fetch qrcode from http://goqr.me (in case package fails)
-                                document.getElementById('qr_code').src = `${qrcode__backup}${shortUrl}`;
+                                qrcode__holder.src = `${qrcode__api}${shortUrl}`;
                             });
                         // 4. Add to history
                         browser.storage.local.get(['userOptions'])
@@ -119,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
+    // 2. Copy Function
     function copyLink() {
         try {
             const copyTextarea = shortUrl;
@@ -146,23 +150,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // 2. Copy Function
-    document.getElementById('button__copy--holder').addEventListener('click', copyLink);
+    // 3. Copy Button
+    copy__btn.addEventListener('click', copyLink);
 
 
-    // 3. QR Code
-    document.getElementById('button__qrcode--holder').addEventListener('click', () => {
+    // 4. QR Code Button
+    qrcode__btn.addEventListener('click', () => {
         toggleDisplay('.qrcode__content--holder');
     });
 
 
-    // 4. elements display function
+    // 5. Display function
     function toggleDisplay(className) {
         const element = document.querySelector(className);
         element.classList.toggle('d-none');
     }
 
-
+    // 6. Copy alert
     function flasher(id) {
         const element = document.getElementById(id);
         element.classList.toggle('v-none');

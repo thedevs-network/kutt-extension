@@ -1,5 +1,17 @@
 import browser from 'webextension-polyfill';
 
+
+const pwd__holder = document.getElementById('pwd__holder'),
+    submit__btn = document.getElementById('button__submit'),
+    pwd__value = document.getElementById('password--value'),
+    api__holder = document.getElementById('api__key--value'),
+    pwd__view = document.getElementById('view__password--eye'),
+    pwd__switch = document.getElementById('password__label--switch'),
+    pwd__checkbox = document.getElementById('password__label--checkbox'),
+    history__checkbox = document.getElementById('history__label--checkbox'),
+    autocopy__checkbox = document.getElementById('autocopy__label--checkbox');
+
+
 // update UI - API Key on options page load
 document.addEventListener('DOMContentLoaded', () => {
     // replace the input value with current value on load
@@ -9,31 +21,31 @@ document.addEventListener('DOMContentLoaded', () => {
             const API_KEY = `${result.key}`;
             let pwd = result.pwd;
             if (API_KEY === 'undefined') {
-                document.getElementById('api__key--value').value = '';
+                api__holder.value = '';
             } else {
-                document.getElementById('api__key--value').value = API_KEY;
-                document.getElementById('password__label--checkbox').checked = result.userOptions.pwdForUrls;
+                api__holder.value = API_KEY;
+                pwd__checkbox.checked = result.userOptions.pwdForUrls;
                 // if disabled -> delete save password
                 if (!result.userOptions.pwdForUrls) {
                     pwd = '';
                 }
-                document.getElementById('password--value').value = pwd;
+                pwd__value.value = pwd;
                 // view password holder
                 toggleView(result.userOptions.pwdForUrls);
             }
-            document.getElementById('autocopy__label--checkbox').checked = result.userOptions.autoCopy;
-            document.getElementById('history__label--checkbox').checked = result.userOptions.keepHistory;
+            autocopy__checkbox.checked = result.userOptions.autoCopy;
+            history__checkbox.checked = result.userOptions.keepHistory;
         });
 });
 
 
 // Store Data and alert message
 const saveData = () => {
-    let password = document.getElementById('password--value').value;
-    const API_KEY = document.getElementById('api__key--value').value;
-    let pwdForUrls = document.getElementById('password__label--checkbox').checked;
-    const autoCopy = document.getElementById('autocopy__label--checkbox').checked;
-    const keepHistory = document.getElementById('history__label--checkbox').checked;
+    let password = pwd__value.value;
+    const API_KEY = api__holder.value;
+    let pwdForUrls = pwd__checkbox.checked;
+    const autoCopy = autocopy__checkbox.checked;
+    const keepHistory = history__checkbox.checked;
 
     if (password == '') {
         pwdForUrls = false;
@@ -51,10 +63,9 @@ const saveData = () => {
     // store value locally
     browser.storage.local.set({ key: API_KEY, pwd: password, URL_array: [], userOptions: userOptions }).then(() => {
         // Saved Alert
-        const element = document.getElementById('button__submit');
-        element.textContent = 'Saved!';
+        submit__btn.textContent = 'Saved!';
         setTimeout(() => {
-            element.textContent = 'Save';
+            submit__btn.textContent = 'Save';
             // close current tab
             browser.tabs.getCurrent().then((tabInfo) => {
                 browser.tabs.remove(tabInfo.id);
@@ -65,7 +76,7 @@ const saveData = () => {
 
 
 // on save button click
-document.getElementById('button__submit').addEventListener('click', saveData);
+submit__btn.addEventListener('click', saveData);
 
 
 // on enter key press
@@ -77,32 +88,30 @@ document.addEventListener('keypress', (e) => {
 
 
 // Show Password
-document.getElementById('view__password--eye').addEventListener('click', () => {
-    const element = document.getElementById('password--value');
-    const view = document.getElementById('view__password--eye');
+pwd__view.addEventListener('click', () => {
+    const element = pwd__value;
     if (element.type === 'password') {
         element.type = 'text';
-        view.textContent = 'HIDE';
+        pwd__view.textContent = 'HIDE';
     } else {
         element.type = 'password';
-        view.textContent = 'SHOW';
+        pwd__view.textContent = 'SHOW';
     }
 });
 
 
 // Password Holder View Toggle
 function toggleView(checked) {
-    const pwdHolder = document.getElementById('pwd__holder');
     if (checked) {
-        pwdHolder.classList.remove('d-none');
+        pwd__holder.classList.remove('d-none');
     } else {
-        pwdHolder.classList.add('d-none');
+        pwd__holder.classList.add('d-none');
     }
 }
 
 
 // Password Option toggle key press
-document.getElementById('password__label--switch').addEventListener('click', () => {
-    const checked = document.getElementById('password__label--checkbox').checked;
+pwd__switch.addEventListener('click', () => {
+    const checked = pwd__checkbox.checked;
     toggleView(checked);
 });
