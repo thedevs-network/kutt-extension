@@ -45,13 +45,15 @@ body {
                     #url__content-inner {
                         margin: 0;
                         font-size: 20px;
+                        line-height: 1;
                         color: $color-dark-grey;    
                         font-weight: $font-weight-bold;
                         letter-spacing: 0.03em;
                     }
                     #copy__alert {
                         position: absolute;
-                        padding-bottom: 3.6em;
+                        margin-top: 3.6em;
+                        top: 0px;
                         color: green;
                         font-size: 11px;
                     }

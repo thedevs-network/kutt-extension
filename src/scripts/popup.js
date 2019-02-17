@@ -34,17 +34,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     // store the shortened link
                     shortUrl = response;
                     // status codes
-                    if (!isNaN(shortUrl)) {
-                        if (shortUrl === 429) {
+                    if (!isNaN(response)) {
+                        if (response === 429) {
                             updateContent('API Limit Exceeded!');
-                        } else if (shortUrl === 401) {
+                        } else if (response === 401) {
                             updateContent('Invalid API Key');
-                            // } else if (shortUrl === 400) {
+                            // } else if (response === 400) {
                             //     updateContent('Unknown Error!!!');
-                        } else if (shortUrl === 504) {
+                        } else if (response === 504) {
                             updateContent('Time-out!');
                         } else {
-                            updateContent('Unknown Error!!!');
+                            updateContent('Some error occured');
                         }
                     }
                     // valid response
