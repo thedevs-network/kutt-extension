@@ -40,7 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Clear all history
 clear__btn.addEventListener('click', () => {
-    browser.storage.local.set({ URL_array: [] })
+    browser.storage.local.set({
+            URL_array: []
+        })
         .then(() => {
             main__element.parentNode.removeChild(main__element);
         });
@@ -69,13 +71,11 @@ function buttonAction(type, id) {
             input.remove();
             const flashHTML = '<div class="table_body--flashCopy" id="flash_copy">Copied to clipboard!</div>';
             flashCopy(flashHTML);
-        }
-        catch (error) {
+        } catch (error) {
             const flashHTML = '<div class="table_body--flashCopy" id="flash_copy">Error while Copying!!</div>';
             flashCopy(flashHTML);
         }
-    }
-    else if (type === 'qrcode') {
+    } else if (type === 'qrcode') {
         // inject template
         let updatedHTML;
         const html = '<div class="table__qrcodePopup--div" id="qrcode__template"><div class="table__qrcode--popup"><div class="table__qrcode--holder"><img id="table__qrcode" src="%qrcodeLink%" alt="QRCode" /></div><div class="table__closebtn--holder"><button type="button" class="table__closebtn--inner" id="close__btn-%num%">Close</button></div></div></div>';
@@ -95,8 +95,7 @@ function buttonAction(type, id) {
                 updatedHTML = html.replace('%qrcodeLink%', `${qrcode__api}${shortUrl}`);
                 document.getElementById(`btns-${id}`).insertAdjacentHTML('afterend', updatedHTML);
             });
-    }
-    else if (type === 'close__btn') {
+    } else if (type === 'close__btn') {
         qrcode__child.parentNode.removeChild(qrcode__child);
     }
 }

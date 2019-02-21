@@ -21,8 +21,7 @@ async function getShortURL(API_key, URLtoShorten, password) {
         // time out
         if (e.code === 'ECONNABORTED') {
             return 504;
-        }
-        else if (e.response) {
+        } else if (e.response) {
             // return error code
             return e.response.status;
         }
@@ -48,6 +47,8 @@ browser.runtime.onMessage.addListener(async (request, sender, response) => {
             targetURLs.shift();
         }
         targetURLs.push(request.mix_URLs);
-        browser.storage.local.set({ URL_array: targetURLs });
+        browser.storage.local.set({
+            URL_array: targetURLs
+        });
     }
 });

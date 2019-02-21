@@ -61,7 +61,12 @@ const saveData = () => {
     };
 
     // store value locally
-    browser.storage.local.set({ key: API_KEY, pwd: password, URL_array: [], userOptions: userOptions }).then(() => {
+    browser.storage.local.set({
+        key: API_KEY,
+        pwd: password,
+        URL_array: [],
+        userOptions: userOptions
+    }).then(() => {
         // Saved Alert
         submit__btn.textContent = 'Saved!';
         setTimeout(() => {

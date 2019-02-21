@@ -14,7 +14,10 @@ const qrcode__holder = document.getElementById('qr_code'),
 document.addEventListener('DOMContentLoaded', () => {
 
     // 1. KuttUrl
-    browser.tabs.query({ 'active': true, 'lastFocusedWindow': true }).then(tabs => {
+    browser.tabs.query({
+        'active': true,
+        'lastFocusedWindow': true
+    }).then(tabs => {
 
         // extract page url
         longUrl = tabs[0].url;
@@ -35,7 +38,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (start === 'http' && API_key !== '' && API_key !== undefined) {
 
                 // send start message to background.js and receive response
-                browser.runtime.sendMessage({ msg: 'start', API_key: API_key, pageUrl: longUrl, password: password }).then(response => {
+                browser.runtime.sendMessage({
+                    msg: 'start',
+                    API_key: API_key,
+                    pageUrl: longUrl,
+                    password: password
+                }).then(response => {
                     // store the shortened link
                     shortUrl = response;
                     // status codes
@@ -84,18 +92,20 @@ document.addEventListener('DOMContentLoaded', () => {
                                     };
                                     browser.storage.local.get(['URL_array'])
                                         .then(result => {
-                                            browser.runtime.sendMessage({ msg: 'store', mix_URLs: long_short_URLs, URL_array: result.URL_array });
+                                            browser.runtime.sendMessage({
+                                                msg: 'store',
+                                                mix_URLs: long_short_URLs,
+                                                URL_array: result.URL_array
+                                            });
                                         });
                                 }
                             });
-                    }
-                    else {
+                    } else {
                         updateContent('Invalid Response!');
                     }
                 });
 
-            }
-            else if (API_key === '' || API_key === undefined) {
+            } else if (API_key === '' || API_key === undefined) {
                 // no api key set
                 updateContent('Set API Key in Options!');
 
@@ -105,15 +115,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     keepHistory: true
                 };
                 // set defaults
-                browser.storage.local.set({ userOptions: defaultOptions, URL_array: [] });
+                browser.storage.local.set({
+                    userOptions: defaultOptions,
+                    URL_array: []
+                });
 
                 // open options page
                 setTimeout(() => {
                     browser.runtime.openOptionsPage();
                 }, 900);
 
-            }
-            else if (start !== 'http') {
+            } else if (start !== 'http') {
                 updateContent('Not a Valid URL!!');
             }
 
@@ -137,8 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 flasher('copy__alert');
             }, 1300);
-        }
-        catch (error) {
+        } catch (error) {
             const el = document.getElementById('copy__alert');
             el.textContent = 'Error while Copying!';
             flasher('copy__alert');

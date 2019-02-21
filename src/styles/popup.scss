@@ -8,6 +8,7 @@ body {
 
 #home {
     min-width: 340px;
+
     .container {
         padding: 10px;
 
@@ -16,40 +17,47 @@ body {
             align-items: center;
             justify-content: space-between;
             line-height: 1;
+
             .main__logo--holder {
                 .main__logo {
                     width: 22px;
                     height: 22px;
                 }
             }
+
             .main__list--holder {
                 .list__button {
                     display: inline-block;
                     margin-right: 10px;
+
                     .button__icon {
-                        width: 16px; 
+                        width: 16px;
                         height: 16px;
                     }
                 }
             }
         }
+
         .content__holder {
             .url__content--holder {
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 margin: 1.5em 0;
+
                 .url__content--url {
                     display: flex;
                     align-items: center;
+
                     #url__content-inner {
                         margin: 0;
                         font-size: 20px;
                         line-height: 1;
-                        color: $color-dark-grey;    
+                        color: $color-dark-grey;
                         font-weight: $font-weight-bold;
                         letter-spacing: 0.03em;
                     }
+
                     #copy__alert {
                         position: absolute;
                         margin-top: 3.6em;
@@ -58,11 +66,13 @@ body {
                         font-size: 11px;
                     }
                 }
+
                 .buttons__content--holder {
                     display: flex;
                     align-items: center;
                     padding: 0;
-                    margin: 0 0 0 16px; 
+                    margin: 0 0 0 16px;
+
                     .copy__content--holder,
                     .qrbtn__content--holder {
                         cursor: pointer;
@@ -75,13 +85,15 @@ body {
                         border-radius: 100%;
                         box-shadow: $color-shadow-light 0px 2px 4px;
                         background-color: $color-less-white;
-                        #button__copy, #button__qrcode {
+
+                        #button__copy,
+                        #button__qrcode {
                             width: 13px;
                             height: 13px;
                         }
                     }
                 }
-            }            
+            }
         }
     }
 }
