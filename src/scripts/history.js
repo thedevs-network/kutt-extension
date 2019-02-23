@@ -2,9 +2,7 @@ import browser from 'webextension-polyfill';
 import QRCode from 'qrcode';
 
 
-const copy__alert = document.getElementById('flash_copy'),
-    qrcode__child = document.getElementById('qrcode__template'),
-    clear__btn = document.getElementById('table__clearAll--btn'),
+const clear__btn = document.getElementById('table__clearAll--btn'),
     main__element = document.getElementById('delegation__element');
 
 
@@ -40,12 +38,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Clear all history
 clear__btn.addEventListener('click', () => {
-    browser.storage.local.set({
-            URL_array: []
-        })
-        .then(() => {
-            main__element.parentNode.removeChild(main__element);
-        });
+    browser.storage.local.set({ URL_array: [] }).then(() => {
+        main__element.parentNode.removeChild(main__element);
+    });
 });
 
 
@@ -53,6 +48,7 @@ function buttonAction(type, id) {
     function flashCopy(flashHTML) {
         document.getElementById(`table__shortened-${id}`).insertAdjacentHTML('afterbegin', flashHTML);
         setTimeout(() => {
+            const copy__alert = document.getElementById('flash_copy');
             copy__alert.parentNode.removeChild(copy__alert);
         }, 1300);
     }
@@ -96,6 +92,7 @@ function buttonAction(type, id) {
                 document.getElementById(`btns-${id}`).insertAdjacentHTML('afterend', updatedHTML);
             });
     } else if (type === 'close__btn') {
+        const qrcode__child = document.getElementById('qrcode__template');
         qrcode__child.parentNode.removeChild(qrcode__child);
     }
 }
