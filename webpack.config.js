@@ -1,17 +1,19 @@
-const path = require('path');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const ZipPlugin = require('zip-webpack-plugin');
+const path = require('path');
 
 module.exports = () => ({
     entry: {
-        options: ['./src/scripts/options.js', './src/styles/options.scss'],
-        popup: ['./src/scripts/popup.js', './src/styles/popup.scss'],
-        history: ['./src/scripts/history.js', './src/styles/history.scss'],
-        background: ['./src/scripts/background.js']
+        options: ['./src/scripts/options.js'],
+        popup: ['./src/scripts/popup.js'],
+        history: ['./src/scripts/history.js'],
+        background: ['./src/scripts/background.js'],
+        styles: ['./src/styles/popup.scss', './src/styles/history.scss', './src/styles/options.scss']
     },
     output: {
         path: path.resolve(__dirname, 'extension', process.env.TARGET),
@@ -49,8 +51,7 @@ module.exports = () => ({
                         options: {
                             name: '[name].css',
                             context: './src/styles/',
-                            outputPath: 'css/',
-                            publicPath: '../'
+                            outputPath: 'css/'
                         }
                     },
                     {
@@ -84,6 +85,7 @@ module.exports = () => ({
         ]
     },
     plugins: [
+        new FixStyleOnlyEntriesPlugin(),
         new CleanWebpackPlugin([
             `extension/${process.env.TARGET}`,
             `extension/${process.env.TARGET}.zip`
@@ -139,6 +141,6 @@ module.exports = () => ({
     },
     devServer: {
         port: 3000,
-        contentBase: './extensions'
+        contentBase: './extension'
     }
 });
