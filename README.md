@@ -1,6 +1,6 @@
 <div align="center"><img width="150" src="src/assets/logo.png" /></div>
 <h1 align="center">kutt-extension</h1>
-<p align="center">Browser extension to to shorten URLs for <a href="https://kutt.it">Kutt.it</a></p>
+<p align="center">Browser extension to shorten long URLs based on <a href="https://kutt.it">Kutt.it</a></p>
 
 <div align="center">
   <a href="https://travis-ci.org/abhijithvijayan/kutt-extension">
@@ -24,13 +24,14 @@
 </div>
 
 ## Features
-- Cross Browser Support
 - Minimal UI
 - Instant QR Code
-- Supports Password for URLs
-- History Feature
+- Cross Browser Support
+- Supports Secure Passwords for URLs
+- History & Incognito Feature
+- Auto Copy Feature
 - Free and Open Source
-- WebExtensions API
+- Uses WebExtensions API
 
 ## Browser Support
 
@@ -61,9 +62,16 @@
   <img width="350" src="https://i.imgur.com/n44Eytz.gif" alt="image1" />
   <img width="350" src="https://i.imgur.com/FJJ2FPU.gif" alt="image2" />
 </div>
-<img width="500" src="https://i.imgur.com/mXqitkW.png" alt="image3" />
-<img width="500" src="https://i.imgur.com/tgLecm2.png" alt="image4" />
-<img width="500" src="https://i.imgur.com/kjHY6aa.png" alt="image5" />
+<p align="center">
+    <img width="500" src="https://i.imgur.com/mXqitkW.png" alt="image3" />
+</p>
+<p align="center">
+    <img width="500" src="https://i.imgur.com/tgLecm2.png" alt="image4" />
+</p>
+<p align="center">
+    <img width="500" src="https://i.imgur.com/kjHY6aa.png" alt="image5" />
+</p>
+<br />
 
 ## Note:
 - <a href="https://kutt.it">Kutt.it</a> API permits **50** URLs shortening per day using the API Key.
@@ -72,10 +80,12 @@
 ## Contributing and Support
 View the Contributing guidelines [here](CONTRIBUTING.md).
 
+Original Repo: [thedevs-network/kutt](https://github.com/thedevs-network/kutt)
+
 If you like my work, you can 
 
 <a href="https://www.buymeacoffee.com/abhijithvijayan" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
-<a href="https://www.patreon.com/join/abhijithvijayan?" target="_blank"><img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become A Patron" style="height: 37px !important;width: auto !important; margin-left: 10px;" ></a>
+<a href="https://www.patreon.com/join/abhijithvijayan?" target="_blank"><img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become A Patron" style="height: 35px !important;width: auto !important; margin-left: 10px;" ></a>
 
 ## Licence
 Code released under the [MIT License](LICENSE).
