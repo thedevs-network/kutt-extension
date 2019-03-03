@@ -1,17 +1,18 @@
 import browser from 'webextension-polyfill';
+import { $, $$ } from './bling';
 import QRCode from 'qrcode';
 
 
 let shortUrl, longUrl, start, API_key, password, keepHistory, autoCopy;
-const qrcode__holder = document.getElementById('qr_code'),
-    url__holder = document.getElementById('url__content-inner'),
-    copy__btn = document.getElementById('button__copy--holder'),
-    qrcode__btn = document.getElementById('button__qrcode--holder'),
+const qrcode__holder = '#qr_code',
+    url__holder = '#url__content-inner',
+    copy__btn = '#button__copy--holder',
+    qrcode__btn = '#button__qrcode--holder',
     qrcode__api = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=';
 
 
 // Initialize
-document.addEventListener('DOMContentLoaded', () => {
+document.on('DOMContentLoaded', () => {
 
     // 1. KuttUrl
     browser.tabs.query({
@@ -32,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // update DOM function
             const updateContent = (value) => {
-                url__holder.textContent = value;
+                $(url__holder).textContent = value;
             };
 
             if (start === 'http' && API_key !== '' && API_key !== undefined) {
@@ -67,11 +68,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         // 3. QR Code Generation
                         QRCode.toDataURL(shortUrl)
                             .then(url => {
-                                qrcode__holder.src = url;
+                                $(qrcode__holder).src = url;
                             })
                             .catch(err => {
                                 // fetch qrcode from http://goqr.me (in case package fails)
-                                qrcode__holder.src = `${qrcode__api}${shortUrl}`;
+                                $(qrcode__holder).src = `${qrcode__api}${shortUrl}`;
                             });
                         // 4. Add to history
                         browser.storage.local.get(['userOptions'])
@@ -114,6 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     autoCopy: false,
                     keepHistory: true
                 };
+
                 // set defaults
                 browser.storage.local.set({
                     userOptions: defaultOptions,
@@ -145,16 +147,16 @@ document.addEventListener('DOMContentLoaded', () => {
             input.select();
             document.execCommand('copy');
             input.remove();
-            flasher('copy__alert');
+            flasher('#copy__alert');
             setTimeout(() => {
-                flasher('copy__alert');
+                flasher('#copy__alert');
             }, 1300);
         } catch (error) {
-            const el = document.getElementById('copy__alert');
+            const el = $('#copy__alert');
             el.textContent = 'Error while Copying!';
-            flasher('copy__alert');
+            flasher('#copy__alert');
             setTimeout(() => {
-                flasher('copy__alert');
+                flasher('#copy__alert');
                 el.textContent = 'Copied to clipboard!';
             }, 1300);
         }
@@ -162,25 +164,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // 3. Copy Button
-    copy__btn.addEventListener('click', copyLink);
+    $(copy__btn).on('click', copyLink);
 
 
     // 4. QR Code Button
-    qrcode__btn.addEventListener('click', () => {
+    $(qrcode__btn).on('click', () => {
         toggleDisplay('.qrcode__content--holder');
     });
 
 
     // 5. Display function
-    function toggleDisplay(className) {
-        const element = document.querySelector(className);
-        element.classList.toggle('d-none');
+    function toggleDisplay(element) {
+        $(element).classList.toggle('d-none');
     }
 
+    
     // 6. Copy alert
     function flasher(id) {
-        const element = document.getElementById(id);
-        element.classList.toggle('v-none');
+        $(id).classList.toggle('v-none');
     }
 
 });
