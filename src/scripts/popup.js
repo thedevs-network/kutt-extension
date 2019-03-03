@@ -139,25 +139,26 @@ document.on('DOMContentLoaded', () => {
     // 2. Copy Function
     function copyLink() {
         try {
-            const copyTextarea = shortUrl;
-            const input = document.createElement('textarea');
-            document.body.appendChild(input);
-            input.value = copyTextarea;
-            input.focus();
-            input.select();
+            $('#copy__alert').textContent = 'Copied to clipboard!';
+            const el = document.createElement('textarea');
+            el.value = shortUrl;
+            el.setAttribute('readonly', '');
+            el.style.position = 'absolute';
+            el.style.left = '-9999px';
+            document.body.appendChild(el);
+            el.select();
             document.execCommand('copy');
-            input.remove();
+            document.body.removeChild(el);
             flasher('#copy__alert');
             setTimeout(() => {
                 flasher('#copy__alert');
             }, 1300);
+
         } catch (error) {
-            const el = $('#copy__alert');
-            el.textContent = 'Error while Copying!';
+            $('#copy__alert').textContent = 'Error while Copying!';
             flasher('#copy__alert');
             setTimeout(() => {
                 flasher('#copy__alert');
-                el.textContent = 'Copied to clipboard!';
             }, 1300);
         }
     }

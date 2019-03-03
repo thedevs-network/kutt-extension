@@ -85,7 +85,7 @@ module.exports = () => ({
         ]
     },
     plugins: [
-        new FixStyleOnlyEntriesPlugin(),
+        new FixStyleOnlyEntriesPlugin({ silent: true }),
         new CleanWebpackPlugin([
             `extension/${process.env.TARGET}`,
             `extension/${process.env.TARGET}.zip`

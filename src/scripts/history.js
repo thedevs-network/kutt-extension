@@ -59,14 +59,15 @@ function buttonAction(type, id) {
         const shortLink = $(`#shortUrl-${id}`).textContent;
         // 2, add to clipboard
         try {
-            const copyTextarea = shortLink;
-            const input = document.createElement('textarea');
-            document.body.appendChild(input);
-            input.value = copyTextarea;
-            input.focus();
-            input.select();
+            const el = document.createElement('textarea');
+            el.value = shortLink;
+            el.setAttribute('readonly', '');
+            el.style.position = 'absolute';
+            el.style.left = '-9999px';
+            document.body.appendChild(el);
+            el.select();
             document.execCommand('copy');
-            input.remove();
+            document.body.removeChild(el);
             const flashHTML = '<div class="table_body--flashCopy" id="flash_copy">Copied to clipboard!</div>';
             flashCopy(flashHTML);
         } catch (error) {
