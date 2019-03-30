@@ -6,7 +6,7 @@ import browser from 'webextension-polyfill';
 async function getShortURL(API_key, URLtoShorten, password) {
     const kutt = new Kutt();
     kutt.setKey(API_key);
-    kutt.setTimeout(15000);
+    kutt.setTimeout(20000);
 
     const data = {
         target: URLtoShorten,
