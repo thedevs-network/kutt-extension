@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Kutt",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "browser_specific_settings": {
         "gecko": {
             "id": "support@kutt.it"
