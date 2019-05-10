@@ -168,7 +168,8 @@ document.on('DOMContentLoaded', async () => {
         const defaultOptions = {
             pwdForUrls: false,
             autoCopy: false,
-            keepHistory: true
+            keepHistory: true,
+            devMode: false
         };
 
         // set defaults
