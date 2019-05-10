@@ -31,7 +31,7 @@ async function getShortURL(API_key, URLtoShorten, password) {
 
 // Calling function
 browser.runtime.onMessage.addListener(async (request, sender, response) => {
-    // get the url shorten request from popup.js
+// get the url shorten request from popup.js
     if (request.msg === 'start') {
         return getShortURL(request.API_key, request.pageUrl, request.password)
             .then(shortLink => {

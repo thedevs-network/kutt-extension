@@ -1,48 +1,46 @@
 {
-    "manifest_version": 2,
-    "name": "Kutt",
-    "version": "1.0.4",
-    "browser_specific_settings": {
-        "gecko": {
-            "id": "support@kutt.it"
-        }
+  "manifest_version": 2,
+  "name": "Kutt",
+  "version": "1.0.5",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "support@kutt.it"
+    }
+  },
+  "description": "URL Shortener",
+  "icons": {
+    "16": "assets/favicon-16.png",
+    "32": "assets/favicon-32.png",
+    "48": "assets/favicon-48.png",
+    "128": "assets/favicon-128.png"
+  },
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "assets/favicon-16.png",
+      "32": "assets/favicon-32.png",
+      "48": "assets/favicon-48.png",
+      "128": "assets/favicon-128.png"
     },
-    "description": "URL Shortener",
-    "icons": {
-        "16": "assets/favicon-16.png",
-        "32": "assets/favicon-32.png",
-        "48": "assets/favicon-48.png",
-        "128": "assets/favicon-128.png"
-    },
-    "browser_action": {
-        "default_popup": "popup.html",
-        "default_icon": {
-            "16": "assets/favicon-16.png",
-            "32": "assets/favicon-32.png",
-            "48": "assets/favicon-48.png",
-            "128": "assets/favicon-128.png"
-        },
-        "default_title": "Kutt",
-        "browser_style": false
-    },
-    "author": "abhijithvijayan",
-    "background": {
-        "scripts": [
-            "js/background.js"
-        ]
-    },
-    "homepage_url": "https://github.com/abhijithvijayan/kutt-extension",
-    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-    "options_ui": {
-        "page": "options.html",
-        "open_in_tab": true
-    },
-    "permissions": [
-        "tabs",
-        "storage",
-        "clipboardWrite",
-        "clipboardRead",
-        "https://kutt.it/*/*"
-    ],
-    "short_name": "Kutt"
+    "default_title": "Kutt",
+    "browser_style": false
+  },
+  "author": "abhijithvijayan",
+  "background": {
+    "scripts": ["js/background.js"]
+  },
+  "homepage_url": "https://github.com/abhijithvijayan/kutt-extension",
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "clipboardWrite",
+    "clipboardRead",
+    "https://kutt.it/*/*"
+  ],
+  "short_name": "Kutt"
 }

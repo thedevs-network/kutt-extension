@@ -179,7 +179,7 @@ document.on('DOMContentLoaded', () => {
         $(element).classList.toggle('d-none');
     }
 
-    
+
     // 6. Copy alert
     function flasher(id) {
         $(id).classList.toggle('v-none');
