@@ -1,14 +1,16 @@
 import browser from 'webextension-polyfill';
-import { $, $$ } from './bling';
+import { $ } from './bling';
 import QRCode from 'qrcode';
 
 
+// constants
 const clear__btn = '#table__clearAll--btn',
     main__element = '#delegation__element';
 
 
 document.on('DOMContentLoaded', async () => {
     let updatedHTML;
+
     const html = `
         <tr class="table__body--holder" id="table__body-%num%">
             <td class="table__body--original">
@@ -33,6 +35,7 @@ document.on('DOMContentLoaded', async () => {
 
     // get longURL, shortURL
     const response = await browser.storage.local.get(['userOptions', 'URL_array']);
+    
     if (response.userOptions.keepHistory === true) {
         const count = response.URL_array.length;
         // update DOM
@@ -49,7 +52,6 @@ document.on('DOMContentLoaded', async () => {
         }
     } else {
         alert('Enable History from Options Page');
-        // open options page
         browser.runtime.openOptionsPage();
     }
 });
@@ -66,7 +68,7 @@ $(clear__btn).on('click', async () => {
 
 // Buttons Function
 const buttonAction = async (type, id) => {
-    const flashCopy = (flashHTML) => {
+    const flashCopyAlert = (flashHTML) => {
         $(`#table__shortened-${id}`).insertAdjacentHTML('afterbegin', flashHTML);
         setTimeout(() => {
             $('#flash_copy').parentNode.removeChild($('#flash_copy'));
@@ -85,10 +87,10 @@ const buttonAction = async (type, id) => {
             document.execCommand('copy');
             document.body.removeChild(el);
             const flashHTML = '<div class="table_body--flashCopy" id="flash_copy">Copied to clipboard!</div>';
-            flashCopy(flashHTML);
+            flashCopyAlert(flashHTML);
         } catch (error) {
             const flashHTML = '<div class="table_body--flashCopy" id="flash_copy">Error while Copying!!</div>';
-            flashCopy(flashHTML);
+            flashCopyAlert(flashHTML);
         }
     } else if (type === 'qrcode') {
         // inject template
