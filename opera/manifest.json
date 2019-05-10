@@ -1,47 +1,40 @@
 {
-    "manifest_version": 2,
-    "name": "Kutt",
-    "version": "1.0.4",
-    "description": "URL Shortener",
-    "developer": {
-        "name": "abhijithvijayan"
+  "manifest_version": 2,
+  "name": "Kutt",
+  "version": "1.0.5",
+  "description": "URL Shortener",
+  "developer": {
+    "name": "abhijithvijayan"
+  },
+  "icons": {
+    "16": "assets/favicon-16.png",
+    "32": "assets/favicon-32.png",
+    "48": "assets/favicon-48.png",
+    "128": "assets/favicon-128.png"
+  },
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "assets/favicon-16.png",
+      "32": "assets/favicon-32.png",
+      "48": "assets/favicon-48.png",
+      "128": "assets/favicon-128.png"
     },
-    "icons": {
-        "16": "assets/favicon-16.png",
-        "32": "assets/favicon-32.png",
-        "48": "assets/favicon-48.png",
-        "128": "assets/favicon-128.png"
-    },
-    "browser_action": {
-        "default_popup": "popup.html",
-        "default_icon": {
-            "16": "assets/favicon-16.png",
-            "32": "assets/favicon-32.png",
-            "48": "assets/favicon-48.png",
-            "128": "assets/favicon-128.png"
-        },
-        "default_title": "Kutt",
-        "chrome_style": false
-    },
-    "background": {
-        "persistent": false,
-        "scripts": [
-            "js/background.js"
-        ]
-    },
-    "homepage_url": "https://github.com/abhijithvijayan/kutt-extension",
-    "minimum_opera_version": "36",
-    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-    "options_page": "options.html",
-    "options_ui": {
-        "page": "options.html",
-        "open_in_tab": true
-    },
-    "permissions": [
-        "tabs",
-        "storage",
-        "clipboardRead",
-        "https://kutt.it/*/*"
-    ],
-    "short_name": "Kutt"
+    "default_title": "Kutt",
+    "chrome_style": false
+  },
+  "background": {
+    "persistent": false,
+    "scripts": ["js/background.js"]
+  },
+  "homepage_url": "https://github.com/abhijithvijayan/kutt-extension",
+  "minimum_opera_version": "36",
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "permissions": ["tabs", "storage", "clipboardRead", "https://kutt.it/*/*"],
+  "short_name": "Kutt"
 }
