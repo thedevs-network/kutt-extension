@@ -96,6 +96,36 @@
                 <div class="slider round"></div>
               </label>
             </div>
+            <div class="dev__mode--container">
+              <label class="developer__mode--label"
+                >Enable Developer Mode
+                <span class="developer__label--optional"
+                  >(Optional)
+                  <span class="developer__label--tooltiptext text-center">
+                    Use extension for self&nbsp;-&nbsp;hosted Kutt.<br />
+                    Enter the self hosted domain in the field.
+                    (eg:&nbsp;https://mykutt.it)
+                  </span>
+                </span>
+              </label>
+              <label
+                class="switch"
+                id="developer__label--switch"
+                for="developer__label--checkbox"
+              >
+                <input type="checkbox" id="developer__label--checkbox" />
+                <div class="slider round"></div>
+              </label>
+            </div>
+            <div class="my-2 d-none" id="developer__holder">
+              <input
+                class="developer__mode--holder text-center"
+                id="developer__mode--value"
+                type="text"
+                placeholder="https://mykutt.it"
+                spellcheck="false"
+              />
+            </div>
             <button class="button__submit" id="button__submit" type="button">
               Save
             </button>

@@ -2,9 +2,25 @@ import Kutt from 'kutt';
 import browser from 'webextension-polyfill';
 
 // Shorten url
-async function getShortURL(API_key, URLtoShorten, password) {
+async function getShortURL(API_KEY, URLtoShorten, password) {
+    let API_HOST = 'https://kutt.it';
+
+    // to be refactored in the next major version
+    try {
+        const { host, userOptions } = await browser.storage.local.get(['host', 'userOptions']);
+        if (userOptions.hasOwnProperty('devMode') && userOptions.devMode) {
+            API_HOST = host;
+        }
+        // console.log('Fetched from localstorage!');
+    }
+    catch (e) {
+        API_HOST = 'https://kutt.it';
+        // console.log('Failed to fetch from localstorage!');
+    }
+    
     const kutt = new Kutt();
-    kutt.setKey(API_key);
+    kutt.setAPI(API_HOST);
+    kutt.setKey(API_KEY);
     kutt.setTimeout(20000);
 
     const data = {

@@ -20,8 +20,8 @@ $color-grad-dark-blue: #2979ff;
 
 $font-nunito: "Nunito", sans-serif;
 
-$font-weight-regular: 400;
-$font-weight-bold: 600;
+$regular: 400;
+$bold: 600;
 
 .d-none {
   display: none !important;
@@ -40,6 +40,11 @@ $font-weight-bold: 600;
 }
 
 .mb-2 {
+  margin-bottom: 2em;
+}
+
+.my-2 {
+  margin-top: 1em;
   margin-bottom: 2em;
 }
 
