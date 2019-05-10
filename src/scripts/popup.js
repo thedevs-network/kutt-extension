@@ -2,187 +2,193 @@ import browser from 'webextension-polyfill';
 import { $, $$ } from './bling';
 import QRCode from 'qrcode';
 
+let shortUrl, longUrl, validUrl, API_key, password, keepHistory, autoCopy;
 
-let shortUrl, longUrl, start, API_key, password, keepHistory, autoCopy;
+// constants
 const qrcode__holder = '#qr_code',
     url__holder = '#url__content-inner',
+    buttons = '.buttons__content--holder',
     copy__btn = '#button__copy--holder',
+    copyalert__holder = '#copy__alert',
+    qrcode__content = '.qrcode__content--holder',
     qrcode__btn = '#button__qrcode--holder',
     qrcode__api = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=';
 
 
-// Initialize
-document.on('DOMContentLoaded', () => {
+const updateDOMContent = (value) => {
+    $(url__holder).textContent = value;
+};
 
-    // 1. KuttUrl
-    browser.tabs.query({
+
+const openOptionsPage = () => {
+    setTimeout(() => {
+        browser.runtime.openOptionsPage();
+    }, 900);
+};
+
+
+const toggleContentVisibility = (element) => {
+    $(element).classList.toggle('d-none');
+};
+
+
+const toggleCopyAlert = () => {
+    $(copyalert__holder).classList.toggle('v-none');
+};
+
+
+// generate QR code
+const generateQR = async url => {
+    try {
+        $(qrcode__holder).src = await QRCode.toDataURL(url);
+    } catch (err) {
+        // fetch qrcode from http://goqr.me api
+        $(qrcode__holder).src = `${qrcode__api}${url}`;
+    }
+};
+
+
+// Copy Function
+const copyLinkToClipboard = () => {
+    try {
+        $(copyalert__holder).textContent = 'Copied to clipboard!';
+        const el = document.createElement('textarea');
+        el.value = shortUrl;
+        el.setAttribute('readonly', '');
+        el.style.position = 'absolute';
+        el.style.left = '-9999px';
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        toggleCopyAlert();
+        setTimeout(() => {
+            toggleCopyAlert();
+        }, 1300);
+
+    } catch (error) {
+        $(copyalert__holder).textContent = 'Error while Copying!';
+        toggleCopyAlert();
+        setTimeout(() => {
+            toggleCopyAlert();
+        }, 1300);
+    }
+};
+
+
+// Initialize url shortening
+document.on('DOMContentLoaded', async () => {
+
+    const tabs = await browser.tabs.query({
         'active': true,
         'lastFocusedWindow': true
-    }).then(tabs => {
+    });
 
-        // extract page url
-        longUrl = tabs[0].url;
-        // extract first 4 chars
-        start = longUrl.substr(0, 4);
+    // extract page url
+    longUrl = tabs[0].url;
+    // validate url
+    validUrl = longUrl.startsWith('http');
 
-        // i) Get api key from storage
-        browser.storage.local.get(['key', 'pwd']).then(result => {
+    // Get credentials from localstorage
+    const { key, pwd } = await browser.storage.local.get(['key', 'pwd']);
+    API_key = key;
+    password = pwd;
 
-            API_key = result.key;
-            password = result.pwd;
+    if (validUrl && API_key !== '' && API_key !== undefined) {
 
-            // update DOM function
-            const updateContent = (value) => {
-                $(url__holder).textContent = value;
-            };
-
-            if (start === 'http' && API_key !== '' && API_key !== undefined) {
-
-                // send start message to background.js and receive response
-                browser.runtime.sendMessage({
-                    msg: 'start',
-                    API_key: API_key,
-                    pageUrl: longUrl,
-                    password: password
-                }).then(response => {
-                    // store the shortened link
-                    shortUrl = response;
-                    // status codes
-                    if (!isNaN(response)) {
-                        if (response === 429) {
-                            updateContent('API Limit Exceeded!');
-                        } else if (response === 401) {
-                            updateContent('Invalid API Key');
-                        } else if (response === 504) {
-                            updateContent('Time-out!');
-                        } else {
-                            updateContent('Some error occured');
-                        }
-                    }
-                    // valid response
-                    else if (shortUrl !== null) {
-                        // 1. update the content with shortened link
-                        updateContent(shortUrl);
-                        // 2. show buttons                        
-                        toggleDisplay('.buttons__content--holder');
-                        // 3. QR Code Generation
-                        QRCode.toDataURL(shortUrl)
-                            .then(url => {
-                                $(qrcode__holder).src = url;
-                            })
-                            .catch(err => {
-                                // fetch qrcode from http://goqr.me (in case package fails)
-                                $(qrcode__holder).src = `${qrcode__api}${shortUrl}`;
-                            });
-                        // 4. Add to history
-                        browser.storage.local.get(['userOptions'])
-                            .then(result => {
-                                keepHistory = result.userOptions.keepHistory;
-                                autoCopy = result.userOptions.autoCopy;
-                                // auto copy
-                                if (autoCopy) {
-                                    setTimeout(() => {
-                                        copyLink();
-                                    }, 500);
-                                }
-                                if (keepHistory) {
-                                    // pass the object of URLs
-                                    const long_short_URLs = {
-                                        longUrl: longUrl,
-                                        shortUrl: shortUrl
-                                    };
-                                    browser.storage.local.get(['URL_array'])
-                                        .then(result => {
-                                            browser.runtime.sendMessage({
-                                                msg: 'store',
-                                                mix_URLs: long_short_URLs,
-                                                URL_array: result.URL_array
-                                            });
-                                        });
-                                }
-                            });
-                    } else {
-                        updateContent('Invalid Response!');
-                    }
-                });
-
-            } else if (API_key === '' || API_key === undefined) {
-                // no api key set
-                updateContent('Set API Key in Options!');
-
-                const defaultOptions = {
-                    pwdForUrls: false,
-                    autoCopy: false,
-                    keepHistory: true
-                };
-
-                // set defaults
-                browser.storage.local.set({
-                    userOptions: defaultOptions,
-                    URL_array: []
-                });
-
-                // open options page
-                setTimeout(() => {
-                    browser.runtime.openOptionsPage();
-                }, 900);
-
-            } else if (start !== 'http') {
-                updateContent('Not a Valid URL!!');
-            }
-
+        // send start message to background.js and get response
+        const response = await browser.runtime.sendMessage({
+            msg: 'start',
+            API_key,
+            pageUrl: longUrl,
+            password
         });
 
-    });
-
-
-    // 2. Copy Function
-    function copyLink() {
-        try {
-            $('#copy__alert').textContent = 'Copied to clipboard!';
-            const el = document.createElement('textarea');
-            el.value = shortUrl;
-            el.setAttribute('readonly', '');
-            el.style.position = 'absolute';
-            el.style.left = '-9999px';
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-            flasher('#copy__alert');
-            setTimeout(() => {
-                flasher('#copy__alert');
-            }, 1300);
-
-        } catch (error) {
-            $('#copy__alert').textContent = 'Error while Copying!';
-            flasher('#copy__alert');
-            setTimeout(() => {
-                flasher('#copy__alert');
-            }, 1300);
+        // status codes
+        if (!isNaN(response)) {
+            switch(response) {
+            case 429: 
+                updateDOMContent('API Limit Exceeded!');
+                break;
+            case 401: 
+                updateDOMContent('Invalid API Key');
+                openOptionsPage();
+                break;
+            case 504: 
+                updateDOMContent('Time-out!');
+                break;
+            default: 
+                updateDOMContent('Some error occured');
+                break;
+            }
         }
+        // got valid response
+        else if (response) {
+            shortUrl = response;
+            // show shortened kutt url
+            updateDOMContent(shortUrl);
+            // Show action buttons                        
+            toggleContentVisibility(buttons);
+            // Generate QR Code 
+            generateQR(shortUrl);
+
+            const { userOptions } = await browser.storage.local.get(['userOptions']);
+            keepHistory = userOptions.keepHistory;
+            autoCopy = userOptions.autoCopy;
+
+            // perform user-set actions
+            if (autoCopy) {
+                setTimeout(() => {
+                    copyLinkToClipboard();
+                }, 500);
+            }
+            if (keepHistory) {
+                // pass the object of URLs
+                const long_short_URLs = {
+                    longUrl,
+                    shortUrl
+                };
+
+                const { URL_array } = await browser.storage.local.get(['URL_array']);
+                // store to localstorage
+                await browser.runtime.sendMessage({
+                    msg: 'store',
+                    mix_URLs: long_short_URLs,
+                    URL_array
+                });
+            }
+        } else {
+            updateDOMContent('Invalid Response!');
+        }
+
+    } else if (API_key === '' || API_key === undefined) {
+        // no API key set
+        updateDOMContent('Set API Key in Options!');
+
+        const defaultOptions = {
+            pwdForUrls: false,
+            autoCopy: false,
+            keepHistory: true
+        };
+
+        // set defaults
+        await browser.storage.local.set({
+            userOptions: defaultOptions,
+            URL_array: []
+        });
+
+        openOptionsPage();
+
+    } else if (!validUrl) {
+        updateDOMContent('Not a Valid URL!!');
     }
 
+    // Copy Button
+    $(copy__btn).on('click', copyLinkToClipboard);
 
-    // 3. Copy Button
-    $(copy__btn).on('click', copyLink);
-
-
-    // 4. QR Code Button
+    // QR Code Button
     $(qrcode__btn).on('click', () => {
-        toggleDisplay('.qrcode__content--holder');
+        toggleContentVisibility(qrcode__content);
     });
-
-
-    // 5. Display function
-    function toggleDisplay(element) {
-        $(element).classList.toggle('d-none');
-    }
-
-
-    // 6. Copy alert
-    function flasher(id) {
-        $(id).classList.toggle('v-none');
-    }
 
 });

@@ -1,7 +1,7 @@
 import { $, $$ } from './bling';
 import browser from 'webextension-polyfill';
 
-
+// constants
 const pwd__holder = '#pwd__holder',
     submit__btn = '#button__submit',
     pwd__value = '#password--value',
@@ -13,32 +13,29 @@ const pwd__holder = '#pwd__holder',
     autocopy__checkbox = '#autocopy__label--checkbox';
 
 
-document.on('DOMContentLoaded', () => {
-    browser.storage.local.get(['key', 'pwd', 'userOptions'])
-        .then(result => {
-            // to string
-            const API_KEY = `${result.key}`;
-            let pwd = result.pwd;
-            if (API_KEY === 'undefined') {
-                $(api__holder).value = '';
-            } else {
-                $(api__holder).value = API_KEY;
-                $(pwd__checkbox).checked = result.userOptions.pwdForUrls;
-                // if disabled -> delete save password
-                if (!result.userOptions.pwdForUrls) {
-                    pwd = '';
-                }
-                $(pwd__value).value = pwd;
-                toggleView(result.userOptions.pwdForUrls);
-            }
-            $(autocopy__checkbox).checked = result.userOptions.autoCopy;
-            $(history__checkbox).checked = result.userOptions.keepHistory;
-        });
+document.on('DOMContentLoaded', async () => {
+    let { key, pwd, userOptions } = await browser.storage.local.get(['key', 'pwd', 'userOptions']);
+    // apikey to string
+    const API_KEY = `${key}`;
+    if (API_KEY === 'undefined') {
+        $(api__holder).value = '';
+    } else {
+        $(api__holder).value = API_KEY;
+        $(pwd__checkbox).checked = userOptions.pwdForUrls;
+        // if disabled -> delete save password
+        if (!userOptions.pwdForUrls) {
+            pwd = '';
+        }
+        $(pwd__value).value = pwd;
+        toggleView(userOptions.pwdForUrls);
+    }
+    $(autocopy__checkbox).checked = userOptions.autoCopy;
+    $(history__checkbox).checked = userOptions.keepHistory;
 });
 
 
 // Store Data and Alert message
-const saveData = () => {
+const saveData = async () => {
     let password = $(pwd__value).value;
     const API_KEY = $(api__holder).value;
     let pwdForUrls = $(pwd__checkbox).checked;
@@ -59,24 +56,23 @@ const saveData = () => {
     };
 
     // store value locally
-    browser.storage.local.set({
+    await browser.storage.local.set({
         key: API_KEY,
         pwd: password,
         URL_array: [],
         userOptions: userOptions
-    }).then(() => {
-        $(submit__btn).textContent = 'Saved';
-        setTimeout(() => {
-            $(submit__btn).textContent = 'Save';
-            // close current tab
-            browser.tabs.getCurrent().then((tabInfo) => {
-                browser.tabs.remove(tabInfo.id);
-            });
-        }, 1250);
     });
+
+    $(submit__btn).textContent = 'Saved';
+    setTimeout(async () => {
+        $(submit__btn).textContent = 'Save';
+        // close current tab
+        const tabInfo = await browser.tabs.getCurrent();
+        browser.tabs.remove(tabInfo.id);
+    }, 1250);
 };
 
-// Save Data
+
 $(submit__btn).on('click', saveData);
 
 document.on('keypress', (e) => {
