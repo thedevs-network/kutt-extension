@@ -49,7 +49,7 @@ const generateQR = async url => {
 
 
 // Copy Function
-const copyLinkToClipboard = () => {
+const copyLinkToClipboard = (shortUrl) => {
     try {
         $(copyalert__holder).textContent = 'Copied to clipboard!';
         const el = document.createElement('textarea');
@@ -139,7 +139,7 @@ document.on('DOMContentLoaded', async () => {
             // perform user-set actions
             if (autoCopy) {
                 setTimeout(() => {
-                    copyLinkToClipboard();
+                    copyLinkToClipboard(shortUrl);
                 }, 500);
             }
             if (keepHistory) {
@@ -185,7 +185,7 @@ document.on('DOMContentLoaded', async () => {
     }
 
     // Copy Button
-    $(copy__btn).on('click', copyLinkToClipboard);
+    $(copy__btn).on('click', () => copyLinkToClipboard(shortUrl));
 
     // QR Code Button
     $(qrcode__btn).on('click', () => {
