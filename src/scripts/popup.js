@@ -47,9 +47,9 @@ const generateQR = async url => {
     }
 };
 
-
 // Copy Function
 const copyLinkToClipboard = (shortUrl) => {
+    // https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
     try {
         $(copyalert__holder).textContent = 'Copied to clipboard!';
         const el = document.createElement('textarea');
@@ -58,9 +58,17 @@ const copyLinkToClipboard = (shortUrl) => {
         el.style.position = 'absolute';
         el.style.left = '-9999px';
         document.body.appendChild(el);
-        el.select();
+        const selected =            
+        document.getSelection().rangeCount > 0       
+            ? document.getSelection().getRangeAt(0)    
+            : false;                                    
+        el.select();  
         document.execCommand('copy');
-        document.body.removeChild(el);
+        document.body.removeChild(el);  
+        if (selected) {                              
+            document.getSelection().removeAllRanges();    
+            document.getSelection().addRange(selected);   
+        }      
         toggleCopyAlert();
         setTimeout(() => {
             toggleCopyAlert();
@@ -184,8 +192,10 @@ document.on('DOMContentLoaded', async () => {
         updateDOMContent('Not a Valid URL!!');
     }
 
+
     // Copy Button
     $(copy__btn).on('click', () => copyLinkToClipboard(shortUrl));
+
 
     // QR Code Button
     $(qrcode__btn).on('click', () => {
