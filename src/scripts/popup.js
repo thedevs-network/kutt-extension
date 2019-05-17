@@ -37,8 +37,7 @@ const toggleCopyAlert = () => {
 };
 
 
-// generate QR code
-const generateQR = async url => {
+const generateQRCode = async url => {
     try {
         $(qrcode__holder).src = await QRCode.toDataURL(url);
     } catch (err) {
@@ -47,8 +46,8 @@ const generateQR = async url => {
     }
 };
 
-// Copy Function
-const copyLinkToClipboard = (shortUrl) => {
+
+const copyLinkToClipboard = () => {
     // https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
     try {
         $(copyalert__holder).textContent = 'Copied to clipboard!';
@@ -58,17 +57,17 @@ const copyLinkToClipboard = (shortUrl) => {
         el.style.position = 'absolute';
         el.style.left = '-9999px';
         document.body.appendChild(el);
-        const selected =            
-        document.getSelection().rangeCount > 0       
-            ? document.getSelection().getRangeAt(0)    
-            : false;                                    
-        el.select();  
+        const selected =
+            document.getSelection().rangeCount > 0
+                ? document.getSelection().getRangeAt(0)
+                : false;
+        el.select();
         document.execCommand('copy');
-        document.body.removeChild(el);  
-        if (selected) {                              
-            document.getSelection().removeAllRanges();    
-            document.getSelection().addRange(selected);   
-        }      
+        document.body.removeChild(el);
+        if (selected) {
+            document.getSelection().removeAllRanges();
+            document.getSelection().addRange(selected);
+        }
         toggleCopyAlert();
         setTimeout(() => {
             toggleCopyAlert();
@@ -82,6 +81,48 @@ const copyLinkToClipboard = (shortUrl) => {
         }, 1300);
     }
 };
+
+
+const addToHistory = async (curURLPair) => {
+    const { URL_array } = await browser.storage.local.get(['URL_array']);
+    // store to localstorage
+    await browser.runtime.sendMessage({
+        msg: 'store',
+        curURLPair,
+        curURLCollection: URL_array
+    });
+};
+
+
+const doUserSetActions = async () => {
+    const { userOptions } = await browser.storage.local.get(['userOptions']);
+    keepHistory = userOptions.keepHistory;
+    autoCopy = userOptions.autoCopy;
+
+    if (autoCopy) {
+        setTimeout(() => {
+            copyLinkToClipboard();
+        }, 500);
+    }
+    
+    if (keepHistory) {
+        const curURLPair = {
+            longUrl,
+            shortUrl
+        };
+        addToHistory(curURLPair);
+    }
+};
+
+
+// Copy Button
+$(copy__btn).on('click', () => copyLinkToClipboard());
+
+
+// QR Code Button
+$(qrcode__btn).on('click', () => {
+    toggleContentVisibility(qrcode__content);
+});
 
 
 // Initialize url shortening
@@ -114,63 +155,44 @@ document.on('DOMContentLoaded', async () => {
 
         // status codes
         if (!isNaN(response)) {
-            switch(response) {
-            case 429: 
+            switch (response) {
+            case 429:
                 updateDOMContent('API Limit Exceeded!');
                 break;
-            case 401: 
+            case 401:
                 updateDOMContent('Invalid API Key');
                 openOptionsPage();
                 break;
-            case 504: 
+            case 504:
                 updateDOMContent('Time-out!');
                 break;
-            default: 
+            default:
                 updateDOMContent('Some error occured');
                 break;
             }
         }
         // got valid response
         else if (response) {
+
             shortUrl = response;
             // show shortened kutt url
             updateDOMContent(shortUrl);
             // Show action buttons                        
             toggleContentVisibility(buttons);
             // Generate QR Code 
-            generateQR(shortUrl);
-
-            const { userOptions } = await browser.storage.local.get(['userOptions']);
-            keepHistory = userOptions.keepHistory;
-            autoCopy = userOptions.autoCopy;
-
+            generateQRCode(shortUrl);
             // perform user-set actions
-            if (autoCopy) {
-                setTimeout(() => {
-                    copyLinkToClipboard(shortUrl);
-                }, 500);
-            }
-            if (keepHistory) {
-                // pass the object of URLs
-                const long_short_URLs = {
-                    longUrl,
-                    shortUrl
-                };
-
-                const { URL_array } = await browser.storage.local.get(['URL_array']);
-                // store to localstorage
-                await browser.runtime.sendMessage({
-                    msg: 'store',
-                    mix_URLs: long_short_URLs,
-                    URL_array
-                });
-            }
-        } else {
+            doUserSetActions();
+        } 
+        // all test-cases fail
+        else {
             updateDOMContent('Invalid Response!');
         }
 
-    } else if (API_key === '' || API_key === undefined) {
-        // no API key set
+    }
+    // no API key set 
+    else if (API_key === '' || API_key === undefined) {
+   
         updateDOMContent('Set API Key in Options!');
 
         const defaultOptions = {
@@ -188,18 +210,9 @@ document.on('DOMContentLoaded', async () => {
 
         openOptionsPage();
 
-    } else if (!validUrl) {
+    } 
+    // invalid url
+    else if (!validUrl) {
         updateDOMContent('Not a Valid URL!!');
     }
-
-
-    // Copy Button
-    $(copy__btn).on('click', () => copyLinkToClipboard(shortUrl));
-
-
-    // QR Code Button
-    $(qrcode__btn).on('click', () => {
-        toggleContentVisibility(qrcode__content);
-    });
-
 });
