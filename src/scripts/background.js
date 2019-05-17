@@ -56,26 +56,18 @@ browser.runtime.onMessage.addListener(async (request, sender, response) => {
     if (request.msg === 'store') {
         const curURLCollection = request.curURLCollection;
         const curURLPair = request.curURLPair;
-        let count = curURLCollection.length;
         // find & remove duplicates
-        curURLCollection.map(el => {
-            console.log(el);
-            if (el.longUrl === curURLPair.longUrl) {
-                // pop the existing pair
-
-                // decrement count
-                --count;
-            }
-        });
+        const noDuplicateArray = curURLCollection.filter(el => el.longUrl !== curURLPair.longUrl);
+        let count = noDuplicateArray.length;
         // delete first pair if size exceeds 10
         if (count >= 10) {
-            curURLCollection.shift();
+            noDuplicateArray.shift();
         }
         // push to the array
-        curURLCollection.push(curURLPair);
+        noDuplicateArray.push(curURLPair);
         // save to local storage
         await browser.storage.local.set({
-            URL_array: curURLCollection
+            URL_array: noDuplicateArray
         });
     }
 });
