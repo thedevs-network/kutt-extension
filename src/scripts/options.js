@@ -21,6 +21,7 @@ document.on('DOMContentLoaded', async () => {
     let { key, pwd, userOptions, host } = await browser.storage.local.get(['key', 'pwd', 'userOptions', 'host']);
     // apikey to string
     const API_KEY = `${key}`;
+
     if (API_KEY === 'undefined') {
         $(api__holder).value = '';
     } else {
@@ -35,6 +36,7 @@ document.on('DOMContentLoaded', async () => {
         toggleInputVisibility(userOptions.pwdForUrls, pwd__holder);
         // dev mode holder
         $(dev__checkbox).checked = userOptions.devMode;
+        // if disabled -> reset to default host
         if (!userOptions.devMode) {
             host = '';
         }
@@ -84,7 +86,7 @@ const saveData = async () => {
         pwd: password,
         host: API_HOST,
         URL_array: [],
-        userOptions: userOptions
+        userOptions
     });
 
     $(submit__btn).textContent = 'Saved';
@@ -98,6 +100,7 @@ const saveData = async () => {
 
 
 $(submit__btn).on('click', saveData);
+
 
 document.on('keypress', (e) => {
     if (e.keyCode === 13) {

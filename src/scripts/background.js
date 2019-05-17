@@ -2,32 +2,34 @@ import Kutt from 'kutt';
 import browser from 'webextension-polyfill';
 
 // Shorten url
-async function getShortURL(API_KEY, URLtoShorten, password) {
+const shortenUrl = async (API_KEY, urlToShorten, password) => {
     let API_HOST = 'https://kutt.it';
 
-    // to be refactored in the next major version
     try {
         const { host, userOptions } = await browser.storage.local.get(['host', 'userOptions']);
         if (userOptions.hasOwnProperty('devMode') && userOptions.devMode) {
             API_HOST = host;
         }
-        // console.log('Fetched from localstorage!');
+        // else use default host
     }
     catch (e) {
+        // do something if fetching from localstorage fails
         API_HOST = 'https://kutt.it';
-        // console.log('Failed to fetch from localstorage!');
     }
     
     const kutt = new Kutt();
+
+    // configure kutt-package
     kutt.setAPI(API_HOST);
     kutt.setKey(API_KEY);
     kutt.setTimeout(20000);
 
     const data = {
-        target: URLtoShorten,
-        password: password
+        target: urlToShorten,
+        password
     };
 
+    // shorten function
     try {
         const response = await kutt.submit(data);
         return response.shortUrl;
@@ -41,26 +43,39 @@ async function getShortURL(API_KEY, URLtoShorten, password) {
             return e.response.status;
         }
     }
-}
+};
 
 
 // Calling function
 browser.runtime.onMessage.addListener(async (request, sender, response) => {
-// get the url shorten request from popup.js
+    // shorten request
     if (request.msg === 'start') {
-        return await getShortURL(request.API_key, request.pageUrl, request.password);
+        return await shortenUrl(request.API_key, request.pageUrl, request.password);
     }
     // store urls to history
     if (request.msg === 'store') {
-        const targetURLs = request.URL_array;
-        const counter = targetURLs.length;
-        if (counter >= 10) {
-            // delete first element
-            targetURLs.shift();
+        const curURLCollection = request.curURLCollection;
+        const curURLPair = request.curURLPair;
+        let count = curURLCollection.length;
+        // find & remove duplicates
+        curURLCollection.map(el => {
+            console.log(el);
+            if (el.longUrl === curURLPair.longUrl) {
+                // pop the existing pair
+
+                // decrement count
+                --count;
+            }
+        });
+        // delete first pair if size exceeds 10
+        if (count >= 10) {
+            curURLCollection.shift();
         }
-        targetURLs.push(request.mix_URLs);
+        // push to the array
+        curURLCollection.push(curURLPair);
+        // save to local storage
         await browser.storage.local.set({
-            URL_array: targetURLs
+            URL_array: curURLCollection
         });
     }
 });
