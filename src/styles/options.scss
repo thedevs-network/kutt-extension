@@ -13,7 +13,7 @@ body {
   height: 100vh;
 
   .options__content--holder {
-    padding-top: 4.8em;
+    padding-top: 5em;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -46,31 +46,21 @@ body {
 
         .api__key--label,
         .password--label,
-        .copy--label {
+        .copy--label,
+        .customhost__mode--label {
           font-size: 16px;
           display: inline-block;
           margin-bottom: 0.8em;
         }
 
-        .dev__mode--container {
-          margin-top: 0.8em;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        .developer__mode--label {
-          font-size: 13px;
-          display: inline-block;
-          // margin-bottom: 0.8em;
-        }
-
         .password--label,
         .api__key--label,
-        .developer__mode--label {
+        .customhost__mode--label {
           .password__label--optional,
-          .developer__label--optional,
-          .api__label--Qmark {
+          .customhost__label--optional,
+          .api__label--text {
+            font-size: 13px;
+            letter-spacing: 1px;
             cursor: default;
             position: relative;
             display: inline-block;
@@ -78,19 +68,19 @@ body {
 
             &:hover .password__label--tooltiptext,
             &:hover .api__label--tooltiptext,
-            &:hover .developer__label--tooltiptext {
+            &:hover .customhost__label--tooltiptext {
               visibility: visible;
               opacity: 1;
             }
 
             .password__label--tooltiptext,
             .api__label--tooltiptext,
-            .developer__label--tooltiptext {
+            .customhost__label--tooltiptext {
               cursor: pointer;
               visibility: hidden;
               font-size: 13px;
               width: 180px;
-              line-height: 1.3;
+              line-height: 1.5;
               letter-spacing: 1px;
               background-color: $color-light-grey;
               color: $color-white;
@@ -118,14 +108,14 @@ body {
             }
           }
 
-          .api__label--Qmark {
+          .api__label--text {
             cursor: pointer;
           }
         }
 
         .api__key--holder,
         .password--holder,
-        .developer__mode--holder {
+        .customhost__mode--holder {
           font-family: $font-nunito;
           width: 100%;
           border-radius: 100px;
@@ -148,7 +138,7 @@ body {
         }
 
         .password--holder,
-        .developer__mode--holder {
+        .customhost__mode--holder {
           font-size: 20px;
           padding: 8px 25px 8px 25px;
         }

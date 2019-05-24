@@ -18,7 +18,7 @@
             href="https://kutt.it"
             target="_blank"
             rel="noopener"
-            >Kutt.it</a
+            >Kutt</a
           >
         </div>
         <div class="form__content--holder">
@@ -26,11 +26,11 @@
             <label class="api__key--label"
               >API Key:
               <a
-                class="api__label--Qmark"
+                class="api__label--text"
                 target="_blank"
                 rel="noopener"
                 href="https://kutt.it/login"
-                >?
+                >(Get one)
                 <span class="api__label--tooltiptext text-center">
                   Generate key from Kutt.it&nbsp;Website<br />(Settings Page)
                 </span>
@@ -45,7 +45,7 @@
             <div>
               <label class="password--label"
                 >Set Password
-                <span class="password__label--optional"
+                <span class="password__label--optional" style="font-size: 16px;"
                   >?
                   <span class="password__label--tooltiptext text-center">
                     Set Password for the Shortened URLs.<br />
@@ -75,7 +75,7 @@
               </span>
             </div>
             <div>
-              <label class="copy--label">Auto Copy Kutt URL</label>
+              <label class="copy--label">Auto-copy URL to clipboard</label>
               <label
                 class="switch"
                 id="autocopy__label--switch"
@@ -86,7 +86,7 @@
               </label>
             </div>
             <div>
-              <label class="copy--label">Keep History</label>
+              <label class="copy--label">Keep URL History</label>
               <label
                 class="switch"
                 id="history__label--switch"
@@ -97,30 +97,30 @@
               </label>
             </div>
             <div class="dev__mode--container">
-              <label class="developer__mode--label"
-                >Enable Developer Mode
-                <span class="developer__label--optional"
-                  >(Optional)
-                  <span class="developer__label--tooltiptext text-center">
+              <label class="customhost__mode--label"
+                >Custom Host
+                <span class="customhost__label--optional"
+                  >(Advanced)
+                  <span class="customhost__label--tooltiptext text-center">
                     Use extension for self&nbsp;-&nbsp;hosted Kutt.<br />
-                    Enter the self hosted domain in the field.
+                    Paste the self hosted domain in the field.
                     (eg:&nbsp;https://mykutt.it)
                   </span>
                 </span>
               </label>
               <label
                 class="switch"
-                id="developer__label--switch"
-                for="developer__label--checkbox"
+                id="customhost__label--switch"
+                for="customhost__label--checkbox"
               >
-                <input type="checkbox" id="developer__label--checkbox" />
+                <input type="checkbox" id="customhost__label--checkbox" />
                 <div class="slider round"></div>
               </label>
             </div>
-            <div class="my-2 d-none" id="developer__holder">
+            <div class="mb-2 d-none" id="customhost__holder">
               <input
-                class="developer__mode--holder text-center"
-                id="developer__mode--value"
+                class="customhost__mode--holder text-center"
+                id="customhost__mode--value"
                 type="text"
                 placeholder="https://mykutt.it"
                 spellcheck="false"

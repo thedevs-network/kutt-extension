@@ -5,6 +5,7 @@ import QRCode from 'qrcode';
 
 // constants
 const clear__btn = '#table__clearAll--btn',
+    table = '.table__content--holder',
     main__element = '#delegation__element';
 
 const html = `
@@ -50,6 +51,10 @@ document.on('DOMContentLoaded', async () => {
                 $(main__element).insertAdjacentHTML('afterbegin', updatedHTML);
             }
         }
+        else {
+            $(clear__btn).style.display = 'none';
+            $(main__element).insertAdjacentHTML('afterbegin', '<h2 class="py-2">Empty List</h2>');
+        }
     } else {
         alert('Enable History from Options Page');
         browser.runtime.openOptionsPage();
@@ -63,6 +68,8 @@ $(clear__btn).on('click', async () => {
         URL_array: []
     });
     $(main__element).parentNode.removeChild($(main__element));
+    $(clear__btn).style.display = 'none';
+    $(table).insertAdjacentHTML('beforeend', '<h2 class="py-2 table-inner">Empty List</h2>');
 });
 
 

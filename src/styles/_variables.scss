@@ -48,6 +48,16 @@ $bold: 600;
   margin-bottom: 2em;
 }
 
+.py-2 {
+  padding: 1em 24px;
+}
+
+.table-inner {
+  border-radius: 0 0 12px 12px;
+  box-shadow: rgba(50, 50, 50, 0.2) 0px 6px 30px;
+  background-color: white;
+}
+
 .selectDisable {
   user-select: none;
 }

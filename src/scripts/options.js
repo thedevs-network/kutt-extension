@@ -3,16 +3,16 @@ import browser from 'webextension-polyfill';
 
 // constants
 const pwd__holder = '#pwd__holder',
-    dev__holder = '#developer__holder',
+    dev__holder = '#customhost__holder',
     submit__btn = '#button__submit',
     pwd__value = '#password--value',
-    dev__value = '#developer__mode--value',
+    dev__value = '#customhost__mode--value',
     api__holder = '#api__key--value',
     pwd__eye = '#view__password--eye',
     pwd__switch = '#password__label--switch',
-    dev__switch = '#developer__label--switch',
+    dev__switch = '#customhost__label--switch',
     pwd__checkbox = '#password__label--checkbox',
-    dev__checkbox = '#developer__label--checkbox',
+    dev__checkbox = '#customhost__label--checkbox',
     history__checkbox = '#history__label--checkbox',
     autocopy__checkbox = '#autocopy__label--checkbox';
 
@@ -138,7 +138,7 @@ $(pwd__switch).on('click', () => {
 });
 
 
-// Developer Mode Enable/Disable Switch
+// customhost Mode Enable/Disable Switch
 $(dev__switch).on('click', () => {
     const checked = $(dev__checkbox).checked;
     toggleInputVisibility(checked, dev__holder);
