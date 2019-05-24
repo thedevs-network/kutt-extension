@@ -6,7 +6,10 @@ import QRCode from 'qrcode';
 // constants
 const clear__btn = '#table__clearAll--btn',
     table = '.table__content--holder',
-    main__element = '#delegation__element';
+    rate__button = '#rate__button',
+    main__element = '#delegation__element',
+    chromeStoreLink = 'https://chrome.google.com/webstore/detail/kutt/pklakpjfiegjacoppcodencchehlfnpd',
+    firefoxStoreLink = 'https://addons.mozilla.org/en-US/firefox/addon/kutt/';
 
 const html = `
     <tr class="table__body--holder" id="table__body-%num%">
@@ -30,6 +33,42 @@ const html = `
         </td>
     </tr>`;
 
+
+const getBrowserInfo = () => {
+    // Chrome 1+
+    const isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+    // Firefox 1.0+
+    const isFirefox = typeof InstallTrigger !== 'undefined';
+    // Opera 8.0+
+    const isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+    if (isFirefox) {
+        return 'firefox';
+    }
+    if (isOpera) {
+        return 'opera';
+    }
+    if (isChrome) {
+        return 'chrome';
+    }
+    return;
+};
+
+
+const updateRatingButton = () => {
+    const browserName = getBrowserInfo();
+    switch (browserName) {
+    case 'chrome':
+    case 'opera': {
+        $(rate__button).setAttribute('href', chromeStoreLink);
+        break;
+    }
+    case 'firefox': {
+        $(rate__button).setAttribute('href', firefoxStoreLink);
+        break;
+    }
+    default: break;
+    }
+};
 
 
 document.on('DOMContentLoaded', async () => {
@@ -55,6 +94,10 @@ document.on('DOMContentLoaded', async () => {
             $(clear__btn).style.display = 'none';
             $(main__element).insertAdjacentHTML('afterbegin', '<h2 class="py-2">Empty List</h2>');
         }
+
+        // rating button
+        updateRatingButton();
+
     } else {
         alert('Enable History from Options Page');
         browser.runtime.openOptionsPage();

@@ -78,7 +78,7 @@
 ## Note:
 
 - <a href="https://kutt.it">Kutt.it</a> API permits **50** URLs shortening per day using the API Key.
-- **Enable Developer Options** to use with self-hosted kutt
+- **Enable Custom Host** option to use with self-hosted kutt
   - Save the self hosted domain in the input (eg: https://mykutt.it)
     - **Note**: the api endpoint is automatically appended during the api call.
 - _Delay at times while shortening might be the issue with Kutt.it API and not with the extension's._
