@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Kutt",
   "version": "2.0.4",
-  "description": "URL Shortener",
+  "description": "Shorten long URLs with just one click.",
   "developer": {
     "name": "abhijithvijayan"
   },
@@ -20,7 +20,7 @@
       "48": "assets/favicon-48.png",
       "128": "assets/favicon-128.png"
     },
-    "default_title": "Kutt",
+    "default_title": "Shorten this URL",
     "chrome_style": false
   },
   "background": {
