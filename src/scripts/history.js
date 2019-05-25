@@ -8,7 +8,7 @@ const clear__btn = '#table__clearAll--btn',
     table = '.table__content--holder',
     rate__button = '#rate__button',
     main__element = '#delegation__element',
-    chromeStoreLink = 'https://chrome.google.com/webstore/detail/kutt/pklakpjfiegjacoppcodencchehlfnpd',
+    chromeStoreLink = 'https://chrome.google.com/webstore/detail/kutt/pklakpjfiegjacoppcodencchehlfnpd/reviews',
     firefoxStoreLink = 'https://addons.mozilla.org/en-US/firefox/addon/kutt/';
 
 const html = `
