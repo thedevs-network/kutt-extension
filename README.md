@@ -37,10 +37,9 @@
 ## Browser Support
 
 | [![Chrome](https://raw.github.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png)](https://chrome.google.com/webstore/detail/kutt/pklakpjfiegjacoppcodencchehlfnpd) | [![Firefox](https://raw.github.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png)](https://addons.mozilla.org/firefox/addon/kutt/) | [![Opera](https://raw.github.com/alrra/browser-logos/master/src/opera/opera_48x48.png)](CONTRIBUTING.md#for-opera-users) | [![Yandex](https://raw.github.com/alrra/browser-logos/master/src/yandex/yandex_48x48.png)](https://chrome.google.com/webstore/detail/kutt/pklakpjfiegjacoppcodencchehlfnpd) | [![Brave](https://raw.github.com/alrra/browser-logos/master/src/brave/brave_48x48.png)](https://chrome.google.com/webstore/detail/kutt/pklakpjfiegjacoppcodencchehlfnpd) | [![vivaldi](https://raw.github.com/alrra/browser-logos/master/src/vivaldi/vivaldi_48x48.png)](https://chrome.google.com/webstore/detail/kutt/pklakpjfiegjacoppcodencchehlfnpd) |
-| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 49 & later ✔                                                                                                                                                                | 52 & later ✔                                                                                                                                  | 36 & later ✔                                                                                                             | Latest ✔                                                                                                                                                                    | Latest ✔                                                                                                                                                                 | Latest ✔                                                                                                                                                                       |
-
 ![Edge](https://raw.github.com/alrra/browser-logos/master/src/edge/edge_48x48.png) |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 49 & later ✔ | 52 & later ✔ | 36 & later ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔
 
 ## How to use
 
@@ -49,6 +48,7 @@
   - Chrome: [Kutt :: Chrome Web Store](https://chrome.google.com/webstore/detail/kutt/pklakpjfiegjacoppcodencchehlfnpd)
   - Firefox: [Kutt :: Add-ons for Firefox](https://addons.mozilla.org/firefox/addon/kutt/)
   - Opera [Kutt :: Opera addons](CONTRIBUTING.md#for-opera-users)
+  - Edge: [Kutt :: Chrome Web Store](https://chrome.google.com/webstore/detail/kutt/pklakpjfiegjacoppcodencchehlfnpd)
 
 - Generate an API Key from <a href="https://kutt.it">`https://kutt.it/`</a> after signing up. (Settings page)
 
@@ -89,10 +89,9 @@ View the Contributing guidelines [here](CONTRIBUTING.md).
 
 Original Repo: [thedevs-network/kutt](https://github.com/thedevs-network/kutt)
 
-If you like my work, you can
+## Show your support
 
-<a href="https://www.buymeacoffee.com/abhijithvijayan" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
-<a href="https://www.patreon.com/join/abhijithvijayan?" target="_blank"><img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become A Patron" style="height: 35px !important;width: auto !important; margin-left: 10px;" ></a>
+Give a ⭐️ if this project helped you!
 
 ## Licence
 
