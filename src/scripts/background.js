@@ -59,8 +59,8 @@ browser.runtime.onMessage.addListener(async (request, sender, response) => {
         // find & remove duplicates
         const noDuplicateArray = curURLCollection.filter(el => el.longUrl !== curURLPair.longUrl);
         let count = noDuplicateArray.length;
-        // delete first pair if size exceeds 10
-        if (count >= 10) {
+        // delete first pair if size exceeds 15
+        if (count >= 15) {
             noDuplicateArray.shift();
         }
         // push to the array
