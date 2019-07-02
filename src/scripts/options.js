@@ -1,21 +1,22 @@
-import { $, $$ } from './bling';
+/* eslint-disable no-use-before-define */
+/* eslint-disable camelcase */
 import browser from 'webextension-polyfill';
+import { $ } from './bling';
 
 // constants
-const pwd__holder = '#pwd__holder',
-    dev__holder = '#customhost__holder',
-    submit__btn = '#button__submit',
-    pwd__value = '#password--value',
-    dev__value = '#customhost__mode--value',
-    api__holder = '#api__key--value',
-    pwd__eye = '#view__password--eye',
-    pwd__switch = '#password__label--switch',
-    dev__switch = '#customhost__label--switch',
-    pwd__checkbox = '#password__label--checkbox',
-    dev__checkbox = '#customhost__label--checkbox',
-    history__checkbox = '#history__label--checkbox',
-    autocopy__checkbox = '#autocopy__label--checkbox';
-
+const pwd__holder = '#pwd__holder';
+const dev__holder = '#customhost__holder';
+const submit__btn = '#button__submit';
+const pwd__value = '#password--value';
+const dev__value = '#customhost__mode--value';
+const api__holder = '#api__key--value';
+const pwd__eye = '#view__password--eye';
+const pwd__switch = '#password__label--switch';
+const dev__switch = '#customhost__label--switch';
+const pwd__checkbox = '#password__label--checkbox';
+const dev__checkbox = '#customhost__label--checkbox';
+const history__checkbox = '#history__label--checkbox';
+const autocopy__checkbox = '#autocopy__label--checkbox';
 
 document.on('DOMContentLoaded', async () => {
     let { key, pwd, userOptions, host } = await browser.storage.local.get(['key', 'pwd', 'userOptions', 'host']);
@@ -47,10 +48,8 @@ document.on('DOMContentLoaded', async () => {
     $(history__checkbox).checked = userOptions.keepHistory;
 });
 
-
 // Store Data and Alert message
 const saveData = async () => {
-
     let password = $(pwd__value).value;
     let API_HOST = $(dev__value).value;
     const API_KEY = $(api__holder).value;
@@ -60,13 +59,13 @@ const saveData = async () => {
     const autoCopy = $(autocopy__checkbox).checked;
     const keepHistory = $(history__checkbox).checked;
 
-    if (password == '') {
+    if (password === '') {
         pwdForUrls = false;
     }
     if (!pwdForUrls) {
         password = '';
     }
-    if (API_HOST == '') {
+    if (API_HOST === '') {
         devMode = false;
     }
     if (!devMode) {
@@ -77,7 +76,7 @@ const saveData = async () => {
         pwdForUrls,
         autoCopy,
         devMode,
-        keepHistory
+        keepHistory,
     };
 
     // store value locally
@@ -86,7 +85,7 @@ const saveData = async () => {
         pwd: password,
         host: API_HOST,
         URL_array: [],
-        userOptions
+        userOptions,
     });
 
     $(submit__btn).textContent = 'Saved';
@@ -98,16 +97,13 @@ const saveData = async () => {
     }, 1250);
 };
 
-
 $(submit__btn).on('click', saveData);
 
-
-document.on('keypress', (e) => {
+document.on('keypress', e => {
     if (e.keyCode === 13) {
         saveData();
     }
 });
-
 
 // Show Password
 $(pwd__eye).on('click', () => {
@@ -121,7 +117,6 @@ $(pwd__eye).on('click', () => {
     }
 });
 
-
 function toggleInputVisibility(checked, el) {
     if (checked) {
         $(el).classList.remove('d-none');
@@ -130,16 +125,14 @@ function toggleInputVisibility(checked, el) {
     }
 }
 
-
 // Password Enable/Disable Switch
 $(pwd__switch).on('click', () => {
-    const checked = $(pwd__checkbox).checked;
+    const { checked } = $(pwd__checkbox);
     toggleInputVisibility(checked, pwd__holder);
 });
 
-
 // customhost Mode Enable/Disable Switch
 $(dev__switch).on('click', () => {
-    const checked = $(dev__checkbox).checked;
+    const { checked } = $(dev__checkbox);
     toggleInputVisibility(checked, dev__holder);
 });

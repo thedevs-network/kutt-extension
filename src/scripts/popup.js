@@ -1,24 +1,26 @@
+/* eslint-disable camelcase */
 import browser from 'webextension-polyfill';
-import { $, $$ } from './bling';
 import QRCode from 'qrcode';
+import { $ } from './bling';
 
-let shortUrl, longUrl, validUrl, API_key, password, keepHistory, autoCopy;
-
+let shortUrl;
+let longUrl;
+let API_key;
+let password;
+let validUrl = '';
 // constants
-const qrcode__holder = '#qr_code',
-    url__holder = '#url__content-inner',
-    buttons = '.buttons__content--holder',
-    copy__btn = '#button__copy--holder',
-    copyalert__holder = '#copy__alert',
-    qrcode__content = '.qrcode__content--holder',
-    qrcode__btn = '#button__qrcode--holder',
-    qrcode__api = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=';
+const qrcode__holder = '#qr_code';
+const url__holder = '#url__content-inner';
+const buttons = '.buttons__content--holder';
+const copy__btn = '#button__copy--holder';
+const copyalert__holder = '#copy__alert';
+const qrcode__content = '.qrcode__content--holder';
+const qrcode__btn = '#button__qrcode--holder';
+const qrcode__api = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=';
 
-
-const updateDOMContent = (value) => {
+const updateDOMContent = value => {
     $(url__holder).textContent = value;
 };
-
 
 const openOptionsPage = () => {
     setTimeout(() => {
@@ -26,16 +28,13 @@ const openOptionsPage = () => {
     }, 900);
 };
 
-
-const toggleContentVisibility = (element) => {
+const toggleContentVisibility = element => {
     $(element).classList.toggle('d-none');
 };
-
 
 const toggleCopyAlert = () => {
     $(copyalert__holder).classList.toggle('v-none');
 };
-
 
 const generateQRCode = async url => {
     try {
@@ -45,7 +44,6 @@ const generateQRCode = async url => {
         $(qrcode__holder).src = `${qrcode__api}${url}`;
     }
 };
-
 
 const copyLinkToClipboard = () => {
     // https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
@@ -57,10 +55,7 @@ const copyLinkToClipboard = () => {
         el.style.position = 'absolute';
         el.style.left = '-9999px';
         document.body.appendChild(el);
-        const selected =
-            document.getSelection().rangeCount > 0
-                ? document.getSelection().getRangeAt(0)
-                : false;
+        const selected = document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false;
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
@@ -72,7 +67,6 @@ const copyLinkToClipboard = () => {
         setTimeout(() => {
             toggleCopyAlert();
         }, 1300);
-
     } catch (error) {
         $(copyalert__holder).textContent = 'Error while Copying!';
         toggleCopyAlert();
@@ -82,61 +76,58 @@ const copyLinkToClipboard = () => {
     }
 };
 
-
-const addToHistory = async (curURLPair) => {
+const addToHistory = async curURLPair => {
     const { URL_array } = await browser.storage.local.get(['URL_array']);
     // store to localstorage
     await browser.runtime.sendMessage({
         msg: 'store',
         curURLPair,
-        curURLCollection: URL_array
+        curURLCollection: URL_array,
     });
 };
 
-
 const doUserSetActions = async () => {
     const { userOptions } = await browser.storage.local.get(['userOptions']);
-    keepHistory = userOptions.keepHistory;
-    autoCopy = userOptions.autoCopy;
+    const { keepHistory, autoCopy } = userOptions;
 
     if (autoCopy) {
         setTimeout(() => {
             copyLinkToClipboard();
         }, 500);
     }
-    
+
     if (keepHistory) {
         const curURLPair = {
             longUrl,
-            shortUrl
+            shortUrl,
         };
         addToHistory(curURLPair);
     }
 };
 
-
 // Copy Button
-$(copy__btn).on('click', () => copyLinkToClipboard());
-
+$(copy__btn).on('click', () => {
+    return copyLinkToClipboard();
+});
 
 // QR Code Button
 $(qrcode__btn).on('click', () => {
     toggleContentVisibility(qrcode__content);
 });
 
-
 // Initialize url shortening
 document.on('DOMContentLoaded', async () => {
-
     const tabs = await browser.tabs.query({
-        'active': true,
-        'lastFocusedWindow': true
+        active: true,
+        lastFocusedWindow: true,
     });
 
     // extract page url
-    longUrl = tabs[0].url;
+    longUrl = tabs.length && tabs[0].url;
     // validate url
-    validUrl = longUrl.startsWith('http');
+    if (longUrl) {
+        validUrl = longUrl.startsWith('http');
+    }
 
     // Get credentials from localstorage
     const { key, pwd } = await browser.storage.local.get(['key', 'pwd']);
@@ -144,73 +135,69 @@ document.on('DOMContentLoaded', async () => {
     password = pwd;
 
     if (validUrl && API_key !== '' && API_key !== undefined) {
-
         // send start message to background.js and get response
         const response = await browser.runtime.sendMessage({
             msg: 'start',
             API_key,
             pageUrl: longUrl,
-            password
+            password,
         });
 
-        // status codes
+        // eslint-disable-next-line no-restricted-globals
         if (!isNaN(response)) {
+            // status codes
             switch (response) {
-            case 429:
-                updateDOMContent('API Limit Exceeded!');
-                break;
-            case 401:
-                updateDOMContent('Invalid API Key');
-                openOptionsPage();
-                break;
-            case 504:
-                updateDOMContent('Time-out!');
-                break;
-            default:
-                updateDOMContent('Some error occured');
-                break;
+                case 429:
+                    updateDOMContent('API Limit Exceeded!');
+                    break;
+                case 401:
+                    updateDOMContent('Invalid API Key');
+                    openOptionsPage();
+                    break;
+                case 504:
+                    updateDOMContent('Time-out!');
+                    break;
+                default:
+                    updateDOMContent('Some error occured');
+                    break;
             }
         }
         // got valid response
         else if (response) {
-
             shortUrl = response;
             // show shortened kutt url
             updateDOMContent(shortUrl);
-            // Show action buttons                        
+            // Show action buttons
             toggleContentVisibility(buttons);
-            // Generate QR Code 
+            // Generate QR Code
             generateQRCode(shortUrl);
             // perform user-set actions
             doUserSetActions();
-        } 
+        }
         // all test-cases fail
         else {
             updateDOMContent('Invalid Response!');
         }
-
     }
-    // no API key set 
+    // no API key set
     else if (API_key === '' || API_key === undefined) {
-   
         updateDOMContent('Set API Key in Options!');
 
         const defaultOptions = {
             pwdForUrls: false,
             autoCopy: false,
             keepHistory: true,
-            devMode: false
+            devMode: false,
         };
 
         // set defaults
         await browser.storage.local.set({
             userOptions: defaultOptions,
-            URL_array: []
+            URL_array: [],
         });
 
         openOptionsPage();
-
-    } 
+    }
     // invalid url
     else if (!validUrl) {
         updateDOMContent('Not a Valid URL!!');
