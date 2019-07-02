@@ -3,13 +3,13 @@
   "version": "2.0.4",
   "main": "background.js",
   "scripts": {
-    "dev-chrome": "cross-env NODE_ENV=development cross-env TARGET=chrome webpack --watch --mode=development",
-    "dev-firefox": "cross-env NODE_ENV=development cross-env TARGET=firefox webpack --watch --mode=development",
-    "dev-opera": "cross-env NODE_ENV=development cross-env TARGET=opera webpack --watch --mode=development",
-    "build-chrome": "cross-env NODE_ENV=production cross-env TARGET=chrome webpack --mode=production",
-    "build-firefox": "cross-env NODE_ENV=production cross-env TARGET=firefox webpack --mode=production",
-    "build-opera": "cross-env NODE_ENV=production cross-env TARGET=opera webpack --mode=production",
-    "build": "npm run build-chrome && npm run build-firefox && npm run build-opera"
+    "dev:chrome": "cross-env NODE_ENV=development cross-env TARGET=chrome webpack --watch --mode=development",
+    "dev:firefox": "cross-env NODE_ENV=development cross-env TARGET=firefox webpack --watch --mode=development",
+    "dev:opera": "cross-env NODE_ENV=development cross-env TARGET=opera webpack --watch --mode=development",
+    "build:chrome": "cross-env NODE_ENV=production cross-env TARGET=chrome webpack --mode=production",
+    "build:firefox": "cross-env NODE_ENV=production cross-env TARGET=firefox webpack --mode=production",
+    "build:opera": "cross-env NODE_ENV=production cross-env TARGET=opera webpack --mode=production",
+    "build": "npm run build:chrome && npm run build:firefox && npm run build:opera"
   },
   "author": "abhijithvijayan",
   "license": "MIT",
@@ -44,8 +44,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.4",
-    "axios": "^0.18.0",
-    "kutt": "^1.2.0",
+    "axios": "^0.19.0",
     "qrcode": "^1.3.3",
     "webextension-polyfill": "^0.3.1"
   },

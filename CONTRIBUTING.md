@@ -11,11 +11,11 @@
 - To watch file changes in developement
 
   - Chrome
-    - `npm run dev-chrome`
+    - `npm run dev:chrome`
   - Firefox
-    - `npm run dev-firefox`
+    - `npm run dev:firefox`
   - Opera
-    - `npm run dev-opera`
+    - `npm run dev:opera`
 
   (Reload Extension Manually in the browser)
 
