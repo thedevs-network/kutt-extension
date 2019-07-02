@@ -1,4 +1,4 @@
-import Kutt from 'kutt';
+import axios from 'axios';
 import browser from 'webextension-polyfill';
 
 // Shorten url
@@ -16,23 +16,23 @@ const shortenUrl = async (API_KEY, urlToShorten, password) => {
         // do something if fetching from localstorage fails
         API_HOST = 'https://kutt.it';
     }
-    
-    const kutt = new Kutt();
-
-    // configure kutt-package
-    kutt.setAPI(API_HOST);
-    kutt.setKey(API_KEY);
-    kutt.setTimeout(20000);
-
-    const data = {
-        target: urlToShorten,
-        password
-    };
 
     // shorten function
     try {
-        const response = await kutt.submit(data);
-        return response.shortUrl;
+        const { data: { shortUrl } } = await axios({
+            method: 'POST',
+            timeout: 20000,
+            url: `${API_HOST}/api/url/submit`,
+            headers: {
+                'X-API-Key': API_KEY
+            },
+            data: {
+                target: urlToShorten,
+                password
+            }
+        });
+        return shortUrl;
+
     } catch (e) {
         // time out
         if (e.code === 'ECONNABORTED') {

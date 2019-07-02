@@ -3,7 +3,6 @@
 ## Assets
 
 - [kutt.it API](https://github.com/thedevs-network/kutt#api) is used to retreive shortened URLs.
-- [node-kutt](https://github.com/ardalanamini/node-kutt) is used for API calls
 
 ## Development
 
