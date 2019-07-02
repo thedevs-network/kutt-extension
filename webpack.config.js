@@ -2,7 +2,7 @@
 /* eslint-disable global-require */
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -86,16 +86,15 @@ module.exports = () => {
         },
         plugins: [
             new FixStyleOnlyEntriesPlugin({ silent: true }),
-            new CleanWebpackPlugin([`extension/${process.env.TARGET}`, `extension/${process.env.TARGET}.zip`]),
+            new CleanWebpackPlugin({
+                cleanOnceBeforeBuildPatterns: [
+                    `extension/${process.env.TARGET}`,
+                    `extension/${process.env.TARGET}.zip`,
+                ],
+            }),
             new CopyWebpackPlugin([
-                {
-                    from: 'src/assets',
-                    to: 'assets',
-                },
-                {
-                    from: `src/manifest.${process.env.TARGET}.json`,
-                    to: 'manifest.json',
-                },
+                { from: 'src/assets', to: 'assets' },
+                { from: `src/manifest.${process.env.TARGET}.json`, to: 'manifest.json' },
             ]),
             new HtmlWebpackPlugin({
                 template: 'src/options.html',
