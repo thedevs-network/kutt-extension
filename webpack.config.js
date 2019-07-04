@@ -88,9 +88,12 @@ module.exports = () => {
             new FixStyleOnlyEntriesPlugin({ silent: true }),
             new CleanWebpackPlugin({
                 cleanOnceBeforeBuildPatterns: [
-                    `extension/${process.env.TARGET}`,
-                    `extension/${process.env.TARGET}.zip`,
+                    // '**/*',
+                    path.join(process.cwd(), `extension/${process.env.TARGET}`),
+                    path.join(process.cwd(), `extension/${process.env.TARGET}.zip`),
                 ],
+                cleanStaleWebpackAssets: false,
+                verbose: true,
             }),
             new CopyWebpackPlugin([
                 { from: 'src/assets', to: 'assets' },
