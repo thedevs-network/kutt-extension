@@ -67,6 +67,8 @@ const saveData = async () => {
     }
     if (API_HOST === '') {
         devMode = false;
+    } else if (API_HOST.endsWith('/')) {
+        API_HOST = API_HOST.slice(0, -1);
     }
     if (!devMode) {
         API_HOST = '';
