@@ -10,7 +10,7 @@ const table = '.table__content--holder';
 const rate__button = '#rate__button';
 const main__element = '#delegation__element';
 const chromeStoreLink = 'https://chrome.google.com/webstore/detail/kutt/pklakpjfiegjacoppcodencchehlfnpd/reviews';
-const firefoxStoreLink = 'https://addons.mozilla.org/en-US/firefox/addon/kutt/';
+const firefoxStoreLink = 'https://addons.mozilla.org/en-US/firefox/addon/kutt/reviews/';
 
 const html = `
     <tr class="table__body--holder" id="table__body-%num%">
