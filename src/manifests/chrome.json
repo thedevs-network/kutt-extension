@@ -1,7 +1,5 @@
 {
-  "manifest_version": 2,
   "name": "Kutt",
-  "version": "3.0.2",
   "description": "Shorten long URLs with just one click.",
   "icons": {
     "16": "assets/favicon-16.png",
@@ -20,6 +18,7 @@
     "default_title": "Shorten this URL",
     "chrome_style": false
   },
+  "manifest_version": 2,
   "author": "abhijithvijayan",
   "background": {
     "persistent": false,

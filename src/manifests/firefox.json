@@ -1,7 +1,5 @@
 {
-  "manifest_version": 2,
   "name": "Kutt",
-  "version": "3.0.2",
   "browser_specific_settings": {
     "gecko": {
       "id": "support@kutt.it"
@@ -25,6 +23,7 @@
     "default_title": "Shorten this URL",
     "browser_style": false
   },
+  "manifest_version": 2,
   "author": "abhijithvijayan",
   "background": {
     "scripts": ["js/background.js"]
