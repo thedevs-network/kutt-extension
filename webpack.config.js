@@ -1,5 +1,4 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable global-require */
+/* eslint-disable global-require, import/no-extraneous-dependencies */
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -97,7 +96,19 @@ module.exports = () => {
             }),
             new CopyWebpackPlugin([
                 { from: 'src/assets', to: 'assets' },
-                { from: `src/manifest.${process.env.TARGET}.json`, to: 'manifest.json' },
+                {
+                    from: `src/manifests/${process.env.TARGET}.json`,
+                    transform(content, path) {
+                        // generates the manifest file using the package.json informations
+                        return Buffer.from(
+                            JSON.stringify({
+                                version: process.env.npm_package_version,
+                                ...JSON.parse(content.toString()),
+                            })
+                        );
+                    },
+                    to: 'manifest.json',
+                },
             ]),
             new HtmlWebpackPlugin({
                 template: 'src/options.html',
