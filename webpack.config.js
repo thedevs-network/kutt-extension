@@ -15,6 +15,16 @@ const manifestInput = require('./src/manifest');
 const targetBrowser = process.env.TARGET_BROWSER;
 const manifest = wextManifest[targetBrowser](manifestInput);
 
+const getExtensionFileType = () => {
+    if (targetBrowser === 'opera') {
+        return 'crx';
+    }
+    if (targetBrowser === 'firefox') {
+        return 'xpi';
+    }
+    return 'zip';
+};
+
 module.exports = () => {
     return {
         entry: {
@@ -94,9 +104,8 @@ module.exports = () => {
             new FixStyleOnlyEntriesPlugin({ silent: true }),
             new CleanWebpackPlugin({
                 cleanOnceBeforeBuildPatterns: [
-                    // '**/*',
                     path.join(process.cwd(), `extension/${targetBrowser}`),
-                    path.join(process.cwd(), `extension/${targetBrowser}.zip`),
+                    path.join(process.cwd(), `extension/${targetBrowser}.${getExtensionFileType()}`),
                 ],
                 cleanStaleWebpackAssets: false,
                 verbose: true,
@@ -138,7 +147,8 @@ module.exports = () => {
                 }),
                 new ZipPlugin({
                     path: path.resolve(__dirname, 'extension'),
-                    filename: `${targetBrowser}.zip`,
+                    extension: `${getExtensionFileType()}`,
+                    filename: `${targetBrowser}`,
                 }),
             ],
         },
