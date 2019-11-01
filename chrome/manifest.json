@@ -1,1 +1,47 @@
-{"version":"3.1.0","name":"Kutt","description":"Shorten long URLs with just one click.","icons":{"16":"assets/favicon-16.png","32":"assets/favicon-32.png","48":"assets/favicon-48.png","128":"assets/favicon-128.png"},"browser_action":{"default_popup":"popup.html","default_icon":{"16":"assets/favicon-16.png","32":"assets/favicon-32.png","48":"assets/favicon-48.png","128":"assets/favicon-128.png"},"default_title":"Shorten this URL","chrome_style":false},"manifest_version":2,"author":"abhijithvijayan","background":{"persistent":false,"scripts":["js/background.js"]},"homepage_url":"https://github.com/abhijithvijayan/kutt-extension","minimum_chrome_version":"49","content_security_policy":"script-src 'self' 'unsafe-eval'; object-src 'self'","options_page":"options.html","options_ui":{"page":"options.html","chrome_style":false,"open_in_tab":true},"permissions":["tabs","storage","clipboardRead","http://*/*","https://*/*"],"short_name":"Kutt"}
+{
+  "manifest_version": 2,
+  "name": "Kutt",
+  "version": "3.1.0",
+  "short_name": "Kutt",
+  "description": "Shorten long URLs with just one click.",
+  "icons": {
+    "16": "assets/favicon-16.png",
+    "32": "assets/favicon-32.png",
+    "48": "assets/favicon-48.png",
+    "128": "assets/favicon-128.png"
+  },
+  "homepage_url": "https://github.com/abhijithvijayan/kutt-extension",
+  "author": "abhijithvijayan",
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "assets/favicon-16.png",
+      "32": "assets/favicon-32.png",
+      "48": "assets/favicon-48.png",
+      "128": "assets/favicon-128.png"
+    },
+    "default_title": "Shorten this URL",
+    "chrome_style": false
+  },
+  "background": {
+    "persistent": false,
+    "scripts": [
+      "js/background.js"
+    ]
+  },
+  "minimum_chrome_version": "49",
+  "permissions": [
+    "tabs",
+    "storage",
+    "clipboardRead",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true,
+    "chrome_style": false
+  }
+}
