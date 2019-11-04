@@ -116,7 +116,7 @@ $(qrcode__btn).on('click', () => {
 });
 
 // Initialize url shortening
-document.on('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const tabs = await browser.tabs.query({
         active: true,
         lastFocusedWindow: true,
@@ -201,5 +201,7 @@ document.on('DOMContentLoaded', async () => {
     // invalid url
     else if (!validUrl) {
         updateDOMContent('Not a Valid URL!!');
+    } else {
+        updateDOMContent('Some error occured');
     }
 });
