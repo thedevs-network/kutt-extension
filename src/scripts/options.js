@@ -29,21 +29,27 @@ document.on('DOMContentLoaded', async () => {
         $(api__holder).value = API_KEY;
         // password holder
         $(pwd__checkbox).checked = userOptions.pwdForUrls;
+
         // if disabled -> delete save password
         if (!userOptions.pwdForUrls) {
             pwd = '';
         }
+
         $(pwd__value).value = pwd;
         toggleInputVisibility(userOptions.pwdForUrls, pwd__holder);
+
         // dev mode holder
         $(dev__checkbox).checked = userOptions.devMode;
+
         // if disabled -> reset to default host
         if (!userOptions.devMode) {
             host = '';
         }
+
         $(dev__value).value = host;
         toggleInputVisibility(userOptions.devMode, dev__holder);
     }
+
     $(autocopy__checkbox).checked = userOptions.autoCopy;
     $(history__checkbox).checked = userOptions.keepHistory;
 });
@@ -93,6 +99,7 @@ const saveData = async () => {
     $(submit__btn).textContent = 'Saved';
     setTimeout(async () => {
         $(submit__btn).textContent = 'Save';
+
         // close current tab
         const tabInfo = await browser.tabs.getCurrent();
         browser.tabs.remove(tabInfo.id);
@@ -110,6 +117,7 @@ document.on('keypress', e => {
 // Show Password
 $(pwd__eye).on('click', () => {
     const element = $(pwd__value);
+
     if (element.type === 'password') {
         element.type = 'text';
         $(pwd__eye).textContent = 'HIDE';
@@ -130,11 +138,13 @@ function toggleInputVisibility(checked, el) {
 // Password Enable/Disable Switch
 $(pwd__switch).on('click', () => {
     const { checked } = $(pwd__checkbox);
+
     toggleInputVisibility(checked, pwd__holder);
 });
 
 // customhost Mode Enable/Disable Switch
 $(dev__switch).on('click', () => {
     const { checked } = $(dev__checkbox);
+
     toggleInputVisibility(checked, dev__holder);
 });

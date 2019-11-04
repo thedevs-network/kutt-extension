@@ -18,24 +18,45 @@ const qrcode__content = '.qrcode__content--holder';
 const qrcode__btn = '#button__qrcode--holder';
 const qrcode__api = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=';
 
+/**
+ *  DOM Message Update function
+ *
+ *  @param {String} Message to show on DOM
+ */
 const updateDOMContent = value => {
     $(url__holder).textContent = value;
 };
 
+/**
+ *  Trigger Opening Options Page
+ */
 const openOptionsPage = () => {
     setTimeout(() => {
         browser.runtime.openOptionsPage();
     }, 900);
 };
 
+/**
+ *  Show / Hide Components
+ *
+ *  @param {String} element ID or class
+ */
 const toggleContentVisibility = element => {
     $(element).classList.toggle('d-none');
 };
 
+/**
+ *  Show / Hide copied text alert
+ */
 const toggleCopyAlert = () => {
     $(copyalert__holder).classList.toggle('v-none');
 };
 
+/**
+ *  QR Code generator
+ *
+ *  @param {String} url
+ */
 const generateQRCode = async url => {
     try {
         $(qrcode__holder).src = await QRCode.toDataURL(url);
@@ -45,6 +66,9 @@ const generateQRCode = async url => {
     }
 };
 
+/**
+ *  Copy Link to Clipboard
+ */
 const copyLinkToClipboard = () => {
     // https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
     try {
@@ -59,16 +83,19 @@ const copyLinkToClipboard = () => {
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
+
         if (selected) {
             document.getSelection().removeAllRanges();
             document.getSelection().addRange(selected);
         }
+
         toggleCopyAlert();
         setTimeout(() => {
             toggleCopyAlert();
         }, 1300);
     } catch (error) {
         $(copyalert__holder).textContent = 'Error while Copying!';
+
         toggleCopyAlert();
         setTimeout(() => {
             toggleCopyAlert();
@@ -76,8 +103,12 @@ const copyLinkToClipboard = () => {
     }
 };
 
+/**
+ *  Add URL to localstorage array
+ */
 const addToHistory = async curURLPair => {
     const { URL_array } = await browser.storage.local.get(['URL_array']);
+
     // store to localstorage
     await browser.runtime.sendMessage({
         msg: 'store',
@@ -86,6 +117,9 @@ const addToHistory = async curURLPair => {
     });
 };
 
+/**
+ *  Handle User Preferred Actions (autoCopy/keepHistory)
+ */
 const doUserSetActions = async () => {
     const { userOptions } = await browser.storage.local.get(['userOptions']);
     const { keepHistory, autoCopy } = userOptions;
@@ -101,21 +135,28 @@ const doUserSetActions = async () => {
             longUrl,
             shortUrl,
         };
+
         addToHistory(curURLPair);
     }
 };
 
-// Copy Button
+/**
+ *  Handle copying on button click
+ */
 $(copy__btn).on('click', () => {
     return copyLinkToClipboard();
 });
 
-// QR Code Button
+/**
+ *  Show / Hide QRCode on button click
+ */
 $(qrcode__btn).on('click', () => {
     toggleContentVisibility(qrcode__content);
 });
 
-// Initialize url shortening
+/**
+ *  Driver Function
+ */
 document.addEventListener('DOMContentLoaded', async () => {
     const tabs = await browser.tabs.query({
         active: true,
@@ -124,18 +165,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // extract page url
     longUrl = tabs.length && tabs[0].url;
+
     // validate url
     if (longUrl) {
         validUrl = longUrl.startsWith('http');
     }
 
-    // Get credentials from localstorage
+    // Get API Key / Password from localstorage
     const { key, pwd } = await browser.storage.local.get(['key', 'pwd']);
     API_key = key;
     password = pwd;
 
     if (validUrl && API_key !== '' && API_key !== undefined) {
-        // send start message to background.js and get response
+        /**
+         *  Initialize url shortening (send message to background.js)
+         */
         const response = await browser.runtime.sendMessage({
             msg: 'start',
             API_key,

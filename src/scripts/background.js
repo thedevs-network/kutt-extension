@@ -7,6 +7,7 @@ const shortenUrl = async (API_KEY, urlToShorten, password) => {
 
     try {
         const { host, userOptions } = await browser.storage.local.get(['host', 'userOptions']);
+
         // eslint-disable-next-line no-prototype-builtins
         if (userOptions.hasOwnProperty('devMode') && userOptions.devMode) {
             API_HOST = host;
@@ -33,12 +34,14 @@ const shortenUrl = async (API_KEY, urlToShorten, password) => {
                 password,
             },
         });
+
         return shortUrl;
     } catch (e) {
         // time out
         if (e.code === 'ECONNABORTED') {
             return 504;
         }
+
         // return status code
         if (e.response) {
             return e.response.status;
@@ -52,21 +55,27 @@ browser.runtime.onMessage.addListener(async (request, sender, response) => {
     if (request.msg === 'start') {
         return shortenUrl(request.API_key, request.pageUrl, request.password);
     }
+
     // store urls to history
     if (request.msg === 'store') {
         const { curURLCollection } = request;
         const { curURLPair } = request;
+
         // find & remove duplicates
         const noDuplicateArray = curURLCollection.filter(el => {
             return el.longUrl !== curURLPair.longUrl;
         });
+
         const count = noDuplicateArray.length;
+
         // delete first pair if size exceeds 15
         if (count >= 15) {
             noDuplicateArray.shift();
         }
+
         // push to the array
         noDuplicateArray.push(curURLPair);
+
         // save to local storage
         await browser.storage.local.set({
             URL_array: noDuplicateArray,
