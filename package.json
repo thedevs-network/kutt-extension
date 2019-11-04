@@ -1,6 +1,6 @@
 {
   "name": "kutt-extension",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "main": "src/scripts/background.js",
   "private": true,
   "license": "MIT",
