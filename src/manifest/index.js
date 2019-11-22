@@ -18,6 +18,7 @@ const manifestInput = {
     __firefox__browser_specific_settings: {
         gecko: {
             id: 'support@kutt.it',
+            strict_min_version: '52.0',
         },
     },
 
