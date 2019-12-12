@@ -15,11 +15,11 @@ const firefoxStoreLink = 'https://addons.mozilla.org/en-US/firefox/addon/kutt/re
 const html = `
     <tr class="table__body--holder" id="table__body-%num%">
         <td class="table__body--original">
-            <a href="%longLink%" class="table__body--originalURL" target="_blank" rel="noopener">%longLink%</a>
+            <a href="%longLink%" class="table__body--originalURL" target="_blank" rel="noopener noreferrer nofollow">%longLink%</a>
         </td>
         <td class="table__body--shortened" id="table__shortened-%num%">
             <div class="table__body--shortenBody">
-                <a href="%shortLink%" id="shortUrl-%num%" class="table__body--shortenURL" target="_blank" rel="noopener">%shortLink%</a>
+                <a href="%shortLink%" id="shortUrl-%num%" class="table__body--shortenURL" target="_blank" rel="noopener noreferrer nofollow">%shortLink%</a>
             </div>
         </td>
         <td class="table__body--functionBtns">
