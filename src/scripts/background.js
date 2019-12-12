@@ -1,9 +1,11 @@
 import axios from 'axios';
 import browser from 'webextension-polyfill';
 
+import { KUTT_IT_DEFAULT_DOMAIN } from './constants';
+
 // Shorten url
 const shortenUrl = async (API_KEY, urlToShorten, password) => {
-    let API_HOST = 'https://kutt.it';
+    let API_HOST = KUTT_IT_DEFAULT_DOMAIN;
 
     try {
         const { host, userOptions } = await browser.storage.local.get(['host', 'userOptions']);
@@ -13,9 +15,8 @@ const shortenUrl = async (API_KEY, urlToShorten, password) => {
             API_HOST = host;
         }
         // else use default host
-    } catch (e) {
-        // do something if fetching from localstorage fails
-        API_HOST = 'https://kutt.it';
+    } catch (err) {
+        API_HOST = KUTT_IT_DEFAULT_DOMAIN;
     }
 
     // shorten function
@@ -52,8 +53,10 @@ const shortenUrl = async (API_KEY, urlToShorten, password) => {
 // Calling function
 browser.runtime.onMessage.addListener(async (request, sender, response) => {
     // shorten request
-    if (request.msg === 'start') {
-        return shortenUrl(request.API_key, request.pageUrl, request.password);
+    if (request.msg === 'shorten') {
+        const { API_KEY, pageUrl, password } = request;
+
+        return shortenUrl(API_KEY, pageUrl, password);
     }
 
     // store urls to history

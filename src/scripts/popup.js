@@ -1,22 +1,22 @@
 /* eslint-disable camelcase */
 import browser from 'webextension-polyfill';
-import QRCode from 'qrcode';
+import qr from 'qrcode';
 
 import {
-    qrcode__holder,
-    url__holder,
-    buttons,
-    copy__btn,
-    copyalert__holder,
-    qrcode__btn,
-    qrcode__api,
-    qrcode__content,
+    QRCODE_IMAGE_NODE,
+    URL_HOLDER,
+    BUTTONS_GROUP,
+    COPY_BUTTON,
+    COPIED_ALERT_HOLDER,
+    QRCODE_BUTTON,
+    QR_EXTERNAL_API_URL,
+    QRCODE_HOLDER,
 } from './constants';
 import { $ } from './bling';
 
 let shortUrl;
 let longUrl;
-let API_key;
+let API_KEY;
 let password;
 let validUrl = '';
 
@@ -24,7 +24,7 @@ let validUrl = '';
  *  DOM Message Update function
  */
 const updateDOMContent = value => {
-    $(url__holder).textContent = value;
+    $(URL_HOLDER).textContent = value;
 };
 
 /**
@@ -49,7 +49,7 @@ const toggleContentVisibility = element => {
  *  Show / Hide copied text alert
  */
 const toggleCopyAlert = () => {
-    $(copyalert__holder).classList.toggle('v-none');
+    $(COPIED_ALERT_HOLDER).classList.toggle('v-none');
 };
 
 /**
@@ -57,12 +57,12 @@ const toggleCopyAlert = () => {
  *
  *  @param {String} url
  */
-const generateQRCode = async url => {
+const generateQRCode = async sourceUrl => {
     try {
-        $(qrcode__holder).src = await QRCode.toDataURL(url);
+        $(QRCODE_IMAGE_NODE).src = await qr.toDataURL(sourceUrl);
     } catch (err) {
         // fetch qrcode from http://goqr.me api
-        $(qrcode__holder).src = `${qrcode__api}${url}`;
+        $(QRCODE_IMAGE_NODE).src = `${QR_EXTERNAL_API_URL}${sourceUrl}`;
     }
 };
 
@@ -72,7 +72,7 @@ const generateQRCode = async url => {
 const copyLinkToClipboard = () => {
     // https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
     try {
-        $(copyalert__holder).textContent = 'Copied to clipboard!';
+        $(COPIED_ALERT_HOLDER).textContent = 'Copied to clipboard!';
         const el = document.createElement('textarea');
         el.value = shortUrl;
         el.setAttribute('readonly', '');
@@ -94,7 +94,7 @@ const copyLinkToClipboard = () => {
             toggleCopyAlert();
         }, 1300);
     } catch (error) {
-        $(copyalert__holder).textContent = 'Error while Copying!';
+        $(COPIED_ALERT_HOLDER).textContent = 'Error while Copying!';
 
         toggleCopyAlert();
         setTimeout(() => {
@@ -143,15 +143,15 @@ const doUserSetActions = async () => {
 /**
  *  Handle copying on button click
  */
-$(copy__btn).on('click', () => {
+$(COPY_BUTTON).on('click', () => {
     return copyLinkToClipboard();
 });
 
 /**
  *  Show / Hide QRCode on button click
  */
-$(qrcode__btn).on('click', () => {
-    toggleContentVisibility(qrcode__content);
+$(QRCODE_BUTTON).on('click', () => {
+    toggleContentVisibility(QRCODE_HOLDER);
 });
 
 /**
@@ -173,16 +173,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Get API Key / Password from localstorage
     const { key, pwd } = await browser.storage.local.get(['key', 'pwd']);
-    API_key = key;
+
+    API_KEY = key;
     password = pwd;
 
-    if (validUrl && API_key !== '' && API_key !== undefined) {
+    if (validUrl && API_KEY !== '' && API_KEY !== undefined) {
         /**
          *  Initialize url shortening (send message to background.js)
          */
         const response = await browser.runtime.sendMessage({
-            msg: 'start',
-            API_key,
+            msg: 'shorten',
+            API_KEY,
             pageUrl: longUrl,
             password,
         });
@@ -212,7 +213,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             // show shortened kutt url
             updateDOMContent(shortUrl);
             // Show action buttons
-            toggleContentVisibility(buttons);
+            toggleContentVisibility(BUTTONS_GROUP);
             // Generate QR Code
             generateQRCode(shortUrl);
             // perform user-set actions
@@ -224,7 +225,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
     // no API key set
-    else if (API_key === '' || API_key === undefined) {
+    else if (API_KEY === '' || API_KEY === undefined) {
         updateDOMContent('Set API Key in Options!');
 
         const defaultOptions = {

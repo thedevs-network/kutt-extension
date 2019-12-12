@@ -3,19 +3,19 @@
 import browser from 'webextension-polyfill';
 
 import {
-    pwd__holder,
-    dev__holder,
-    submit__btn,
-    pwd__value,
-    dev__value,
-    api__holder,
-    pwd__eye,
-    pwd__switch,
-    dev__switch,
-    pwd__checkbox,
-    dev__checkbox,
-    history__checkbox,
-    autocopy__checkbox,
+    PASSWORD_HOLDER,
+    CUSTOM_HOST_URL_HOLDER,
+    SAVE_BUTTON,
+    PASSWORD_INPUT,
+    CUSTOM_HOST_URL_INPUT,
+    API_KEY_INPUT,
+    PASSWORD_VIEW_TOGGLER,
+    PASSWORD_INPUT_TOGGLE_SWITCH,
+    CUSTOM_HOST_INPUT_TOGGLE_SWITCH,
+    PASSWORD_OPTION_CHECKBOX,
+    CUSTOM_HOST_OPTION_CHECKBOX,
+    SAVE_HISTORY_OPTION_CHECKBOX,
+    AUTOCOPY_OPTION_CHECKBOX,
 } from './constants';
 import { $ } from './bling';
 
@@ -27,47 +27,47 @@ document.on('DOMContentLoaded', async () => {
     const API_KEY = `${key}`;
 
     if (API_KEY === 'undefined') {
-        $(api__holder).value = '';
+        $(API_KEY_INPUT).value = '';
     } else {
-        $(api__holder).value = API_KEY;
+        $(API_KEY_INPUT).value = API_KEY;
 
         // password holder
-        $(pwd__checkbox).checked = userOptions.pwdForUrls;
+        $(PASSWORD_OPTION_CHECKBOX).checked = userOptions.pwdForUrls;
 
         // if disabled -> delete saved password
         if (!userOptions.pwdForUrls) {
             pwd = '';
         }
 
-        $(pwd__value).value = pwd;
-        toggleInputVisibility(userOptions.pwdForUrls, pwd__holder);
+        $(PASSWORD_INPUT).value = pwd;
+        toggleInputVisibility(userOptions.pwdForUrls, PASSWORD_HOLDER);
 
         // dev mode holder
-        $(dev__checkbox).checked = userOptions.devMode;
+        $(CUSTOM_HOST_OPTION_CHECKBOX).checked = userOptions.devMode;
 
         // if disabled -> reset to default host
         if (!userOptions.devMode) {
             host = '';
         }
 
-        $(dev__value).value = host;
-        toggleInputVisibility(userOptions.devMode, dev__holder);
+        $(CUSTOM_HOST_URL_INPUT).value = host;
+        toggleInputVisibility(userOptions.devMode, CUSTOM_HOST_URL_HOLDER);
     }
 
-    $(autocopy__checkbox).checked = userOptions.autoCopy;
-    $(history__checkbox).checked = userOptions.keepHistory;
+    $(AUTOCOPY_OPTION_CHECKBOX).checked = userOptions.autoCopy;
+    $(SAVE_HISTORY_OPTION_CHECKBOX).checked = userOptions.keepHistory;
 });
 
 // Store Data and Alert message
 const saveData = async () => {
-    let password = $(pwd__value).value;
-    let API_HOST = $(dev__value).value;
-    const API_KEY = $(api__holder).value;
+    let password = $(PASSWORD_INPUT).value;
+    let API_HOST = $(CUSTOM_HOST_URL_INPUT).value;
+    const API_KEY = $(API_KEY_INPUT).value;
 
-    let devMode = $(dev__checkbox).checked;
-    let pwdForUrls = $(pwd__checkbox).checked;
-    const autoCopy = $(autocopy__checkbox).checked;
-    const keepHistory = $(history__checkbox).checked;
+    let devMode = $(CUSTOM_HOST_OPTION_CHECKBOX).checked;
+    let pwdForUrls = $(PASSWORD_OPTION_CHECKBOX).checked;
+    const autoCopy = $(AUTOCOPY_OPTION_CHECKBOX).checked;
+    const keepHistory = $(SAVE_HISTORY_OPTION_CHECKBOX).checked;
 
     if (password === '') {
         pwdForUrls = false;
@@ -103,10 +103,10 @@ const saveData = async () => {
         userOptions,
     });
 
-    $(submit__btn).textContent = 'Saved';
+    $(SAVE_BUTTON).textContent = 'Saved';
 
     setTimeout(async () => {
-        $(submit__btn).textContent = 'Save';
+        $(SAVE_BUTTON).textContent = 'Save';
 
         // close current tab
         const tabInfo = await browser.tabs.getCurrent();
@@ -117,7 +117,7 @@ const saveData = async () => {
 /**
  *  Handle submit button click
  */
-$(submit__btn).on('click', saveData);
+$(SAVE_BUTTON).on('click', saveData);
 
 /**
  *  Handle enter-key press
@@ -131,15 +131,15 @@ document.on('keypress', e => {
 /**
  *  Toggle Password View
  */
-$(pwd__eye).on('click', () => {
-    const element = $(pwd__value);
+$(PASSWORD_VIEW_TOGGLER).on('click', () => {
+    const element = $(PASSWORD_INPUT);
 
     if (element.type === 'password') {
         element.type = 'text';
-        $(pwd__eye).textContent = 'HIDE';
+        $(PASSWORD_VIEW_TOGGLER).textContent = 'HIDE';
     } else {
         element.type = 'password';
-        $(pwd__eye).textContent = 'SHOW';
+        $(PASSWORD_VIEW_TOGGLER).textContent = 'SHOW';
     }
 });
 
@@ -157,17 +157,17 @@ function toggleInputVisibility(checked, el) {
 /**
  *  Password Enable/Disable Switch
  */
-$(pwd__switch).on('click', () => {
-    const { checked } = $(pwd__checkbox);
+$(PASSWORD_INPUT_TOGGLE_SWITCH).on('click', () => {
+    const { checked } = $(PASSWORD_OPTION_CHECKBOX);
 
-    toggleInputVisibility(checked, pwd__holder);
+    toggleInputVisibility(checked, PASSWORD_HOLDER);
 });
 
 /**
  *  Customhost Mode Enable/Disable Switch
  */
-$(dev__switch).on('click', () => {
-    const { checked } = $(dev__checkbox);
+$(CUSTOM_HOST_INPUT_TOGGLE_SWITCH).on('click', () => {
+    const { checked } = $(CUSTOM_HOST_OPTION_CHECKBOX);
 
-    toggleInputVisibility(checked, dev__holder);
+    toggleInputVisibility(checked, CUSTOM_HOST_URL_HOLDER);
 });

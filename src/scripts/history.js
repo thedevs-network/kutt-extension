@@ -1,17 +1,31 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable camelcase */
 import browser from 'webextension-polyfill';
-import QRCode from 'qrcode';
+import qr from 'qrcode';
 
 import {
-    html,
-    clear__btn,
-    table,
-    rate__button,
-    home__button,
-    main__element,
-    chromeStoreLink,
-    firefoxStoreLink,
+    HISTORY_TABLE_ITEM_HTML,
+    CLEAR_HISTORY_BUTTON,
+    HISTORY_VIEW_TABLE,
+    RATE_NOW_BUTTON,
+    DASHBOARD_BUTTON,
+    HISTORY_VIEW_TABLE_PARENT_NODE,
+    CHROME_STORE_LINK,
+    FIREFOX_STORE_LINK,
+    QR_EXTERNAL_API_URL,
+    KUTT_IT_DEFAULT_DOMAIN,
+    FIREFOX,
+    OPERA,
+    CHROME,
+    ALERT_COPIED_HOLDER,
+    NO_URLS_TO_SHOW,
+    COPIED_TO_CLIPBOARD,
+    FAILED_TO_COPY,
+    QRCODE_POPUP_NODE_TEMPLATE,
+    QRCODE_POPUP_NODE,
+    COPY_BUTTON_ID,
+    QRCODE_BUTTON_ID,
+    QRCODE_POPUP_CLOSE_BUTTON_ID,
 } from './constants';
 import { $ } from './bling';
 
@@ -30,14 +44,14 @@ const getBrowserInfo = () => {
     const isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
 
     if (isFirefox) {
-        return 'firefox';
+        return FIREFOX;
     }
 
     if (isOpera) {
-        return 'opera';
+        return OPERA;
     }
 
-    return 'chrome';
+    return CHROME;
 };
 
 /**
@@ -47,14 +61,14 @@ const updateRatingButton = () => {
     const browserName = getBrowserInfo();
 
     switch (browserName) {
-        case 'chrome':
-        case 'opera': {
-            $(rate__button).setAttribute('href', chromeStoreLink);
+        case CHROME:
+        case OPERA: {
+            $(RATE_NOW_BUTTON).setAttribute('href', CHROME_STORE_LINK);
             break;
         }
 
-        case 'firefox': {
-            $(rate__button).setAttribute('href', firefoxStoreLink);
+        case FIREFOX: {
+            $(RATE_NOW_BUTTON).setAttribute('href', FIREFOX_STORE_LINK);
             break;
         }
 
@@ -85,24 +99,24 @@ document.on('DOMContentLoaded', async () => {
 
             for (const el of URL_array) {
                 // Regular Expression Based Implementation
-                updatedHTML = html.replace(/%longLink%/g, el.longUrl);
+                updatedHTML = HISTORY_TABLE_ITEM_HTML.replace(/%longLink%/g, el.longUrl);
                 pass += 1;
                 updatedHTML = updatedHTML.replace(/%num%/g, pass);
                 updatedHTML = updatedHTML.replace(/%shortLink%/g, el.shortUrl);
                 // inject to DOM
-                $(main__element).insertAdjacentHTML('afterbegin', updatedHTML);
+                $(HISTORY_VIEW_TABLE_PARENT_NODE).insertAdjacentHTML('afterbegin', updatedHTML);
             }
         } else {
-            $(clear__btn).style.display = 'none';
-            $(main__element).insertAdjacentHTML('afterbegin', '<h2 class="py-2">No Shortened URLs</h2>');
+            $(CLEAR_HISTORY_BUTTON).style.display = 'none';
+            $(HISTORY_VIEW_TABLE_PARENT_NODE).insertAdjacentHTML('afterbegin', NO_URLS_TO_SHOW);
         }
 
         // update review link
         updateRatingButton();
 
         // update home page url
-        const hostHomeUrl = devMode ? host : 'https://kutt.it';
-        $(home__button).setAttribute('href', hostHomeUrl);
+        const hostHomeUrl = devMode ? host : KUTT_IT_DEFAULT_DOMAIN;
+        $(DASHBOARD_BUTTON).setAttribute('href', hostHomeUrl);
     } else {
         alert('Enable History from Options Page');
 
@@ -114,14 +128,14 @@ document.on('DOMContentLoaded', async () => {
 /**
  *  Clear all history
  */
-$(clear__btn).on('click', async () => {
+$(CLEAR_HISTORY_BUTTON).on('click', async () => {
     await browser.storage.local.set({
         URL_array: [],
     });
 
-    $(main__element).parentNode.removeChild($(main__element));
-    $(clear__btn).style.display = 'none';
-    $(table).insertAdjacentHTML('beforeend', '<h2 class="py-2 table-inner">No Shortened URLs</h2>');
+    $(HISTORY_VIEW_TABLE_PARENT_NODE).parentNode.removeChild($(HISTORY_VIEW_TABLE_PARENT_NODE));
+    $(CLEAR_HISTORY_BUTTON).style.display = 'none';
+    $(HISTORY_VIEW_TABLE).insertAdjacentHTML('beforeend', NO_URLS_TO_SHOW);
 });
 
 /**
@@ -132,12 +146,12 @@ const buttonAction = async (type, id) => {
         $(`#table__shortened-${id}`).insertAdjacentHTML('afterbegin', flashHTML);
 
         setTimeout(() => {
-            $('#flash_copy').parentNode.removeChild($('#flash_copy'));
+            $(ALERT_COPIED_HOLDER).parentNode.removeChild($(ALERT_COPIED_HOLDER));
         }, 1300);
     };
 
     // copy button
-    if (type === 'copy') {
+    if (type === COPY_BUTTON_ID) {
         const shortLink = $(`#shortUrl-${id}`).textContent;
 
         try {
@@ -157,42 +171,34 @@ const buttonAction = async (type, id) => {
                 document.getSelection().addRange(selected);
             }
 
-            const flashHTML = '<div class="table_body--flashCopy" id="flash_copy">Copied to clipboard!</div>';
-            flashCopyAlert(flashHTML);
+            flashCopyAlert(COPIED_TO_CLIPBOARD);
         } catch (error) {
-            const flashHTML = '<div class="table_body--flashCopy" id="flash_copy">Error while Copying!!</div>';
-            flashCopyAlert(flashHTML);
+            flashCopyAlert(FAILED_TO_COPY);
         }
     }
     // generate QRCode
-    else if (type === 'qrcode') {
-        // inject template
+    else if (type === QRCODE_BUTTON_ID) {
         let updatedHTML;
-        const htmlContent = `<div class="table__qrcodePopup--div" id="qrcode__template"><div class="table__qrcode--popup"><div class="table__qrcode--holder"><img id="table__qrcode" src="%qrcodeLink%" alt="QRCode" /></div><div class="table__closebtn--holder"><button type="button" class="table__closebtn--inner" id="close__btn-%num%">Close</button></div></div></div>`;
 
         // 1. get short link
         const shortUrl = $(`#shortUrl-${id}`).textContent;
 
         // 2. generate qrcode
         try {
-            const qrcodeURL = await QRCode.toDataURL(shortUrl);
+            const qrcodeURL = await qr.toDataURL(shortUrl);
 
             // 3. display popup menu with link
-            updatedHTML = htmlContent.replace('%qrcodeLink%', qrcodeURL);
+            updatedHTML = QRCODE_POPUP_NODE_TEMPLATE.replace('%qrcodeLink%', qrcodeURL);
             updatedHTML = updatedHTML.replace('%num%', id);
 
             $(`#btns-${id}`).insertAdjacentHTML('afterend', updatedHTML);
         } catch (err) {
             // fetch qrcode from http://goqr.me
-            const qrcode__api = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=';
-
-            updatedHTML = htmlContent.replace('%qrcodeLink%', `${qrcode__api}${shortUrl}`);
+            updatedHTML = QRCODE_POPUP_NODE_TEMPLATE.replace('%qrcodeLink%', `${QR_EXTERNAL_API_URL}${shortUrl}`);
             $(`#btns-${id}`).insertAdjacentHTML('afterend', updatedHTML);
         }
-    }
-    // clear all button
-    else if (type === 'close__btn') {
-        $('#qrcode__template').parentNode.removeChild($('#qrcode__template'));
+    } else if (type === QRCODE_POPUP_CLOSE_BUTTON_ID) {
+        $(QRCODE_POPUP_NODE).parentNode.removeChild($(QRCODE_POPUP_NODE));
     }
 };
 
@@ -217,7 +223,7 @@ const getButtonDetails = e => {
 /**
  *  Button Action (qrcode / copy)
  */
-$(main__element).on('click', getButtonDetails);
+$(HISTORY_VIEW_TABLE_PARENT_NODE).on('click', getButtonDetails);
 
 /**
  *  prevent enter key press
