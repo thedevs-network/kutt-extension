@@ -47,8 +47,8 @@ const manifestInput = {
     __chrome__minimum_chrome_version: '49',
     __opera__minimum_opera_version: '36',
 
-    '__chrome|opera__permissions': ['tabs', 'storage', 'clipboardRead', 'http://*/*', 'https://*/*'],
-    __firefox__permissions: ['tabs', 'storage', 'clipboardWrite', 'clipboardRead', 'http://*/*', 'https://*/*'],
+    '__chrome|opera__permissions': ['activeTab', 'storage', 'clipboardRead', 'http://*/*', 'https://*/*'],
+    __firefox__permissions: ['activeTab', 'storage', 'clipboardWrite', 'clipboardRead', 'http://*/*', 'https://*/*'],
 
     content_security_policy: "script-src 'self' 'unsafe-eval'; object-src 'self'",
 
