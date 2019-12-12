@@ -57,7 +57,7 @@ const manifestInput = {
         page: 'options.html',
         open_in_tab: true,
         __chrome__chrome_style: false,
-        __firefox__browser_style: false,
+        '__firefox|opera__browser_style': false,
     },
 };
 
