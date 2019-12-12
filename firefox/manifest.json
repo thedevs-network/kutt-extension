@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Kutt",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "short_name": "Kutt",
   "description": "Shorten long URLs with just one click.",
   "icons": {
@@ -13,7 +13,8 @@
   "homepage_url": "https://github.com/abhijithvijayan/kutt-extension",
   "browser_specific_settings": {
     "gecko": {
-      "id": "support@kutt.it"
+      "id": "support@kutt.it",
+      "strict_min_version": "52.0"
     }
   },
   "author": "abhijithvijayan",
