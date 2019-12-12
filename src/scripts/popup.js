@@ -1,6 +1,17 @@
 /* eslint-disable camelcase */
 import browser from 'webextension-polyfill';
 import QRCode from 'qrcode';
+
+import {
+    qrcode__holder,
+    url__holder,
+    buttons,
+    copy__btn,
+    copyalert__holder,
+    qrcode__btn,
+    qrcode__api,
+    qrcode__content,
+} from './constants';
 import { $ } from './bling';
 
 let shortUrl;
@@ -8,20 +19,9 @@ let longUrl;
 let API_key;
 let password;
 let validUrl = '';
-// constants
-const qrcode__holder = '#qr_code';
-const url__holder = '#url__content-inner';
-const buttons = '.buttons__content--holder';
-const copy__btn = '#button__copy--holder';
-const copyalert__holder = '#copy__alert';
-const qrcode__content = '.qrcode__content--holder';
-const qrcode__btn = '#button__qrcode--holder';
-const qrcode__api = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=';
 
 /**
  *  DOM Message Update function
- *
- *  @param {String} Message to show on DOM
  */
 const updateDOMContent = value => {
     $(url__holder).textContent = value;

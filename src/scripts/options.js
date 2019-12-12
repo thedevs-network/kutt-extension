@@ -1,36 +1,40 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable camelcase */
 import browser from 'webextension-polyfill';
+
+import {
+    pwd__holder,
+    dev__holder,
+    submit__btn,
+    pwd__value,
+    dev__value,
+    api__holder,
+    pwd__eye,
+    pwd__switch,
+    dev__switch,
+    pwd__checkbox,
+    dev__checkbox,
+    history__checkbox,
+    autocopy__checkbox,
+} from './constants';
 import { $ } from './bling';
 
-// constants
-const pwd__holder = '#pwd__holder';
-const dev__holder = '#customhost__holder';
-const submit__btn = '#button__submit';
-const pwd__value = '#password--value';
-const dev__value = '#customhost__mode--value';
-const api__holder = '#api__key--value';
-const pwd__eye = '#view__password--eye';
-const pwd__switch = '#password__label--switch';
-const dev__switch = '#customhost__label--switch';
-const pwd__checkbox = '#password__label--checkbox';
-const dev__checkbox = '#customhost__label--checkbox';
-const history__checkbox = '#history__label--checkbox';
-const autocopy__checkbox = '#autocopy__label--checkbox';
-
 document.on('DOMContentLoaded', async () => {
+    // get values from localstorage
     let { key, pwd, userOptions, host } = await browser.storage.local.get(['key', 'pwd', 'userOptions', 'host']);
-    // apikey to string
+
+    // don't use toString() as it will fail for `undefined`
     const API_KEY = `${key}`;
 
     if (API_KEY === 'undefined') {
         $(api__holder).value = '';
     } else {
         $(api__holder).value = API_KEY;
+
         // password holder
         $(pwd__checkbox).checked = userOptions.pwdForUrls;
 
-        // if disabled -> delete save password
+        // if disabled -> delete saved password
         if (!userOptions.pwdForUrls) {
             pwd = '';
         }
@@ -68,14 +72,17 @@ const saveData = async () => {
     if (password === '') {
         pwdForUrls = false;
     }
+
     if (!pwdForUrls) {
         password = '';
     }
+
     if (API_HOST === '') {
         devMode = false;
     } else if (API_HOST.endsWith('/')) {
         API_HOST = API_HOST.slice(0, -1);
     }
+
     if (!devMode) {
         API_HOST = '';
     }
@@ -97,6 +104,7 @@ const saveData = async () => {
     });
 
     $(submit__btn).textContent = 'Saved';
+
     setTimeout(async () => {
         $(submit__btn).textContent = 'Save';
 
@@ -106,15 +114,23 @@ const saveData = async () => {
     }, 1250);
 };
 
+/**
+ *  Handle submit button click
+ */
 $(submit__btn).on('click', saveData);
 
+/**
+ *  Handle enter-key press
+ */
 document.on('keypress', e => {
     if (e.keyCode === 13) {
         saveData();
     }
 });
 
-// Show Password
+/**
+ *  Toggle Password View
+ */
 $(pwd__eye).on('click', () => {
     const element = $(pwd__value);
 
@@ -127,6 +143,9 @@ $(pwd__eye).on('click', () => {
     }
 });
 
+/**
+ *  Toggle Element Visibility
+ */
 function toggleInputVisibility(checked, el) {
     if (checked) {
         $(el).classList.remove('d-none');
@@ -135,14 +154,18 @@ function toggleInputVisibility(checked, el) {
     }
 }
 
-// Password Enable/Disable Switch
+/**
+ *  Password Enable/Disable Switch
+ */
 $(pwd__switch).on('click', () => {
     const { checked } = $(pwd__checkbox);
 
     toggleInputVisibility(checked, pwd__holder);
 });
 
-// customhost Mode Enable/Disable Switch
+/**
+ *  Customhost Mode Enable/Disable Switch
+ */
 $(dev__switch).on('click', () => {
     const { checked } = $(dev__checkbox);
 

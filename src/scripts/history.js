@@ -2,38 +2,18 @@
 /* eslint-disable camelcase */
 import browser from 'webextension-polyfill';
 import QRCode from 'qrcode';
+
+import {
+    html,
+    clear__btn,
+    table,
+    rate__button,
+    home__button,
+    main__element,
+    chromeStoreLink,
+    firefoxStoreLink,
+} from './constants';
 import { $ } from './bling';
-
-const clear__btn = '#table__clearAll--btn';
-const table = '.table__content--holder';
-const rate__button = '#rate__button';
-const home__button = '#home__button';
-const main__element = '#delegation__element';
-const chromeStoreLink = 'https://chrome.google.com/webstore/detail/kutt/pklakpjfiegjacoppcodencchehlfnpd/reviews';
-const firefoxStoreLink = 'https://addons.mozilla.org/en-US/firefox/addon/kutt/reviews/';
-
-const html = `
-    <tr class="table__body--holder" id="table__body-%num%">
-        <td class="table__body--original">
-            <a href="%longLink%" class="table__body--originalURL" target="_blank" rel="noopener noreferrer nofollow">%longLink%</a>
-        </td>
-        <td class="table__body--shortened" id="table__shortened-%num%">
-            <div class="table__body--shortenBody">
-                <a href="%shortLink%" id="shortUrl-%num%" class="table__body--shortenURL" target="_blank" rel="noopener noreferrer nofollow">%shortLink%</a>
-            </div>
-        </td>
-        <td class="table__body--functionBtns">
-            <div class="table__body--btnHolder" id="btns-%num%">
-                <button type="button" class="table__body--copy" id="copy-%num%" title="Copy">
-                    <img class="selectDisable icon__img" src="assets/copy.svg" alt="copy" />
-                </button>
-                <button type="button" class="table__body--qrcode" id="qrcode-%num%" title="QR Code">
-                    <img class="selectDisable icon__img" src="assets/qrcode.svg" alt="QR Code" />
-                </button>
-            </div>
-        </td>
-    </tr>
-`;
 
 /**
  *  Identify Browser
