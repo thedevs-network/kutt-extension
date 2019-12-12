@@ -4,10 +4,10 @@ import browser from 'webextension-polyfill';
 import QRCode from 'qrcode';
 import { $ } from './bling';
 
-// constants
 const clear__btn = '#table__clearAll--btn';
 const table = '.table__content--holder';
 const rate__button = '#rate__button';
+const home__button = '#home__button';
 const main__element = '#delegation__element';
 const chromeStoreLink = 'https://chrome.google.com/webstore/detail/kutt/pklakpjfiegjacoppcodencchehlfnpd/reviews';
 const firefoxStoreLink = 'https://addons.mozilla.org/en-US/firefox/addon/kutt/reviews/';
@@ -35,6 +35,9 @@ const html = `
     </tr>
 `;
 
+/**
+ *  Identify Browser
+ */
 const getBrowserInfo = () => {
     // Chrome 1+
     const isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
@@ -49,16 +52,17 @@ const getBrowserInfo = () => {
     if (isFirefox) {
         return 'firefox';
     }
+
     if (isOpera) {
         return 'opera';
-    }
-    if (isChrome) {
-        return 'chrome';
     }
 
     return 'chrome';
 };
 
+/**
+ *  Update Store Link
+ */
 const updateRatingButton = () => {
     const browserName = getBrowserInfo();
 
@@ -68,27 +72,38 @@ const updateRatingButton = () => {
             $(rate__button).setAttribute('href', chromeStoreLink);
             break;
         }
+
         case 'firefox': {
             $(rate__button).setAttribute('href', firefoxStoreLink);
             break;
         }
+
         default:
             break;
     }
 };
 
+/**
+ *  Update Home Page URL
+ */
+
 document.on('DOMContentLoaded', async () => {
     let updatedHTML;
 
-    const response = await browser.storage.local.get(['userOptions', 'URL_array']);
+    const {
+        userOptions: { keepHistory, devMode },
+        URL_array,
+        host,
+    } = await browser.storage.local.get(['userOptions', 'URL_array', 'host']);
 
-    if (response.userOptions.keepHistory) {
-        const count = response.URL_array.length;
+    if (keepHistory) {
+        const count = URL_array.length;
 
         // update DOM
         if (count > 0) {
             let pass = 0;
-            for (const el of response.URL_array) {
+
+            for (const el of URL_array) {
                 // Regular Expression Based Implementation
                 updatedHTML = html.replace(/%longLink%/g, el.longUrl);
                 pass += 1;
@@ -99,18 +114,26 @@ document.on('DOMContentLoaded', async () => {
             }
         } else {
             $(clear__btn).style.display = 'none';
-            $(main__element).insertAdjacentHTML('afterbegin', '<h2 class="py-2">Empty List</h2>');
+            $(main__element).insertAdjacentHTML('afterbegin', '<h2 class="py-2">No Shortened URLs</h2>');
         }
 
-        // rating button
+        // update review link
         updateRatingButton();
+
+        // update home page url
+        const hostHomeUrl = devMode ? host : 'https://kutt.it';
+        $(home__button).setAttribute('href', hostHomeUrl);
     } else {
         alert('Enable History from Options Page');
+
+        // open options page in new tab
         browser.runtime.openOptionsPage();
     }
 });
 
-// Clear all history
+/**
+ *  Clear all history
+ */
 $(clear__btn).on('click', async () => {
     await browser.storage.local.set({
         URL_array: [],
@@ -118,10 +141,12 @@ $(clear__btn).on('click', async () => {
 
     $(main__element).parentNode.removeChild($(main__element));
     $(clear__btn).style.display = 'none';
-    $(table).insertAdjacentHTML('beforeend', '<h2 class="py-2 table-inner">Empty List</h2>');
+    $(table).insertAdjacentHTML('beforeend', '<h2 class="py-2 table-inner">No Shortened URLs</h2>');
 });
 
-// Buttons Function
+/**
+ *  Handle Buttons Click Actions
+ */
 const buttonAction = async (type, id) => {
     const flashCopyAlert = flashHTML => {
         $(`#table__shortened-${id}`).insertAdjacentHTML('afterbegin', flashHTML);
@@ -191,7 +216,9 @@ const buttonAction = async (type, id) => {
     }
 };
 
-// get the delegation id
+/**
+ *  get the delegation id (child node)
+ */
 const getButtonDetails = e => {
     let splitId;
     let type;
@@ -207,10 +234,14 @@ const getButtonDetails = e => {
     }
 };
 
-// Button Action (qrcode / copy)
+/**
+ *  Button Action (qrcode / copy)
+ */
 $(main__element).on('click', getButtonDetails);
 
-// prevent enter key press
+/**
+ *  prevent enter key press
+ */
 document.on('keypress', e => {
     const keyCode = e.which || e.keyCode;
 
