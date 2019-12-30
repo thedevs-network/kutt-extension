@@ -1,6 +1,7 @@
 <div align="center"><img width="150" src="src/assets/logo.png" /></div>
 <h1 align="center">kutt-extension</h1>
 <p align="center">Browser extension to shorten long URLs based on <a href="https://kutt.it">Kutt.it</a></p>
+<h3 align="center">🙋‍♂️ Made by <a href="https://twitter.com/_abhijithv">@abhijithvijayan</a></h3>
 
 <div align="center">
   <a href="https://travis-ci.org/abhijithvijayan/kutt-extension">
