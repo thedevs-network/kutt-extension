@@ -3419,6 +3419,11 @@ webpack@^4.41.5:
     watchpack "^1.6.0"
     webpack-sources "^1.4.1"
 
+wext-manifest@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/wext-manifest/-/wext-manifest-2.1.0.tgz#9ae4eefd6ffea93aa19917c6fe534830a76218bf"
+  integrity sha512-EV7fLAPSA1uHx/nQ9jmu2PAOgRgTi0rCvr6KycAl6fMJ4tvlLTP5dBAE0mmDWmVMH3z3jrtjrqsg0TU0Whg7rw==
+
 which-module@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/which-module/-/which-module-2.0.0.tgz#d9ef07dce77b9902b8a3a8fa4b31c3e3f7e6e87a"
@@ -3458,6 +3463,11 @@ wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
   integrity sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
+
+write-webpack-plugin@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/write-webpack-plugin/-/write-webpack-plugin-1.1.0.tgz#ac60a7fcbc149a8cc33a465420fbdf2f612e9af9"
+  integrity sha512-/E04VeJtHiOW02ET68yy38KRSOJTtvMFvAV3pLLgtYJWuhhNRQypPQWUsYzChndkRtedspqydOCG134AZZqBaA==
 
 xtend@^4.0.0, xtend@~4.0.1:
   version "4.0.2"

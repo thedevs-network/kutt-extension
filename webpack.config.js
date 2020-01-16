@@ -1,14 +1,18 @@
 const path = require('path');
 const webpack = require('webpack');
+const wextManifest = require('wext-manifest');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin'); 
+const WriteWebpackPlugin = require('write-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { CheckerPlugin } = require('awesome-typescript-loader');
 
+const manifestInput = require('./src/manifest');
 const targetBrowser = process.env.TARGET_BROWSER;
 const sourcePath = path.join(__dirname, 'src');
 const destPath = path.join(__dirname, 'extension');
 const nodeEnv = process.env.NODE_ENV || 'development';
+const manifest = wextManifest[targetBrowser](manifestInput);
 
 const getExtensionFileType = () => {
   if (targetBrowser === 'opera') {
@@ -66,5 +70,6 @@ module.exports = {
       chunks: ['options']
     }),
     new CopyWebpackPlugin([{ from: path.join(sourcePath, 'assets'), to: 'assets' }]),
+    new WriteWebpackPlugin([{ name: manifest.name, data: Buffer.from(manifest.content) }]),
   ]
 }
