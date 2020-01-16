@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin'); 
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { CheckerPlugin } = require('awesome-typescript-loader');
 
 const targetBrowser = process.env.TARGET_BROWSER;
@@ -44,6 +45,14 @@ module.exports = {
   },
   plugins: [
     new CheckerPlugin(),
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: [
+          path.join(process.cwd(), `extension/${targetBrowser}`),
+          path.join(process.cwd(), `extension/${targetBrowser}.${getExtensionFileType()}`),
+      ],
+      cleanStaleWebpackAssets: false,
+      verbose: true,
+    }),
     new HtmlWebpackPlugin({
       template: path.join(sourcePath, 'html', 'popup.html'),
       inject: 'body',
