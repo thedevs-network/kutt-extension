@@ -8,8 +8,13 @@
   "repository": "https://github.com/abhijithvijayan/kutt-extension.git",
   "author": "abhijithvijayan <34790378+abhijithvijayan@users.noreply.github.com>",
   "scripts": {
-    "dev": "webpack -w",
-    "build": "webpack"
+    "dev:chrome": "cross-env NODE_ENV=development cross-env TARGET_BROWSER=chrome webpack --watch --mode=development",
+    "dev:firefox": "cross-env NODE_ENV=development cross-env TARGET_BROWSER=firefox webpack --watch --mode=development",
+    "dev:opera": "cross-env NODE_ENV=development cross-env TARGET_BROWSER=opera webpack --watch --mode=development",
+    "build:chrome": "cross-env NODE_ENV=production cross-env TARGET_BROWSER=chrome webpack --mode=production",
+    "build:firefox": "cross-env NODE_ENV=production cross-env TARGET_BROWSER=firefox webpack --mode=production",
+    "build:opera": "cross-env NODE_ENV=production cross-env TARGET_BROWSER=opera webpack --mode=production",
+    "build": "yarn run build:chrome && yarn run build:firefox && yarn run build:opera"
   },
   "keywords": [
     "url",
@@ -30,6 +35,7 @@
     "@types/react-dom": "^16.9.4",
     "@types/webpack": "^4.41.2",
     "awesome-typescript-loader": "^5.2.1",
+    "cross-env": "^6.0.3",
     "html-webpack-plugin": "^3.2.0",
     "typescript": "^3.7.4",
     "webpack": "^4.41.5",
