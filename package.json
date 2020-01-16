@@ -16,8 +16,19 @@
     "build:opera": "cross-env NODE_ENV=production cross-env TARGET_BROWSER=opera webpack --mode=production",
     "build": "yarn run build:chrome && yarn run build:firefox && yarn run build:opera",
     "lint": "eslint . --ext .js,.ts",
-		"lint:fix": "eslint . --ext .js,.ts --fix"
+    "lint:fix": "eslint . --ext .js,.ts --fix"
   },
+  "husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
+  "lint-staged": {
+		"*.{js,ts,tsx}": [
+			"yarn run lint:fix",
+			"git add"
+		]
+	},
   "keywords": [
     "url",
     "shortener",
@@ -54,6 +65,8 @@
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^2.3.0",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^4.0.10",
+    "lint-staged": "^9.5.0",
     "prettier": "^1.19.1",
     "typescript": "^3.7.4",
     "webpack": "^4.41.5",
