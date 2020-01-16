@@ -8,7 +8,7 @@ const manifestInput = {
     icons: {},
 
     description: 'Sample description',
-    homepage_url: '',
+    homepage_url: 'https://github.com',
     short_name: 'Sample Name',
 
     permissions: ['activeTab', 'storage', 'http://*/*', 'https://*/*'],
