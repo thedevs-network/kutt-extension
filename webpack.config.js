@@ -3,9 +3,20 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CheckerPlugin } = require('awesome-typescript-loader');
 
+const targetBrowser = process.env.TARGET_BROWSER;
 const sourcePath = path.join(__dirname, 'src');
 const destPath = path.join(__dirname, 'extension');
 const nodeEnv = process.env.NODE_ENV || 'development';
+
+const getExtensionFileType = () => {
+  if (targetBrowser === 'opera') {
+      return 'crx';
+  }
+  if (targetBrowser === 'firefox') {
+      return 'xpi';
+  }
+  return 'zip';
+};
 
 module.exports = {
   mode: 'development',
@@ -16,7 +27,7 @@ module.exports = {
   },
   output: {
     filename: 'js/[name].bundle.js',
-    path: path.join(destPath)
+    path: path.join(destPath, targetBrowser)
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json']
