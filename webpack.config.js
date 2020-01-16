@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin'); 
 const { CheckerPlugin } = require('awesome-typescript-loader');
 
 const targetBrowser = process.env.TARGET_BROWSER;
@@ -54,6 +55,7 @@ module.exports = {
       inject: 'body',
       filename: 'options.html',
       chunks: ['options']
-    })
+    }),
+    new CopyWebpackPlugin([{ from: path.join(sourcePath, 'assets'), to: 'assets' }]),
   ]
 }
