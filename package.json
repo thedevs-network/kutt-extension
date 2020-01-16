@@ -16,5 +16,8 @@
     "kutt"
   ],
   "license": "MIT",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "awesome-typescript-loader": "^5.2.1"
+  }
 }
