@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
-const { CheckerPlugin } = require('awesome-typescript-loader')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CheckerPlugin } = require('awesome-typescript-loader');
 
 const sourcePath = path.join(__dirname, 'src');
 const destPath = path.join(__dirname, 'extension');
@@ -14,8 +15,8 @@ module.exports = {
     popup: path.join(sourcePath, 'Popup', 'index.tsx')
   },
   output: {
-    filename: '[name].bundle.js',
-    path: path.join(destPath, 'js')
+    filename: 'js/[name].bundle.js',
+    path: path.join(destPath)
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json']
@@ -30,6 +31,18 @@ module.exports = {
     ]
   },
   plugins: [
-    new CheckerPlugin()
+    new CheckerPlugin(),
+    new HtmlWebpackPlugin({
+      template: path.join(sourcePath, 'html', 'popup.html'),
+      inject: 'body',
+      filename: 'popup.html',
+      chunks: ['popup']
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(sourcePath, 'html', 'options.html'),
+      inject: 'body',
+      filename: 'options.html',
+      chunks: ['options']
+    })
   ]
 }
