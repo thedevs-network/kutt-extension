@@ -9,85 +9,91 @@ const { CheckerPlugin } = require('awesome-typescript-loader');
 const ExtensionReloader = require('webpack-extension-reloader');
 
 const manifestInput = require('./src/manifest');
+
 const targetBrowser = process.env.TARGET_BROWSER;
 const sourcePath = path.join(__dirname, 'src');
 const destPath = path.join(__dirname, 'extension');
 const nodeEnv = process.env.NODE_ENV || 'development';
 const manifest = wextManifest[targetBrowser](manifestInput);
 
-const extensionReloader = nodeEnv === "development" ? new ExtensionReloader({
-	port: 9128,
-	reloadPage: true,
-	entries: {
-    // TODO: reload manifest on update
-		background: 'background',
-		extensionPage: ['popup', 'options'],
-	}
-}) : () => {this.apply = () => {}};
+const extensionReloader =
+    nodeEnv === 'development'
+        ? new ExtensionReloader({
+              port: 9128,
+              reloadPage: true,
+              entries: {
+                  // TODO: reload manifest on update
+                  background: 'background',
+                  extensionPage: ['popup', 'options'],
+              },
+          })
+        : () => {
+              this.apply = () => {};
+          };
 
 const getExtensionFileType = () => {
-  if (targetBrowser === 'opera') {
-      return 'crx';
-  }
-  if (targetBrowser === 'firefox') {
-      return 'xpi';
-  }
+    if (targetBrowser === 'opera') {
+        return 'crx';
+    }
+    if (targetBrowser === 'firefox') {
+        return 'xpi';
+    }
 
-  return 'zip';
+    return 'zip';
 };
 
 module.exports = {
-  mode: 'development',
+    mode: 'development',
 
-  entry: {
-    background: path.join(sourcePath, 'Background', 'index.ts'),
-    options: path.join(sourcePath, 'Options', 'index.tsx'),
-    popup: path.join(sourcePath, 'Popup', 'index.tsx')
-  },
+    entry: {
+        background: path.join(sourcePath, 'Background', 'index.ts'),
+        options: path.join(sourcePath, 'Options', 'index.tsx'),
+        popup: path.join(sourcePath, 'Popup', 'index.tsx'),
+    },
 
-  output: {
-    filename: 'js/[name].bundle.js',
-    path: path.join(destPath, targetBrowser)
-  },
+    output: {
+        filename: 'js/[name].bundle.js',
+        path: path.join(destPath, targetBrowser),
+    },
 
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json']
-  },
+    resolve: {
+        extensions: ['.ts', '.tsx', '.js', '.json'],
+    },
 
-  module: {
-    rules: [
-      {
-        test: /\.(js|ts|tsx)?$/,
-        loader: 'awesome-typescript-loader',
-        exclude: /node_modules/
-      }
-    ]
-  },
-  
-  plugins: [
-    new CheckerPlugin(),
-    new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: [
-          path.join(process.cwd(), `extension/${targetBrowser}`),
-          path.join(process.cwd(), `extension/${targetBrowser}.${getExtensionFileType()}`),
-      ],
-      cleanStaleWebpackAssets: false,
-      verbose: true,
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(sourcePath, 'html', 'popup.html'),
-      inject: 'body',
-      filename: 'popup.html',
-      chunks: ['popup']
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(sourcePath, 'html', 'options.html'),
-      inject: 'body',
-      filename: 'options.html',
-      chunks: ['options']
-    }),
-    new CopyWebpackPlugin([{ from: path.join(sourcePath, 'assets'), to: 'assets' }]),
-    new WriteWebpackPlugin([{ name: manifest.name, data: Buffer.from(manifest.content) }]),
-    extensionReloader,
-  ]
-}
+    module: {
+        rules: [
+            {
+                test: /\.(js|ts|tsx)?$/,
+                loader: 'awesome-typescript-loader',
+                exclude: /node_modules/,
+            },
+        ],
+    },
+
+    plugins: [
+        new CheckerPlugin(),
+        new CleanWebpackPlugin({
+            cleanOnceBeforeBuildPatterns: [
+                path.join(process.cwd(), `extension/${targetBrowser}`),
+                path.join(process.cwd(), `extension/${targetBrowser}.${getExtensionFileType()}`),
+            ],
+            cleanStaleWebpackAssets: false,
+            verbose: true,
+        }),
+        new HtmlWebpackPlugin({
+            template: path.join(sourcePath, 'html', 'popup.html'),
+            inject: 'body',
+            filename: 'popup.html',
+            chunks: ['popup'],
+        }),
+        new HtmlWebpackPlugin({
+            template: path.join(sourcePath, 'html', 'options.html'),
+            inject: 'body',
+            filename: 'options.html',
+            chunks: ['options'],
+        }),
+        new CopyWebpackPlugin([{ from: path.join(sourcePath, 'assets'), to: 'assets' }]),
+        new WriteWebpackPlugin([{ name: manifest.name, data: Buffer.from(manifest.content) }]),
+        extensionReloader,
+    ],
+};

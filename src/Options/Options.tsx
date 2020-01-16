@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 const Options = () => {
-  return <div>Hello World</div>;
-}
+    return <div>Hello World</div>;
+};
 
 export default Options;
