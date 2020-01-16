@@ -7,6 +7,10 @@
   },
   "repository": "https://github.com/abhijithvijayan/kutt-extension.git",
   "author": "abhijithvijayan <34790378+abhijithvijayan@users.noreply.github.com>",
+  "scripts": {
+    "dev": "webpack -w",
+    "build": "webpack"
+  },
   "keywords": [
     "url",
     "shortener",

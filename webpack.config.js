@@ -8,18 +8,18 @@ const nodeEnv = process.env.NODE_ENV || 'development';
 module.exports = {
   watch: nodeEnv === 'watch',
   entry: {
-    background: path.join(sourcePath, 'background', 'index.ts');
-    options: path.join(sourcePath, 'options', 'index.ts');
-    popup: path.join(sourcePath, 'popup', 'index.ts');
+    background: path.join(sourcePath, 'Background', 'index.ts'),
+    options: path.join(sourcePath, 'Options', 'index.tsx'),
+    popup: path.join(sourcePath, 'Popup', 'index.tsx')
   },
   output: {
-    path: destPath;
-    filename: '[name].bundle.js';
+    path: destPath,
+    filename: '[name].bundle.js',
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.json']
   },
   module: {
-    resolve: {
-      extensions: ['.ts', '.tsx', '.js', '.json']
-    },
     rules: [
       {
         test: /\.(js|ts|tsx)?$/,
@@ -29,6 +29,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new CheckerPlugin();
+    new CheckerPlugin()
   ]
 }
