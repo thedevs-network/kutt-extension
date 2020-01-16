@@ -2,7 +2,7 @@ const path = require('path');
 const { CheckerPlugin } = require('awesome-typescript-loader')
 
 const sourcePath = path.join(__dirname, 'src');
-const destPath = path.join(__dirname, 'dist');
+const destPath = path.join(__dirname, 'extension');
 const nodeEnv = process.env.NODE_ENV || 'development';
 
 module.exports = {
