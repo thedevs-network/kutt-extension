@@ -1,0 +1,20 @@
+{
+  "name": "kutt-extension",
+  "version": "1.0.0",
+  "description": "Kutt.it extension for browsers.",
+  "engines": {
+    "node": ">= 8 <=12"
+  },
+  "repository": "https://github.com/abhijithvijayan/kutt-extension.git",
+  "author": "abhijithvijayan <34790378+abhijithvijayan@users.noreply.github.com>",
+  "keywords": [
+    "url",
+    "shortener",
+    "browser",
+    "extension",
+    "addon",
+    "kutt"
+  ],
+  "license": "MIT",
+  "private": true
+}
