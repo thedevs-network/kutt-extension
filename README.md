@@ -24,6 +24,8 @@
   </a>
 </div>
 
+## v2 (🚧 [WIP](https://github.com/abhijithvijayan/kutt-extension/tree/refactor/react-typescript))
+
 ## Features
 
 - Minimal UI
