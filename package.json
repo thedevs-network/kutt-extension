@@ -19,16 +19,16 @@
     "lint:fix": "eslint . --ext .js,.ts --fix"
   },
   "husky": {
-		"hooks": {
-			"pre-commit": "lint-staged"
-		}
-	},
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
-		"*.{js,ts,tsx}": [
-			"yarn run lint:fix",
-			"git add"
-		]
-	},
+    "*.{js,ts,tsx}": [
+      "yarn run lint:fix",
+      "git add"
+    ]
+  },
   "keywords": [
     "url",
     "shortener",
@@ -40,10 +40,16 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@babel/runtime": "^7.8.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
+    "@babel/plugin-transform-destructuring": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",
     "@types/webpack": "^4.41.2",
