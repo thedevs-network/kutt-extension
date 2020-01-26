@@ -41,7 +41,7 @@ const manifestInput = {
 
     background: {
         '__chrome|opera__persistent': false,
-        scripts: ['js/background.js'],
+        scripts: ['js/background.bundle.js'],
     },
 
     __chrome__minimum_chrome_version: '49',
