@@ -67,3 +67,6 @@ typings/
 ## scripts build
 extension/
 dist/
+
+# awesome-ts-loader cache
+.awcache
