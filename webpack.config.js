@@ -12,6 +12,7 @@ const manifestInput = require('./src/manifest');
 
 const targetBrowser = process.env.TARGET_BROWSER;
 const sourcePath = path.join(__dirname, 'src');
+const viewsPath = path.join(__dirname, 'views');
 const destPath = path.join(__dirname, 'extension');
 const nodeEnv = process.env.NODE_ENV || 'development';
 const manifest = wextManifest[targetBrowser](manifestInput);
@@ -81,13 +82,13 @@ module.exports = {
             verbose: true,
         }),
         new HtmlWebpackPlugin({
-            template: path.join(sourcePath, 'html', 'popup.html'),
+            template: path.join(viewsPath, 'popup.html'),
             inject: 'body',
             filename: 'popup.html',
             chunks: ['popup'],
         }),
         new HtmlWebpackPlugin({
-            template: path.join(sourcePath, 'html', 'options.html'),
+            template: path.join(viewsPath, 'options.html'),
             inject: 'body',
             filename: 'options.html',
             chunks: ['options'],
