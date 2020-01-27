@@ -87,6 +87,7 @@
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
     "webpack-extension-reloader": "^1.1.4",
+    "webpack-fix-style-only-entries": "^0.4.0",
     "wext-manifest": "^2.1.0",
     "write-webpack-plugin": "^1.1.0"
   }

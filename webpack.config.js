@@ -7,6 +7,7 @@ const WriteWebpackPlugin = require('write-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { CheckerPlugin } = require('awesome-typescript-loader');
 const ExtensionReloader = require('webpack-extension-reloader');
+const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
 
 const manifestInput = require('./src/manifest');
 
@@ -106,7 +107,11 @@ module.exports = {
     },
 
     plugins: [
+        // for awesome-typescript-loader
         new CheckerPlugin(),
+        // https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/518
+        new FixStyleOnlyEntriesPlugin({ silent: true }),
+        // delete previous build files
         new CleanWebpackPlugin({
             cleanOnceBeforeBuildPatterns: [
                 path.join(process.cwd(), `extension/${targetBrowser}`),
@@ -127,8 +132,11 @@ module.exports = {
             filename: 'options.html',
             chunks: ['options'],
         }),
+        // copy assets
         new CopyWebpackPlugin([{ from: path.join(sourcePath, 'assets'), to: 'assets' }]),
+        // write manifest.json
         new WriteWebpackPlugin([{ name: manifest.name, data: Buffer.from(manifest.content) }]),
+        // plugin to enable browser reloading in development mode
         extensionReloader,
     ],
 };
