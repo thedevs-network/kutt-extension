@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Kutt.it extension for browsers.",
   "engines": {
-    "node": ">=8 <=12"
+    "node": ">=8 <=12",
+    "yarn": ">= 1.0.0"
   },
   "repository": "https://github.com/abhijithvijayan/kutt-extension.git",
   "author": "abhijithvijayan <34790378+abhijithvijayan@users.noreply.github.com>",
@@ -25,8 +26,7 @@
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
-      "yarn run lint:fix",
-      "git add"
+      "npm run lint:fix"
     ]
   },
   "keywords": [
