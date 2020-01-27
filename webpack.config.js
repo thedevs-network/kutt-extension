@@ -45,7 +45,7 @@ const getExtensionFileType = () => {
 };
 
 module.exports = {
-    mode: 'development',
+    mode: nodeEnv,
 
     entry: {
         background: path.join(sourcePath, 'Background', 'index.ts'),
@@ -111,6 +111,7 @@ module.exports = {
         new CheckerPlugin(),
         // https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/518
         new FixStyleOnlyEntriesPlugin({ silent: true }),
+        new webpack.EnvironmentPlugin(['NODE_ENV', 'TARGET_BROWSER']),
         // delete previous build files
         new CleanWebpackPlugin({
             cleanOnceBeforeBuildPatterns: [
