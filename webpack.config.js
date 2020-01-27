@@ -50,6 +50,7 @@ module.exports = {
         background: path.join(sourcePath, 'Background', 'index.ts'),
         options: path.join(sourcePath, 'Options', 'index.tsx'),
         popup: path.join(sourcePath, 'Popup', 'index.tsx'),
+        styles: [path.join(sourcePath, 'Popup', 'popup.scss'), path.join(sourcePath, 'Options', 'options.scss')],
     },
 
     output: {
@@ -70,6 +71,36 @@ module.exports = {
                 test: /\.(js|ts|tsx)?$/,
                 loader: 'awesome-typescript-loader',
                 exclude: /node_modules/,
+            },
+            {
+                test: /\.scss$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].css',
+                            context: './src/styles/',
+                            outputPath: 'css/',
+                        },
+                    },
+                    'extract-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true,
+                        },
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            ident: 'postcss',
+                            // eslint-disable-next-line global-require
+                            plugins: [require('autoprefixer')()],
+                        },
+                    },
+                    'resolve-url-loader',
+                    'sass-loader',
+                ],
             },
         ],
     },
