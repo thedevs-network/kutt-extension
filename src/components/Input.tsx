@@ -13,13 +13,13 @@ type SelectFieldOptionPropeties = {
     disabled?: boolean | undefined;
 };
 
-export const SelectField = ({
+export const SelectField: React.FC<SelectFieldProperties & FieldProps> = ({
     options,
     label,
     field,
     form: { touched, errors },
     ...props
-}: SelectFieldProperties & FieldProps): JSX.Element => {
+}) => {
     return (
         <>
             <label htmlFor={field.name}>{label}</label>
@@ -42,12 +42,12 @@ type TextFieldProperties = {
     label: string;
 };
 
-export const TextField = ({
+export const TextField: React.FC<TextFieldProperties & FieldProps> = ({
     label,
     field,
     form: { touched, errors },
     ...props
-}: TextFieldProperties & FieldProps): JSX.Element => {
+}) => {
     return (
         <>
             <label htmlFor={field.name}>{label}</label>

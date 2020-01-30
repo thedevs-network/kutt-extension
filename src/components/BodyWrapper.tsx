@@ -4,7 +4,7 @@ type WrapperProperties = {
     children: React.ReactChild;
 };
 
-const BodyWrapper = ({ children }: WrapperProperties): JSX.Element => {
+const BodyWrapper: React.FC = ({ children }: WrapperProperties) => {
     // ToDo: get from props
     const isLoading = false;
 

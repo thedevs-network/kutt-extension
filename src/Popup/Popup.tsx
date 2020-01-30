@@ -4,7 +4,7 @@ import BodyWrapper from '../components/BodyWrapper';
 import PopupForm from './PopupForm';
 import PopupHeader from './Header';
 
-const Popup = (): JSX.Element => {
+const Popup: React.FC = () => {
     return (
         <BodyWrapper>
             <div>

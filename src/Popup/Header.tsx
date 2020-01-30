@@ -2,7 +2,7 @@ import React from 'react';
 
 import Icon from '../components/Icon';
 
-const Header = (): JSX.Element => {
+const Header: React.FC = () => {
     return (
         <>
             <header id="header">

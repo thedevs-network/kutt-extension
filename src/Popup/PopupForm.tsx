@@ -26,7 +26,7 @@ const domainOptions = [
     },
 ];
 
-const InnerForm = (props: FormikProps<FormValuesProperties>): JSX.Element => {
+const InnerForm: React.FC<FormikProps<FormValuesProperties>> = props => {
     const { isSubmitting, handleChange, handleBlur, handleSubmit } = props;
 
     return (
