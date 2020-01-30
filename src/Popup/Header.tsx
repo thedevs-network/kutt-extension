@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Icon from '../components/Icon';
+import { openExtOptionsPage } from '../helpers/optionsPageHelpers';
 
 const Header: React.FC = () => {
     return (
@@ -10,7 +11,9 @@ const Header: React.FC = () => {
                     <img src="assets/logo.png" alt="logo" style={{ width: '22px', height: '22px' }} />
                 </div>
                 <div className="action__buttons--holder">
-                    <Icon name="settings" className="icon" />
+                    <button type="button" className="icon" onClick={openExtOptionsPage}>
+                        <Icon name="settings" />
+                    </button>
                 </div>
             </header>
         </>

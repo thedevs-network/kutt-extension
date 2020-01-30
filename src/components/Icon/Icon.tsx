@@ -19,11 +19,7 @@ type Props = {
 };
 
 const Icon: React.FC<Props> = ({ name, ...rest }) => {
-    return (
-        <button type="button" {...rest}>
-            {React.createElement(icons[name])}
-        </button>
-    );
+    return <div {...rest}>{React.createElement(icons[name])}</div>;
 };
 
 export default Icon;
