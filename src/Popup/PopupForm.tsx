@@ -1,9 +1,9 @@
 import React from 'react';
-import { withFormik, Field, Form, FormikHelpers } from 'formik';
+import { withFormik, Field, Form, FormikHelpers, FormikProps, FormikErrors } from 'formik';
 
 import { SelectField, TextField } from '../components/Input';
 
-interface FormValueProperties {
+interface FormValuesProperties {
     domain: string;
     customurl: string;
     password: string;
@@ -25,7 +25,8 @@ const domainOptions = [
         value: '2',
     },
 ];
-const PopupForm = (props): JSX.Element => {
+
+const InnerForm = (props: FormikProps<FormValuesProperties>): JSX.Element => {
     const { isSubmitting, handleChange, handleBlur, handleSubmit } = props;
 
     return (
@@ -58,18 +59,25 @@ const PopupForm = (props): JSX.Element => {
     );
 };
 
-export default withFormik({
-    mapPropsToValues: () => {
+// The type of props `PopupForm` receives
+interface PopupFormProperties {
+    defaultDomainId: string;
+}
+
+// Wrap our form with the withFormik HoC
+const PopupForm = withFormik<PopupFormProperties, FormValuesProperties>({
+    // Transform outer props into form values
+    mapPropsToValues: props => {
         return {
-            domain: '2', // default option value
+            domain: props.defaultDomainId, // default option value
             customurl: '',
             password: '',
         };
     },
 
     // Custom sync validation
-    validate: (values: FormValueProperties) => {
-        const errors = {};
+    validate: (values: FormValuesProperties) => {
+        const errors: FormikErrors<FormValuesProperties> = {};
 
         if (values.customurl && values.customurl.length < 3) {
             errors.customurl = 'Custom URL must be atleast 3 characters';
@@ -82,11 +90,13 @@ export default withFormik({
         return errors;
     },
 
-    handleSubmit: (values: FormValueProperties, { setSubmitting }: FormikHelpers<FormValueProperties>) => {
+    handleSubmit: (values: FormValuesProperties, { setSubmitting }: FormikHelpers<FormValuesProperties>) => {
         console.log(values);
 
         setSubmitting(false);
     },
 
     displayName: 'PopupForm',
-})(PopupForm);
+})(InnerForm);
+
+export default PopupForm;

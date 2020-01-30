@@ -1,5 +1,11 @@
 /* eslint-disable no-nested-ternary */
 import React from 'react';
+import { FieldProps } from 'formik';
+
+type SelectFieldProperties = {
+    options: SelectFieldOptionPropeties[];
+    label: string;
+};
 
 type SelectFieldOptionPropeties = {
     option: string;
@@ -7,7 +13,13 @@ type SelectFieldOptionPropeties = {
     disabled?: boolean | undefined;
 };
 
-export const SelectField = ({ options, label, field, form: { touched, errors }, ...props }): JSX.Element => {
+export const SelectField = ({
+    options,
+    label,
+    field,
+    form: { touched, errors },
+    ...props
+}: SelectFieldProperties & FieldProps): JSX.Element => {
     return (
         <>
             <label htmlFor={field.name}>{label}</label>
@@ -26,7 +38,16 @@ export const SelectField = ({ options, label, field, form: { touched, errors }, 
     );
 };
 
-export const TextField = ({ label, field, form: { touched, errors }, ...props }): JSX.Element => {
+type TextFieldProperties = {
+    label: string;
+};
+
+export const TextField = ({
+    label,
+    field,
+    form: { touched, errors },
+    ...props
+}: TextFieldProperties & FieldProps): JSX.Element => {
     return (
         <>
             <label htmlFor={field.name}>{label}</label>
