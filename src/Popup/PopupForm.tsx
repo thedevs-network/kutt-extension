@@ -53,7 +53,7 @@ const InnerForm = (props: FormikProps<FormValuesProperties>): JSX.Element => {
             <Field name="password" type="password" component={TextField} label="Password" />
 
             <button type="submit" disabled={isSubmitting}>
-                Submit
+                Create
             </button>
         </Form>
     );

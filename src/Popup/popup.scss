@@ -1,3 +1,26 @@
 @import "../styles/fonts";
 @import "../styles/reset";
 @import "../styles/variables";
+
+#header {
+  display: flex;
+  justify-content: space-between;
+
+  .logo__holder {
+    width: 22px;
+    height: 22px;
+  }
+  .action__buttons--holder {
+
+
+    .icon {
+      border: none;
+      align-items: center;
+      justify-content: center;
+      border-radius: 100%;
+      background-color: none !important;
+      cursor: pointer;
+      box-sizing: border-box;
+    }
+  }
+}
