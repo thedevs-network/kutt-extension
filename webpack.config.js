@@ -8,7 +8,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { CheckerPlugin } = require('awesome-typescript-loader');
 const ExtensionReloader = require('webpack-extension-reloader');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
 
 const manifestInput = require('./src/manifest');
 
@@ -103,8 +102,7 @@ module.exports = {
     plugins: [
         // for awesome-typescript-loader
         new CheckerPlugin(),
-        // https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/518
-        new FixStyleOnlyEntriesPlugin({ silent: true }),
+        // environment variables
         new webpack.EnvironmentPlugin(['NODE_ENV', 'TARGET_BROWSER']),
         // delete previous build files
         new CleanWebpackPlugin({
