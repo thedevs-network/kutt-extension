@@ -2,6 +2,8 @@
 import React from 'react';
 import { FieldProps } from 'formik';
 
+import './styles.scss';
+
 type SelectFieldProperties = {
     options: SelectFieldOptionPropeties[];
     label: string;

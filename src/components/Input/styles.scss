@@ -1,0 +1,33 @@
+input {
+    filter: none;
+    min-width: 0px;
+    width: 100%;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    height: 45px;
+    padding-left: 32px;
+    padding-right: 20px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+    letter-spacing: 0.05em;
+    color: rgb(68, 68, 68);
+    background-color: white;
+    box-shadow: rgba(167, 182, 190, 0.2) 0px 10px 35px;
+    border-top-width: initial;
+    border-right-width: initial;
+    border-left-width: initial;
+    border-top-color: initial;
+    border-right-color: initial;
+    border-left-color: initial;
+    margin: 0px;
+    border-style: none none solid;
+    border-image: initial;
+    border-radius: 100px;
+    border-bottom: 5px solid rgb(245, 245, 245);
+    transition: all 0.5s ease-out 0s;
+}
