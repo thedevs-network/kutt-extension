@@ -52,7 +52,6 @@ module.exports = {
         background: path.join(sourcePath, 'Background', 'index.ts'),
         options: path.join(sourcePath, 'Options', 'index.tsx'),
         popup: path.join(sourcePath, 'Popup', 'index.tsx'),
-        styles: [path.join(sourcePath, 'Popup', 'popup.scss'), path.join(sourcePath, 'Options', 'options.scss')],
     },
 
     output: {
