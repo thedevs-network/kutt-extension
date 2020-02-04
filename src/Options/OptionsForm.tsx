@@ -1,7 +1,9 @@
 import React from 'react';
 import { withFormik, Field, Form, FormikHelpers, FormikProps, FormikErrors } from 'formik';
 
+import messageUtil from '../lib/mesageUtil';
 import { TextField } from '../components/Input';
+import { CHECK_API_KEY } from '../Background/constants';
 
 interface FormValuesProperties {
     apikey: string;
@@ -15,7 +17,7 @@ const InnerForm: React.FC<FormikProps<FormValuesProperties>> = props => {
             <Field name="apikey" type="password" component={TextField} label="API Key" />
 
             <button type="submit" disabled={isSubmitting}>
-                Save
+                Validate
             </button>
         </Form>
     );
@@ -39,19 +41,32 @@ const OptionsForm = withFormik<OptionsFormProperties, FormValuesProperties>({
 
         if (!values.apikey) {
             errors.apikey = 'API key missing';
-        } else if (values.apikey && values.apikey.trim().length < 40) {
-            errors.apikey = 'API key must be 40 characters';
-        } else if (values.apikey && values.apikey.trim().length > 40) {
-            errors.apikey = 'API key cannot exceed 40 characters';
         }
+        // ToDo: restore later
+        // else if (values.apikey && values.apikey.trim().length < 40) {
+        //     errors.apikey = 'API key must be 40 characters';
+        // } else if (values.apikey && values.apikey.trim().length > 40) {
+        //     errors.apikey = 'API key cannot exceed 40 characters';
+        // }
 
         return errors;
     },
 
-    handleSubmit: (values: FormValuesProperties, { setSubmitting }: FormikHelpers<FormValuesProperties>) => {
+    handleSubmit: async (values: FormValuesProperties, { setSubmitting }: FormikHelpers<FormValuesProperties>) => {
         console.log(values);
 
         setSubmitting(false);
+
+        // ToDo:
+        try {
+            console.log('options: sending message');
+            await messageUtil.send(CHECK_API_KEY, { apikey: values.apikey.trim() });
+        } catch (err) {
+            console.log(err);
+        }
+        // 2. show valid api key status
+        // 3. Throw error (if error exists)
+        // 4. else -> show no internet message
     },
 
     displayName: 'OptionsForm',
