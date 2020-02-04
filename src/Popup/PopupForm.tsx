@@ -2,11 +2,14 @@ import React from 'react';
 import { withFormik, Field, Form, FormikHelpers, FormikProps, FormikErrors } from 'formik';
 
 import { SelectField, TextField } from '../components/Input';
+import messageUtil from '../lib/mesageUtil';
+import { SHORTEN_URL } from '../Background/constants';
+import { ShortenUrlBodyProperties } from '../Background';
 
 interface FormValuesProperties {
-    domain: string;
-    customurl: string;
     password: string;
+    customurl: string;
+    domain: string;
 }
 
 // ToDo: Fetch from API
@@ -69,9 +72,9 @@ const PopupForm = withFormik<PopupFormProperties, FormValuesProperties>({
     // Transform outer props into form values
     mapPropsToValues: props => {
         return {
-            domain: props.defaultDomainId, // default option value
-            customurl: '',
             password: '',
+            customurl: '',
+            domain: props.defaultDomainId, // default option value
         };
     },
 
@@ -79,21 +82,33 @@ const PopupForm = withFormik<PopupFormProperties, FormValuesProperties>({
     validate: (values: FormValuesProperties) => {
         const errors: FormikErrors<FormValuesProperties> = {};
 
-        if (values.customurl && values.customurl.length < 3) {
-            errors.customurl = 'Custom URL must be atleast 3 characters';
-        }
-
         if (values.password && values.password.length < 3) {
             errors.password = 'Password must be atleast 3 characters';
+        }
+
+        if (values.customurl && values.customurl.length < 3) {
+            errors.customurl = 'Custom URL must be atleast 3 characters';
         }
 
         return errors;
     },
 
-    handleSubmit: (values: FormValuesProperties, { setSubmitting }: FormikHelpers<FormValuesProperties>) => {
+    handleSubmit: async (values: FormValuesProperties, { setSubmitting }: FormikHelpers<FormValuesProperties>) => {
         console.log(values);
-
         setSubmitting(false);
+
+        const data: ShortenUrlBodyProperties = {
+            // ToDo: get target link from browser.tabs
+            target: 'https://long-url.com',
+            reuse: false,
+            ...values,
+        };
+
+        try {
+            await messageUtil.send(SHORTEN_URL, data);
+        } catch (err) {
+            console.log(err);
+        }
     },
 
     displayName: 'PopupForm',
