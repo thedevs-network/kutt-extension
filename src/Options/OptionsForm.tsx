@@ -2,7 +2,7 @@ import React from 'react';
 import { withFormik, Field, Form, FormikHelpers, FormikProps, FormikErrors } from 'formik';
 
 import messageUtil from '../lib/mesageUtil';
-import { TextField } from '../components/Input';
+import { TextField, CheckBox } from '../components/Input';
 import { CHECK_API_KEY } from '../Background/constants';
 
 interface FormValuesProperties {
@@ -19,6 +19,9 @@ const InnerForm: React.FC<FormikProps<FormValuesProperties>> = props => {
             <button type="submit" disabled={isSubmitting}>
                 Validate
             </button>
+
+            <Field name="autocopy" component={CheckBox} label="Auto Copy URL to Clipboard" />
+            <Field name="history" component={CheckBox} label="Keep URLs History" />
         </Form>
     );
 };
@@ -32,6 +35,8 @@ const OptionsForm = withFormik<OptionsFormProperties, FormValuesProperties>({
     mapPropsToValues: props => {
         return {
             apikey: '',
+            autocopy: false,
+            history: true,
         };
     },
 

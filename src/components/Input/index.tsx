@@ -59,3 +59,24 @@ export const TextField: React.FC<TextFieldProperties & FieldProps> = ({
         </>
     );
 };
+
+type CheckBoxProperties = {
+    label: string;
+};
+
+export const CheckBox: React.FC<CheckBoxProperties & FieldProps> = ({ label, field, form, ...props }) => {
+    return (
+        <>
+            <label htmlFor={field.name}>{label}</label>
+            <input
+                type="checkbox"
+                checked={field.value}
+                onChange={(): void => {
+                    form.setFieldValue(field.name, !field.value);
+                }}
+                {...field}
+                {...props}
+            />
+        </>
+    );
+};
