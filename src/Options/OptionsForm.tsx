@@ -1,27 +1,44 @@
 import React from 'react';
 import { withFormik, Field, Form, FormikHelpers, FormikProps, FormikErrors } from 'formik';
 
+import AutoSave from '../lib/autoSave';
 import messageUtil from '../lib/mesageUtil';
-import { TextField, CheckBox } from '../components/Input';
+import { updateSettings } from '../lib/storage';
 import { CHECK_API_KEY } from '../Background/constants';
+import { TextField, CheckBox } from '../components/Input';
 
-interface FormValuesProperties {
+type FormValuesProperties = {
     apikey: string;
-}
+    autocopy: boolean;
+    history: boolean;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const onSave = (values: FormValuesProperties): Promise<any> => {
+    // should always return a Promise
+    return updateSettings(values); // update local settings
+};
 
 const InnerForm: React.FC<FormikProps<FormValuesProperties>> = props => {
     const { isSubmitting, handleSubmit } = props;
 
     return (
         <Form onSubmit={handleSubmit} autoComplete="off">
-            <Field name="apikey" type="password" component={TextField} label="API Key" />
-
-            <button type="submit" disabled={isSubmitting}>
-                Validate
-            </button>
+            <div>
+                <Field name="apikey" type="password" component={TextField} label="API Key" />
+                <button type="submit" disabled={isSubmitting}>
+                    Validate
+                </button>
+            </div>
 
             <Field name="autocopy" component={CheckBox} label="Auto Copy URL to Clipboard" />
             <Field name="history" component={CheckBox} label="Keep URLs History" />
+            <AutoSave
+                onSave={onSave}
+                render={({ isSaving }: { isSaving: boolean }): string | null => {
+                    return isSaving ? 'Saving' : null;
+                }}
+            />
         </Form>
     );
 };
@@ -57,21 +74,21 @@ const OptionsForm = withFormik<OptionsFormProperties, FormValuesProperties>({
         return errors;
     },
 
+    // for API Key validation only
     handleSubmit: async (values: FormValuesProperties, { setSubmitting }: FormikHelpers<FormValuesProperties>) => {
         console.log(values);
 
         setSubmitting(false);
 
-        // ToDo:
         try {
-            console.log('options: sending message');
             await messageUtil.send(CHECK_API_KEY, { apikey: values.apikey.trim() });
         } catch (err) {
             console.log(err);
         }
-        // 2. show valid api key status
-        // 3. Throw error (if error exists)
-        // 4. else -> show no internet message
+        // ToDo:
+        // 1. show valid api key status
+        // 2. Throw error (if error exists)
+        // 3. else -> show no internet message
     },
 
     displayName: 'OptionsForm',
