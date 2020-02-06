@@ -1,9 +1,9 @@
 import React from 'react';
 import { withFormik, Field, Form, FormikHelpers, FormikProps, FormikErrors } from 'formik';
 
-import AutoSave from '../lib/autoSave';
-import messageUtil from '../lib/mesageUtil';
-import { updateSettings } from '../lib/storage';
+import AutoSave from '../util/autoSave';
+import messageUtil from '../util/mesageUtil';
+import { updateSettings } from '../util/storage';
 import { CHECK_API_KEY } from '../Background/constants';
 import { TextField, CheckBox } from '../components/Input';
 

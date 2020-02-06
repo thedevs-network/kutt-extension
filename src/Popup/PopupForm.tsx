@@ -2,7 +2,7 @@ import React from 'react';
 import { withFormik, Field, Form, FormikHelpers, FormikProps, FormikErrors } from 'formik';
 
 import { SelectField, TextField } from '../components/Input';
-import messageUtil from '../lib/mesageUtil';
+import messageUtil from '../util/mesageUtil';
 import { SHORTEN_URL } from '../Background/constants';
 import { ShortenUrlBodyProperties } from '../Background';
 
