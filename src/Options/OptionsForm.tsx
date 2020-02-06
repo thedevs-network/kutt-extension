@@ -3,7 +3,7 @@ import { withFormik, Field, Form, FormikHelpers, FormikProps, FormikErrors } fro
 
 import AutoSave from '../util/autoSave';
 import messageUtil from '../util/mesageUtil';
-import { updateSettings } from '../util/storage';
+import { updateExtensionSettings } from '../util/optionsPageHelpers';
 import { CHECK_API_KEY } from '../Background/constants';
 import { TextField, CheckBox } from '../components/Input';
 
@@ -16,7 +16,7 @@ type FormValuesProperties = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const onSave = (values: FormValuesProperties): Promise<any> => {
     // should always return a Promise
-    return updateSettings(values); // update local settings
+    return updateExtensionSettings(values); // update local settings
 };
 
 const InnerForm: React.FC<FormikProps<FormValuesProperties>> = props => {
