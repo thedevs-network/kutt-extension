@@ -17,10 +17,34 @@ export type ShortenUrlBodyProperties = {
     domain: string;
 };
 
-async function shortenUrl(params: ShortenUrlBodyProperties): AxiosPromise<any> {
+type ShortenLinkResponseProperties = {
+    id: string;
+    address: string;
+    banned: boolean;
+    password: boolean;
+    target: string;
+    visit_count: number;
+    created_at: string;
+    updated_at: string;
+    link: string;
+};
+
+export type ShortenErrorStatusProperties = {
+    error: true;
+    message: string;
+};
+
+export type SuccessfulShortenStatusProperties = {
+    error: false;
+    data: ShortenLinkResponseProperties;
+};
+
+async function shortenUrl(
+    params: ShortenUrlBodyProperties
+): Promise<SuccessfulShortenStatusProperties | ShortenErrorStatusProperties> {
     try {
         // ToDo: get apikey from local storage
-        const { data } = await api({
+        const { data }: { data: ShortenLinkResponseProperties } = await api({
             method: 'POST',
             timeout: constants.SHORTEN_URL_TIMEOUT,
             url: `/api/v2/links`,
@@ -32,17 +56,31 @@ async function shortenUrl(params: ShortenUrlBodyProperties): AxiosPromise<any> {
             },
         });
 
-        console.log(data);
+        return {
+            error: false,
+            data,
+        };
     } catch (err) {
         if (err.response) {
             if (err.response.status === 401) {
-                // 'Error: Invalid API Key'
+                return {
+                    error: true,
+                    message: 'Error: Invalid API Key',
+                };
             }
         }
 
         if (err.code === 'ECONNABORTED') {
-            // timed-out
+            return {
+                error: true,
+                message: 'Error: Timed out',
+            };
         }
+
+        return {
+            error: true,
+            message: 'Error: Something went wrong',
+        };
     }
 }
 
@@ -82,7 +120,7 @@ async function checkApiKey(apikey: string): Promise<any> {
 /**
  *  Listen for messages from UI
  */
-browser.runtime.onMessage.addListener((request, sender): void | AxiosPromise<any> => {
+browser.runtime.onMessage.addListener((request, sender): void | Promise<any> => {
     console.log('message received', request);
     // eslint-disable-next-line default-case
     switch (request.action) {

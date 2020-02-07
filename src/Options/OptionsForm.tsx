@@ -57,7 +57,6 @@ const OptionsForm = withFormik<OptionsFormProperties, FormValuesProperties>({
         };
     },
 
-    // Custom sync validation
     validate: (values: FormValuesProperties) => {
         const errors: FormikErrors<FormValuesProperties> = {};
 
@@ -80,6 +79,7 @@ const OptionsForm = withFormik<OptionsFormProperties, FormValuesProperties>({
 
         if (!err) {
             // ToDo: show valid api key status
+            // ToDo: Store user information
             console.log('Valid API Key');
         } else {
             console.log(err);
