@@ -76,19 +76,16 @@ const OptionsForm = withFormik<OptionsFormProperties, FormValuesProperties>({
 
     // for API Key validation only
     handleSubmit: async (values: FormValuesProperties, { setSubmitting }: FormikHelpers<FormValuesProperties>) => {
-        console.log(values);
+        const err = await messageUtil.send(CHECK_API_KEY, { apikey: values.apikey.trim() });
 
-        setSubmitting(false);
-
-        try {
-            await messageUtil.send(CHECK_API_KEY, { apikey: values.apikey.trim() });
-        } catch (err) {
+        if (!err) {
+            // ToDo: show valid api key status
+            console.log('Valid API Key');
+        } else {
             console.log(err);
         }
-        // ToDo:
-        // 1. show valid api key status
-        // 2. Throw error (if error exists)
-        // 3. else -> show no internet message
+
+        setSubmitting(false);
     },
 
     displayName: 'OptionsForm',

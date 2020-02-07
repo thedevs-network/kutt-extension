@@ -32,16 +32,37 @@ function shortenUrl(params: ShortenUrlBodyProperties): AxiosPromise<any> {
     });
 }
 
-function checkApiKey(apikey: string): AxiosPromise<any> {
-    // fix-on-resolve: https://github.com/thedevs-network/kutt/issues/203#issuecomment-581740790
+function getUserSettings(apikey: string): AxiosPromise<any> {
     return api({
         method: 'GET',
-        url: '/api/v2/sample_endpoint',
+        url: '/api/v2/users',
         timeout: constants.CHECK_API_KEY_TIMEOUT,
         headers: {
             'X-API-Key': apikey,
         },
     });
+}
+
+async function checkApiKey(apikey: string): Promise<any> {
+    try {
+        const { data } = await getUserSettings(apikey);
+
+        console.log(data);
+    } catch (err) {
+        if (err.response) {
+            if (err.response.status === 401) {
+                return 'Error: Invalid API Key';
+            }
+
+            return 'Error: Something went wrong.';
+        }
+
+        if (err.code === 'ECONNABORTED') {
+            return 'Error: Timed out';
+        }
+
+        return 'Error: Please check your internet connection';
+    }
 }
 
 /**
