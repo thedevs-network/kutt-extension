@@ -83,11 +83,16 @@ const OptionsForm = withFormik<OptionsFormProperties, FormValuesProperties>({
         if (!response.error) {
             // ToDo: show valid api key status
             console.log('Valid API Key');
-            // ToDo: Store user information
-            console.log(response.data);
+
+            // Store user account information
+            await updateExtensionSettings(response.data);
         } else {
             // errored
             console.log(response.message);
+
+            // ToDo:
+            // Delete `UserSettingsResponseProperties` fields from settings
+            // This will remove user data completely
         }
 
         // enable validate button

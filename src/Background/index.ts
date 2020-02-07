@@ -95,7 +95,7 @@ function getUserSettings(apikey: string): AxiosPromise<any> {
     });
 }
 
-type DomainEntryProperties = {
+export type DomainEntryProperties = {
     address: string;
     banned: boolean;
     created_at: string;
@@ -104,7 +104,7 @@ type DomainEntryProperties = {
     updated_at: string;
 };
 
-type UserSettingsResponseProperties = {
+export type UserSettingsResponseProperties = {
     apikey: string;
     email: string;
     domains: DomainEntryProperties[];
