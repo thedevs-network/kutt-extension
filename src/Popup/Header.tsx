@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Icon from '../components/Icon';
-import { openExtOptionsPage } from '../util/optionsPageHelpers';
+import { openExtOptionsPage } from '../util/settings';
 
 const Header: React.FC = () => {
     return (

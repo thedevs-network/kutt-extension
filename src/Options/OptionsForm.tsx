@@ -3,7 +3,7 @@ import { withFormik, Field, Form, FormikHelpers, FormikProps, FormikErrors } fro
 
 import AutoSave from '../util/autoSave';
 import messageUtil from '../util/mesageUtil';
-import { updateExtensionSettings } from '../util/optionsPageHelpers';
+import { updateExtensionSettings } from '../util/settings';
 import { CHECK_API_KEY } from '../Background/constants';
 import { TextField, CheckBox } from '../components/Input';
 import { SuccessfulApiKeyCheckProperties, ApiErroredProperties } from '../Background';
@@ -84,15 +84,15 @@ const OptionsForm = withFormik<OptionsFormProperties, FormValuesProperties>({
             // ToDo: show valid api key status
             console.log('Valid API Key');
 
+            const { domains, email } = response.data;
             // Store user account information
-            await updateExtensionSettings(response.data);
+            await updateExtensionSettings({ user: { domains, email } });
         } else {
-            // errored
-            console.log(response.message);
+            // ---- errored ---- //
+            // Delete `user` field from settings
+            await updateExtensionSettings({ user: null });
 
-            // ToDo:
-            // Delete `UserSettingsResponseProperties` fields from settings
-            // This will remove user data completely
+            console.log(response.message);
         }
 
         // enable validate button
