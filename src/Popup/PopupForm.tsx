@@ -4,11 +4,7 @@ import { withFormik, Field, Form, FormikHelpers, FormikProps, FormikErrors } fro
 import { SelectField, TextField } from '../components/Input';
 import messageUtil from '../util/mesageUtil';
 import { SHORTEN_URL } from '../Background/constants';
-import {
-    ShortenUrlBodyProperties,
-    SuccessfulShortenStatusProperties,
-    ShortenErrorStatusProperties,
-} from '../Background';
+import { ShortenUrlBodyProperties, SuccessfulShortenStatusProperties, ApiErroredProperties } from '../Background';
 
 interface FormValuesProperties {
     password: string;
@@ -109,7 +105,7 @@ const PopupForm = withFormik<PopupFormProperties, FormValuesProperties>({
             domain, // ToDo: validate this
         };
 
-        const response: SuccessfulShortenStatusProperties | ShortenErrorStatusProperties = await messageUtil.send(
+        const response: SuccessfulShortenStatusProperties | ApiErroredProperties = await messageUtil.send(
             SHORTEN_URL,
             apiBody
         );

@@ -6,6 +6,7 @@ import messageUtil from '../util/mesageUtil';
 import { updateExtensionSettings } from '../util/optionsPageHelpers';
 import { CHECK_API_KEY } from '../Background/constants';
 import { TextField, CheckBox } from '../components/Input';
+import { SuccessfulApiKeyCheckProperties, ApiErroredProperties } from '../Background';
 
 type FormValuesProperties = {
     apikey: string;
@@ -75,16 +76,21 @@ const OptionsForm = withFormik<OptionsFormProperties, FormValuesProperties>({
 
     // for API Key validation only
     handleSubmit: async (values: FormValuesProperties, { setSubmitting }: FormikHelpers<FormValuesProperties>) => {
-        const err = await messageUtil.send(CHECK_API_KEY, { apikey: values.apikey.trim() });
+        const response: SuccessfulApiKeyCheckProperties | ApiErroredProperties = await messageUtil.send(CHECK_API_KEY, {
+            apikey: values.apikey.trim(),
+        });
 
-        if (!err) {
+        if (!response.error) {
             // ToDo: show valid api key status
-            // ToDo: Store user information
             console.log('Valid API Key');
+            // ToDo: Store user information
+            console.log(response.data);
         } else {
-            console.log(err);
+            // errored
+            console.log(response.message);
         }
 
+        // enable validate button
         setSubmitting(false);
     },
 

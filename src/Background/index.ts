@@ -29,7 +29,7 @@ type ShortenLinkResponseProperties = {
     link: string;
 };
 
-export type ShortenErrorStatusProperties = {
+export type ApiErroredProperties = {
     error: true;
     message: string;
 };
@@ -41,7 +41,7 @@ export type SuccessfulShortenStatusProperties = {
 
 async function shortenUrl(
     params: ShortenUrlBodyProperties
-): Promise<SuccessfulShortenStatusProperties | ShortenErrorStatusProperties> {
+): Promise<SuccessfulShortenStatusProperties | ApiErroredProperties> {
     try {
         // ToDo: get apikey from local storage
         const { data }: { data: ShortenLinkResponseProperties } = await api({
@@ -95,25 +95,63 @@ function getUserSettings(apikey: string): AxiosPromise<any> {
     });
 }
 
-async function checkApiKey(apikey: string): Promise<any> {
-    try {
-        const { data } = await getUserSettings(apikey);
+type DomainEntryProperties = {
+    address: string;
+    banned: boolean;
+    created_at: string;
+    id: string;
+    homepage: string;
+    updated_at: string;
+};
 
+type UserSettingsResponseProperties = {
+    apikey: string;
+    email: string;
+    domains: DomainEntryProperties[];
+};
+
+export type SuccessfulApiKeyCheckProperties = {
+    error: false;
+    data: UserSettingsResponseProperties;
+};
+
+async function checkApiKey(apikey: string): Promise<SuccessfulApiKeyCheckProperties | ApiErroredProperties> {
+    try {
+        const { data }: { data: UserSettingsResponseProperties } = await getUserSettings(apikey);
+
+        // ToDo:
         console.log(data);
+
+        return {
+            error: false,
+            data,
+        };
     } catch (err) {
         if (err.response) {
             if (err.response.status === 401) {
-                return 'Error: Invalid API Key';
+                return {
+                    error: true,
+                    message: 'Error: Invalid API Key',
+                };
             }
 
-            return 'Error: Something went wrong.';
+            return {
+                error: true,
+                message: 'Error: Something went wrong.',
+            };
         }
 
         if (err.code === 'ECONNABORTED') {
-            return 'Error: Timed out';
+            return {
+                error: true,
+                message: 'Error: Timed out',
+            };
         }
 
-        return 'Error: Please check your internet connection';
+        return {
+            error: true,
+            message: 'Error: Please check your internet connection',
+        };
     }
 }
 
@@ -122,6 +160,7 @@ async function checkApiKey(apikey: string): Promise<any> {
  */
 browser.runtime.onMessage.addListener((request, sender): void | Promise<any> => {
     console.log('message received', request);
+
     // eslint-disable-next-line default-case
     switch (request.action) {
         case constants.CHECK_API_KEY: {
