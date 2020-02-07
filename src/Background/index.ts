@@ -11,8 +11,8 @@ import api from '../api';
 
 export type ShortenUrlBodyProperties = {
     target: string;
-    password: string;
-    customurl: string;
+    password?: string;
+    customurl?: string;
     reuse: boolean;
     domain: string;
 };

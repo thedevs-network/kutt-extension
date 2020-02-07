@@ -82,11 +82,11 @@ const PopupForm = withFormik<PopupFormProperties, FormValuesProperties>({
     validate: (values: FormValuesProperties) => {
         const errors: FormikErrors<FormValuesProperties> = {};
 
-        if (values.password && values.password.length < 3) {
+        if (values.password && values.password.trim().length < 3) {
             errors.password = 'Password must be atleast 3 characters';
         }
 
-        if (values.customurl && values.customurl.length < 3) {
+        if (values.customurl && values.customurl.trim().length < 3) {
             errors.customurl = 'Custom URL must be atleast 3 characters';
         }
 
@@ -94,14 +94,15 @@ const PopupForm = withFormik<PopupFormProperties, FormValuesProperties>({
     },
 
     handleSubmit: async (values: FormValuesProperties, { setSubmitting }: FormikHelpers<FormValuesProperties>) => {
-        console.log(values);
-        setSubmitting(false);
+        const { customurl, password, domain } = values;
 
         const data: ShortenUrlBodyProperties = {
             // ToDo: get target link from browser.tabs
             target: 'https://long-url.com',
             reuse: false,
-            ...values,
+            ...(customurl.trim() !== '' && { customurl: customurl.trim() }), // add this key if field is not empty
+            ...(password.trim() !== '' && { password: password.trim() }),
+            domain, // ToDo: validate this
         };
 
         try {
@@ -109,6 +110,8 @@ const PopupForm = withFormik<PopupFormProperties, FormValuesProperties>({
         } catch (err) {
             console.log(err);
         }
+
+        setSubmitting(false);
     },
 
     displayName: 'PopupForm',
