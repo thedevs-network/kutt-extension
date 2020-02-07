@@ -17,19 +17,33 @@ export type ShortenUrlBodyProperties = {
     domain: string;
 };
 
-function shortenUrl(params: ShortenUrlBodyProperties): AxiosPromise<any> {
-    // ToDo: get apikey from local storage
-    return api({
-        method: 'POST',
-        timeout: constants.SHORTEN_URL_TIMEOUT,
-        url: `/api/v2/links`,
-        headers: {
-            'X-API-Key': 'replace-with-api-key',
-        },
-        data: {
-            ...params,
-        },
-    });
+async function shortenUrl(params: ShortenUrlBodyProperties): AxiosPromise<any> {
+    try {
+        // ToDo: get apikey from local storage
+        const { data } = await api({
+            method: 'POST',
+            timeout: constants.SHORTEN_URL_TIMEOUT,
+            url: `/api/v2/links`,
+            headers: {
+                'X-API-Key': 'replace-with-api-key',
+            },
+            data: {
+                ...params,
+            },
+        });
+
+        console.log(data);
+    } catch (err) {
+        if (err.response) {
+            if (err.response.status === 401) {
+                // 'Error: Invalid API Key'
+            }
+        }
+
+        if (err.code === 'ECONNABORTED') {
+            // timed-out
+        }
+    }
 }
 
 function getUserSettings(apikey: string): AxiosPromise<any> {

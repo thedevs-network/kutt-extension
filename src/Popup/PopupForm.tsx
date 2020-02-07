@@ -105,11 +105,8 @@ const PopupForm = withFormik<PopupFormProperties, FormValuesProperties>({
             domain, // ToDo: validate this
         };
 
-        try {
-            await messageUtil.send(SHORTEN_URL, data);
-        } catch (err) {
-            console.log(err);
-        }
+        const response = await messageUtil.send(SHORTEN_URL, data);
+        console.log(response);
 
         setSubmitting(false);
     },
