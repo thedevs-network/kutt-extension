@@ -12,18 +12,20 @@ type PopupBodyProperties = {
     setRequestProcessed: ProcessRequestProperties;
 };
 
-const PopupBody: React.FC<PopupBodyProperties> = ({ requestProcessed: { message }, setRequestProcessed }) => {
+const PopupBody: React.FC<PopupBodyProperties> = ({ requestProcessed: { message, error }, setRequestProcessed }) => {
     return (
         <>
             <div>
-                <button
-                    type="button"
-                    onClick={(): void => {
-                        return setRequestProcessed({ error: null, message: '' });
-                    }}
-                >
-                    Go Back
-                </button>
+                {!error ? (
+                    <button
+                        type="button"
+                        onClick={(): void => {
+                            return setRequestProcessed({ error: null, message: '' });
+                        }}
+                    >
+                        Go Back
+                    </button>
+                ) : null}
                 <p>{message}</p>
             </div>
         </>

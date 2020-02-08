@@ -99,10 +99,8 @@ const PopupForm = withFormik<PopupFormProperties, PopupFormValuesProperties>({
         const target: string | null = (tabs.length > 0 && tabs[0].url) || null;
 
         if (!target || !target.startsWith('http')) {
-            // ToDo: handle no valid target
-            console.log('Not a valid URL');
-
-            return;
+            // No valid target
+            return setRequestProcessed({ error: true, message: 'Not a valid URL' });
         }
 
         const { customurl, password, domain } = values;
