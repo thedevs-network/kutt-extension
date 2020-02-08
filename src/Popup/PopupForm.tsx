@@ -10,24 +10,20 @@ import { SHORTEN_URL } from '../Background/constants';
 import { SelectField, TextField } from '../components/Input';
 import { ShortenUrlBodyProperties, SuccessfulShortenStatusProperties, ApiErroredProperties } from '../Background';
 
-type FormValuesProperties = {
+type PopupFormValuesProperties = {
     password: string;
     customurl: string;
     domain: string;
 };
 
-const InnerForm: React.FC<FormikProps<FormValuesProperties>> = props => {
+const InnerForm: React.FC<FormikProps<PopupFormValuesProperties>> = props => {
     // ToDo: type
     const { isSubmitting, handleSubmit, domainOptions } = props;
 
     return (
         <>
             {isSubmitting ? (
-                <>
-                    <div className="popup__loader">
-                        <Loader />
-                    </div>
-                </>
+                <Loader />
             ) : (
                 <Form onSubmit={handleSubmit} autoComplete="off" id="popup__form">
                     <div>
@@ -62,7 +58,7 @@ type PopupFormProperties = {
 };
 
 // Wrap our form with the withFormik HoC
-const PopupForm = withFormik<PopupFormProperties, FormValuesProperties>({
+const PopupForm = withFormik<PopupFormProperties, PopupFormValuesProperties>({
     // Transform outer props into default form values
     mapPropsToValues: props => {
         const defaultItem = props.domainOptions.find(({ id }) => {
@@ -77,8 +73,8 @@ const PopupForm = withFormik<PopupFormProperties, FormValuesProperties>({
     },
 
     // Custom sync validation
-    validate: (values: FormValuesProperties) => {
-        const errors: FormikErrors<FormValuesProperties> = {};
+    validate: (values: PopupFormValuesProperties) => {
+        const errors: FormikErrors<PopupFormValuesProperties> = {};
         // ToDo: Remove special symbols from password & customurl fields
 
         if (values.password && values.password.trim().length < 3) {
@@ -92,7 +88,10 @@ const PopupForm = withFormik<PopupFormProperties, FormValuesProperties>({
         return errors;
     },
 
-    handleSubmit: async (values: FormValuesProperties, { setSubmitting }: FormikHelpers<FormValuesProperties>) => {
+    handleSubmit: async (
+        values: PopupFormValuesProperties,
+        { setSubmitting }: FormikHelpers<PopupFormValuesProperties>
+    ) => {
         // Get target link to shorten
         const tabs = await getCurrentTab();
         const target: string | null = (tabs.length > 0 && tabs[0].url) || null;
