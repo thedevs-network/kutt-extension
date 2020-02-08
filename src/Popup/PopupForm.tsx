@@ -3,7 +3,7 @@ import { withFormik, Field, Form, FormikBag, FormikProps, FormikErrors } from 'f
 
 import Loader from '../components/Loader';
 import messageUtil from '../util/mesageUtil';
-import { DomainOptionsProperties } from './Popup';
+import { DomainOptionsProperties, ProcessRequestProperties } from './Popup';
 import { getCurrentTab } from '../util/tabs';
 
 import { SHORTEN_URL } from '../Background/constants';
@@ -54,12 +54,7 @@ const InnerForm: React.FC<PopupFormProperties & FormikProps<PopupFormValuesPrope
 type PopupFormProperties = {
     defaultDomainId: string;
     domainOptions: DomainOptionsProperties[];
-    setRequestProcessed: React.Dispatch<
-        React.SetStateAction<{
-            error: boolean | null;
-            message: string;
-        }>
-    >;
+    setRequestProcessed: ProcessRequestProperties;
 };
 
 // Wrap our form with the withFormik HoC

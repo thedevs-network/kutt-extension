@@ -17,6 +17,13 @@ export type DomainOptionsProperties = {
     disabled: boolean;
 };
 
+export type ProcessRequestProperties = React.Dispatch<
+    React.SetStateAction<{
+        error: boolean | null;
+        message: string;
+    }>
+>;
+
 const Popup: React.FC = () => {
     const [domainOptions, setDomainOptions] = useState<DomainOptionsProperties[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -79,10 +86,12 @@ const Popup: React.FC = () => {
                 {!loading ? (
                     <>
                         <PopupHeader />
-                        {(requestProcessed.error !== null && <PopupBody requestProcessed={requestProcessed} />) || (
+                        {(requestProcessed.error !== null && (
+                            <PopupBody requestProcessed={requestProcessed} setRequestProcessed={setRequestProcessed} />
+                        )) || (
                             <PopupForm
-                                domainOptions={domainOptions}
                                 defaultDomainId="default"
+                                domainOptions={domainOptions}
                                 setRequestProcessed={setRequestProcessed}
                             />
                         )}
