@@ -3,24 +3,26 @@ import { withFormik, Field, Form, FormikHelpers, FormikProps, FormikErrors } fro
 
 import AutoSave from '../util/autoSave';
 import messageUtil from '../util/mesageUtil';
-import { updateExtensionSettings } from '../util/settings';
 import { CHECK_API_KEY } from '../Background/constants';
 import { TextField, CheckBox } from '../components/Input';
+import { updateExtensionSettings } from '../util/settings';
 import { SuccessfulApiKeyCheckProperties, ApiErroredProperties } from '../Background';
 
-type FormValuesProperties = {
+export type OptionsFormValuesProperties = {
     apikey: string;
     autocopy: boolean;
     history: boolean;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const onSave = (values: FormValuesProperties): Promise<any> => {
+const onSave = (values: OptionsFormValuesProperties): Promise<any> => {
     // should always return a Promise
     return updateExtensionSettings(values); // update local settings
 };
 
-const InnerForm: React.FC<FormikProps<FormValuesProperties>> = props => {
+// Note: The default key-value pairs are not saved to storage without any first interaction
+const InnerForm: React.FC<FormikProps<OptionsFormValuesProperties>> = props => {
+    // ToDo: Replace `Saving` text with Spinning Loader
     const { isSubmitting, handleSubmit } = props;
 
     return (
@@ -48,26 +50,28 @@ const InnerForm: React.FC<FormikProps<FormValuesProperties>> = props => {
 };
 
 // The type of props `OptionsForm` receives
-interface OptionsFormProperties {} // eslint-disable-line @typescript-eslint/no-empty-interface
+type OptionsFormProperties = {
+    defaultValues: OptionsFormValuesProperties;
+};
 
 // Wrap our form with the withFormik HoC
-const OptionsForm = withFormik<OptionsFormProperties, FormValuesProperties>({
+const OptionsForm = withFormik<OptionsFormProperties, OptionsFormValuesProperties>({
     // Transform outer props into form values
-    mapPropsToValues: props => {
+    mapPropsToValues: ({ defaultValues: { apikey, autocopy, history } }) => {
         return {
-            apikey: '',
-            autocopy: false,
-            history: true,
+            apikey,
+            autocopy,
+            history,
         };
     },
 
-    validate: (values: FormValuesProperties) => {
-        const errors: FormikErrors<FormValuesProperties> = {};
+    validate: (values: OptionsFormValuesProperties) => {
+        const errors: FormikErrors<OptionsFormValuesProperties> = {};
 
         if (!values.apikey) {
             errors.apikey = 'API key missing';
         }
-        // ToDo: restore later
+        // ToDo: restore before on production
         // else if (values.apikey && values.apikey.trim().length < 40) {
         //     errors.apikey = 'API key must be 40 characters';
         // } else if (values.apikey && values.apikey.trim().length > 40) {
@@ -78,7 +82,10 @@ const OptionsForm = withFormik<OptionsFormProperties, FormValuesProperties>({
     },
 
     // for API Key validation only
-    handleSubmit: async (values: FormValuesProperties, { setSubmitting }: FormikHelpers<FormValuesProperties>) => {
+    handleSubmit: async (
+        values: OptionsFormValuesProperties,
+        { setSubmitting }: FormikHelpers<OptionsFormValuesProperties>
+    ) => {
         const response: SuccessfulApiKeyCheckProperties | ApiErroredProperties = await messageUtil.send(CHECK_API_KEY, {
             apikey: values.apikey.trim(),
         });
