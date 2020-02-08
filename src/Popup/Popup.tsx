@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { UserSettingsResponseProperties, DomainEntryProperties } from '../Background';
 import { getExtensionSettings } from '../util/settings';
 import BodyWrapper from '../components/BodyWrapper';
+import Loader from '../components/Loader';
 import PopupForm from './PopupForm';
 import PopupHeader from './Header';
 
@@ -79,7 +80,7 @@ const Popup: React.FC = () => {
                         <PopupForm domainOptions={domainOptions} defaultDomainId="default" />
                     </>
                 ) : (
-                    'Loading...'
+                    <Loader />
                 )}
             </div>
         </BodyWrapper>

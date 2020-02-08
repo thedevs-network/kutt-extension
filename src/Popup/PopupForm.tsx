@@ -1,10 +1,11 @@
 import React from 'react';
 import { withFormik, Field, Form, FormikHelpers, FormikProps, FormikErrors } from 'formik';
 
-import { DomainOptionsProperties } from './Popup';
-import { SelectField, TextField } from '../components/Input';
+import Loader from '../components/Loader';
 import messageUtil from '../util/mesageUtil';
+import { DomainOptionsProperties } from './Popup';
 import { SHORTEN_URL } from '../Background/constants';
+import { SelectField, TextField } from '../components/Input';
 import { ShortenUrlBodyProperties, SuccessfulShortenStatusProperties, ApiErroredProperties } from '../Background';
 
 type FormValuesProperties = {
@@ -17,21 +18,37 @@ const InnerForm: React.FC<FormikProps<FormValuesProperties>> = props => {
     const { isSubmitting, handleSubmit, domainOptions } = props;
 
     return (
-        <Form onSubmit={handleSubmit} autoComplete="off" id="popup__form">
-            <div>
-                <Field name="domain" type="text" component={SelectField} label="Domain" options={domainOptions} />
-            </div>
-            <div>
-                <Field name="customurl" type="text" component={TextField} label="Custom URL" />
-            </div>
-            <div>
-                <Field name="password" type="password" component={TextField} label="Password" />
-            </div>
+        <>
+            {isSubmitting ? (
+                <>
+                    <div className="popup__loader">
+                        <Loader />
+                    </div>
+                </>
+            ) : (
+                <Form onSubmit={handleSubmit} autoComplete="off" id="popup__form">
+                    <div>
+                        <Field
+                            name="domain"
+                            type="text"
+                            component={SelectField}
+                            label="Domain"
+                            options={domainOptions}
+                        />
+                    </div>
+                    <div>
+                        <Field name="customurl" type="text" component={TextField} label="Custom URL" />
+                    </div>
+                    <div>
+                        <Field name="password" type="password" component={TextField} label="Password" />
+                    </div>
 
-            <button type="submit" disabled={isSubmitting}>
-                Create
-            </button>
-        </Form>
+                    <button type="submit" disabled={isSubmitting}>
+                        Create
+                    </button>
+                </Form>
+            )}
+        </>
     );
 };
 
