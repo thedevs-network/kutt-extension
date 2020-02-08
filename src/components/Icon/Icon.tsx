@@ -1,9 +1,11 @@
 import React from 'react';
 
 import Settings from './Settings';
+import Spinner from './Spinner';
 
 const icons = {
     settings: Settings,
+    spinner: Spinner,
 };
 
 export type Icons = keyof typeof icons;
