@@ -25,15 +25,17 @@ export const SelectField: React.FC<SelectFieldProperties & FieldProps> = ({
     return (
         <>
             <label htmlFor={field.name}>{label}</label>
-            <select {...field} {...props}>
-                {options.map(({ option, value, disabled = false }: SelectFieldOptionPropeties, index: number) => {
-                    return (
-                        <option value={value} disabled={disabled} key={index}>
-                            {option}
-                        </option>
-                    );
-                })}
-            </select>
+            <div style={{ padding: '0px' }}>
+                <select {...field} {...props}>
+                    {options.map(({ option, value, disabled = false }: SelectFieldOptionPropeties, index: number) => {
+                        return (
+                            <option value={value} disabled={disabled} key={index}>
+                                {option}
+                            </option>
+                        );
+                    })}
+                </select>
+            </div>
 
             {touched[field.name] && errors[field.name] && <div className="error">{errors[field.name]}</div>}
         </>

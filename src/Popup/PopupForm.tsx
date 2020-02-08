@@ -17,12 +17,16 @@ const InnerForm: React.FC<FormikProps<FormValuesProperties>> = props => {
     const { isSubmitting, handleSubmit, domainOptions } = props;
 
     return (
-        <Form onSubmit={handleSubmit} autoComplete="off">
-            <Field name="domain" type="text" component={SelectField} label="Domain" options={domainOptions} />
-
-            <Field name="customurl" type="text" component={TextField} label="Custom URL" />
-
-            <Field name="password" type="password" component={TextField} label="Password" />
+        <Form onSubmit={handleSubmit} autoComplete="off" id="popup__form">
+            <div>
+                <Field name="domain" type="text" component={SelectField} label="Domain" options={domainOptions} />
+            </div>
+            <div>
+                <Field name="customurl" type="text" component={TextField} label="Custom URL" />
+            </div>
+            <div>
+                <Field name="password" type="password" component={TextField} label="Password" />
+            </div>
 
             <button type="submit" disabled={isSubmitting}>
                 Create

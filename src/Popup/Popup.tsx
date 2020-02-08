@@ -72,7 +72,7 @@ const Popup: React.FC = () => {
 
     return (
         <BodyWrapper>
-            <div>
+            <div id="popup">
                 {!loading ? (
                     <>
                         <PopupHeader />

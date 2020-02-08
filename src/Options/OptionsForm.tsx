@@ -24,16 +24,19 @@ const InnerForm: React.FC<FormikProps<FormValuesProperties>> = props => {
     const { isSubmitting, handleSubmit } = props;
 
     return (
-        <Form onSubmit={handleSubmit} autoComplete="off">
+        <Form onSubmit={handleSubmit} autoComplete="off" id="options__form">
             <div>
                 <Field name="apikey" type="password" component={TextField} label="API Key" />
                 <button type="submit" disabled={isSubmitting}>
                     Validate
                 </button>
             </div>
-
-            <Field name="autocopy" component={CheckBox} label="Auto Copy URL to Clipboard" />
-            <Field name="history" component={CheckBox} label="Keep URLs History" />
+            <div>
+                <Field name="autocopy" component={CheckBox} label="Auto Copy URL to Clipboard" />
+            </div>
+            <div>
+                <Field name="history" component={CheckBox} label="Keep URLs History" />
+            </div>
             <AutoSave
                 onSave={onSave}
                 render={({ isSaving }: { isSaving: boolean }): string | null => {

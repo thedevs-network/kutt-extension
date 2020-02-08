@@ -1,3 +1,38 @@
 @import "../styles/fonts";
 @import "../styles/reset";
 @import "../styles/variables";
+
+body {
+  color: $black;
+  background-color: $grey-white;
+}
+
+#options {
+  display: flex;
+  justify-content: center;
+  padding: 20% 10%;
+  font-size: 1.125em;
+
+  #options__form {
+    button {
+      padding: 7px 22px;
+      margin: 15px auto;
+      cursor: pointer;
+      background-color: lightblue;
+    }
+
+    div {
+      padding: 5px 10px;
+      width: 100%;
+
+      .error {
+        font-size: 11px;
+        padding: 2px 10px;
+      }
+
+      input[type="checkbox"] {
+        width: auto;
+      }
+    }
+  }
+}

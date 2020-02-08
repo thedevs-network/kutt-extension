@@ -6,7 +6,7 @@ import OptionsForm from './OptionsForm';
 const Options: React.FC = () => {
     return (
         <BodyWrapper>
-            <div>
+            <div id="options">
                 <OptionsForm />
             </div>
         </BodyWrapper>
