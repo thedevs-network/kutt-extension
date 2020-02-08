@@ -13,10 +13,6 @@ type ExtensionSettingsProperties = {
     } | null;
 };
 
-export function openExtOptionsPage(): Promise<void> {
-    return browser.runtime.openOptionsPage();
-}
-
 // update extension settings in browser storage
 export function saveExtensionSettings(settings: Storage.StorageAreaSetItemsType): Promise<void> {
     return browser.storage.local.set({

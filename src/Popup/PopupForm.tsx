@@ -4,6 +4,8 @@ import { withFormik, Field, Form, FormikHelpers, FormikProps, FormikErrors } fro
 import Loader from '../components/Loader';
 import messageUtil from '../util/mesageUtil';
 import { DomainOptionsProperties } from './Popup';
+import { getCurrentTab } from '../util/tabs';
+
 import { SHORTEN_URL } from '../Background/constants';
 import { SelectField, TextField } from '../components/Input';
 import { ShortenUrlBodyProperties, SuccessfulShortenStatusProperties, ApiErroredProperties } from '../Background';
@@ -15,6 +17,7 @@ type FormValuesProperties = {
 };
 
 const InnerForm: React.FC<FormikProps<FormValuesProperties>> = props => {
+    // ToDo: type
     const { isSubmitting, handleSubmit, domainOptions } = props;
 
     return (
@@ -66,8 +69,6 @@ const PopupForm = withFormik<PopupFormProperties, FormValuesProperties>({
             return id === 'default';
         });
 
-        console.log(defaultItem && defaultItem.value.trim());
-
         return {
             password: '',
             customurl: '',
@@ -92,18 +93,27 @@ const PopupForm = withFormik<PopupFormProperties, FormValuesProperties>({
     },
 
     handleSubmit: async (values: FormValuesProperties, { setSubmitting }: FormikHelpers<FormValuesProperties>) => {
-        const { customurl, password, domain } = values;
-        console.log(values);
+        // Get target link to shorten
+        const tabs = await getCurrentTab();
+        const target: string | null = (tabs.length > 0 && tabs[0].url) || null;
 
+        if (!target || !target.startsWith('http')) {
+            // ToDo: handle no valid target
+            console.log('Not a valid URL');
+
+            return;
+        }
+
+        const { customurl, password, domain } = values;
         const apiBody: ShortenUrlBodyProperties = {
-            // ToDo: get target link from browser.tabs
-            target: 'https://long-url.com',
+            target,
             ...(customurl.trim() !== '' && { customurl: customurl.trim() }), // add this key if field is not empty
             ...(password.trim() !== '' && { password: password.trim() }),
             reuse: false,
             ...(domain.trim() !== '' && { domain: domain.trim() }),
         };
 
+        // shorten url in the background
         const response: SuccessfulShortenStatusProperties | ApiErroredProperties = await messageUtil.send(
             SHORTEN_URL,
             apiBody
