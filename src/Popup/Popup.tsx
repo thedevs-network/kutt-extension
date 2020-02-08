@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import { UserSettingsResponseProperties, DomainEntryProperties } from '../Background';
+import { UserSettingsResponseProperties } from '../Background';
 import { getExtensionSettings } from '../util/settings';
 import BodyWrapper from '../components/BodyWrapper';
 import Loader from '../components/Loader';
 import PopupForm from './PopupForm';
 import PopupHeader from './Header';
+import PopupBody, { ProcessedRequestProperties } from './PopupBody';
 
 import './styles.scss';
 
@@ -18,7 +19,8 @@ export type DomainOptionsProperties = {
 
 const Popup: React.FC = () => {
     const [domainOptions, setDomainOptions] = useState<DomainOptionsProperties[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [requestProcessed, setRequestProcessed] = useState<ProcessedRequestProperties>({ error: null, message: '' });
 
     useEffect((): void => {
         async function getUserSettings(): Promise<void> {
@@ -77,7 +79,13 @@ const Popup: React.FC = () => {
                 {!loading ? (
                     <>
                         <PopupHeader />
-                        <PopupForm domainOptions={domainOptions} defaultDomainId="default" />
+                        {(requestProcessed.error !== null && <PopupBody requestProcessed={requestProcessed} />) || (
+                            <PopupForm
+                                domainOptions={domainOptions}
+                                defaultDomainId="default"
+                                setRequestProcessed={setRequestProcessed}
+                            />
+                        )}
                     </>
                 ) : (
                     <Loader />

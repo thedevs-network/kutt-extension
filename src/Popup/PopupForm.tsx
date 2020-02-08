@@ -54,6 +54,12 @@ const InnerForm: React.FC<PopupFormProperties & FormikProps<PopupFormValuesPrope
 type PopupFormProperties = {
     defaultDomainId: string;
     domainOptions: DomainOptionsProperties[];
+    setRequestProcessed: React.Dispatch<
+        React.SetStateAction<{
+            error: boolean | null;
+            message: string;
+        }>
+    >;
 };
 
 // Wrap our form with the withFormik HoC
@@ -91,7 +97,7 @@ const PopupForm = withFormik<PopupFormProperties, PopupFormValuesProperties>({
 
     handleSubmit: async (
         values: PopupFormValuesProperties,
-        { setSubmitting, props }: FormikBag<PopupFormProperties, PopupFormValuesProperties>
+        { setSubmitting, props: { setRequestProcessed } }: FormikBag<PopupFormProperties, PopupFormValuesProperties>
     ) => {
         // Get target link to shorten
         const tabs = await getCurrentTab();
@@ -120,12 +126,15 @@ const PopupForm = withFormik<PopupFormProperties, PopupFormValuesProperties>({
         );
 
         if (!response.error) {
-            const { data } = response;
-            // ToDo: Show Shortened Link data on DOM
-            console.log(data);
+            const {
+                data: { link },
+            } = response;
+
+            // show shortened url
+            setRequestProcessed({ error: false, message: link });
         } else {
             // errored
-            console.log(response.message);
+            setRequestProcessed({ error: true, message: response.message });
         }
 
         // enable submit button
