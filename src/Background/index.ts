@@ -14,7 +14,7 @@ export type ShortenUrlBodyProperties = {
     password?: string;
     customurl?: string;
     reuse: boolean;
-    domain: string;
+    domain?: string;
 };
 
 type ShortenLinkResponseProperties = {

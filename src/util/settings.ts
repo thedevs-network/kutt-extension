@@ -7,8 +7,10 @@ type ExtensionSettingsProperties = {
     apikey: string;
     autocopy: boolean;
     history: boolean;
-    email?: string;
-    domains?: DomainEntryProperties[];
+    user?: {
+        email?: string;
+        domains?: DomainEntryProperties[];
+    } | null;
 };
 
 export function openExtOptionsPage(): Promise<void> {

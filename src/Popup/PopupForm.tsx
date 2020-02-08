@@ -1,57 +1,26 @@
 import React from 'react';
 import { withFormik, Field, Form, FormikHelpers, FormikProps, FormikErrors } from 'formik';
 
+import { DomainOptionsProperties } from './Popup';
 import { SelectField, TextField } from '../components/Input';
 import messageUtil from '../util/mesageUtil';
 import { SHORTEN_URL } from '../Background/constants';
 import { ShortenUrlBodyProperties, SuccessfulShortenStatusProperties, ApiErroredProperties } from '../Background';
 
-interface FormValuesProperties {
+type FormValuesProperties = {
     password: string;
     customurl: string;
     domain: string;
-}
-
-// ToDo: Fetch from API
-const domainOptions = [
-    {
-        option: '-- Choose Domain --',
-        value: '',
-        disabled: true,
-    },
-    {
-        option: 'https://kutt.it',
-        value: '1',
-    },
-    {
-        option: 'https://example.com',
-        value: '2',
-    },
-];
+};
 
 const InnerForm: React.FC<FormikProps<FormValuesProperties>> = props => {
-    const { isSubmitting, handleChange, handleBlur, handleSubmit } = props;
+    const { isSubmitting, handleSubmit, domainOptions } = props;
 
     return (
         <Form onSubmit={handleSubmit} autoComplete="off">
-            <Field
-                name="domain"
-                type="text"
-                component={SelectField}
-                label="Domain"
-                options={domainOptions}
-                onChange={handleChange}
-                onBlur={handleBlur}
-            />
+            <Field name="domain" type="text" component={SelectField} label="Domain" options={domainOptions} />
 
-            <Field
-                name="customurl"
-                type="text"
-                component={TextField}
-                label="Custom URL"
-                onChange={handleChange}
-                onBlur={handleBlur}
-            />
+            <Field name="customurl" type="text" component={TextField} label="Custom URL" />
 
             <Field name="password" type="password" component={TextField} label="Password" />
 
@@ -63,24 +32,32 @@ const InnerForm: React.FC<FormikProps<FormValuesProperties>> = props => {
 };
 
 // The type of props `PopupForm` receives
-interface PopupFormProperties {
+type PopupFormProperties = {
     defaultDomainId: string;
-}
+    domainOptions: DomainOptionsProperties[];
+};
 
 // Wrap our form with the withFormik HoC
 const PopupForm = withFormik<PopupFormProperties, FormValuesProperties>({
-    // Transform outer props into form values
+    // Transform outer props into default form values
     mapPropsToValues: props => {
+        const defaultItem = props.domainOptions.find(({ id }) => {
+            return id === 'default';
+        });
+
+        console.log(defaultItem && defaultItem.value.trim());
+
         return {
             password: '',
             customurl: '',
-            domain: props.defaultDomainId, // default option value
+            domain: defaultItem && defaultItem.value ? defaultItem.value.trim() : '',
         };
     },
 
     // Custom sync validation
     validate: (values: FormValuesProperties) => {
         const errors: FormikErrors<FormValuesProperties> = {};
+        // ToDo: Remove special symbols from password & customurl fields
 
         if (values.password && values.password.trim().length < 3) {
             errors.password = 'Password must be atleast 3 characters';
@@ -95,14 +72,15 @@ const PopupForm = withFormik<PopupFormProperties, FormValuesProperties>({
 
     handleSubmit: async (values: FormValuesProperties, { setSubmitting }: FormikHelpers<FormValuesProperties>) => {
         const { customurl, password, domain } = values;
+        console.log(values);
 
         const apiBody: ShortenUrlBodyProperties = {
             // ToDo: get target link from browser.tabs
             target: 'https://long-url.com',
-            reuse: false,
             ...(customurl.trim() !== '' && { customurl: customurl.trim() }), // add this key if field is not empty
             ...(password.trim() !== '' && { password: password.trim() }),
-            domain, // ToDo: validate this
+            reuse: false,
+            ...(domain.trim() !== '' && { domain: domain.trim() }),
         };
 
         const response: SuccessfulShortenStatusProperties | ApiErroredProperties = await messageUtil.send(
