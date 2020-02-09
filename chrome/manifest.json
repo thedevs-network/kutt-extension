@@ -26,7 +26,7 @@
   "background": {
     "persistent": false,
     "scripts": [
-      "js/background.js"
+      "js/background.bundle.js"
     ]
   },
   "minimum_chrome_version": "49",

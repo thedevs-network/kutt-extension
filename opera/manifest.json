@@ -28,7 +28,7 @@
   "background": {
     "persistent": false,
     "scripts": [
-      "js/background.js"
+      "js/background.bundle.js"
     ]
   },
   "minimum_opera_version": "36",
