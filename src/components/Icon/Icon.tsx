@@ -2,8 +2,12 @@ import React from 'react';
 
 import Settings from './Settings';
 import Spinner from './Spinner';
+import ArrowLeft from './ArrowLeft';
+import Refresh from './Refresh';
 
 const icons = {
+    arrowleft: ArrowLeft,
+    refresh: Refresh,
     settings: Settings,
     spinner: Spinner,
 };
