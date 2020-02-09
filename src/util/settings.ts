@@ -3,7 +3,7 @@ import { browser, Storage } from 'webextension-polyfill-ts';
 import { DomainEntryProperties } from '../Background';
 
 // Core Extensions settings props
-type ExtensionSettingsProperties = {
+export type ExtensionSettingsProperties = {
     apikey: string;
     autocopy: boolean;
     history: boolean;

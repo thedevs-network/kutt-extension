@@ -161,7 +161,7 @@ async function checkApiKey(apikey: string): Promise<SuccessfulApiKeyCheckPropert
 /**
  *  Listen for messages from UI
  */
-browser.runtime.onMessage.addListener((request, sender): void | Promise<any> => {
+browser.runtime.onMessage.addListener((request, _sender): void | Promise<any> => {
     console.log('message received', request);
 
     // eslint-disable-next-line default-case
