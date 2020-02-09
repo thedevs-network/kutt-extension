@@ -25,55 +25,60 @@ export type ProcessRequestProperties = React.Dispatch<
 >;
 
 const Popup: React.FC = () => {
-    const [domainOptions, setDomainOptions] = useState<DomainOptionsProperties[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [domainOptions, setDomainOptions] = useState<DomainOptionsProperties[]>([]);
     const [requestProcessed, setRequestProcessed] = useState<ProcessedRequestProperties>({ error: null, message: '' });
 
     useEffect((): void => {
         async function getUserSettings(): Promise<void> {
             const { settings = {} } = await getExtensionSettings();
+            // ToDo: change kutt.it entry to custom host(if exist)
+            const defaultOptions: DomainOptionsProperties[] = [
+                {
+                    id: '',
+                    option: '-- Choose Domain --',
+                    value: '',
+                    disabled: true,
+                },
+                {
+                    id: 'default',
+                    option: 'kutt.it',
+                    value: 'https://kutt.it',
+                    disabled: false,
+                },
+            ];
 
-            if (Object.prototype.hasOwnProperty.call(settings, 'user')) {
-                if (settings.user) {
-                    const { user }: { user: UserSettingsResponseProperties } = settings;
+            // No API Key set
+            if (!Object.prototype.hasOwnProperty.call(settings, 'apikey') || settings.apikey === '') {
+                setRequestProcessed({ error: true, message: 'Extension requires an API Key to work' });
+                setLoading(false);
 
-                    let optionsArray: DomainOptionsProperties[] = user.domains.map(
-                        ({ id, address, homepage, banned }) => {
-                            return {
-                                id,
-                                option: homepage,
-                                value: address,
-                                disabled: banned,
-                            };
-                        }
-                    );
-
-                    // ToDo: change kutt.it entry to custom host(if exist)
-                    const defaultOptions = [
-                        {
-                            id: '',
-                            option: '-- Choose Domain --',
-                            value: '',
-                            disabled: true,
-                        },
-                        {
-                            id: 'default',
-                            option: 'kutt.it',
-                            value: 'https://kutt.it',
-                            disabled: false,
-                        },
-                    ];
-
-                    // merge to beginning of array
-                    optionsArray = defaultOptions.concat(optionsArray);
-
-                    setDomainOptions(optionsArray);
-                }
-
-                // ToDo: Handle no-user state
+                // ToDo: Open options page after slight delay
+                return;
             }
 
-            // ToDo: handle init operations
+            // `user` & `apikey` fields exist on storage
+            if (Object.prototype.hasOwnProperty.call(settings, 'user') && settings.user) {
+                const { user }: { user: UserSettingsResponseProperties } = settings;
+
+                let optionsArray: DomainOptionsProperties[] = user.domains.map(({ id, address, homepage, banned }) => {
+                    return {
+                        id,
+                        option: homepage,
+                        value: address,
+                        disabled: banned,
+                    };
+                });
+
+                // merge to beginning of array
+                optionsArray = defaultOptions.concat(optionsArray);
+                setDomainOptions(optionsArray);
+            } else {
+                // no `user` but `apikey` exist on storage
+                setDomainOptions(defaultOptions);
+            }
+
+            // ToDo: handle init operations(if any)
             setLoading(false);
         }
 
