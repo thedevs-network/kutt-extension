@@ -1,6 +1,7 @@
-import React from 'react';
-import { withFormik, Field, Form, FormikHelpers, FormikProps, FormikErrors } from 'formik';
+import React, { useState } from 'react';
+import { withFormik, Field, Form, FormikBag, FormikProps, FormikErrors } from 'formik';
 
+import Icon from '../components/Icon';
 import AutoSave from '../util/autoSave';
 import messageUtil from '../util/mesageUtil';
 import { CHECK_API_KEY } from '../Background/constants';
@@ -12,6 +13,11 @@ export type OptionsFormValuesProperties = {
     apikey: string;
     autocopy: boolean;
     history: boolean;
+};
+
+type ProcessedRequestProperties = {
+    error: boolean | null;
+    message: string;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -30,7 +36,7 @@ const InnerForm: React.FC<FormikProps<OptionsFormValuesProperties>> = props => {
             <div>
                 <Field name="apikey" type="password" component={TextField} label="API Key" />
                 <button type="submit" disabled={isSubmitting}>
-                    Validate
+                    {isSubmitting ? <Icon name="spinner" /> : 'Validate'}
                 </button>
             </div>
             <div>
@@ -57,7 +63,7 @@ type OptionsFormProperties = {
 // Wrap our form with the withFormik HoC
 const OptionsForm = withFormik<OptionsFormProperties, OptionsFormValuesProperties>({
     // Transform outer props into form values
-    mapPropsToValues: ({ defaultValues: { apikey, autocopy, history } }) => {
+    mapPropsToValues: ({ defaultValues: { apikey, autocopy, history } }): OptionsFormValuesProperties => {
         return {
             apikey,
             autocopy,
@@ -65,7 +71,7 @@ const OptionsForm = withFormik<OptionsFormProperties, OptionsFormValuesPropertie
         };
     },
 
-    validate: (values: OptionsFormValuesProperties) => {
+    validate: (values: OptionsFormValuesProperties): FormikErrors<OptionsFormValuesProperties> => {
         const errors: FormikErrors<OptionsFormValuesProperties> = {};
 
         if (!values.apikey) {
@@ -84,7 +90,7 @@ const OptionsForm = withFormik<OptionsFormProperties, OptionsFormValuesPropertie
     // for API Key validation only
     handleSubmit: async (
         values: OptionsFormValuesProperties,
-        { setSubmitting }: FormikHelpers<OptionsFormValuesProperties>
+        { setSubmitting }: FormikBag<OptionsFormProperties, OptionsFormValuesProperties>
     ) => {
         const response: SuccessfulApiKeyCheckProperties | ApiErroredProperties = await messageUtil.send(CHECK_API_KEY, {
             apikey: values.apikey.trim(),
