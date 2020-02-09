@@ -3,12 +3,12 @@ import { withFormik, Field, Form, FormikBag, FormikProps, FormikErrors } from 'f
 
 import Loader from '../components/Loader';
 import messageUtil from '../util/mesageUtil';
-import { DomainOptionsProperties, ProcessRequestProperties } from './Popup';
+import { UserConfigProperties, ProcessRequestProperties } from './Popup';
 import { getCurrentTab } from '../util/tabs';
 
 import { SHORTEN_URL } from '../Background/constants';
 import { SelectField, TextField } from '../components/Input';
-import { ShortenUrlBodyProperties, SuccessfulShortenStatusProperties, ApiErroredProperties } from '../Background';
+import { ApiBodyProperties, SuccessfulShortenStatusProperties, ApiErroredProperties } from '../Background';
 
 type PopupFormValuesProperties = {
     password: string;
@@ -17,7 +17,11 @@ type PopupFormValuesProperties = {
 };
 
 const InnerForm: React.FC<PopupFormProperties & FormikProps<PopupFormValuesProperties>> = props => {
-    const { isSubmitting, handleSubmit, domainOptions } = props;
+    const {
+        isSubmitting,
+        handleSubmit,
+        userConfig: { domainOptions },
+    } = props;
 
     return (
         <>
@@ -53,22 +57,26 @@ const InnerForm: React.FC<PopupFormProperties & FormikProps<PopupFormValuesPrope
 // The type of props `PopupForm` receives
 type PopupFormProperties = {
     defaultDomainId: string;
-    domainOptions: DomainOptionsProperties[];
+    userConfig: UserConfigProperties;
     setRequestProcessed: ProcessRequestProperties;
 };
 
 // Wrap our form with the withFormik HoC
 const PopupForm = withFormik<PopupFormProperties, PopupFormValuesProperties>({
     // Transform outer props into default form values
-    mapPropsToValues: (props): PopupFormValuesProperties => {
-        const defaultItem = props.domainOptions.find(({ id }) => {
-            return id === 'default';
+    mapPropsToValues: ({
+        defaultDomainId,
+        userConfig: { domainOptions },
+    }: PopupFormProperties): PopupFormValuesProperties => {
+        // find default item to select in options menu
+        const defaultItem = domainOptions.find(({ id }) => {
+            return id === defaultDomainId;
         });
 
         return {
             password: '',
             customurl: '',
-            domain: defaultItem && defaultItem.value ? defaultItem.value.trim() : '',
+            domain: defaultItem && defaultItem.value ? defaultItem.value.trim() : '', // empty string will map to disabled entry
         };
     },
 
@@ -81,7 +89,6 @@ const PopupForm = withFormik<PopupFormProperties, PopupFormValuesProperties>({
         if (values.password && values.password.trim().length < 3) {
             errors.password = 'Password must be atleast 3 characters';
         }
-
         // custom url validation
         if (values.customurl && values.customurl.trim().length < 3) {
             errors.customurl = 'Custom URL must be atleast 3 characters';
@@ -92,7 +99,13 @@ const PopupForm = withFormik<PopupFormProperties, PopupFormValuesProperties>({
 
     handleSubmit: async (
         values: PopupFormValuesProperties,
-        { setSubmitting, props: { setRequestProcessed } }: FormikBag<PopupFormProperties, PopupFormValuesProperties>
+        {
+            setSubmitting,
+            props: {
+                setRequestProcessed,
+                userConfig: { apikey },
+            },
+        }: FormikBag<PopupFormProperties, PopupFormValuesProperties>
     ) => {
         // Get target link to shorten
         const tabs = await getCurrentTab();
@@ -104,9 +117,10 @@ const PopupForm = withFormik<PopupFormProperties, PopupFormValuesProperties>({
         }
 
         const { customurl, password, domain } = values;
-        const apiBody: ShortenUrlBodyProperties = {
+        const apiBody: ApiBodyProperties = {
+            apikey,
             target,
-            ...(customurl.trim() !== '' && { customurl: customurl.trim() }), // add this key if field is not empty
+            ...(customurl.trim() !== '' && { customurl: customurl.trim() }), // add this key only if field is not empty
             ...(password.trim() !== '' && { password: password.trim() }),
             reuse: false,
             ...(domain.trim() !== '' && { domain: domain.trim() }),
@@ -118,7 +132,7 @@ const PopupForm = withFormik<PopupFormProperties, PopupFormValuesProperties>({
             apiBody
         );
 
-        // enable submit button
+        // re-enable submit button
         setSubmitting(false);
 
         if (!response.error) {

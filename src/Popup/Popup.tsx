@@ -10,7 +10,7 @@ import PopupBody, { ProcessedRequestProperties } from './PopupBody';
 
 import './styles.scss';
 
-export type DomainOptionsProperties = {
+type DomainOptionsProperties = {
     option: string;
     value: string;
     id: string;
@@ -24,13 +24,22 @@ export type ProcessRequestProperties = React.Dispatch<
     }>
 >;
 
+export type UserConfigProperties = {
+    apikey: string;
+    domainOptions: DomainOptionsProperties[];
+};
+
 const Popup: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
-    const [domainOptions, setDomainOptions] = useState<DomainOptionsProperties[]>([]);
+    const [userConfig, setUserConfig] = useState<UserConfigProperties>({
+        apikey: '',
+        domainOptions: [],
+    });
     const [requestProcessed, setRequestProcessed] = useState<ProcessedRequestProperties>({ error: null, message: '' });
 
     useEffect((): void => {
         async function getUserSettings(): Promise<void> {
+            // ToDo: type
             const { settings = {} } = await getExtensionSettings();
             // ToDo: change kutt.it entry to custom host(if exist)
             const defaultOptions: DomainOptionsProperties[] = [
@@ -72,10 +81,12 @@ const Popup: React.FC = () => {
 
                 // merge to beginning of array
                 optionsArray = defaultOptions.concat(optionsArray);
-                setDomainOptions(optionsArray);
+
+                // update domain list
+                setUserConfig({ apikey: settings.apikey, domainOptions: optionsArray });
             } else {
                 // no `user` but `apikey` exist on storage
-                setDomainOptions(defaultOptions);
+                setUserConfig({ apikey: settings.apikey, domainOptions: defaultOptions });
             }
 
             // ToDo: handle init operations(if any)
@@ -96,7 +107,7 @@ const Popup: React.FC = () => {
                         )) || (
                             <PopupForm
                                 defaultDomainId="default"
-                                domainOptions={domainOptions}
+                                userConfig={userConfig}
                                 setRequestProcessed={setRequestProcessed}
                             />
                         )}

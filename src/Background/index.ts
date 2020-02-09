@@ -9,13 +9,17 @@ import { AxiosPromise } from 'axios';
 import * as constants from './constants';
 import api from '../api';
 
-export type ShortenUrlBodyProperties = {
+type ShortenUrlBodyProperties = {
     target: string;
     password?: string;
     customurl?: string;
     reuse: boolean;
     domain?: string;
 };
+
+export interface ApiBodyProperties extends ShortenUrlBodyProperties {
+    apikey: string;
+}
 
 type ShortenLinkResponseProperties = {
     id: string;
@@ -40,19 +44,21 @@ export type SuccessfulShortenStatusProperties = {
 };
 
 async function shortenUrl(
-    params: ShortenUrlBodyProperties
+    params: ApiBodyProperties
 ): Promise<SuccessfulShortenStatusProperties | ApiErroredProperties> {
     try {
-        // ToDo: get apikey from local storage
+        // extract `apikey` from body
+        const { apikey, ...otherParams } = params;
+
         const { data }: { data: ShortenLinkResponseProperties } = await api({
             method: 'POST',
             timeout: constants.SHORTEN_URL_TIMEOUT,
             url: `/api/v2/links`,
             headers: {
-                'X-API-Key': 'replace-with-api-key',
+                'X-API-Key': apikey,
             },
             data: {
-                ...params,
+                ...otherParams,
             },
         });
 
@@ -118,9 +124,6 @@ export type SuccessfulApiKeyCheckProperties = {
 async function checkApiKey(apikey: string): Promise<SuccessfulApiKeyCheckProperties | ApiErroredProperties> {
     try {
         const { data }: { data: UserSettingsResponseProperties } = await getUserSettings(apikey);
-
-        // ToDo:
-        console.log(data);
 
         return {
             error: false,
