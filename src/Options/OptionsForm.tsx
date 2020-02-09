@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { withFormik, Field, Form, FormikBag, FormikProps, FormikErrors } from 'formik';
 
 import Icon from '../components/Icon';
@@ -15,11 +15,6 @@ export type OptionsFormValuesProperties = {
     history: boolean;
 };
 
-type ProcessedRequestProperties = {
-    error: boolean | null;
-    message: string;
-};
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const onSave = (values: OptionsFormValuesProperties): Promise<any> => {
     // should always return a Promise
@@ -28,15 +23,27 @@ const onSave = (values: OptionsFormValuesProperties): Promise<any> => {
 
 // Note: The default key-value pairs are not saved to storage without any first interaction
 const InnerForm: React.FC<FormikProps<OptionsFormValuesProperties>> = props => {
-    // ToDo: Replace `Saving` text with Spinning Loader
-    const { isSubmitting, handleSubmit } = props;
+    const { isSubmitting, handleSubmit, setStatus, status } = props;
+    // ToDo: add custom domain form input
+
+    // run on component mount
+    useEffect(() => {
+        setStatus({ error: null, message: '' });
+    }, [setStatus]);
 
     return (
         <Form onSubmit={handleSubmit} autoComplete="off" id="options__form">
             <div>
                 <Field name="apikey" type="password" component={TextField} label="API Key" />
                 <button type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? <Icon name="spinner" /> : 'Validate'}
+                    {/* eslint-disable-next-line no-nested-ternary */}
+                    {isSubmitting ? (
+                        <Icon name="spinner" />
+                    ) : status && status.error !== null ? (
+                        (status && !status.error && <Icon name="tick" />) || <Icon name="cross" />
+                    ) : (
+                        'Validate'
+                    )}
                 </button>
             </div>
             <div>
@@ -45,10 +52,12 @@ const InnerForm: React.FC<FormikProps<OptionsFormValuesProperties>> = props => {
             <div>
                 <Field name="history" component={CheckBox} label="Keep URLs History" />
             </div>
+
+            {/* auto save hook component */}
             <AutoSave
                 onSave={onSave}
-                render={({ isSaving }: { isSaving: boolean }): string | null => {
-                    return isSaving ? 'Saving' : null;
+                render={({ isSaving }: { isSaving: boolean }): JSX.Element | null => {
+                    return isSaving ? <Icon name="spinner" /> : null;
                 }}
             />
         </Form>
@@ -90,29 +99,35 @@ const OptionsForm = withFormik<OptionsFormProperties, OptionsFormValuesPropertie
     // for API Key validation only
     handleSubmit: async (
         values: OptionsFormValuesProperties,
-        { setSubmitting }: FormikBag<OptionsFormProperties, OptionsFormValuesProperties>
+        { setSubmitting, setStatus }: FormikBag<OptionsFormProperties, OptionsFormValuesProperties>
     ) => {
+        // request API validation request
         const response: SuccessfulApiKeyCheckProperties | ApiErroredProperties = await messageUtil.send(CHECK_API_KEY, {
             apikey: values.apikey.trim(),
         });
 
         if (!response.error) {
-            // ToDo: show valid api key status
-            console.log('Valid API Key');
+            // set top-level status
+            setStatus({ error: false, message: 'Valid API Key' });
 
-            const { domains, email } = response.data;
             // Store user account information
+            const { domains, email } = response.data;
             await updateExtensionSettings({ user: { domains, email } });
         } else {
             // ---- errored ---- //
+            setStatus({ error: true, message: response.message });
+
             // Delete `user` field from settings
             await updateExtensionSettings({ user: null });
-
-            console.log(response.message);
         }
 
-        // enable validate button
-        setSubmitting(false);
+        setTimeout(() => {
+            // Reset status
+            setStatus({ error: null, message: '' });
+
+            // enable validate button
+            setSubmitting(false);
+        }, 1000);
     },
 
     displayName: 'OptionsForm',
