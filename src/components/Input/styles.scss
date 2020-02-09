@@ -1,0 +1,24 @@
+input {
+    height: 35px;
+    width: 100%;
+    display: flex;
+    position: relative;
+    margin: 0px;
+    border-radius: 100px;
+    border: 5px solid rgb(245, 245, 245);
+}
+
+select {
+    height: 35px;
+    padding: 10px 15px;
+    width: 100%;
+    display: flex;
+    position: relative;
+    margin: 0px;
+    border-radius: 100px;
+    background-color: rgb(245, 245, 245);
+
+    option {
+        background-color: rgb(245, 245, 245);
+    }
+}
