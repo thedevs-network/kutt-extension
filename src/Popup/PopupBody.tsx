@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Icon from '../components/Icon';
 import { ProcessRequestProperties } from './Popup';
 
 export type ProcessedRequestProperties = {
@@ -23,7 +24,7 @@ const PopupBody: React.FC<PopupBodyProperties> = ({ requestProcessed: { message,
                             return setRequestProcessed({ error: null, message: '' });
                         }}
                     >
-                        Go Back
+                        <Icon name="arrowleft" />
                     </button>
                 ) : null}
                 <p>{message}</p>
