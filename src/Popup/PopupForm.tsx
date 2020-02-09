@@ -118,6 +118,9 @@ const PopupForm = withFormik<PopupFormProperties, PopupFormValuesProperties>({
             apiBody
         );
 
+        // enable submit button
+        setSubmitting(false);
+
         if (!response.error) {
             const {
                 data: { link },
@@ -129,9 +132,6 @@ const PopupForm = withFormik<PopupFormProperties, PopupFormValuesProperties>({
             // errored
             setRequestProcessed({ error: true, message: response.message });
         }
-
-        // enable submit button
-        setSubmitting(false);
     },
 
     displayName: 'PopupForm',
