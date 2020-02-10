@@ -9,6 +9,7 @@ import PopupHeader from './Header';
 import PopupBody, { ProcessedRequestProperties } from './PopupBody';
 
 import './styles.scss';
+import { openExtOptionsPage } from '../util/tabs';
 
 type DomainOptionsProperties = {
     option: string;
@@ -66,7 +67,11 @@ const Popup: React.FC = () => {
                 setRequestProcessed({ error: true, message: 'Extension requires an API Key to work' });
                 setLoading(false);
 
-                // ToDo: Open options page after slight delay
+                // Open options page
+                setTimeout(() => {
+                    return openExtOptionsPage();
+                }, 1300);
+
                 return;
             }
 
