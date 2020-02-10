@@ -38,6 +38,7 @@ const Popup: React.FC = () => {
     const [requestProcessed, setRequestProcessed] = useState<ProcessedRequestProperties>({ error: null, message: '' });
 
     useEffect((): void => {
+        // ToDo: Update DOM on Header refresh button request process
         async function getUserSettings(): Promise<void> {
             // ToDo: type
             const { settings = {} } = await getExtensionSettings();
@@ -101,7 +102,7 @@ const Popup: React.FC = () => {
             <div id="popup">
                 {!loading ? (
                     <>
-                        <PopupHeader />
+                        <PopupHeader setLoading={setLoading} userConfig={userConfig} />
                         {(requestProcessed.error !== null && (
                             <PopupBody requestProcessed={requestProcessed} setRequestProcessed={setRequestProcessed} />
                         )) || (
