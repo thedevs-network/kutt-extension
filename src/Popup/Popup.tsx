@@ -29,16 +29,19 @@ export type UserConfigProperties = {
     domainOptions: DomainOptionsProperties[];
 };
 
+export type SetPageReloadFlagProperties = React.Dispatch<React.SetStateAction<boolean>>;
+
 const Popup: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
+    const [pageReloadFlag, setPageReloadFlag] = useState<boolean>(false);
     const [userConfig, setUserConfig] = useState<UserConfigProperties>({
         apikey: '',
         domainOptions: [],
     });
     const [requestProcessed, setRequestProcessed] = useState<ProcessedRequestProperties>({ error: null, message: '' });
 
+    // This will be re-rendered on `pageReloadFlag` change
     useEffect((): void => {
-        // ToDo: Update DOM on Header refresh button request process
         async function getUserSettings(): Promise<void> {
             // ToDo: type
             const { settings = {} } = await getExtensionSettings();
@@ -95,14 +98,18 @@ const Popup: React.FC = () => {
         }
 
         getUserSettings();
-    }, []);
+    }, [pageReloadFlag]);
 
     return (
         <BodyWrapper>
             <div id="popup">
                 {!loading ? (
                     <>
-                        <PopupHeader userConfig={userConfig} />
+                        <PopupHeader
+                            userConfig={userConfig}
+                            pageReloadFlag={pageReloadFlag}
+                            setPageReloadFlag={setPageReloadFlag}
+                        />
                         {(requestProcessed.error !== null && (
                             <PopupBody requestProcessed={requestProcessed} setRequestProcessed={setRequestProcessed} />
                         )) || (

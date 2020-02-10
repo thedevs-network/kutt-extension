@@ -2,20 +2,33 @@ import React, { useState } from 'react';
 
 import Icon from '../components/Icon';
 import messageUtil from '../util/mesageUtil';
-import { UserConfigProperties } from './Popup';
+import { UserConfigProperties, SetPageReloadFlagProperties } from './Popup';
 import { openExtOptionsPage } from '../util/tabs';
 import { CHECK_API_KEY } from '../Background/constants';
 import { updateExtensionSettings } from '../util/settings';
 import { SuccessfulApiKeyCheckProperties, ApiErroredProperties } from '../Background';
 
+type SetLoadingProperties = React.Dispatch<React.SetStateAction<boolean>>;
+
+type ErrorProperties = {
+    error: boolean | null;
+    message: string;
+};
+
+type SetErroredProperties = React.Dispatch<React.SetStateAction<ErrorProperties>>;
+
 async function fetchUserDomains({
     userConfig: { apikey },
     setLoading,
     setErrored,
+    pageReloadFlag,
+    setPageReloadFlag,
 }: {
     userConfig: UserConfigProperties;
     setLoading: SetLoadingProperties;
     setErrored: SetErroredProperties;
+    pageReloadFlag: boolean;
+    setPageReloadFlag: SetPageReloadFlagProperties;
 }): Promise<void> {
     // show loading spinner
     setLoading(true);
@@ -43,26 +56,22 @@ async function fetchUserDomains({
         await updateExtensionSettings({ user: null });
     }
 
+    // reload page
+    setPageReloadFlag(!pageReloadFlag);
+
     setTimeout(() => {
         // Reset status
         setErrored({ error: null, message: '' });
     }, 1000);
 }
 
-type SetLoadingProperties = React.Dispatch<React.SetStateAction<boolean>>;
-
-type ErrorProperties = {
-    error: boolean | null;
-    message: string;
-};
-
-type SetErroredProperties = React.Dispatch<React.SetStateAction<ErrorProperties>>;
-
 type HeaderProperties = {
     userConfig: UserConfigProperties;
+    pageReloadFlag: boolean;
+    setPageReloadFlag: SetPageReloadFlagProperties;
 };
 
-const Header: React.FC<HeaderProperties> = ({ userConfig }) => {
+const Header: React.FC<HeaderProperties> = ({ userConfig, pageReloadFlag, setPageReloadFlag }) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [errored, setErrored] = useState<ErrorProperties>({ error: null, message: '' });
 
@@ -77,7 +86,13 @@ const Header: React.FC<HeaderProperties> = ({ userConfig }) => {
                         type="button"
                         className="icon"
                         onClick={(): Promise<void> => {
-                            return fetchUserDomains({ userConfig, setLoading, setErrored });
+                            return fetchUserDomains({
+                                userConfig,
+                                setLoading,
+                                setErrored,
+                                pageReloadFlag,
+                                setPageReloadFlag,
+                            });
                         }}
                     >
                         {/* eslint-disable no-nested-ternary */}
