@@ -102,7 +102,7 @@ const Popup: React.FC = () => {
             <div id="popup">
                 {!loading ? (
                     <>
-                        <PopupHeader setLoading={setLoading} userConfig={userConfig} />
+                        <PopupHeader userConfig={userConfig} />
                         {(requestProcessed.error !== null && (
                             <PopupBody requestProcessed={requestProcessed} setRequestProcessed={setRequestProcessed} />
                         )) || (

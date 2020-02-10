@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Icon from '../components/Icon';
 import messageUtil from '../util/mesageUtil';
@@ -8,8 +8,16 @@ import { CHECK_API_KEY } from '../Background/constants';
 import { updateExtensionSettings } from '../util/settings';
 import { SuccessfulApiKeyCheckProperties, ApiErroredProperties } from '../Background';
 
-async function fetchUserDomains({ apikey }: UserConfigProperties, setLoading: SetLoadingProperties): Promise<void> {
-    // show loading screen
+async function fetchUserDomains({
+    userConfig: { apikey },
+    setLoading,
+    setErrored,
+}: {
+    userConfig: UserConfigProperties;
+    setLoading: SetLoadingProperties;
+    setErrored: SetErroredProperties;
+}): Promise<void> {
+    // show loading spinner
     setLoading(true);
 
     // request API
@@ -17,32 +25,47 @@ async function fetchUserDomains({ apikey }: UserConfigProperties, setLoading: Se
         apikey,
     });
 
+    // stop spinner
+    setLoading(false);
+
     if (!response.error) {
         // ---- success ---- //
-        // ToDo: Change refresh button to Tick icon
+        setErrored({ error: false, message: 'Fetching domains successful' });
 
         // Store user account information
         const { domains, email } = response.data;
         await updateExtensionSettings({ user: { domains, email } });
     } else {
         // ---- errored ---- //
-        console.log(response.message);
+        setErrored({ error: true, message: response.message });
 
         // Delete `user` field from settings
         await updateExtensionSettings({ user: null });
     }
 
-    setLoading(false);
+    setTimeout(() => {
+        // Reset status
+        setErrored({ error: null, message: '' });
+    }, 1000);
 }
 
 type SetLoadingProperties = React.Dispatch<React.SetStateAction<boolean>>;
 
-type HeaderProperties = {
-    userConfig: UserConfigProperties;
-    setLoading: SetLoadingProperties;
+type ErrorProperties = {
+    error: boolean | null;
+    message: string;
 };
 
-const Header: React.FC<HeaderProperties> = ({ userConfig, setLoading }) => {
+type SetErroredProperties = React.Dispatch<React.SetStateAction<ErrorProperties>>;
+
+type HeaderProperties = {
+    userConfig: UserConfigProperties;
+};
+
+const Header: React.FC<HeaderProperties> = ({ userConfig }) => {
+    const [loading, setLoading] = useState<boolean>(false);
+    const [errored, setErrored] = useState<ErrorProperties>({ error: null, message: '' });
+
     return (
         <>
             <header id="header">
@@ -54,10 +77,19 @@ const Header: React.FC<HeaderProperties> = ({ userConfig, setLoading }) => {
                         type="button"
                         className="icon"
                         onClick={(): Promise<void> => {
-                            return fetchUserDomains(userConfig, setLoading);
+                            return fetchUserDomains({ userConfig, setLoading, setErrored });
                         }}
                     >
-                        <Icon name="refresh" />
+                        {/* eslint-disable no-nested-ternary */}
+                        <Icon
+                            name={
+                                loading
+                                    ? 'spinner'
+                                    : errored && errored.error !== null
+                                    ? (errored && !errored.error && 'tick') || 'cross'
+                                    : 'refresh'
+                            }
+                        />
                     </button>
                     <button type="button" className="icon" onClick={openExtOptionsPage}>
                         <Icon name="settings" />
