@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
+import QRCode from 'qrcode.react';
 
 import Icon from '../components/Icon';
 import { ProcessRequestProperties } from './Popup';
@@ -16,6 +17,7 @@ type PopupBodyProperties = {
 
 const PopupBody: React.FC<PopupBodyProperties> = ({ requestProcessed: { message, error }, setRequestProcessed }) => {
     const [copied, setCopied] = useState<boolean>(false);
+    const [QRView, setQRView] = useState<boolean>(false);
 
     // reset copy message
     useEffect(() => {
@@ -37,8 +39,9 @@ const PopupBody: React.FC<PopupBodyProperties> = ({ requestProcessed: { message,
                         <Icon name="arrowleft" />
                     </button>
                 )}
+
                 <p>{message}</p>
-                {/* // ToDo: show only on successful url shortening */}
+
                 {!error && (
                     <div>
                         <CopyToClipboard
@@ -55,6 +58,17 @@ const PopupBody: React.FC<PopupBodyProperties> = ({ requestProcessed: { message,
                                 <Icon name="tick" />
                             )}
                         </CopyToClipboard>
+
+                        <button
+                            type="button"
+                            onClick={(): void => {
+                                return setQRView(!QRView);
+                            }}
+                        >
+                            <Icon name="qrcode" />
+                        </button>
+
+                        <div>{QRView && <QRCode size={128} value={message} />}</div>
                     </div>
                 )}
             </div>

@@ -3,6 +3,7 @@ import React from 'react';
 import Copy from './Copy';
 import Tick from './Tick';
 import Cross from './Cross';
+import QRCode from './QRCode';
 import Spinner from './Spinner';
 import Refresh from './Refresh';
 import Settings from './Settings';
@@ -12,6 +13,7 @@ const icons = {
     arrowleft: ArrowLeft,
     copy: Copy,
     cross: Cross,
+    qrcode: QRCode,
     refresh: Refresh,
     settings: Settings,
     spinner: Spinner,
