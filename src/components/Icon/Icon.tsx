@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Copy from './Copy';
 import Tick from './Tick';
 import Cross from './Cross';
 import Spinner from './Spinner';
@@ -9,6 +10,7 @@ import ArrowLeft from './ArrowLeft';
 
 const icons = {
     arrowleft: ArrowLeft,
+    copy: Copy,
     cross: Cross,
     refresh: Refresh,
     settings: Settings,
