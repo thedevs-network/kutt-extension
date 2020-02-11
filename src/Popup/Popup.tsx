@@ -115,15 +115,14 @@ const Popup: React.FC = () => {
                             pageReloadFlag={pageReloadFlag}
                             setPageReloadFlag={setPageReloadFlag}
                         />
-                        {(requestProcessed.error !== null && (
-                            <PopupBody requestProcessed={requestProcessed} setRequestProcessed={setRequestProcessed} />
-                        )) || (
-                            <PopupForm
-                                defaultDomainId="default"
-                                userConfig={userConfig}
-                                setRequestProcessed={setRequestProcessed}
-                            />
-                        )}
+
+                        {requestProcessed.error !== null && <PopupBody requestProcessed={requestProcessed} />}
+
+                        <PopupForm
+                            defaultDomainId="default"
+                            userConfig={userConfig}
+                            setRequestProcessed={setRequestProcessed}
+                        />
                     </>
                 ) : (
                     <Loader />

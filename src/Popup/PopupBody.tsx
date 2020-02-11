@@ -3,7 +3,6 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 import QRCode from 'qrcode.react';
 
 import Icon from '../components/Icon';
-import { ProcessRequestProperties } from './Popup';
 
 export type ProcessedRequestProperties = {
     error: boolean | null;
@@ -12,10 +11,9 @@ export type ProcessedRequestProperties = {
 
 type PopupBodyProperties = {
     requestProcessed: ProcessedRequestProperties;
-    setRequestProcessed: ProcessRequestProperties;
 };
 
-const PopupBody: React.FC<PopupBodyProperties> = ({ requestProcessed: { message, error }, setRequestProcessed }) => {
+const PopupBody: React.FC<PopupBodyProperties> = ({ requestProcessed: { message, error } }) => {
     const [copied, setCopied] = useState<boolean>(false);
     const [QRView, setQRView] = useState<boolean>(false);
 
@@ -28,22 +26,18 @@ const PopupBody: React.FC<PopupBodyProperties> = ({ requestProcessed: { message,
 
     return (
         <>
-            <div>
-                {!error && (
-                    <button
-                        type="button"
-                        onClick={(): void => {
-                            return setRequestProcessed({ error: null, message: '' });
-                        }}
-                    >
-                        <Icon name="arrowleft" />
-                    </button>
-                )}
-
-                <p>{message}</p>
-
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
                 {!error && (
                     <div>
+                        <button
+                            type="button"
+                            onClick={(): void => {
+                                return setQRView(!QRView);
+                            }}
+                        >
+                            <Icon name="qrcode" />
+                        </button>
+
                         <CopyToClipboard
                             text={message}
                             onCopy={(): void => {
@@ -58,20 +52,17 @@ const PopupBody: React.FC<PopupBodyProperties> = ({ requestProcessed: { message,
                                 <Icon name="tick" />
                             )}
                         </CopyToClipboard>
-
-                        <button
-                            type="button"
-                            onClick={(): void => {
-                                return setQRView(!QRView);
-                            }}
-                        >
-                            <Icon name="qrcode" />
-                        </button>
-
-                        <div>{QRView && <QRCode size={128} value={message} />}</div>
                     </div>
                 )}
+
+                <p>{message}</p>
             </div>
+
+            {!error && QRView && (
+                <div>
+                    <QRCode size={128} value={message} />
+                </div>
+            )}
         </>
     );
 };
