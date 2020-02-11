@@ -1,7 +1,6 @@
 import React from 'react';
 import { withFormik, Field, Form, FormikBag, FormikProps, FormikErrors } from 'formik';
 
-import Loader from '../components/Loader';
 import messageUtil from '../util/mesageUtil';
 import { UserConfigProperties, ProcessRequestProperties } from './Popup';
 import { getCurrentTab } from '../util/tabs';
@@ -25,9 +24,7 @@ const InnerForm: React.FC<PopupFormProperties & FormikProps<PopupFormValuesPrope
 
     return (
         <>
-            {isSubmitting ? (
-                <Loader />
-            ) : (
+            {!isSubmitting ? (
                 <Form onSubmit={handleSubmit} autoComplete="off" id="popup__form">
                     <div>
                         <Field
@@ -49,7 +46,7 @@ const InnerForm: React.FC<PopupFormProperties & FormikProps<PopupFormValuesPrope
                         Create
                     </button>
                 </Form>
-            )}
+            ) : null}
         </>
     );
 };
@@ -58,6 +55,7 @@ const InnerForm: React.FC<PopupFormProperties & FormikProps<PopupFormValuesPrope
 type PopupFormProperties = {
     defaultDomainId: string;
     userConfig: UserConfigProperties;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
     setRequestProcessed: ProcessRequestProperties;
 };
 
@@ -100,18 +98,22 @@ const PopupForm = withFormik<PopupFormProperties, PopupFormValuesProperties>({
     handleSubmit: async (
         values: PopupFormValuesProperties,
         {
-            setSubmitting,
             props: {
+                setLoading,
                 setRequestProcessed,
                 userConfig: { apikey },
             },
         }: FormikBag<PopupFormProperties, PopupFormValuesProperties>
     ) => {
+        // enable loading screen
+        setLoading(true);
+
         // Get target link to shorten
         const tabs = await getCurrentTab();
         const target: string | null = (tabs.length > 0 && tabs[0].url) || null;
 
         if (!target || !target.startsWith('http')) {
+            setLoading(false);
             // No valid target
             return setRequestProcessed({ error: true, message: 'Not a valid URL' });
         }
@@ -132,8 +134,8 @@ const PopupForm = withFormik<PopupFormProperties, PopupFormValuesProperties>({
             apiBody
         );
 
-        // re-enable submit button
-        setSubmitting(false);
+        // disable spinner
+        setLoading(false);
 
         if (!response.error) {
             const {

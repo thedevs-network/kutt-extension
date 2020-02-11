@@ -121,6 +121,7 @@ const Popup: React.FC = () => {
                         <PopupForm
                             defaultDomainId="default"
                             userConfig={userConfig}
+                            setLoading={setLoading}
                             setRequestProcessed={setRequestProcessed}
                         />
                     </>
