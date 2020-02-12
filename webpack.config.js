@@ -49,8 +49,9 @@ module.exports = {
 
     entry: {
         background: path.join(sourcePath, 'Background', 'index.ts'),
-        options: path.join(sourcePath, 'Options', 'index.tsx'),
         popup: path.join(sourcePath, 'Popup', 'index.tsx'),
+        options: path.join(sourcePath, 'Options', 'index.tsx'),
+        history: path.join(sourcePath, 'History', 'index.tsx'),
     },
 
     output: {
@@ -124,6 +125,12 @@ module.exports = {
             inject: 'body',
             filename: 'options.html',
             chunks: ['options'],
+        }),
+        new HtmlWebpackPlugin({
+            template: path.join(viewsPath, 'history.html'),
+            inject: 'body',
+            filename: 'history.html',
+            chunks: ['history'],
         }),
         // write css file(s) to build folder
         new MiniCssExtractPlugin({ filename: 'css/[name].css' }),
