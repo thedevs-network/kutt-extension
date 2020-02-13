@@ -26,16 +26,17 @@ const PopupBody: React.FC<PopupBodyProperties> = ({ requestProcessed: { message,
 
     return (
         <>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div className="popup__body">
                 {!error && (
                     <div>
                         <button
+                            className="icon__button"
                             type="button"
                             onClick={(): void => {
                                 return setQRView(!QRView);
                             }}
                         >
-                            <Icon name="qrcode" />
+                            <Icon className="qr__icon" name="qrcode" />
                         </button>
 
                         <CopyToClipboard
@@ -45,11 +46,13 @@ const PopupBody: React.FC<PopupBodyProperties> = ({ requestProcessed: { message,
                             }}
                         >
                             {!copied ? (
-                                <button type="button">
-                                    <Icon name="copy" />
+                                <button className="icon__button" type="button">
+                                    <Icon className="copy__icon" name="copy" />
                                 </button>
                             ) : (
-                                <Icon name="tick" />
+                                <button type="button">
+                                    <Icon name="tick" />
+                                </button>
                             )}
                         </CopyToClipboard>
                     </div>
@@ -59,7 +62,7 @@ const PopupBody: React.FC<PopupBodyProperties> = ({ requestProcessed: { message,
             </div>
 
             {!error && QRView && (
-                <div>
+                <div className="qr__holder">
                     <QRCode size={128} value={message} />
                 </div>
             )}

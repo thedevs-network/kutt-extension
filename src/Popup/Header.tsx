@@ -79,7 +79,7 @@ const Header: React.FC<HeaderProperties> = ({ userConfig, pageReloadFlag, setPag
         <>
             <header id="header">
                 <div className="logo__holder">
-                    <img src="assets/logo.png" alt="logo" style={{ width: '22px', height: '22px' }} />
+                    <img src="assets/logo.png" alt="logo" />
                 </div>
                 <div className="action__buttons--holder">
                     <button
@@ -97,6 +97,7 @@ const Header: React.FC<HeaderProperties> = ({ userConfig, pageReloadFlag, setPag
                     >
                         {/* eslint-disable no-nested-ternary */}
                         <Icon
+                            className="refresh__icon"
                             name={
                                 loading
                                     ? 'spinner'

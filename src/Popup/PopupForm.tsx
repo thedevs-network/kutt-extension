@@ -25,21 +25,18 @@ const InnerForm: React.FC<PopupFormProperties & FormikProps<PopupFormValuesPrope
     return (
         <>
             {!isSubmitting ? (
-                <Form onSubmit={handleSubmit} autoComplete="off" id="popup__form">
+                <Form onSubmit={handleSubmit} autoComplete="off" className="popup__form">
                     <div>
-                        <Field
-                            name="domain"
-                            type="text"
-                            component={SelectField}
-                            label="Domain"
-                            options={domainOptions}
-                        />
+                        <h4>Domain:</h4>
+                        <Field name="domain" type="text" component={SelectField} options={domainOptions} />
                     </div>
                     <div>
-                        <Field name="customurl" type="text" component={TextField} label="Custom URL" />
+                        <h4>kutt.it/</h4>
+                        <Field name="customurl" type="text" component={TextField} />
                     </div>
                     <div>
-                        <Field name="password" type="password" component={TextField} label="Password" />
+                        <h4>Password:</h4>
+                        <Field name="password" type="password" component={TextField} />
                     </div>
 
                     <button type="submit" disabled={isSubmitting}>

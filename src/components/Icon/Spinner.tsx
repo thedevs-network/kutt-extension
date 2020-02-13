@@ -11,7 +11,7 @@ const Spinner: React.FC = () => {
                 width="24"
                 height="24"
                 fill="none"
-                stroke="currentColor"
+                stroke="#b8b8b8"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
