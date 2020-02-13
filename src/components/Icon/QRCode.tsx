@@ -3,9 +3,10 @@ import React from 'react';
 const QRCode: React.FC = () => {
     return (
         <svg
-            viewBox="-2 -2 24 24"
-            width={24}
-            height={24}
+            viewBox="-2 -2 30 30"
+            width={20}
+            height={20}
+            fill="#b9b9b9"
             preserveAspectRatio="xMinYMin"
             className="qr-code_svg__jam qr-code_svg__jam-qr-code"
         >

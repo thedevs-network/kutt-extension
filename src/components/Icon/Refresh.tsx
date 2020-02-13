@@ -3,9 +3,10 @@ import React from 'react';
 const Refresh: React.FC = () => {
     return (
         <svg
-            viewBox="-1.5 -2.5 24 24"
+            viewBox="-2 -2 24 24"
             width={24}
             height={24}
+            fill="#b8b8b8"
             preserveAspectRatio="xMinYMin"
             className="refresh_svg__jam refresh_svg__jam-refresh"
         >
