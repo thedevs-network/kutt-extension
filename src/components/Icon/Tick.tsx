@@ -6,6 +6,7 @@ const Check: React.FC = () => {
             viewBox="-5 -7 24 24"
             width={24}
             height={24}
+            fill="#b8b8b8"
             preserveAspectRatio="xMinYMin"
             className="check_svg__jam check_svg__jam-check"
         >

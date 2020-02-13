@@ -4,8 +4,9 @@ const Settings: React.FC = () => {
     return (
         <svg
             viewBox="-2 -2 24 24"
-            width="32"
-            height="32"
+            width={24}
+            height={24}
+            fill="#b8b8b8"
             preserveAspectRatio="xMinYMin"
             className="cog_svg__jam cog_svg__jam-cog"
         >
