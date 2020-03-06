@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { withFormik, Field, Form, FormikBag, FormikProps, FormikErrors } from 'formik';
 
 import Icon from '../components/Icon';
-import AutoSave from '../util/autoSave';
 import messageUtil from '../util/mesageUtil';
 import { CHECK_API_KEY } from '../Background/constants';
 import { TextField, CheckBox } from '../components/Input';
@@ -13,6 +12,8 @@ export type OptionsFormValuesProperties = {
     apikey: string;
     autocopy: boolean;
     history: boolean;
+    advanced: boolean;
+    customhost: string;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -23,10 +24,14 @@ const onSave = (values: OptionsFormValuesProperties): Promise<any> => {
 
 // Note: The default key-value pairs are not saved to storage without any first interaction
 const InnerForm: React.FC<FormikProps<OptionsFormValuesProperties>> = props => {
-    const { isSubmitting, handleSubmit, setStatus, status } = props;
-    // ToDo: add custom domain form input
+    const { isSubmitting, handleSubmit, setStatus, status, values } = props;
 
-    // run on component mount
+    // on component mount -> set `settings` object
+    useEffect(() => {
+        onSave({ ...values, ...(values.advanced === false && { customhost: '' }) });
+    }, [values]);
+
+    // run on component update
     useEffect(() => {
         setStatus({ error: null, message: '' });
     }, [setStatus]);
@@ -53,13 +58,14 @@ const InnerForm: React.FC<FormikProps<OptionsFormValuesProperties>> = props => {
                 <Field name="history" component={CheckBox} label="Keep URLs History" />
             </div>
 
-            {/* auto save hook component */}
-            <AutoSave
-                onSave={onSave}
-                render={({ isSaving }: { isSaving: boolean }): JSX.Element | null => {
-                    return isSaving ? <Icon name="spinner" /> : null;
-                }}
-            />
+            <div>
+                <Field name="advanced" component={CheckBox} label="Advanced" />
+                <div>
+                    {values.advanced && (
+                        <Field name="customhost" type="text" component={TextField} label="Custom Host" />
+                    )}
+                </div>
+            </div>
         </Form>
     );
 };
@@ -72,11 +78,15 @@ type OptionsFormProperties = {
 // Wrap our form with the withFormik HoC
 const OptionsForm = withFormik<OptionsFormProperties, OptionsFormValuesProperties>({
     // Transform outer props into form values
-    mapPropsToValues: ({ defaultValues: { apikey, autocopy, history } }): OptionsFormValuesProperties => {
+    mapPropsToValues: ({
+        defaultValues: { apikey, autocopy, history, advanced, customhost },
+    }): OptionsFormValuesProperties => {
         return {
             apikey,
             autocopy,
             history,
+            advanced,
+            customhost,
         };
     },
 
@@ -92,6 +102,7 @@ const OptionsForm = withFormik<OptionsFormProperties, OptionsFormValuesPropertie
         // } else if (values.apikey && values.apikey.trim().length > 40) {
         //     errors.apikey = 'API key cannot exceed 40 characters';
         // }
+        // ToDo: add custom domain validation
 
         return errors;
     },
@@ -102,6 +113,7 @@ const OptionsForm = withFormik<OptionsFormProperties, OptionsFormValuesPropertie
         { setSubmitting, setStatus }: FormikBag<OptionsFormProperties, OptionsFormValuesProperties>
     ) => {
         // request API validation request
+        // ToDo: attach customdomain (if exist)
         const response: SuccessfulApiKeyCheckProperties | ApiErroredProperties = await messageUtil.send(CHECK_API_KEY, {
             apikey: values.apikey.trim(),
         });

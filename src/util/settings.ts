@@ -26,7 +26,7 @@ export function getExtensionSettings(): Promise<{ [s: string]: any }> {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function updateExtensionSettings(newFields: { [s: string]: any }): Promise<void> {
+export async function updateExtensionSettings(newFields?: { [s: string]: any }): Promise<void> {
     const { settings = {} } = await getExtensionSettings();
 
     return saveExtensionSettings({ ...settings, ...newFields });

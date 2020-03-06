@@ -11,11 +11,15 @@ const Options: React.FC = () => {
         apikey: '',
         autocopy: true,
         history: false,
+        advanced: false,
+        customhost: '',
     });
 
     useEffect(() => {
         async function getSavedSettings(): Promise<void> {
             const { settings = {} } = await getExtensionSettings();
+            const customHost: string = settings.customhost || defaultValues.customhost;
+            const advancedSettings: boolean = settings.advanced || defaultValues.advanced;
 
             // inject existing keys (if field doesn't exist, use default)
             const defaultFormValues: OptionsFormValuesProperties = {
@@ -26,6 +30,8 @@ const Options: React.FC = () => {
                 history: Object.prototype.hasOwnProperty.call(settings, 'history')
                     ? settings.history
                     : defaultValues.history,
+                advanced: customHost.trim().length > 0 ? advancedSettings : defaultValues.advanced, // disable `advance` if customhost is not set
+                customhost: advancedSettings === true ? customHost : defaultValues.customhost, // drop customhost value if `advanced` is false
             };
 
             setDefaultValues(defaultFormValues);
@@ -33,7 +39,13 @@ const Options: React.FC = () => {
         }
 
         getSavedSettings();
-    }, [defaultValues.apikey, defaultValues.autocopy, defaultValues.history]);
+    }, [
+        defaultValues.apikey,
+        defaultValues.autocopy,
+        defaultValues.history,
+        defaultValues.advanced,
+        defaultValues.customhost,
+    ]); // dependencies
 
     return (
         <BodyWrapper>
