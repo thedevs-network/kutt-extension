@@ -81,7 +81,7 @@ const PopupForm = withFormik<PopupFormProperties, PopupFormValuesProperties>({
         // ToDo: Remove special symbols from password & customurl fields
 
         // password validation
-        if (values.password && values.password.trim().length < 3) {
+        if (values.password && values.password.trim().length < 1) {
             errors.password = 'Password must be atleast 3 characters';
         }
         // custom url validation
@@ -122,7 +122,8 @@ const PopupForm = withFormik<PopupFormProperties, PopupFormValuesProperties>({
             ...(customurl.trim() !== '' && { customurl: customurl.trim() }), // add this key only if field is not empty
             ...(password.trim() !== '' && { password: password.trim() }),
             reuse: false,
-            ...(domain.trim() !== '' && { domain: domain.trim() }),
+            // ToDo: restore when https://github.com/thedevs-network/kutt/issues/287 is resolved
+            // ...(domain.trim() !== '' && { domain: domain.trim() }),
         };
 
         // shorten url in the background

@@ -74,6 +74,14 @@ async function shortenUrl(
                     message: 'Error: Invalid API Key',
                 };
             }
+
+            // server request validation errors
+            if (err.response.status === 400 && Object.prototype.hasOwnProperty.call(err.response.data, 'error')) {
+                return {
+                    error: true,
+                    message: `Error: ${err.response.data.error}`,
+                };
+            }
         }
 
         if (err.code === 'ECONNABORTED') {
@@ -162,8 +170,6 @@ async function checkApiKey(apikey: string): Promise<SuccessfulApiKeyCheckPropert
  *  Listen for messages from UI
  */
 browser.runtime.onMessage.addListener((request, _sender): void | Promise<any> => {
-    console.log('message received', request);
-
     // eslint-disable-next-line default-case
     switch (request.action) {
         case constants.CHECK_API_KEY: {
