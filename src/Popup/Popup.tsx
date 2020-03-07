@@ -12,8 +12,8 @@ import './styles.scss';
 import { openExtOptionsPage } from '../util/tabs';
 
 enum Kutt {
-    domain = 'https://kutt.it',
-    title = 'kutt.it',
+    domain = 'kutt.it',
+    url = 'https://kutt.it',
 }
 
 type DomainOptionsProperties = {
@@ -33,6 +33,7 @@ export type ProcessRequestProperties = React.Dispatch<
 export type UserConfigProperties = {
     apikey: string;
     domainOptions: DomainOptionsProperties[];
+    host: typeof Kutt;
 };
 
 export type SetPageReloadFlagProperties = React.Dispatch<React.SetStateAction<boolean>>;
@@ -43,7 +44,7 @@ const Popup: React.FC = () => {
     const [userConfig, setUserConfig] = useState<UserConfigProperties>({
         apikey: '',
         domainOptions: [],
-        // ToDo: attach host domain & name
+        host: Kutt,
     });
     const [requestProcessed, setRequestProcessed] = useState<ProcessedRequestProperties>({ error: null, message: '' });
 
@@ -66,8 +67,7 @@ const Popup: React.FC = () => {
                 return;
             }
 
-            let defaultDomainOption: string = Kutt.title;
-            let defaultDomainValue: string = Kutt.domain;
+            let defaultHost = Kutt;
 
             // If `advanced` field is true
             if (Object.prototype.hasOwnProperty.call(settings, 'advanced') && settings.advanced) {
@@ -77,16 +77,14 @@ const Popup: React.FC = () => {
                     settings.customhost.trim().length > 0 &&
                     (settings.customhost.startsWith('http://') || settings.customhost.startsWith('https://'))
                 ) {
-                    // eslint-disable-next-line prefer-destructuring
-                    defaultDomainOption = settings.customhost
-                        .replace('http://', '')
-                        .replace('https://', '')
-                        .replace('www.', '')
-                        .split(/[/?#]/)[0]; // extract domain
-
-                    defaultDomainValue = settings.customhost.endsWith('/')
-                        ? settings.customhost.slice(0, -1)
-                        : settings.customhost; // slice `/` at the end
+                    defaultHost = {
+                        domain: settings.customhost
+                            .replace('http://', '')
+                            .replace('https://', '')
+                            .replace('www.', '')
+                            .split(/[/?#]/)[0], // extract domain
+                        url: settings.customhost.endsWith('/') ? settings.customhost.slice(0, -1) : settings.customhost, // slice `/` at the end
+                    };
                 }
             }
 
@@ -100,8 +98,8 @@ const Popup: React.FC = () => {
                 },
                 {
                     id: 'default',
-                    option: defaultDomainOption,
-                    value: defaultDomainValue,
+                    option: defaultHost.domain,
+                    value: defaultHost.url,
                     disabled: false,
                 },
             ];
@@ -123,10 +121,10 @@ const Popup: React.FC = () => {
                 optionsArray = defaultOptions.concat(optionsArray);
 
                 // update domain list
-                setUserConfig({ apikey: settings.apikey, domainOptions: optionsArray });
+                setUserConfig({ apikey: settings.apikey, domainOptions: optionsArray, host: defaultHost });
             } else {
                 // no `user` but `apikey` exist on storage
-                setUserConfig({ apikey: settings.apikey, domainOptions: defaultOptions });
+                setUserConfig({ apikey: settings.apikey, domainOptions: defaultOptions, host: defaultHost });
             }
 
             // ToDo: handle init operations(if any)

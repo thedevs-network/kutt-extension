@@ -19,10 +19,11 @@ const InnerForm: React.FC<PopupFormProperties & FormikProps<PopupFormValuesPrope
     const {
         isSubmitting,
         handleSubmit,
-        userConfig: { domainOptions },
+        userConfig: {
+            domainOptions,
+            host: { domain },
+        },
     } = props;
-
-    // ToDo: show host domain title dynamically
 
     return (
         <>
@@ -33,7 +34,7 @@ const InnerForm: React.FC<PopupFormProperties & FormikProps<PopupFormValuesPrope
                         <Field name="domain" type="text" component={SelectField} options={domainOptions} />
                     </div>
                     <div>
-                        <h4>kutt.it/</h4>
+                        <h4>{domain}/</h4>
                         <Field name="customurl" type="text" component={TextField} />
                     </div>
                     <div>
