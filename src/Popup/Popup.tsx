@@ -11,6 +11,11 @@ import PopupBody, { ProcessedRequestProperties } from './PopupBody';
 import './styles.scss';
 import { openExtOptionsPage } from '../util/tabs';
 
+enum Kutt {
+    domain = 'https://kutt.it',
+    title = 'kutt.it',
+}
+
 type DomainOptionsProperties = {
     option: string;
     value: string;
@@ -38,29 +43,15 @@ const Popup: React.FC = () => {
     const [userConfig, setUserConfig] = useState<UserConfigProperties>({
         apikey: '',
         domainOptions: [],
+        // ToDo: attach host domain & name
     });
     const [requestProcessed, setRequestProcessed] = useState<ProcessedRequestProperties>({ error: null, message: '' });
 
-    // This will be re-rendered on `pageReloadFlag` change
+    // re-renders on `pageReloadFlag` change
     useEffect((): void => {
         async function getUserSettings(): Promise<void> {
-            // ToDo: type
+            // ToDo: set types: refer https://kutt.it/jITyIU
             const { settings = {} } = await getExtensionSettings();
-            // ToDo: change kutt.it entry to custom host(if exist)
-            const defaultOptions: DomainOptionsProperties[] = [
-                {
-                    id: '',
-                    option: '-- Choose Domain --',
-                    value: '',
-                    disabled: true,
-                },
-                {
-                    id: 'default',
-                    option: 'kutt.it',
-                    value: 'https://kutt.it',
-                    disabled: false,
-                },
-            ];
 
             // No API Key set
             if (!Object.prototype.hasOwnProperty.call(settings, 'apikey') || settings.apikey === '') {
@@ -74,6 +65,46 @@ const Popup: React.FC = () => {
 
                 return;
             }
+
+            let defaultDomainOption: string = Kutt.title;
+            let defaultDomainValue: string = Kutt.domain;
+
+            // If `advanced` field is true
+            if (Object.prototype.hasOwnProperty.call(settings, 'advanced') && settings.advanced) {
+                // If `customhost` field is set
+                if (
+                    Object.prototype.hasOwnProperty.call(settings, 'customhost') &&
+                    settings.customhost.trim().length > 0 &&
+                    (settings.customhost.startsWith('http://') || settings.customhost.startsWith('https://'))
+                ) {
+                    // eslint-disable-next-line prefer-destructuring
+                    defaultDomainOption = settings.customhost
+                        .replace('http://', '')
+                        .replace('https://', '')
+                        .replace('www.', '')
+                        .split(/[/?#]/)[0]; // extract domain
+
+                    defaultDomainValue = settings.customhost.endsWith('/')
+                        ? settings.customhost.slice(0, -1)
+                        : settings.customhost; // slice `/` at the end
+                }
+            }
+
+            // options menu
+            const defaultOptions: DomainOptionsProperties[] = [
+                {
+                    id: '',
+                    option: '-- Choose Domain --',
+                    value: '',
+                    disabled: true,
+                },
+                {
+                    id: 'default',
+                    option: defaultDomainOption,
+                    value: defaultDomainValue,
+                    disabled: false,
+                },
+            ];
 
             // `user` & `apikey` fields exist on storage
             if (Object.prototype.hasOwnProperty.call(settings, 'user') && settings.user) {

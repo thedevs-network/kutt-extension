@@ -103,6 +103,9 @@ const OptionsForm = withFormik<OptionsFormProperties, OptionsFormValuesPropertie
         //     errors.apikey = 'API key cannot exceed 40 characters';
         // }
         // ToDo: add custom domain validation
+        // should begin with `http://` or `https://`
+        // dont end with `/`
+        // no spaces(validate a url)
 
         return errors;
     },
