@@ -125,7 +125,7 @@ const PopupForm = withFormik<PopupFormProperties, PopupFormValuesProperties>({
             return setRequestProcessed({ error: true, message: 'Not a valid URL' });
         }
 
-        const { customurl, password, domain } = values;
+        const { customurl, password } = values;
         const apiBody: ApiBodyProperties = {
             apikey,
             target,
