@@ -17,7 +17,6 @@ import { updateExtensionSettings } from '../util/settings';
 
 export type OptionsFormValuesProperties = {
     apikey: string;
-    autocopy: boolean;
     history: boolean;
     advanced: boolean;
     customhost: string;
@@ -64,9 +63,6 @@ const InnerForm: React.FC<FormikProps<OptionsFormValuesProperties>> = props => {
                 </button>
             </div>
             <div>
-                <Field name="autocopy" component={CheckBox} label="Auto Copy URL to Clipboard" />
-            </div>
-            <div>
                 <Field name="history" component={CheckBox} label="Keep URLs History" />
             </div>
 
@@ -91,11 +87,10 @@ type OptionsFormProperties = {
 const OptionsForm = withFormik<OptionsFormProperties, OptionsFormValuesProperties>({
     // Transform outer props into form values
     mapPropsToValues: ({
-        extensionConfig: { apikey, autocopy, history, advanced, customhost },
+        extensionConfig: { apikey, history, advanced, customhost },
     }: OptionsFormProperties): OptionsFormValuesProperties => {
         return {
             apikey,
-            autocopy,
             history,
             advanced,
             customhost,

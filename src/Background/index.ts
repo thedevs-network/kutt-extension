@@ -166,8 +166,6 @@ async function checkApiKey({
                 };
             }
 
-            // ToDo: add server request validation errors
-
             return {
                 error: true,
                 message: 'Error: Something went wrong.',

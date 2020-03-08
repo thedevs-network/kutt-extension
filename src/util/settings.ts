@@ -5,7 +5,6 @@ import { DomainEntryProperties } from '../Background';
 // Core Extensions settings props
 export type ExtensionSettingsProperties = {
     apikey: string;
-    autocopy: boolean;
     history: boolean;
     user?: {
         email?: string;

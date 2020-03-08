@@ -8,7 +8,6 @@ import OptionsForm from './OptionsForm';
 
 export type ExtensionConfigProperties = {
     apikey: string;
-    autocopy: boolean;
     history: boolean;
     advanced: boolean;
     customhost: string; // for form values
@@ -18,7 +17,6 @@ const Options: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [extensionConfig, setExtensionConfig] = useState<ExtensionConfigProperties>({
         apikey: '',
-        autocopy: true,
         history: false,
         advanced: false,
         customhost: '',
@@ -38,9 +36,6 @@ const Options: React.FC = () => {
             // inject existing keys (if field doesn't exist, use default)
             const defaultExtensionConfig: ExtensionConfigProperties = {
                 apikey: settings.apikey || extensionConfig.apikey,
-                autocopy: Object.prototype.hasOwnProperty.call(settings, 'autocopy')
-                    ? settings.autocopy
-                    : extensionConfig.autocopy,
                 history: Object.prototype.hasOwnProperty.call(settings, 'history')
                     ? settings.history
                     : extensionConfig.history,
@@ -59,13 +54,7 @@ const Options: React.FC = () => {
         }
 
         getSavedSettings();
-    }, [
-        extensionConfig.apikey,
-        extensionConfig.autocopy,
-        extensionConfig.history,
-        extensionConfig.advanced,
-        extensionConfig.customhost,
-    ]); // dependencies
+    }, [extensionConfig.apikey, extensionConfig.history, extensionConfig.advanced, extensionConfig.customhost]); // dependencies
 
     return (
         <BodyWrapper>
