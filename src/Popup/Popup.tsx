@@ -75,7 +75,7 @@ const Popup: React.FC = () => {
                 if (
                     Object.prototype.hasOwnProperty.call(settings, 'customhost') &&
                     settings.customhost.trim().length > 0 &&
-                    isValidUrl(settings.customurl)
+                    isValidUrl(settings.customhost)
                 ) {
                     defaultHost = {
                         hostDomain: settings.customhost

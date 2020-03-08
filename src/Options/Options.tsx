@@ -29,7 +29,7 @@ const Options: React.FC = () => {
             const { settings = {} } = await getExtensionSettings();
             // eslint-disable-next-line no-nested-ternary
             const customHost: string = settings.customhost
-                ? isValidUrl(settings.customurl)
+                ? isValidUrl(settings.customhost)
                     ? settings.customhost
                     : extensionConfig.customhost
                 : extensionConfig.customhost;
