@@ -5,9 +5,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { browser } from 'webextension-polyfill-ts';
 
-import { AxiosPromise } from 'axios';
+import axios, { AxiosPromise } from 'axios';
 import * as constants from './constants';
-import api from '../api';
+import { Kutt } from '../Popup/Popup';
 
 type ShortenUrlBodyProperties = {
     target: string;
@@ -43,17 +43,50 @@ export type SuccessfulShortenStatusProperties = {
     data: ShortenLinkResponseProperties;
 };
 
-async function shortenUrl(
-    params: ApiBodyProperties
-): Promise<SuccessfulShortenStatusProperties | ApiErroredProperties> {
+type HostUrlProperties = typeof Kutt.hostUrl;
+
+export type DomainEntryProperties = {
+    address: string;
+    banned: boolean;
+    created_at: string;
+    id: string;
+    homepage: string;
+    updated_at: string;
+};
+
+export type UserSettingsResponseProperties = {
+    apikey: string;
+    email: string;
+    domains: DomainEntryProperties[];
+};
+
+export type SuccessfulApiKeyCheckProperties = {
+    error: false;
+    data: UserSettingsResponseProperties;
+};
+
+export type ShortUrlActionBodyProperties = {
+    apiBody: ApiBodyProperties;
+    hostUrl: HostUrlProperties;
+};
+
+export type GetUserSettingsBodyProperties = {
+    apikey: string;
+    hostUrl: HostUrlProperties;
+};
+
+async function shortenUrl({
+    apiBody,
+    hostUrl,
+}: ShortUrlActionBodyProperties): Promise<SuccessfulShortenStatusProperties | ApiErroredProperties> {
     try {
         // extract `apikey` from body
-        const { apikey, ...otherParams } = params;
+        const { apikey, ...otherParams } = apiBody;
 
-        const { data }: { data: ShortenLinkResponseProperties } = await api({
+        const { data }: { data: ShortenLinkResponseProperties } = await axios({
             method: 'POST',
             timeout: constants.SHORTEN_URL_TIMEOUT,
-            url: `/api/v2/links`,
+            url: `${hostUrl}/api/v2/links`,
             headers: {
                 'X-API-Key': apikey,
             },
@@ -98,10 +131,10 @@ async function shortenUrl(
     }
 }
 
-function getUserSettings(apikey: string): AxiosPromise<any> {
-    return api({
+function getUserSettings({ apikey, hostUrl }: GetUserSettingsBodyProperties): AxiosPromise<any> {
+    return axios({
         method: 'GET',
-        url: '/api/v2/users',
+        url: `${hostUrl}/api/v2/users`,
         timeout: constants.CHECK_API_KEY_TIMEOUT,
         headers: {
             'X-API-Key': apikey,
@@ -109,29 +142,12 @@ function getUserSettings(apikey: string): AxiosPromise<any> {
     });
 }
 
-export type DomainEntryProperties = {
-    address: string;
-    banned: boolean;
-    created_at: string;
-    id: string;
-    homepage: string;
-    updated_at: string;
-};
-
-export type UserSettingsResponseProperties = {
-    apikey: string;
-    email: string;
-    domains: DomainEntryProperties[];
-};
-
-export type SuccessfulApiKeyCheckProperties = {
-    error: false;
-    data: UserSettingsResponseProperties;
-};
-
-async function checkApiKey(apikey: string): Promise<SuccessfulApiKeyCheckProperties | ApiErroredProperties> {
+async function checkApiKey({
+    apikey,
+    hostUrl,
+}: GetUserSettingsBodyProperties): Promise<SuccessfulApiKeyCheckProperties | ApiErroredProperties> {
     try {
-        const { data }: { data: UserSettingsResponseProperties } = await getUserSettings(apikey);
+        const { data }: { data: UserSettingsResponseProperties } = await getUserSettings({ apikey, hostUrl });
 
         return {
             error: false,
@@ -145,6 +161,8 @@ async function checkApiKey(apikey: string): Promise<SuccessfulApiKeyCheckPropert
                     message: 'Error: Invalid API Key',
                 };
             }
+
+            // ToDo: add server request validation errors
 
             return {
                 error: true,
@@ -173,7 +191,7 @@ browser.runtime.onMessage.addListener((request, _sender): void | Promise<any> =>
     // eslint-disable-next-line default-case
     switch (request.action) {
         case constants.CHECK_API_KEY: {
-            return checkApiKey(request.params.apikey);
+            return checkApiKey(request.params);
         }
 
         case constants.SHORTEN_URL: {

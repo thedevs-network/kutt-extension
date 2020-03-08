@@ -6,7 +6,7 @@ import { UserConfigProperties, SetPageReloadFlagProperties } from './Popup';
 import { openExtOptionsPage } from '../util/tabs';
 import { CHECK_API_KEY } from '../Background/constants';
 import { updateExtensionSettings } from '../util/settings';
-import { SuccessfulApiKeyCheckProperties, ApiErroredProperties } from '../Background';
+import { SuccessfulApiKeyCheckProperties, ApiErroredProperties, GetUserSettingsBodyProperties } from '../Background';
 
 type SetLoadingProperties = React.Dispatch<React.SetStateAction<boolean>>;
 
@@ -18,7 +18,10 @@ type ErrorProperties = {
 type SetErroredProperties = React.Dispatch<React.SetStateAction<ErrorProperties>>;
 
 async function fetchUserDomains({
-    userConfig: { apikey },
+    userConfig: {
+        apikey,
+        host: { hostUrl },
+    },
     setLoading,
     setErrored,
     pageReloadFlag,
@@ -33,10 +36,15 @@ async function fetchUserDomains({
     // show loading spinner
     setLoading(true);
 
-    // request API
-    const response: SuccessfulApiKeyCheckProperties | ApiErroredProperties = await messageUtil.send(CHECK_API_KEY, {
+    const apiKeyValidationBody: GetUserSettingsBodyProperties = {
         apikey,
-    });
+        hostUrl,
+    };
+    // request API
+    const response: SuccessfulApiKeyCheckProperties | ApiErroredProperties = await messageUtil.send(
+        CHECK_API_KEY,
+        apiKeyValidationBody
+    );
 
     // stop spinner
     setLoading(false);

@@ -11,9 +11,9 @@ import PopupBody, { ProcessedRequestProperties } from './PopupBody';
 import './styles.scss';
 import { openExtOptionsPage } from '../util/tabs';
 
-enum Kutt {
-    domain = 'kutt.it',
-    url = 'https://kutt.it',
+export enum Kutt {
+    hostDomain = 'kutt.it',
+    hostUrl = 'https://kutt.it',
 }
 
 type DomainOptionsProperties = {
@@ -78,12 +78,14 @@ const Popup: React.FC = () => {
                     (settings.customhost.startsWith('http://') || settings.customhost.startsWith('https://'))
                 ) {
                     defaultHost = {
-                        domain: settings.customhost
+                        hostDomain: settings.customhost
                             .replace('http://', '')
                             .replace('https://', '')
                             .replace('www.', '')
                             .split(/[/?#]/)[0], // extract domain
-                        url: settings.customhost.endsWith('/') ? settings.customhost.slice(0, -1) : settings.customhost, // slice `/` at the end
+                        hostUrl: settings.customhost.endsWith('/')
+                            ? settings.customhost.slice(0, -1)
+                            : settings.customhost, // slice `/` at the end
                     };
                 }
             }
@@ -98,8 +100,8 @@ const Popup: React.FC = () => {
                 },
                 {
                     id: 'default',
-                    option: defaultHost.domain,
-                    value: defaultHost.url,
+                    option: defaultHost.hostDomain,
+                    value: defaultHost.hostUrl,
                     disabled: false,
                 },
             ];

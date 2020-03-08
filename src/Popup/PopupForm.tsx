@@ -7,7 +7,12 @@ import { getCurrentTab } from '../util/tabs';
 
 import { SHORTEN_URL } from '../Background/constants';
 import { SelectField, TextField } from '../components/Input';
-import { ApiBodyProperties, SuccessfulShortenStatusProperties, ApiErroredProperties } from '../Background';
+import {
+    ApiBodyProperties,
+    SuccessfulShortenStatusProperties,
+    ApiErroredProperties,
+    ShortUrlActionBodyProperties,
+} from '../Background';
 
 type PopupFormValuesProperties = {
     password: string;
@@ -21,7 +26,7 @@ const InnerForm: React.FC<PopupFormProperties & FormikProps<PopupFormValuesPrope
         handleSubmit,
         userConfig: {
             domainOptions,
-            host: { domain },
+            host: { hostDomain },
         },
     } = props;
 
@@ -34,7 +39,7 @@ const InnerForm: React.FC<PopupFormProperties & FormikProps<PopupFormValuesPrope
                         <Field name="domain" type="text" component={SelectField} options={domainOptions} />
                     </div>
                     <div>
-                        <h4>{domain}/</h4>
+                        <h4>{hostDomain}/</h4>
                         <Field name="customurl" type="text" component={TextField} />
                     </div>
                     <div>
@@ -101,7 +106,10 @@ const PopupForm = withFormik<PopupFormProperties, PopupFormValuesProperties>({
             props: {
                 setLoading,
                 setRequestProcessed,
-                userConfig: { apikey },
+                userConfig: {
+                    apikey,
+                    host: { hostUrl },
+                },
             },
         }: FormikBag<PopupFormProperties, PopupFormValuesProperties>
     ) => {
@@ -129,10 +137,14 @@ const PopupForm = withFormik<PopupFormProperties, PopupFormValuesProperties>({
             // ...(domain.trim() !== '' && { domain: domain.trim() }),
         };
 
+        const apiShortenUrlBody: ShortUrlActionBodyProperties = {
+            apiBody,
+            hostUrl,
+        };
         // shorten url in the background
         const response: SuccessfulShortenStatusProperties | ApiErroredProperties = await messageUtil.send(
             SHORTEN_URL,
-            apiBody
+            apiShortenUrlBody
         );
 
         // disable spinner
