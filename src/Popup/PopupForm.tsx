@@ -1,18 +1,17 @@
 import React from 'react';
 import { withFormik, Field, Form, FormikBag, FormikProps, FormikErrors } from 'formik';
 
-import messageUtil from '../util/mesageUtil';
-import { UserConfigProperties, ProcessRequestProperties } from './Popup';
-import { getCurrentTab } from '../util/tabs';
-
-import { SHORTEN_URL } from '../Background/constants';
-import { SelectField, TextField } from '../components/Input';
 import {
     ApiBodyProperties,
     SuccessfulShortenStatusProperties,
     ApiErroredProperties,
     ShortUrlActionBodyProperties,
 } from '../Background';
+import messageUtil from '../util/mesageUtil';
+import { getCurrentTab, isValidUrl } from '../util/tabs';
+import { SHORTEN_URL } from '../Background/constants';
+import { SelectField, TextField } from '../components/Input';
+import { ProcessRequestProperties, UserConfigProperties } from './Popup';
 
 type PopupFormValuesProperties = {
     password: string;
@@ -120,9 +119,9 @@ const PopupForm = withFormik<PopupFormProperties, PopupFormValuesProperties>({
         const tabs = await getCurrentTab();
         const target: string | null = (tabs.length > 0 && tabs[0].url) || null;
 
-        if (!target || !target.startsWith('http')) {
+        if (!target || !isValidUrl(target)) {
             setLoading(false);
-            // No valid target
+
             return setRequestProcessed({ error: true, message: 'Not a valid URL' });
         }
 

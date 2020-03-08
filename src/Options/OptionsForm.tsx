@@ -2,11 +2,18 @@ import React, { useEffect } from 'react';
 import { withFormik, Field, Form, FormikBag, FormikProps, FormikErrors } from 'formik';
 
 import Icon from '../components/Icon';
+import {
+    Kutt,
+    SuccessfulApiKeyCheckProperties,
+    ApiErroredProperties,
+    GetUserSettingsBodyProperties,
+} from '../Background';
+import { isValidUrl } from '../util/tabs';
 import messageUtil from '../util/mesageUtil';
+import { ExtensionConfigProperties } from './Options';
 import { CHECK_API_KEY } from '../Background/constants';
 import { TextField, CheckBox } from '../components/Input';
 import { updateExtensionSettings } from '../util/settings';
-import { SuccessfulApiKeyCheckProperties, ApiErroredProperties } from '../Background';
 
 export type OptionsFormValuesProperties = {
     apikey: string;
@@ -24,12 +31,17 @@ const onSave = (values: OptionsFormValuesProperties): Promise<any> => {
 
 // Note: The default key-value pairs are not saved to storage without any first interaction
 const InnerForm: React.FC<FormikProps<OptionsFormValuesProperties>> = props => {
-    const { isSubmitting, handleSubmit, setStatus, status, values } = props;
+    const { isSubmitting, handleSubmit, setFieldValue, setStatus, status, values } = props;
 
     // on component mount -> set `settings` object
     useEffect(() => {
+        // Reset `customhost` field on `advanced` untick
+        if (values.advanced === false) {
+            setFieldValue('customhost', '');
+        }
+
         onSave({ ...values, ...(values.advanced === false && { customhost: '' }) });
-    }, [values]);
+    }, [values, setFieldValue]);
 
     // run on component update
     useEffect(() => {
@@ -72,15 +84,15 @@ const InnerForm: React.FC<FormikProps<OptionsFormValuesProperties>> = props => {
 
 // The type of props `OptionsForm` receives
 type OptionsFormProperties = {
-    defaultValues: OptionsFormValuesProperties;
+    extensionConfig: ExtensionConfigProperties;
 };
 
 // Wrap our form with the withFormik HoC
 const OptionsForm = withFormik<OptionsFormProperties, OptionsFormValuesProperties>({
     // Transform outer props into form values
     mapPropsToValues: ({
-        defaultValues: { apikey, autocopy, history, advanced, customhost },
-    }): OptionsFormValuesProperties => {
+        extensionConfig: { apikey, autocopy, history, advanced, customhost },
+    }: OptionsFormProperties): OptionsFormValuesProperties => {
         return {
             apikey,
             autocopy,
@@ -96,30 +108,41 @@ const OptionsForm = withFormik<OptionsFormProperties, OptionsFormValuesPropertie
         if (!values.apikey) {
             errors.apikey = 'API key missing';
         }
+
         // ToDo: restore before on production
         // else if (values.apikey && values.apikey.trim().length < 40) {
         //     errors.apikey = 'API key must be 40 characters';
         // } else if (values.apikey && values.apikey.trim().length > 40) {
         //     errors.apikey = 'API key cannot exceed 40 characters';
         // }
-        // ToDo: add custom domain validation
-        // should begin with `http://` or `https://`
-        // dont end with `/`
-        // no spaces(validate a url)
+
+        if (values.advanced && values.customhost.trim().length <= 0) {
+            errors.customhost = 'Custom URL cannot be empty';
+        }
+
+        if (values.customhost.trim().length > 0) {
+            if (!isValidUrl(values.customhost.trim()) || values.customhost.trim().length < 10) {
+                errors.customhost = 'Please enter a valid url';
+            }
+        }
 
         return errors;
     },
 
     // for API Key validation only
     handleSubmit: async (
-        values: OptionsFormValuesProperties,
+        { apikey, customhost }: OptionsFormValuesProperties,
         { setSubmitting, setStatus }: FormikBag<OptionsFormProperties, OptionsFormValuesProperties>
     ) => {
         // request API validation request
-        // ToDo: attach customdomain (if exist)
-        const response: SuccessfulApiKeyCheckProperties | ApiErroredProperties = await messageUtil.send(CHECK_API_KEY, {
-            apikey: values.apikey.trim(),
-        });
+        const apiKeyValidationBody: GetUserSettingsBodyProperties = {
+            apikey: apikey.trim(),
+            hostUrl: customhost.trim().length > 0 ? customhost.trim() : Kutt.hostUrl,
+        };
+        const response: SuccessfulApiKeyCheckProperties | ApiErroredProperties = await messageUtil.send(
+            CHECK_API_KEY,
+            apiKeyValidationBody
+        );
 
         if (!response.error) {
             // set top-level status

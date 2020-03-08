@@ -7,7 +7,11 @@ import { browser } from 'webextension-polyfill-ts';
 
 import axios, { AxiosPromise } from 'axios';
 import * as constants from './constants';
-import { Kutt } from '../Popup/Popup';
+
+export enum Kutt {
+    hostDomain = 'kutt.it',
+    hostUrl = 'https://kutt.it',
+}
 
 type ShortenUrlBodyProperties = {
     target: string;
@@ -43,7 +47,7 @@ export type SuccessfulShortenStatusProperties = {
     data: ShortenLinkResponseProperties;
 };
 
-type HostUrlProperties = typeof Kutt.hostUrl;
+type HostUrlProperties = string;
 
 export type DomainEntryProperties = {
     address: string;

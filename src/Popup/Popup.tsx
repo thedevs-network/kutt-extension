@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 
-import { UserSettingsResponseProperties } from '../Background';
+import PopupBody, { ProcessedRequestProperties } from './PopupBody';
+import { Kutt, UserSettingsResponseProperties } from '../Background';
 import { getExtensionSettings } from '../util/settings';
 import BodyWrapper from '../components/BodyWrapper';
 import Loader from '../components/Loader';
 import PopupForm from './PopupForm';
 import PopupHeader from './Header';
-import PopupBody, { ProcessedRequestProperties } from './PopupBody';
 
 import './styles.scss';
-import { openExtOptionsPage } from '../util/tabs';
+import { openExtOptionsPage, isValidUrl } from '../util/tabs';
 
-export enum Kutt {
-    hostDomain = 'kutt.it',
-    hostUrl = 'https://kutt.it',
-}
+type HostProperties = {
+    hostDomain: string;
+    hostUrl: string;
+};
 
 type DomainOptionsProperties = {
     option: string;
@@ -33,7 +33,7 @@ export type ProcessRequestProperties = React.Dispatch<
 export type UserConfigProperties = {
     apikey: string;
     domainOptions: DomainOptionsProperties[];
-    host: typeof Kutt;
+    host: HostProperties;
 };
 
 export type SetPageReloadFlagProperties = React.Dispatch<React.SetStateAction<boolean>>;
@@ -67,7 +67,7 @@ const Popup: React.FC = () => {
                 return;
             }
 
-            let defaultHost = Kutt;
+            let defaultHost: HostProperties = Kutt;
 
             // If `advanced` field is true
             if (Object.prototype.hasOwnProperty.call(settings, 'advanced') && settings.advanced) {
@@ -75,7 +75,7 @@ const Popup: React.FC = () => {
                 if (
                     Object.prototype.hasOwnProperty.call(settings, 'customhost') &&
                     settings.customhost.trim().length > 0 &&
-                    (settings.customhost.startsWith('http://') || settings.customhost.startsWith('https://'))
+                    isValidUrl(settings.customurl)
                 ) {
                     defaultHost = {
                         hostDomain: settings.customhost
