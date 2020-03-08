@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const wextManifest = require('wext-manifest');
+const ZipPlugin = require('zip-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WriteWebpackPlugin = require('write-webpack-plugin');
@@ -141,4 +143,18 @@ module.exports = {
         // plugin to enable browser reloading in development mode
         extensionReloader,
     ],
+
+    optimization: {
+        minimizer: [
+            new TerserPlugin({
+                cache: true,
+                parallel: true,
+            }),
+            new ZipPlugin({
+                path: destPath,
+                extension: `${getExtensionFileType(targetBrowser)}`,
+                filename: `${targetBrowser}`,
+            }),
+        ],
+    },
 };
