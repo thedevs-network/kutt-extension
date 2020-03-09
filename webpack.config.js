@@ -35,11 +35,11 @@ const extensionReloader =
               this.apply = () => {};
           };
 
-const getExtensionFileType = () => {
-    if (targetBrowser === 'opera') {
+const getExtensionFileType = browser => {
+    if (browser === 'opera') {
         return 'crx';
     }
-    if (targetBrowser === 'firefox') {
+    if (browser === 'firefox') {
         return 'xpi';
     }
 
