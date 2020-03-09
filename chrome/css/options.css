@@ -1,0 +1,8 @@
+*,*:before,*:after{box-sizing:border-box}*:focus{outline:0}ol,ul{list-style-type:none}*{margin:0;padding:0;border:0;outline:0}body{overflow-x:hidden}a:link{text-decoration:none}input{word-spacing:normal;text-transform:none;text-indent:0px;text-shadow:none;text-rendering:auto;cursor:text;margin:0em;padding:1px 0px;border-width:2px}.d-none{display:none !important}body{color:#111;background-color:#f3f3f3}#options{display:-webkit-box;display:flex;-webkit-box-pack:center;justify-content:center;padding:20% 10%;font-size:1.125em}#options #options__form button{padding:7px 22px;margin:15px auto;cursor:pointer;background-color:lightblue}#options #options__form div{padding:5px 10px;width:100%}#options #options__form div .error{font-size:11px;padding:2px 10px}#options #options__form div input[type="checkbox"]{width:auto}
+
+#loader{position:fixed;top:50%;left:50%;-webkit-transform:translate(-50%, -50%);transform:translate(-50%, -50%);display:-webkit-box;display:flex;height:100%;-webkit-box-pack:center;justify-content:center;-webkit-box-align:center;align-items:center}
+
+@-webkit-keyframes spin{from{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes spin{from{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}#spinner{-webkit-animation:spin 1s linear infinite;animation:spin 1s linear infinite}
+
+input{height:35px;width:100%;margin:0px;border-radius:5px;padding:0px 10px !important;background-color:#EBEBEB}select{height:35px;padding:0px 10px;width:100%;margin:0px;border-radius:5px;background-color:#f5f5f5}select option{background-color:#f5f5f5}
+
