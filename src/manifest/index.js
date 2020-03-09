@@ -3,7 +3,7 @@ const pkg = require('../../package.json');
 const manifestInput = {
     manifest_version: 2,
     name: 'Kutt',
-    version: pkg.version,
+    version: pkg.version.replace('-beta.', '.'),
 
     short_name: 'Kutt',
     description: 'Shorten long URLs with just one click.',
