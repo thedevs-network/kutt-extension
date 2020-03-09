@@ -1,5 +1,4 @@
 {
-	"compileOnSave": false,
   "compilerOptions": {
 		"outDir": "dist",
 		/* for manifest/index.js */
