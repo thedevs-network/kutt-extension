@@ -45,7 +45,7 @@ const Options: React.FC = () => {
                     advancedSettings === true
                         ? customHost.endsWith('/')
                             ? customHost.slice(0, -1)
-                            : customHost
+                            : customHost.toLowerCase()
                         : extensionConfig.customhost, // drop customhost value if `advanced` is false
             };
 
