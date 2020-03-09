@@ -90,10 +90,10 @@ const OptionsForm = withFormik<OptionsFormProperties, OptionsFormValuesPropertie
         extensionConfig: { apikey, history, advanced, customhost },
     }: OptionsFormProperties): OptionsFormValuesProperties => {
         return {
-            apikey,
+            apikey: apikey.trim(),
             history,
             advanced,
-            customhost,
+            customhost: customhost.trim(),
         };
     },
 

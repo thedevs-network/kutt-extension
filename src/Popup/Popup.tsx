@@ -170,10 +170,10 @@ const Popup: React.FC = () => {
                 optionsArray = defaultOptions.concat(optionsArray);
 
                 // update domain list
-                setUserConfig({ apikey: settings.apikey, domainOptions: optionsArray, host: defaultHost });
+                setUserConfig({ apikey: settings.apikey.trim(), domainOptions: optionsArray, host: defaultHost });
             } else {
                 // no `user` but `apikey` exist on storage
-                setUserConfig({ apikey: settings.apikey, domainOptions: defaultOptions, host: defaultHost });
+                setUserConfig({ apikey: settings.apikey.trim(), domainOptions: defaultOptions, host: defaultHost });
             }
 
             setLoading(false);
