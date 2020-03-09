@@ -7,9 +7,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WriteWebpackPlugin = require('write-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const { CheckerPlugin } = require('awesome-typescript-loader');
 const ExtensionReloader = require('webpack-extension-reloader');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const manifestInput = require('./src/manifest');
 
@@ -49,6 +49,8 @@ const getExtensionFileType = browser => {
 module.exports = {
     mode: nodeEnv,
 
+    context: __dirname, // to automatically find tsconfig.json
+
     entry: {
         background: path.join(sourcePath, 'Background', 'index.ts'),
         popup: path.join(sourcePath, 'Popup', 'index.tsx'),
@@ -72,8 +74,11 @@ module.exports = {
         rules: [
             {
                 test: /\.(js|ts|tsx)?$/,
-                loader: 'awesome-typescript-loader',
-                exclude: /node_modules/,
+                loader: 'ts-loader',
+                options: {
+                    // disable type checker - we will use it in fork plugin
+                    transpileOnly: true,
+                },
             },
             {
                 test: /\.(sa|sc|c)ss$/,
@@ -103,8 +108,7 @@ module.exports = {
     },
 
     plugins: [
-        // for awesome-typescript-loader
-        new CheckerPlugin(),
+        new ForkTsCheckerWebpackPlugin(),
         // environment variables
         new webpack.EnvironmentPlugin(['NODE_ENV', 'TARGET_BROWSER']),
         // delete previous build files
