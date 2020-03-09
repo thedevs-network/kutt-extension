@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import PopupBody, { ProcessedRequestProperties } from './PopupBody';
 import { Kutt, UserSettingsResponseProperties } from '../Background';
-import { getExtensionSettings } from '../util/settings';
+import { getExtensionSettings, migrateSettings, getPreviousSettings } from '../util/settings';
 import BodyWrapper from '../components/BodyWrapper';
 import Loader from '../components/Loader';
 import PopupForm from './PopupForm';
@@ -51,6 +51,53 @@ const Popup: React.FC = () => {
     // re-renders on `pageReloadFlag` change
     useEffect((): void => {
         async function getUserSettings(): Promise<void> {
+            // -----------------------------------------------------------------------------//
+            // -----------------------------------------------------------------------------//
+            // -----            // ToDo: remove in next major release //              ----- //
+            // ----- Ref: https://github.com/abhijithvijayan/kutt-extension/issues/78 ----- //
+            // -----------------------------------------------------------------------------//
+            // -----------------------------------------------------------------------------//
+
+            const {
+                // old keys from extension v3.x.x
+                key = '',
+                host = '',
+                userOptions = { autoCopy: false, devMode: false, keepHistory: false, pwdForUrls: false },
+            } = await getPreviousSettings();
+
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const migrationSettings: any = {};
+            let performMigration = false;
+
+            if (key.trim().length > 0) {
+                // map it to `settings.apikey`
+                migrationSettings.apikey = key;
+                performMigration = true;
+            }
+            if (host.trim().length > 0 && userOptions.devMode) {
+                // map `host` to `settings.customhost`
+                migrationSettings.customhost = host;
+                // set `advanced` to true
+                migrationSettings.advanced = true;
+                performMigration = true;
+            }
+            if (userOptions.keepHistory) {
+                // set `settings.history` to true
+                migrationSettings.history = true;
+                performMigration = true;
+            }
+            if (performMigration) {
+                // perform migration
+                await migrateSettings(migrationSettings);
+            }
+
+            // -----------------------------------------------------------------------------//
+            // -----------------------------------------------------------------------------//
+            // -----------------------------------------------------------------------------//
+            // -----------------------------------------------------------------------------//
+            // -----------------------------------------------------------------------------//
+            // -----------------------------------------------------------------------------//
+
             // ToDo: set types: refer https://kutt.it/jITyIU
             const { settings = {} } = await getExtensionSettings();
 
@@ -129,7 +176,6 @@ const Popup: React.FC = () => {
                 setUserConfig({ apikey: settings.apikey, domainOptions: defaultOptions, host: defaultHost });
             }
 
-            // ToDo: handle init operations(if any)
             setLoading(false);
         }
 

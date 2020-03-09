@@ -30,3 +30,19 @@ export async function updateExtensionSettings(newFields?: { [s: string]: any }):
 
     return saveExtensionSettings({ ...settings, ...newFields });
 }
+
+// ToDo: Remove in the next major release
+export function migrateSettings(settings: Storage.StorageAreaSetItemsType): Promise<void> {
+    // clear all keys
+    browser.storage.local.clear();
+
+    return browser.storage.local.set({
+        settings,
+    });
+}
+
+// ToDo: Remove in the next major release
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function getPreviousSettings(): Promise<{ [s: string]: any }> {
+    return browser.storage.local.get(null);
+}
