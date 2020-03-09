@@ -11,7 +11,8 @@
           "edge": "79"
         }
       }
-    ]
+    ],
+    "@babel/preset-typescript"
   ],
   "plugins": [
     // Some transforms (such as object-rest-spread)
