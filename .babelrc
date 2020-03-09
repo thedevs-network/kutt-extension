@@ -4,6 +4,9 @@
       // Latest stable ECMAScript features
       "@babel/preset-env",
       {
+        "useBuiltIns": "entry",
+        // Do not transform modules to CJS
+        "modules": false,
         "targets": {
           "chrome": "49",
           "firefox": "52",
@@ -12,11 +15,11 @@
         }
       }
     ],
-    "@babel/preset-typescript"
+    "@babel/typescript",
+    "@babel/react"
   ],
   "plugins": [
-    // Some transforms (such as object-rest-spread)
-    // don't work without it: https://github.com/babel/babel/issues/7215
+    ["@babel/plugin-proposal-class-properties"],
     ["@babel/plugin-transform-destructuring", { "useBuiltIns": true }],
     ["@babel/plugin-proposal-object-rest-spread", { "useBuiltIns": true }],
     [
