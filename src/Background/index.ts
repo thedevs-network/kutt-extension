@@ -119,6 +119,14 @@ async function shortenUrl({
                     message: `Error: ${err.response.data.error}`,
                 };
             }
+
+            // ToDo: remove in the next major update
+            if (err.response.status === 404) {
+                return {
+                    error: true,
+                    message: 'Error: This extension now uses API v2, please update your kutt.it instance.',
+                };
+            }
         }
 
         if (err.code === 'ECONNABORTED') {
