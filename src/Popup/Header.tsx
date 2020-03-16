@@ -90,9 +90,16 @@ const Header: React.FC<HeaderProperties> = ({ userConfig, pageReloadFlag, setPag
                     <img src="assets/logo.png" alt="logo" />
                 </div>
                 <div className="action__buttons--holder">
-                    <button
-                        type="button"
-                        className="icon"
+                    <Icon
+                        className="icon refresh__icon"
+                        name={
+                            // eslint-disable-next-line no-nested-ternary
+                            loading
+                                ? 'spinner'
+                                : errored && errored.error !== null
+                                ? (errored && !errored.error && 'tick') || 'cross'
+                                : 'refresh'
+                        }
                         onClick={(): Promise<void> => {
                             return fetchUserDomains({
                                 userConfig,
@@ -102,22 +109,8 @@ const Header: React.FC<HeaderProperties> = ({ userConfig, pageReloadFlag, setPag
                                 setPageReloadFlag,
                             });
                         }}
-                    >
-                        {/* eslint-disable no-nested-ternary */}
-                        <Icon
-                            className="refresh__icon"
-                            name={
-                                loading
-                                    ? 'spinner'
-                                    : errored && errored.error !== null
-                                    ? (errored && !errored.error && 'tick') || 'cross'
-                                    : 'refresh'
-                            }
-                        />
-                    </button>
-                    <button type="button" className="icon" onClick={openExtOptionsPage}>
-                        <Icon name="settings" />
-                    </button>
+                    />
+                    <Icon className="icon settings__icon" name="settings" onClick={openExtOptionsPage} />
                 </div>
             </header>
         </>

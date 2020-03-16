@@ -1,13 +1,59 @@
 @import "../styles/fonts";
 @import "../styles/reset";
 @import "../styles/variables";
+@import "../styles/components";
 
 body {
   color: $black;
 }
 
+
+#header {
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .logo__holder {
+    img {
+      width: 30px !important;
+      height: 30px !important;
+    }
+  }
+
+  .action__buttons--holder {
+    display: flex;
+
+    .icon {
+      background-color: transparent;
+      box-shadow: none;
+      height: 35px;
+      width: 35px;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    .refresh__icon {
+
+      svg {
+        stroke: rgb(187, 187, 187);
+        stroke-width: 2.5;
+      }
+    }
+  }
+
+  .settings__icon {
+    svg {
+      fill: rgb(187, 187, 187);
+      stroke: none;
+    }
+  }
+}
+
 #popup {
-  min-height: 300px;
+  min-height: 350px;
   min-width: 250px;
   font-size: 1.125em;
 
@@ -49,54 +95,44 @@ body {
       font-size: 1.2em;
     }
 
-    .copy__icon {
-      display: block;
-      padding-right: 5px;
+    .link {
+      border-bottom: 1px dotted $StatsTotalUnderline;
+      font-size: 1.602em;
       cursor: pointer;
+      min-width: 0px;
+      padding-bottom: 2px;
+      color: rgb(41, 71, 86);
+      font-weight: 300;
+      margin: 0px;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    .copy__icon,
+    .check__icon {
+      margin: 0px 16px 0px 0px;
+
+      svg {
+        stroke: rgb(101, 189, 137);
+        stroke-width: 2.5;
+      }
     }
 
     .qr__icon {
-      display: block;
-      padding-right: 5px;
-      padding-top: 5px;
-      cursor: pointer;
+      margin: 0px 8px 0px 0px;
+
+      svg {
+        fill: rgb(89, 89, 89);
+        stroke: none;
+      }
     }
   }
 
   .qr__holder {
     display: flex;
     justify-content: center;
-    padding-top: 10px;
-  }
-}
-
-#header {
-  padding: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  .logo__holder {
-    img {
-      width: 30px !important;
-      height: 30px !important;
-    }
-  }
-
-  .action__buttons--holder {
-    .icon {
-      vertical-align: middle;
-      border: none;
-      align-items: center;
-      justify-content: center;
-      border-radius: 100%;
-      background-color: transparent !important;
-      cursor: pointer;
-    }
-
-    .refresh__icon {
-      cursor: pointer;
-      padding-right: 5px;
-    }
+    padding: 17px 15px 0px 15px;
   }
 }

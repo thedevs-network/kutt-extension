@@ -30,15 +30,13 @@ const PopupBody: React.FC<PopupBodyProperties> = ({ requestProcessed: { message,
             <div className="popup__body">
                 {!error ? (
                     <>
-                        <button
-                            className="icon__button"
-                            type="button"
+                        <Icon
+                            className="icon qr__icon"
+                            name="qrcode"
                             onClick={(): void => {
                                 return setQRView(!QRView);
                             }}
-                        >
-                            <Icon className="qr__icon" name="qrcode" />
-                        </button>
+                        />
                         {!copied ? (
                             <CopyToClipboard
                                 text={message}
@@ -46,10 +44,10 @@ const PopupBody: React.FC<PopupBodyProperties> = ({ requestProcessed: { message,
                                     return setCopied(true);
                                 }}
                             >
-                                <Icon className="copy__icon" name="copy" />
+                                <Icon className="icon copy__icon" name="copy" />
                             </CopyToClipboard>
                         ) : (
-                            <Icon name="tick" />
+                            <Icon className="icon check__icon" name="tick" />
                         )}
                         <CopyToClipboard
                             text={message}
@@ -57,7 +55,7 @@ const PopupBody: React.FC<PopupBodyProperties> = ({ requestProcessed: { message,
                                 return setCopied(true);
                             }}
                         >
-                            <p>{removeProtocol(message)}</p>
+                            <h1 className="link">{removeProtocol(message)}</h1>
                         </CopyToClipboard>
                     </>
                 ) : (
