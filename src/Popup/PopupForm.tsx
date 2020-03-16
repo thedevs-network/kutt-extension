@@ -88,7 +88,7 @@ const PopupForm = withFormik<PopupFormProperties, PopupFormValuesProperties>({
         // ToDo: Remove special symbols from password & customurl fields
 
         // password validation
-        if (values.password && values.password.trim().length < 1) {
+        if (values.password && values.password.trim().length < 3) {
             errors.password = 'Password must be atleast 3 characters';
         }
         // custom url validation
@@ -153,9 +153,10 @@ const PopupForm = withFormik<PopupFormProperties, PopupFormValuesProperties>({
             const {
                 data: { link },
             } = response;
+            const trimmedLink: string = link.replace('https://', '');
 
             // show shortened url
-            setRequestProcessed({ error: false, message: link });
+            setRequestProcessed({ error: false, message: trimmedLink });
         } else {
             // errored
             setRequestProcessed({ error: true, message: response.message });

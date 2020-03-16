@@ -3,6 +3,7 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 import QRCode from 'qrcode.react';
 
 import Icon from '../components/Icon';
+import { removeProtocol } from '../util/link';
 
 export type ProcessedRequestProperties = {
     error: boolean | null;
@@ -27,8 +28,8 @@ const PopupBody: React.FC<PopupBodyProperties> = ({ requestProcessed: { message,
     return (
         <>
             <div className="popup__body">
-                {!error && (
-                    <div>
+                {!error ? (
+                    <>
                         <button
                             className="icon__button"
                             type="button"
@@ -38,27 +39,30 @@ const PopupBody: React.FC<PopupBodyProperties> = ({ requestProcessed: { message,
                         >
                             <Icon className="qr__icon" name="qrcode" />
                         </button>
-
+                        {!copied ? (
+                            <CopyToClipboard
+                                text={message}
+                                onCopy={(): void => {
+                                    return setCopied(true);
+                                }}
+                            >
+                                <Icon className="copy__icon" name="copy" />
+                            </CopyToClipboard>
+                        ) : (
+                            <Icon name="tick" />
+                        )}
                         <CopyToClipboard
                             text={message}
                             onCopy={(): void => {
                                 return setCopied(true);
                             }}
                         >
-                            {!copied ? (
-                                <button className="icon__button" type="button">
-                                    <Icon className="copy__icon" name="copy" />
-                                </button>
-                            ) : (
-                                <button type="button">
-                                    <Icon name="tick" />
-                                </button>
-                            )}
+                            <p>{removeProtocol(message)}</p>
                         </CopyToClipboard>
-                    </div>
+                    </>
+                ) : (
+                    <p>{message}</p>
                 )}
-
-                <p>{message}</p>
             </div>
 
             {!error && QRView && (

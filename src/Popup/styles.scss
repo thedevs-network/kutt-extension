@@ -13,6 +13,7 @@ body {
 
   .popup__form {
     padding: 15px 15px;
+
     h4 {
       padding: 10px 0px 5px 0px;
       font-size: 0.9em;
@@ -41,24 +42,24 @@ body {
     display: flex;
     justify-content: center;
     padding: 15px 15px 0px 15px;
+
     p {
       padding-top: 5px;
       text-decoration: underline;
       font-size: 1.2em;
     }
-    .icon__button {
+
+    .copy__icon {
+      display: block;
+      padding-right: 5px;
       cursor: pointer;
-      .copy__icon {
-        display: block;
-        padding-right: 5px;
-        cursor: pointer;
-      }
-      .qr__icon {
-        display: block;
-        padding-right: 5px;
-        padding-top: 5px;
-        cursor: pointer;
-      }
+    }
+
+    .qr__icon {
+      display: block;
+      padding-right: 5px;
+      padding-top: 5px;
+      cursor: pointer;
     }
   }
 
@@ -92,6 +93,7 @@ body {
       background-color: transparent !important;
       cursor: pointer;
     }
+
     .refresh__icon {
       cursor: pointer;
       padding-right: 5px;
