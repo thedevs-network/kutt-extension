@@ -73,18 +73,9 @@
 ## Screenshots
 
 <div>
-  <img width="350" src="https://i.imgur.com/n44Eytz.gif" alt="image1" />
-  <img width="350" src="https://i.imgur.com/FJJ2FPU.gif" alt="image2" />
+  <img width="250" src="./.github/assets/popup.png" alt="image1" />
 </div>
-<p align="center">
-    <img width="500" src="https://i.imgur.com/mXqitkW.png" alt="image3" />
-</p>
-<p align="center">
-    <img width="500" src="https://i.imgur.com/tgLecm2.png" alt="image4" />
-</p>
-<p align="center">
-    <img width="500" src="https://i.imgur.com/kjHY6aa.png" alt="image5" />
-</p>
+
 <br />
 
 ## Note:
