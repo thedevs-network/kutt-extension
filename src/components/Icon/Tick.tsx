@@ -1,18 +1,21 @@
 import React from 'react';
 
-const Check: React.FC = () => {
+const Tick: React.FC = () => {
     return (
         <svg
-            viewBox="-5 -7 24 24"
-            width={24}
-            height={24}
-            fill="#b8b8b8"
-            preserveAspectRatio="xMinYMin"
-            className="check_svg__jam check_svg__jam-check"
+            xmlns="http://www.w3.org/2000/svg"
+            width="48"
+            height="48"
+            fill="none"
+            stroke="#000"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
         >
-            <path d="M5.486 9.73a.997.997 0 01-.707-.292L.537 5.195A1 1 0 111.95 3.78l3.535 3.535L11.85.952a1 1 0 011.415 1.414L6.193 9.438a.997.997 0 01-.707.292z" />
+            <path d="M20 6L9 17 4 12" />
         </svg>
     );
 };
 
-export default React.memo(Check);
+export default React.memo(Tick);
