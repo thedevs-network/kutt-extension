@@ -24,6 +24,7 @@ export type Icons = keyof typeof icons;
 
 type Props = {
     name: Icons;
+    title?: string;
     stroke?: string;
     fill?: string;
     hoverFill?: string;

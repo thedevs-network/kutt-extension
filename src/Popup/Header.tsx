@@ -92,6 +92,7 @@ const Header: React.FC<HeaderProperties> = ({ userConfig, pageReloadFlag, setPag
                 <div className="action__buttons--holder">
                     <Icon
                         className="icon refresh__icon"
+                        title="Refresh"
                         name={
                             // eslint-disable-next-line no-nested-ternary
                             loading
@@ -110,7 +111,12 @@ const Header: React.FC<HeaderProperties> = ({ userConfig, pageReloadFlag, setPag
                             });
                         }}
                     />
-                    <Icon className="icon settings__icon" name="settings" onClick={openExtOptionsPage} />
+                    <Icon
+                        className="icon settings__icon"
+                        name="settings"
+                        title="Settings"
+                        onClick={openExtOptionsPage}
+                    />
                 </div>
             </header>
         </>
