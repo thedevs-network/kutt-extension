@@ -41,6 +41,7 @@
   "private": true,
   "dependencies": {
     "@babel/runtime": "^7.8.7",
+    "advanced-css-reset": "^1.1.0",
     "axios": "^0.19.2",
     "formik": "^2.1.4",
     "lodash.isequal": "^4.5.0",
