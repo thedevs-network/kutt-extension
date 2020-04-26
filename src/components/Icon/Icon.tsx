@@ -11,33 +11,33 @@ import Settings from './Settings';
 import ArrowLeft from './ArrowLeft';
 
 const icons = {
-    arrowleft: ArrowLeft,
-    copy: Copy,
-    cross: Cross,
-    qrcode: QRCode,
-    refresh: Refresh,
-    settings: Settings,
-    spinner: Spinner,
-    tick: Tick,
-    zap: Zap,
+  arrowleft: ArrowLeft,
+  copy: Copy,
+  cross: Cross,
+  qrcode: QRCode,
+  refresh: Refresh,
+  settings: Settings,
+  spinner: Spinner,
+  tick: Tick,
+  zap: Zap,
 };
 
 export type Icons = keyof typeof icons;
 
 type Props = {
-    name: Icons;
-    title?: string;
-    stroke?: string;
-    fill?: string;
-    hoverFill?: string;
-    hoverStroke?: string;
-    strokeWidth?: string;
-    className?: string;
-    onClick?: () => void;
+  name: Icons;
+  title?: string;
+  stroke?: string;
+  fill?: string;
+  hoverFill?: string;
+  hoverStroke?: string;
+  strokeWidth?: string;
+  className?: string;
+  onClick?: () => void;
 };
 
-const Icon: React.FC<Props> = ({ name, ...rest }) => {
-    return <div {...rest}>{React.createElement(icons[name])}</div>;
+const Icon: React.FC<Props> = ({name, ...rest}) => {
+  return <div {...rest}>{React.createElement(icons[name])}</div>;
 };
 
 export default Icon;

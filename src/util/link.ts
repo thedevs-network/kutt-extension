@@ -1,1 +1,2 @@
-export const removeProtocol = (link: string): string => link.replace(/^https?:\/\//, '');
+export const removeProtocol = (link: string): string =>
+  link.replace(/^https?:\/\//, '');
