@@ -69,16 +69,22 @@ type CheckBoxProperties = {
 export const CheckBox: React.FC<CheckBoxProperties & FieldProps> = ({ label, field, form, ...props }) => {
     return (
         <>
-            <label htmlFor={field.name}>{label}</label>
-            <input
-                type="checkbox"
-                checked={field.value}
-                onChange={(): void => {
-                    form.setFieldValue(field.name, !field.value);
-                }}
-                {...field}
+            <label
+                htmlFor={field.name}
+                className="check__box"
                 {...props}
-            />
+                onChange={(): boolean => {
+                    console.log('hello');
+
+                    // form.setFieldValue(field.name, !field.value);
+                    return !field.value;
+                }}
+            >
+                <input type="checkbox" checked={field.value} {...field} />
+                <div className={`inner ${field.value ? 'checked' : ''}`} />
+
+                <span>{label}</span>
+            </label>
         </>
     );
 };

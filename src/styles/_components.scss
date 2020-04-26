@@ -25,3 +25,31 @@
     transition: all 0.2s ease-out 0s;
   }
 }
+
+.btn-primary {
+  min-width: 0px;
+  height: 32px;
+  width: auto;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 24px;
+  padding-right: 24px;
+  font-size: 12px;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  font-weight: normal;
+  text-align: center;
+  line-height: 1;
+  word-break: keep-all;
+  color: white;
+  box-shadow: rgba(66, 165, 245, 0.5) 0px 5px 6px;
+  cursor: pointer;
+  margin: 0px;
+  flex: 0 0 auto;
+  background: linear-gradient(to right, rgb(66, 165, 245), rgb(41, 121, 255));
+  border-radius: 100px;
+  transition: all 0.4s ease-out 0s;
+  overflow: hidden;
+}

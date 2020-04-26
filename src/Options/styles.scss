@@ -1,6 +1,7 @@
 @import "../styles/fonts";
 @import "../styles/reset";
 @import "../styles/variables";
+@import "../styles/components";
 
 @import "~webext-base-css/webext-base.css";
 
@@ -16,16 +17,27 @@ body {
   font-size: 1.125em;
 
   #options__form {
-    button {
-      padding: 7px 22px;
-      margin: 15px auto;
-      cursor: pointer;
-      background-color: lightblue;
+    .btn-primary {
+      margin: 16px 0px 0px;
+      background: linear-gradient(to right, rgb(126, 87, 194), rgb(98, 0, 234));
+
+      &:hover {
+        box-shadow: rgba(66, 165, 245, 0.5) 0px 6px 15px;
+        transform: translateY(-2px) scale(1.02, 1.02);
+        outline: none;
+      }
+
+      .icon {
+        width: 16px;
+        height: 16px;
+        padding: 0px;
+        background-color: transparent;
+        box-shadow: none;
+        margin: 0px 8px 0px 0px;
+      }
     }
 
     div {
-      padding: 5px 10px;
-      width: 100%;
 
       .error {
         font-size: 11px;

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Zap from './Zap';
 import Copy from './Copy';
 import Tick from './Tick';
 import Cross from './Cross';
@@ -18,6 +19,7 @@ const icons = {
     settings: Settings,
     spinner: Spinner,
     tick: Tick,
+    zap: Zap,
 };
 
 export type Icons = keyof typeof icons;

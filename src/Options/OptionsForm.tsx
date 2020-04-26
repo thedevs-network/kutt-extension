@@ -51,23 +51,23 @@ const InnerForm: React.FC<FormikProps<OptionsFormValuesProperties>> = props => {
         <Form onSubmit={handleSubmit} autoComplete="off" id="options__form">
             <div>
                 <Field name="apikey" type="password" component={TextField} label="API Key" />
-                <button type="submit" disabled={isSubmitting}>
+                <button type="submit" className="btn-primary" disabled={isSubmitting}>
                     {/* eslint-disable-next-line no-nested-ternary */}
                     {isSubmitting ? (
-                        <Icon name="spinner" />
+                        <Icon name="spinner" className="icon" />
                     ) : status && status.error !== null ? (
-                        (status && !status.error && <Icon name="tick" />) || <Icon name="cross" />
+                        (status && !status.error && <Icon name="tick" className="icon" />) || <Icon name="cross" />
                     ) : (
-                        'Validate'
+                        <Icon name="zap" className="icon" />
                     )}
+                    Validate
                 </button>
             </div>
-            <div>
-                <Field name="history" component={CheckBox} label="Keep URLs History" />
-            </div>
+
+            <Field name="history" component={CheckBox} label="Keep URLs History" />
 
             <div>
-                <Field name="advanced" component={CheckBox} label="Advanced" />
+                <Field name="advanced" component={CheckBox} label="Show advanced options" />
                 <div>
                     {values.advanced && (
                         <Field name="customhost" type="text" component={TextField} label="Custom Host" />
