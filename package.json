@@ -3,7 +3,7 @@
   "version": "4.0.0-beta.6",
   "description": "Kutt.it extension for browsers.",
   "engines": {
-    "node": ">=10",
+    "node": ">=10.0.0",
     "yarn": ">= 1.0.0"
   },
   "repository": "https://github.com/abhijithvijayan/kutt-extension.git",
@@ -49,6 +49,7 @@
     "react": "^16.13.0",
     "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.13.0",
+    "unicorn.log": "^1.7.0",
     "webext-base-css": "^1.0.0",
     "webextension-polyfill-ts": "^0.13.0"
   },

@@ -88,8 +88,6 @@ export const CheckBox: React.FC<CheckBoxProperties & FieldProps> = ({
         className="check__box"
         {...props}
         onChange={(): boolean => {
-          console.log('hello');
-
           // form.setFieldValue(field.name, !field.value);
           return !field.value;
         }}
