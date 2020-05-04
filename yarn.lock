@@ -2890,6 +2890,11 @@ elliptic@^6.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
+emoji-log@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/emoji-log/-/emoji-log-1.0.2.tgz#f2da615b05c2e415626e2bdd122dfa37d6d87144"
+  integrity sha512-3r9WI8xWU3gaeuPSrHEO9cbTybzlud82v98qeJlwyeGhUhKMleKdvDLegn/CPd1UZiFfTgl5VmJ9OW7I0y7CVA==
+
 emoji-regex@^7.0.1, emoji-regex@^7.0.2:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-7.0.3.tgz#933a04052860c85e83c122479c4748a8e4c72156"
@@ -4653,6 +4658,13 @@ json5@^2.1.0:
   dependencies:
     minimist "^1.2.0"
 
+json5@^2.1.2:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/json5/-/json5-2.1.3.tgz#c9b0f7fa9233bfe5807fe66fcf3a5617ed597d43"
+  integrity sha512-KXPvOm8K9IJKFM0bmdn8QXh7udDh1g/giieX0NLCaMnb4hEiVFqnop2ImTXCc5e0/oHz3LTqmHGtExn5hfMkOA==
+  dependencies:
+    minimist "^1.2.5"
+
 jsprim@^1.2.2:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/jsprim/-/jsprim-1.4.1.tgz#313e66bc1e5cc06e438bc1b7499c2e5c56acb6a2"
@@ -4858,6 +4870,15 @@ loader-utils@^1.0.2, loader-utils@^1.1.0, loader-utils@^1.2.3:
     big.js "^5.2.2"
     emojis-list "^3.0.0"
     json5 "^1.0.1"
+
+loader-utils@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-2.0.0.tgz#e4cace5b816d425a166b5f097e10cd12b36064b0"
+  integrity sha512-rP4F0h2RaWSvPEkD7BLDFQnvSf+nK+wr3ESUjNTyAGobqrijmW92zc+SO6d4p4B1wh7+B/Jg1mkQe5NYUEHtHQ==
+  dependencies:
+    big.js "^5.2.2"
+    emojis-list "^3.0.0"
+    json5 "^2.1.2"
 
 locate-path@^2.0.0:
   version "2.0.0"
@@ -7010,6 +7031,14 @@ schema-utils@^2.6.0, schema-utils@^2.6.1, schema-utils@^2.6.4:
     ajv "^6.12.0"
     ajv-keywords "^3.4.1"
 
+schema-utils@^2.6.5:
+  version "2.6.6"
+  resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-2.6.6.tgz#299fe6bd4a3365dc23d99fd446caff8f1d6c330c"
+  integrity sha512-wHutF/WPSbIi9x6ctjGGk2Hvl0VOz5l3EKEuKbjPlB30mKZUzb9A5k9yEXRX3pwyqVLPvpfZZEllaFq/M718hA==
+  dependencies:
+    ajv "^6.12.0"
+    ajv-keywords "^3.4.1"
+
 scss-tokenizer@^0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/scss-tokenizer/-/scss-tokenizer-0.2.3.tgz#8eb06db9a9723333824d3f5530641149847ce5d1"
@@ -8137,10 +8166,20 @@ webpack@^4.42.0:
     watchpack "^1.6.0"
     webpack-sources "^1.4.1"
 
-wext-manifest@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/wext-manifest/-/wext-manifest-2.1.0.tgz#9ae4eefd6ffea93aa19917c6fe534830a76218bf"
-  integrity sha512-EV7fLAPSA1uHx/nQ9jmu2PAOgRgTi0rCvr6KycAl6fMJ4tvlLTP5dBAE0mmDWmVMH3z3jrtjrqsg0TU0Whg7rw==
+wext-manifest-loader@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/wext-manifest-loader/-/wext-manifest-loader-1.1.6.tgz#3b6b40e7f3fdb4a0ab32e89f9786d5603915217c"
+  integrity sha512-gW9/KUAqmhFxaG89BThCWK4shheZ9ZocXQ9SUrlO6mtiM+CwTxAOOrM4UZ6jqwbx3gfLbGhR0msSRZtC09ftTg==
+  dependencies:
+    loader-utils "^2.0.0"
+    schema-utils "^2.6.5"
+
+wext-manifest-webpack-plugin@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/wext-manifest-webpack-plugin/-/wext-manifest-webpack-plugin-1.1.1.tgz#0c728fbe46b3f554e724aaedbaadb3a0d6af4e08"
+  integrity sha512-Z7WNjqV5PUt11UxSb0V9+j6b7WOrKSfJ7yDg5Ave/M+sdlwkfcwHn2U/mSAdJDHCroaywqz87kZZ/mRG02yPMQ==
+  dependencies:
+    emoji-log "^1.0.2"
 
 which-module@^1.0.0:
   version "1.0.0"
@@ -8226,11 +8265,6 @@ wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
   integrity sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
-
-write-webpack-plugin@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/write-webpack-plugin/-/write-webpack-plugin-1.1.0.tgz#ac60a7fcbc149a8cc33a465420fbdf2f612e9af9"
-  integrity sha512-/E04VeJtHiOW02ET68yy38KRSOJTtvMFvAV3pLLgtYJWuhhNRQypPQWUsYzChndkRtedspqydOCG134AZZqBaA==
 
 write@1.0.3:
   version "1.0.3"
