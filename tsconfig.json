@@ -1,8 +1,6 @@
 {
 	"extends": "@abhijithvijayan/tsconfig",
 	"compilerOptions": {
-		/* for manifest/index.js */
-		"allowJs": true,
 		"lib": [
 			"dom",
 			"dom.iterable",
@@ -13,7 +11,6 @@
 		"skipLibCheck": true,
 	},
 	"include": [
-		"source",
-		"source/manifest/index.js"
+		"source"
 	]
 }
