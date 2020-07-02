@@ -12,7 +12,6 @@ import Loader from '../components/Loader';
 import PopupForm from './PopupForm';
 import PopupHeader from './Header';
 
-import './styles.scss';
 import {openExtOptionsPage, isValidUrl} from '../util/tabs';
 
 type HostProperties = {

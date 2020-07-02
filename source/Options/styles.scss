@@ -1,9 +1,7 @@
-@import "../styles/fonts";
-@import "../styles/reset";
-@import "../styles/variables";
-@import "../styles/components";
-
-@import "~webext-base-css/webext-base.css";
+@import "../styles/base/fonts";
+@import "../styles/base/reset";
+@import "../styles/base/variables";
+@import "../styles/base/components";
 
 body {
   color: $black;

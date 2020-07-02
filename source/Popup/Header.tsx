@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import 'twin.macro';
 
 import Icon from '../components/Icon';
 import messageUtil from '../util/mesageUtil';
@@ -100,7 +101,7 @@ const Header: React.FC<HeaderProperties> = ({
 
   return (
     <>
-      <header id="header">
+      <header id="header" tw="p-4">
         <div className="logo__holder">
           <img src="assets/logo.png" alt="logo" />
         </div>

@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import 'twin.macro';
 import {
   withFormik,
   Field,
@@ -72,7 +73,12 @@ const InnerForm: React.FC<FormikProps<OptionsFormValuesProperties>> = (
           component={TextField}
           label="API Key"
         />
-        <button type="submit" className="btn-primary" disabled={isSubmitting}>
+        <button
+          tw="bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 hover:text-white shadow-md py-2 px-6 inline-flex items-center"
+          type="submit"
+          disabled={isSubmitting}
+        >
+          <span tw="mr-2">Validate</span>
           {/* eslint-disable-next-line no-nested-ternary */}
           {isSubmitting ? (
             <Icon name="spinner" className="icon" />
@@ -83,7 +89,6 @@ const InnerForm: React.FC<FormikProps<OptionsFormValuesProperties>> = (
           ) : (
             <Icon name="zap" className="icon" />
           )}
-          Validate
         </button>
       </div>
 

@@ -7,7 +7,7 @@
     "yarn": ">= 1.0.0"
   },
   "repository": "https://github.com/abhijithvijayan/kutt-extension.git",
-  "author": "abhijithvijayan <34790378+abhijithvijayan@users.noreply.github.com>",
+  "author": "abhijithvijayan <email@abhijithvijayan.in>",
   "scripts": {
     "dev:chrome": "cross-env NODE_ENV=development cross-env TARGET_BROWSER=chrome webpack --watch",
     "dev:firefox": "cross-env NODE_ENV=development cross-env TARGET_BROWSER=firefox webpack --watch",
@@ -20,9 +20,7 @@
     "lint:fix": "eslint . --ext .ts,.tsx --fix"
   },
   "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "hooks": {}
   },
   "lint-staged": {
     "*.{ts,tsx}": [
@@ -46,11 +44,12 @@
     "formik": "^2.1.4",
     "lodash.isequal": "^4.5.0",
     "qrcode.react": "^1.0.0",
-    "react": "^16.13.0",
+    "react": "^16.13.1",
     "react-copy-to-clipboard": "^5.0.2",
-    "react-dom": "^16.13.0",
+    "react-dom": "^16.13.1",
+    "styled-components": "^5.1.1",
+    "twin.macro": "^1.4.1",
     "unicorn.log": "^1.7.0",
-    "webext-base-css": "^1.0.0",
     "webextension-polyfill-ts": "^0.13.0"
   },
   "devDependencies": {
@@ -60,6 +59,7 @@
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
     "@babel/plugin-transform-destructuring": "^7.8.8",
+    "@babel/plugin-transform-react-jsx": "^7.10.4",
     "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/preset-env": "^7.8.7",
     "@babel/preset-react": "^7.8.3",
@@ -69,6 +69,7 @@
     "@types/react": "^16.9.23",
     "@types/react-copy-to-clipboard": "^4.3.0",
     "@types/react-dom": "^16.9.5",
+    "@types/styled-components": "^5.1.0",
     "@types/webpack": "^4.41.7",
     "@typescript-eslint/eslint-plugin": "^2.28.0",
     "@typescript-eslint/parser": "^2.28.0",
@@ -97,6 +98,9 @@
     "postcss-loader": "^3.0.0",
     "prettier": "^2.0.4",
     "resolve-url-loader": "^3.1.1",
+    "sass-extract": "^2.1.0",
+    "sass-extract-js": "^0.4.0",
+    "sass-extract-loader": "^1.1.0",
     "sass-loader": "^8.0.2",
     "terser-webpack-plugin": "^2.3.5",
     "typescript": "^3.8.3",
