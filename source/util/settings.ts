@@ -1,4 +1,4 @@
-import {browser, Storage} from 'webextension-polyfill-ts';
+import {browser} from 'webextension-polyfill-ts';
 
 import {DomainEntryProperties} from '../Background';
 
@@ -13,9 +13,7 @@ export type ExtensionSettingsProperties = {
 };
 
 // update extension settings in browser storage
-export function saveExtensionSettings(
-  settings: Storage.StorageAreaSetItemsType
-): Promise<void> {
+export function saveExtensionSettings(settings: any): Promise<void> {
   return browser.storage.local.set({
     settings,
   });
@@ -36,9 +34,7 @@ export async function updateExtensionSettings(newFields?: {
 }
 
 // ToDo: Remove in the next major release
-export function migrateSettings(
-  settings: Storage.StorageAreaSetItemsType
-): Promise<void> {
+export function migrateSettings(settings: any): Promise<void> {
   // clear all keys
   browser.storage.local.clear();
 
