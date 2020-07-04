@@ -52,6 +52,7 @@
     "react": "^16.13.1",
     "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.13.1",
+    "react-use-form-state": "^0.13.1",
     "styled-components": "^5.1.1",
     "twin.macro": "^1.4.1",
     "webextension-polyfill-ts": "^0.19.0"
