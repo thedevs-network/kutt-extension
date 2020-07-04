@@ -2,12 +2,17 @@
   "name": "kutt-extension",
   "version": "4.0.0-beta.6",
   "description": "Kutt.it extension for browsers.",
+  "license": "MIT",
+  "repository": "https://github.com/abhijithvijayan/kutt-extension.git",
+  "author": {
+    "name": "abhijithvijayan",
+    "email": "email@abhijithvijayan.in",
+    "url": "https://abhijithvijayan.in"
+  },
   "engines": {
     "node": ">=10.0.0",
     "yarn": ">= 1.0.0"
   },
-  "repository": "https://github.com/abhijithvijayan/kutt-extension.git",
-  "author": "abhijithvijayan <email@abhijithvijayan.in>",
   "scripts": {
     "dev:chrome": "cross-env NODE_ENV=development cross-env TARGET_BROWSER=chrome webpack --watch",
     "dev:firefox": "cross-env NODE_ENV=development cross-env TARGET_BROWSER=firefox webpack --watch",
@@ -35,7 +40,6 @@
     "addon",
     "kutt"
   ],
-  "license": "MIT",
   "private": true,
   "dependencies": {
     "@babel/runtime": "^7.10.4",
@@ -53,7 +57,8 @@
     "webextension-polyfill-ts": "^0.19.0"
   },
   "devDependencies": {
-    "@abhijithvijayan/eslint-config": "1.4.1",
+    "@abhijithvijayan/eslint-config": "2.5.4",
+    "@abhijithvijayan/eslint-config-airbnb": "^1.0.2",
     "@abhijithvijayan/tsconfig": "^1.2.0",
     "@babel/core": "^7.10.4",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
@@ -80,11 +85,11 @@
     "copy-webpack-plugin": "^5.1.1",
     "cross-env": "^7.0.2",
     "css-loader": "^3.6.0",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb": "^18.2.0",
+    "eslint": "^7.4.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.3",
     "eslint-plugin-react-hooks": "^4.0.5",

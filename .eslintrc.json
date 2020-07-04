@@ -3,6 +3,9 @@
 		"@abhijithvijayan/eslint-config/typescript",
 		"@abhijithvijayan/eslint-config/react"
 	],
+	"parserOptions": {
+		"project": "./tsconfig.json"
+	},
 	"rules": {
 		"no-console": "off",
 		"react/jsx-props-no-spreading": "off",
