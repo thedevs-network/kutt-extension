@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import QRCode from 'qrcode.react';
 
-import Icon from '../components/Icon';
-import {removeProtocol} from '../util/link';
+import Icon from '../../components/Icon';
+import {removeProtocol} from '../../util/link';
 
 export type ProcessedRequestProperties = {
   error: boolean | null;

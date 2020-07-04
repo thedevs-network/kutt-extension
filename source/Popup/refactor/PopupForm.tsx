@@ -13,11 +13,11 @@ import {
   SuccessfulShortenStatusProperties,
   ApiErroredProperties,
   ShortUrlActionBodyProperties,
-} from '../Background';
-import messageUtil from '../util/mesageUtil';
-import {getCurrentTab, isValidUrl} from '../util/tabs';
-import {SHORTEN_URL} from '../Background/constants';
-import {SelectField, TextField} from '../components/Input';
+} from '../../Background';
+import messageUtil from '../../util/mesageUtil';
+import {getCurrentTab, isValidUrl} from '../../util/tabs';
+import {SHORTEN_URL} from '../../Background/constants';
+import {SelectField, TextField} from '../../components/Input';
 import {ProcessRequestProperties, UserConfigProperties} from './Popup';
 
 type PopupFormValuesProperties = {

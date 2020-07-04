@@ -1,16 +1,16 @@
 import React, {useState} from 'react';
 import 'twin.macro';
 
-import Icon from '../components/Icon';
-import messageUtil from '../util/mesageUtil';
-import {openExtOptionsPage} from '../util/tabs';
-import {CHECK_API_KEY} from '../Background/constants';
-import {updateExtensionSettings} from '../util/settings';
+import Icon from '../../components/Icon';
+import messageUtil from '../../util/mesageUtil';
+import {openExtOptionsPage} from '../../util/tabs';
+import {CHECK_API_KEY} from '../../Background/constants';
+import {updateExtensionSettings} from '../../util/settings';
 import {
   SuccessfulApiKeyCheckProperties,
   ApiErroredProperties,
   GetUserSettingsBodyProperties,
-} from '../Background';
+} from '../../Background';
 import {UserConfigProperties, SetPageReloadFlagProperties} from './Popup';
 
 type SetLoadingProperties = React.Dispatch<React.SetStateAction<boolean>>;
