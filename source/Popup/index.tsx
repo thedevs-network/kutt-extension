@@ -5,7 +5,10 @@ import ReactDOM from 'react-dom';
 // Common styles
 import '../styles/main.scss';
 
+import './refactor/styles.scss';
+
 import Popup from './Popup';
+import OtherPopup from './refactor/Popup';
 
 // eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved,  @typescript-eslint/no-var-requires, node/no-missing-require
 const theme = require('sass-extract-loader?{"plugins": ["sass-extract-js"]}!../styles/base/_variables.scss');
@@ -14,6 +17,7 @@ const theme = require('sass-extract-loader?{"plugins": ["sass-extract-js"]}!../s
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <Popup />
+    {/* <OtherPopup /> */}
   </ThemeProvider>,
   document.getElementById('popup-root')
 );
