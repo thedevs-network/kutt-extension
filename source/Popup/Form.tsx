@@ -1,20 +1,81 @@
+import {useFormState} from 'react-use-form-state';
 import React from 'react';
-import 'twin.macro';
+import tw from 'twin.macro';
 
 const Form: React.FC = () => {
+  const [
+    formState,
+    {
+      text: textProps,
+      password: passwordProps,
+      select: selectProps,
+      label: labelProps,
+    },
+  ] = useFormState<{
+    domain: string;
+    customurl: string;
+    password: string;
+  }>(null, {
+    withIds: true, // enable automatic creation of id and htmlFor props
+  });
+  const {
+    errors: formStateErrors,
+    validity: formStateValidity,
+    setField: setFormStateField,
+    setFieldError: setFormStateFieldError,
+  } = formState;
+
+  const isFormValid =
+    ((formStateValidity.customurl === undefined ||
+      formStateValidity.customurl) &&
+      (formStateValidity.password === undefined ||
+        formStateValidity.password) &&
+      formStateErrors.customurl === undefined &&
+      formStateErrors.password === undefined) ||
+    false;
+
+  function handleCustomUrlInputChange(url: string): void {
+    setFormStateField('customurl', url);
+
+    if (url.length > 0 && url.length < 3) {
+      setFormStateFieldError(
+        'customurl',
+        'Custom URL must be atleast 3 characters'
+      );
+    }
+  }
+
+  function handlePasswordInputChange(password: string): void {
+    setFormStateField('password', password);
+
+    if (password.length > 0 && password.length < 3) {
+      setFormStateFieldError(
+        'password',
+        'Password must be atleast 3 characters'
+      );
+    }
+  }
+
+  async function handleSubmit(): Promise<void> {
+    console.log('submitted', formState.values);
+  }
+
   return (
     <>
       <div tw="flex flex-col w-full max-w-sm p-4 mx-auto bg-white border border-gray-200 shadow">
         <div tw="flex flex-col mb-4">
           <label
-            htmlFor="domain"
+            {...labelProps('domain')}
             tw="sm:text-sm mb-1 text-xs tracking-wide text-gray-600"
           >
             Domain:
           </label>
 
           <div tw="relative">
-            <select tw="sm:text-base focus:border-indigo-400 focus:outline-none relative w-full px-2 py-2 text-sm placeholder-gray-400 border rounded">
+            <select
+              {...selectProps('domain')}
+              tw="sm:text-base focus:border-indigo-400 focus:outline-none relative w-full px-2 py-2 text-sm placeholder-gray-400 border rounded"
+            >
               <option value="select" selected>
                 -- Choose Domain --
               </option>
@@ -27,7 +88,7 @@ const Form: React.FC = () => {
 
         <div tw="flex flex-col mb-4">
           <label
-            htmlFor="customurl"
+            {...labelProps('customurl')}
             tw="sm:text-sm mb-1 text-xs tracking-wide text-gray-600"
           >
             customDomain/
@@ -35,17 +96,32 @@ const Form: React.FC = () => {
 
           <div tw="relative">
             <input
-              name="customurl"
-              type="text"
-              value=""
-              tw="sm:text-base focus:border-indigo-400 focus:outline-none relative w-full px-2 py-2 text-sm placeholder-gray-400 border rounded"
+              {...textProps('customurl')}
+              onChange={({
+                target: {value},
+              }: React.ChangeEvent<HTMLInputElement>): void => {
+                // NOTE: overriding onChange to show errors
+                handleCustomUrlInputChange(value.trim());
+              }}
+              spellCheck="false"
+              css={[
+                tw`sm:text-base focus:border-indigo-400 focus:outline-none relative w-full py-2 pl-2 pr-12 text-sm placeholder-gray-400 border rounded`,
+                formStateValidity.customurl !== undefined &&
+                  !formStateValidity.customurl &&
+                  tw`border-red-500`,
+              ]}
             />
           </div>
+
+          <span tw="flex items-center mt-1 ml-1 text-xs font-medium tracking-wide text-red-500">
+            {formStateErrors.customurl}
+          </span>
         </div>
 
         <div tw="flex flex-col mb-4">
           <label
-            htmlFor="password"
+            {...labelProps('password')}
+            spellCheck="false"
             tw="sm:text-sm mb-1 text-xs tracking-wide text-gray-600"
           >
             Password:
@@ -72,21 +148,31 @@ const Form: React.FC = () => {
             </div>
 
             <input
-              name="password"
-              type="password"
-              value=""
-              tw="sm:text-base focus:border-indigo-400 focus:outline-none relative w-full py-2 pl-2 pr-12 text-sm placeholder-gray-400 border border-red-500 rounded"
+              {...passwordProps('password')}
+              onChange={({
+                target: {value},
+              }: React.ChangeEvent<HTMLInputElement>): void => {
+                // NOTE: overriding onChange to show errors
+                handlePasswordInputChange(value.trim());
+              }}
+              css={[
+                tw`sm:text-base focus:border-indigo-400 focus:outline-none relative w-full py-2 pl-2 pr-12 text-sm placeholder-gray-400 border rounded`,
+                formStateValidity.password !== undefined &&
+                  !formStateValidity.password &&
+                  tw`border-red-500`,
+              ]}
             />
           </div>
 
           <span tw="flex items-center mt-1 ml-1 text-xs font-medium tracking-wide text-red-500">
-            Invalid username field !
+            {formStateErrors.password}
           </span>
         </div>
 
         <button
           type="submit"
-          disabled={true}
+          disabled={!isFormValid}
+          onClick={handleSubmit}
           tw="block w-full px-2 py-2 mt-4 mb-1 text-base font-semibold text-white bg-purple-700 rounded"
         >
           Create
