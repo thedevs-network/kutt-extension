@@ -32,7 +32,7 @@ import {
 
 import BodyWrapper from '../components/BodyWrapper';
 import Loader from '../components/Loader';
-import Form from './Form';
+import Form, {CONSTANTS} from './Form';
 
 const Popup: React.FC = () => {
   const [
@@ -158,7 +158,7 @@ const Popup: React.FC = () => {
           disabled: true,
         },
         {
-          id: 'default',
+          id: CONSTANTS.DefaultDomainId,
           option: defaultHost.hostDomain,
           value: defaultHost.hostUrl,
           disabled: false,

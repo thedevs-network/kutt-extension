@@ -2,6 +2,8 @@ import {useFormState} from 'react-use-form-state';
 import tw from 'twin.macro';
 import React from 'react';
 
+import {useExtensionSettings} from '../contexts/extension-settings-context';
+
 type Props = {
   handleFormSubmit: (props: {
     domain: string;
@@ -10,7 +12,14 @@ type Props = {
   }) => Promise<void>;
 };
 
+export enum CONSTANTS {
+  DefaultDomainId = 'default',
+}
+
 const Form: React.FC<Props> = ({handleFormSubmit}) => {
+  const extensionSettingsState = useExtensionSettings()[0];
+  const {domainOptions} = extensionSettingsState;
+
   const [
     formState,
     {
@@ -23,9 +32,19 @@ const Form: React.FC<Props> = ({handleFormSubmit}) => {
     domain: string;
     customurl: string;
     password: string;
-  }>(null, {
-    withIds: true, // enable automatic creation of id and htmlFor props
-  });
+  }>(
+    {
+      domain:
+        domainOptions
+          .find(({id}) => {
+            return id === CONSTANTS.DefaultDomainId;
+          })
+          ?.value?.trim() || '', // empty string will map to disabled entry
+    },
+    {
+      withIds: true, // enable automatic creation of id and htmlFor props
+    }
+  );
   const {
     errors: formStateErrors,
     validity: formStateValidity,
@@ -82,12 +101,13 @@ const Form: React.FC<Props> = ({handleFormSubmit}) => {
               {...selectProps('domain')}
               tw="sm:text-base focus:border-indigo-400 focus:outline-none relative w-full px-2 py-2 text-sm placeholder-gray-400 border rounded"
             >
-              <option value="select" selected>
-                -- Choose Domain --
-              </option>
-              <option value="bug">report a bug</option>
-              <option value="feature">Request a feature</option>
-              <option value="feedback">Feedback</option>
+              {domainOptions.map(({id, option, value, disabled = false}) => {
+                return (
+                  <option value={value} disabled={disabled} key={id}>
+                    {option}
+                  </option>
+                );
+              })}
             </select>
           </div>
         </div>

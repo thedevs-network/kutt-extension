@@ -16,7 +16,7 @@ export type DomainOptionsProperties = {
   option: string;
   value: string;
   id: string;
-  disabled: boolean;
+  disabled?: boolean;
 };
 
 type SET_EXTENSION_SETTINGS = {
