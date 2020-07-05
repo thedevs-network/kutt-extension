@@ -1,6 +1,6 @@
 import {useFormState} from 'react-use-form-state';
-import React from 'react';
 import tw from 'twin.macro';
+import React from 'react';
 
 const Form: React.FC = () => {
   const [
@@ -25,7 +25,7 @@ const Form: React.FC = () => {
     setFieldError: setFormStateFieldError,
   } = formState;
 
-  const isFormValid =
+  const isFormValid: boolean =
     ((formStateValidity.customurl === undefined ||
       formStateValidity.customurl) &&
       (formStateValidity.password === undefined ||
@@ -36,6 +36,7 @@ const Form: React.FC = () => {
 
   function handleCustomUrlInputChange(url: string): void {
     setFormStateField('customurl', url);
+    // ToDo: Remove special symbols
 
     if (url.length > 0 && url.length < 3) {
       setFormStateFieldError(
@@ -47,6 +48,7 @@ const Form: React.FC = () => {
 
   function handlePasswordInputChange(password: string): void {
     setFormStateField('password', password);
+    // ToDo: Remove special symbols
 
     if (password.length > 0 && password.length < 3) {
       setFormStateFieldError(
