@@ -2,7 +2,15 @@ import {useFormState} from 'react-use-form-state';
 import tw from 'twin.macro';
 import React from 'react';
 
-const Form: React.FC = () => {
+type Props = {
+  handleFormSubmit: (props: {
+    domain: string;
+    customurl: string;
+    password: string;
+  }) => Promise<void>;
+};
+
+const Form: React.FC<Props> = ({handleFormSubmit}) => {
   const [
     formState,
     {
@@ -56,10 +64,6 @@ const Form: React.FC = () => {
         'Password must be atleast 3 characters'
       );
     }
-  }
-
-  async function handleSubmit(): Promise<void> {
-    console.log('submitted', formState.values);
   }
 
   return (
@@ -174,7 +178,9 @@ const Form: React.FC = () => {
         <button
           type="submit"
           disabled={!isFormValid}
-          onClick={handleSubmit}
+          onClick={(): void => {
+            handleFormSubmit(formState.values);
+          }}
           tw="block w-full px-2 py-2 mt-4 mb-1 text-base font-semibold text-white bg-purple-700 rounded"
         >
           Create

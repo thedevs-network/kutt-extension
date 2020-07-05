@@ -1,7 +1,18 @@
 import React, {useEffect} from 'react';
 
-import {Kutt, UserSettingsResponseProperties} from '../Background';
-import {openExtOptionsPage, isValidUrl} from '../util/tabs';
+import {openExtOptionsPage, getCurrentTab, isValidUrl} from '../util/tabs';
+import {
+  Kutt,
+  SuccessfulShortenStatusProperties,
+  UserSettingsResponseProperties,
+  ShortUrlActionBodyProperties,
+  ApiErroredProperties,
+  ApiBodyProperties,
+} from '../Background';
+import {SHORTEN_URL} from '../Background/constants';
+
+import messageUtil from '../util/mesageUtil';
+
 import {
   ExtensionSettingsActionTypes,
   DomainOptionsProperties,
@@ -23,7 +34,10 @@ import Loader from '../components/Loader';
 import Form from './Form';
 
 const Popup: React.FC = () => {
-  const extensionSettingsDispatch = useExtensionSettings()[1];
+  const [
+    extensionSettingsState,
+    extensionSettingsDispatch,
+  ] = useExtensionSettings();
   const [requestStatusState, requestStatusDispatch] = useRequestStatus();
 
   useEffect((): void => {
@@ -203,10 +217,103 @@ const Popup: React.FC = () => {
     // ToDo: pageReloadFlag for updating ui when local storage settings are changed
   }, [extensionSettingsDispatch, requestStatusDispatch]);
 
+  async function handleFormSubmit({
+    customurl,
+    password,
+  }: {
+    domain: string;
+    customurl: string;
+    password: string;
+  }): Promise<void> {
+    // enable loading screen
+    requestStatusDispatch({
+      type: RequestStatusActionTypes.SET_LOADING,
+      payload: true,
+    });
+
+    // Get target link to shorten
+    const tabs = await getCurrentTab();
+    const target: string | null = (tabs.length > 0 && tabs[0].url) || null;
+
+    if (!target || !isValidUrl(target)) {
+      requestStatusDispatch({
+        type: RequestStatusActionTypes.SET_LOADING,
+        payload: false,
+      });
+
+      requestStatusDispatch({
+        type: RequestStatusActionTypes.SET_REQUEST_STATUS,
+        payload: {
+          error: true,
+          message: 'Not a valid URL',
+        },
+      });
+
+      return;
+    }
+
+    const apiBody: ApiBodyProperties = {
+      apikey: extensionSettingsState.apikey,
+      target,
+      ...(customurl.trim() !== '' && {customurl: customurl.trim()}), // add this key only if field is not empty
+      ...(password.trim() !== '' && {password: password.trim()}),
+      reuse: false,
+      // ToDo: restore when https://github.com/thedevs-network/kutt/issues/287 is resolved
+      // ...(domain.trim() !== '' && { domain: domain.trim() }),
+    };
+
+    const apiShortenUrlBody: ShortUrlActionBodyProperties = {
+      apiBody,
+      hostUrl: extensionSettingsState.host.hostUrl,
+    };
+    // shorten url in the background
+    const response:
+      | SuccessfulShortenStatusProperties
+      | ApiErroredProperties = await messageUtil.send(
+      SHORTEN_URL,
+      apiShortenUrlBody
+    );
+
+    // disable spinner
+    requestStatusDispatch({
+      type: RequestStatusActionTypes.SET_LOADING,
+      payload: false,
+    });
+
+    if (!response.error) {
+      const {
+        data: {link},
+      } = response;
+      const trimmedLink: string = link.replace('https://', '');
+
+      // show shortened url
+      requestStatusDispatch({
+        type: RequestStatusActionTypes.SET_REQUEST_STATUS,
+        payload: {
+          error: false,
+          message: trimmedLink,
+        },
+      });
+    } else {
+      // errored
+      requestStatusDispatch({
+        type: RequestStatusActionTypes.SET_REQUEST_STATUS,
+        payload: {
+          error: true,
+          message: response.message,
+        },
+      });
+    }
+  }
+
   return (
     <BodyWrapper>
       <div id="popup">
-        {!requestStatusState.loading ? <Form /> : <Loader />}
+        {!requestStatusState.loading ? (
+          <Form handleFormSubmit={handleFormSubmit} />
+        ) : (
+          <Loader />
+        )}
       </div>
     </BodyWrapper>
   );
