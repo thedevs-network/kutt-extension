@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import tw, {css} from 'twin.macro';
 
 import {openExtOptionsPage, getCurrentTab, isValidUrl} from '../util/tabs';
 import {
@@ -311,7 +312,16 @@ const Popup: React.FC = () => {
 
   return (
     <BodyWrapper>
-      <div id="popup">
+      <div
+        id="popup"
+        css={[
+          tw`text-lg`,
+          css`
+            min-height: 350px;
+            min-width: 250px;
+          `,
+        ]}
+      >
         {!requestStatusState.loading ? (
           <>
             <PopupHeader />

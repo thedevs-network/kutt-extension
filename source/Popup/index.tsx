@@ -4,12 +4,9 @@ import ReactDOM from 'react-dom';
 
 // Common styles
 import '../styles/main.scss';
-// ToDo: remove later
-import './refactor/styles.scss';
 
 import {ExtensionSettingsProvider} from '../contexts/extension-settings-context';
 import {RequestStatusProvider} from '../contexts/request-status-context';
-// import OtherPopup from './refactor/Popup';
 import Popup from './Popup';
 
 // eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved,  @typescript-eslint/no-var-requires, node/no-missing-require
@@ -21,7 +18,6 @@ ReactDOM.render(
     <ExtensionSettingsProvider>
       <RequestStatusProvider>
         <Popup />
-        {/* <OtherPopup /> */}
       </RequestStatusProvider>
     </ExtensionSettingsProvider>
   </ThemeProvider>,

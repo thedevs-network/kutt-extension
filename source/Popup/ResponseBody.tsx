@@ -14,11 +14,10 @@ export type ProcessedRequestProperties = {
 
 const StyledH1 = styled.h1`
   border-bottom: 1px dotted ${({theme}): string => theme.statsTotalUnderline};
-  font-size: 1.602em;
   padding-bottom: 2px;
   color: rgb(41, 71, 86);
 
-  ${tw`hover:opacity-75 min-w-0 m-0 font-light cursor-pointer`}
+  ${tw`hover:opacity-75 min-w-0 m-0 text-2xl font-light cursor-pointer`}
 `;
 
 const StyledPopupBody = styled.div`

@@ -1,5 +1,5 @@
 import {useFormState} from 'react-use-form-state';
-import tw from 'twin.macro';
+import tw, {css} from 'twin.macro';
 import React from 'react';
 
 import {useExtensionSettings} from '../contexts/extension-settings-context';
@@ -102,11 +102,18 @@ const Form: React.FC<Props> = ({handleFormSubmit}) => {
           <div tw="relative">
             <select
               {...selectProps('domain')}
-              tw="sm:text-base focus:border-indigo-400 focus:outline-none relative w-full px-2 py-2 text-sm placeholder-gray-400 border rounded"
+              css={[
+                tw`sm:text-base focus:border-indigo-400 focus:outline-none relative w-full px-2 py-2 text-sm placeholder-gray-400 bg-gray-200 border rounded`,
+              ]}
             >
               {domainOptions.map(({id, option, value, disabled = false}) => {
                 return (
-                  <option value={value} disabled={disabled} key={id}>
+                  <option
+                    tw="bg-gray-200 "
+                    value={value}
+                    disabled={disabled}
+                    key={id}
+                  >
                     {option}
                   </option>
                 );
@@ -134,7 +141,8 @@ const Form: React.FC<Props> = ({handleFormSubmit}) => {
               }}
               spellCheck="false"
               css={[
-                tw`sm:text-base focus:border-indigo-400 focus:outline-none relative w-full py-2 pl-2 pr-12 text-sm placeholder-gray-400 border rounded`,
+                tw`sm:text-base focus:border-indigo-400 focus:outline-none relative w-full py-2 pl-2 pr-12 text-sm placeholder-gray-400 bg-gray-200 border rounded`,
+
                 formStateValidity.customurl !== undefined &&
                   !formStateValidity.customurl &&
                   tw`border-red-500`,
@@ -185,7 +193,8 @@ const Form: React.FC<Props> = ({handleFormSubmit}) => {
                 handlePasswordInputChange(value.trim());
               }}
               css={[
-                tw`sm:text-base focus:border-indigo-400 focus:outline-none relative w-full py-2 pl-2 pr-12 text-sm placeholder-gray-400 border rounded`,
+                tw`sm:text-base focus:border-indigo-400 focus:outline-none relative w-full py-2 pl-2 pr-12 text-sm placeholder-gray-400 bg-gray-200 border rounded`,
+
                 formStateValidity.password !== undefined &&
                   !formStateValidity.password &&
                   tw`border-red-500`,
@@ -204,7 +213,17 @@ const Form: React.FC<Props> = ({handleFormSubmit}) => {
           onClick={(): void => {
             handleFormSubmit(formState.values);
           }}
-          tw="block w-full px-2 py-2 mt-4 mb-1 text-base font-semibold text-white bg-purple-700 rounded"
+          css={[
+            tw`block w-full px-2 py-2 mb-1 text-xs font-semibold text-white bg-purple-700 rounded`,
+
+            css`
+              background: linear-gradient(
+                to right,
+                rgb(126, 87, 194),
+                rgb(98, 0, 234)
+              );
+            `,
+          ]}
         >
           Create
         </button>

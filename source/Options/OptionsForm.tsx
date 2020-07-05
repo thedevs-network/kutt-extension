@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import 'twin.macro';
 import {
   withFormik,
-  Field,
+  // Field,
   Form,
   FormikBag,
   FormikProps,
@@ -20,7 +20,7 @@ import {isValidUrl} from '../util/tabs';
 import messageUtil from '../util/mesageUtil';
 import {ExtensionConfigProperties} from './Options';
 import {CHECK_API_KEY} from '../Background/constants';
-import {TextField, CheckBox} from '../components/Input';
+// import {TextField, CheckBox} from '../components/Input';
 import {updateExtensionSettings} from '../util/settings';
 
 export type OptionsFormValuesProperties = {
@@ -67,12 +67,12 @@ const InnerForm: React.FC<FormikProps<OptionsFormValuesProperties>> = (
   return (
     <Form onSubmit={handleSubmit} autoComplete="off" id="options__form">
       <div>
-        <Field
+        {/* <Field
           name="apikey"
           type="password"
           component={TextField}
           label="API Key"
-        />
+        /> */}
         <button
           tw="bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 hover:text-white shadow-md py-2 px-6 inline-flex items-center"
           type="submit"
@@ -92,23 +92,23 @@ const InnerForm: React.FC<FormikProps<OptionsFormValuesProperties>> = (
         </button>
       </div>
 
-      <Field name="history" component={CheckBox} label="Keep URLs History" />
+      {/* <Field name="history" component={CheckBox} label="Keep URLs History" /> */}
 
       <div>
-        <Field
+        {/* <Field
           name="advanced"
           component={CheckBox}
           label="Show advanced options"
-        />
+        /> */}
         <div>
-          {values.advanced && (
+          {/* {values.advanced && (
             <Field
               name="customhost"
               type="text"
               component={TextField}
               label="Custom Host"
             />
-          )}
+          )} */}
         </div>
       </div>
     </Form>
