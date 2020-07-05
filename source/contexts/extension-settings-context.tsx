@@ -5,6 +5,7 @@ import {Kutt} from '../Background';
 
 export enum ExtensionSettingsActionTypes {
   SET_EXTENSION_SETTINGS = 'set-extension-settings',
+  RELOAD_EXTENSION_SETTINGS = 'reload-extension-settings',
 }
 
 export type HostProperties = {
@@ -28,18 +29,25 @@ type SET_EXTENSION_SETTINGS = {
   };
 };
 
-type Action = SET_EXTENSION_SETTINGS;
+type RELOAD_EXTENSION_SETTINGS = {
+  type: ExtensionSettingsActionTypes.RELOAD_EXTENSION_SETTINGS;
+  payload: boolean;
+};
+
+type Action = SET_EXTENSION_SETTINGS | RELOAD_EXTENSION_SETTINGS;
 
 type InitialValues = {
   apikey: string;
   domainOptions: DomainOptionsProperties[];
   host: HostProperties;
+  reload: boolean;
 };
 
 const initialValues: InitialValues = {
   apikey: '',
   domainOptions: [],
   host: Kutt,
+  reload: false,
 };
 
 type State = InitialValues;
@@ -56,6 +64,10 @@ function extensionSettingsReducer(state: State, action: Action): State {
   switch (action.type) {
     case ExtensionSettingsActionTypes.SET_EXTENSION_SETTINGS: {
       return {...state, ...action.payload};
+    }
+
+    case ExtensionSettingsActionTypes.RELOAD_EXTENSION_SETTINGS: {
+      return {...state, reload: action.payload};
     }
 
     default:

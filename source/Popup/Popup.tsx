@@ -13,6 +13,7 @@ import {SHORTEN_URL} from '../Background/constants';
 import messageUtil from '../util/mesageUtil';
 
 import ResponseBody from './ResponseBody';
+import PopupHeader from './Header';
 
 import {
   ExtensionSettingsActionTypes,
@@ -40,7 +41,9 @@ const Popup: React.FC = () => {
     extensionSettingsDispatch,
   ] = useExtensionSettings();
   const [requestStatusState, requestStatusDispatch] = useRequestStatus();
+  const {reload: liveReloadFlag} = extensionSettingsState;
 
+  // re-renders on `liveReloadFlag` change
   useEffect((): void => {
     async function getUserSettings(): Promise<void> {
       // -----------------------------------------------------------------------------//
@@ -215,8 +218,7 @@ const Popup: React.FC = () => {
     }
 
     getUserSettings();
-    // ToDo: pageReloadFlag for updating ui when local storage settings are changed
-  }, [extensionSettingsDispatch, requestStatusDispatch]);
+  }, [liveReloadFlag, extensionSettingsDispatch, requestStatusDispatch]);
 
   async function handleFormSubmit({
     customurl,
@@ -312,6 +314,7 @@ const Popup: React.FC = () => {
       <div id="popup">
         {!requestStatusState.loading ? (
           <>
+            <PopupHeader />
             {requestStatusState.error !== null && <ResponseBody />}
             <Form handleFormSubmit={handleFormSubmit} />
           </>

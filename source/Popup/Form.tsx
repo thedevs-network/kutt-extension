@@ -18,7 +18,10 @@ export enum CONSTANTS {
 
 const Form: React.FC<Props> = ({handleFormSubmit}) => {
   const extensionSettingsState = useExtensionSettings()[0];
-  const {domainOptions} = extensionSettingsState;
+  const {
+    domainOptions,
+    host: {hostDomain},
+  } = extensionSettingsState;
 
   const [
     formState,
@@ -93,7 +96,7 @@ const Form: React.FC<Props> = ({handleFormSubmit}) => {
             {...labelProps('domain')}
             tw="sm:text-sm mb-1 text-xs tracking-wide text-gray-600"
           >
-            Domain:
+            Domain
           </label>
 
           <div tw="relative">
@@ -117,7 +120,7 @@ const Form: React.FC<Props> = ({handleFormSubmit}) => {
             {...labelProps('customurl')}
             tw="sm:text-sm mb-1 text-xs tracking-wide text-gray-600"
           >
-            customDomain/
+            {hostDomain}/
           </label>
 
           <div tw="relative">
@@ -150,7 +153,7 @@ const Form: React.FC<Props> = ({handleFormSubmit}) => {
             spellCheck="false"
             tw="sm:text-sm mb-1 text-xs tracking-wide text-gray-600"
           >
-            Password:
+            Password
           </label>
 
           <div tw="relative">

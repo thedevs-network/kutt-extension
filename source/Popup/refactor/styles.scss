@@ -8,48 +8,47 @@ body {
 }
 
 
-#header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+// #header {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
 
-  .logo__holder {
-    img {
-      width: 30px !important;
-      height: 30px !important;
-    }
-  }
+//   .logo__holder {
+//     img {
+//       width: 30px !important;
+//       height: 30px !important;
+//     }
+//   }
 
-  .action__buttons--holder {
-    display: flex;
+//   .action__buttons--holder {
+//     display: flex;
 
-    .icon {
-      background-color: transparent;
-      box-shadow: none;
-      height: 35px;
-      width: 35px;
+//     .icon {
+//       background-color: transparent;
+//       box-shadow: none;
+//       height: 35px;
+//       width: 35px;
 
-      &:hover {
-        opacity: 0.8;
-      }
-    }
+//       &:hover {
+//         opacity: 0.8;
+//       }
+//     }
 
-    .refresh__icon {
+//     .refresh__icon {
+//       svg {
+//         stroke: rgb(187, 187, 187);
+//         stroke-width: 2.5;
+//       }
+//     }
+//   }
 
-      svg {
-        stroke: rgb(187, 187, 187);
-        stroke-width: 2.5;
-      }
-    }
-  }
-
-  .settings__icon {
-    svg {
-      fill: rgb(187, 187, 187);
-      stroke: none;
-    }
-  }
-}
+//   .settings__icon {
+//     svg {
+//       fill: rgb(187, 187, 187);
+//       stroke: none;
+//     }
+//   }
+// }
 
 #popup {
   min-height: 350px;
