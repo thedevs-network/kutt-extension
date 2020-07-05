@@ -83,55 +83,55 @@ body {
     }
   }
 
-  .popup__body {
-    display: flex;
-    justify-content: center;
-    padding: 15px 15px 0px 15px;
+  // .popup__body {
+  //   display: flex;
+  //   justify-content: center;
+  //   padding: 15px 15px 0px 15px;
 
-    p {
-      padding-top: 5px;
-      text-decoration: underline;
-      font-size: 1.2em;
-    }
+  //   p {
+  //     padding-top: 5px;
+  //     text-decoration: underline;
+  //     font-size: 1.2em;
+  //   }
 
-    .link {
-      border-bottom: 1px dotted $StatsTotalUnderline;
-      font-size: 1.602em;
-      cursor: pointer;
-      min-width: 0px;
-      padding-bottom: 2px;
-      color: rgb(41, 71, 86);
-      font-weight: 300;
-      margin: 0px;
+  //   .link {
+  //     border-bottom: 1px dotted $StatsTotalUnderline;
+  //     font-size: 1.602em;
+  //     cursor: pointer;
+  //     min-width: 0px;
+  //     padding-bottom: 2px;
+  //     color: rgb(41, 71, 86);
+  //     font-weight: 300;
+  //     margin: 0px;
 
-      &:hover {
-        opacity: 0.8;
-      }
-    }
+  //     &:hover {
+  //       opacity: 0.8;
+  //     }
+  //   }
 
-    .copy__icon,
-    .check__icon {
-      margin: 0px 16px 0px 0px;
+  //   .copy__icon,
+  //   .check__icon {
+  //     margin: 0px 16px 0px 0px;
 
-      svg {
-        stroke: rgb(101, 189, 137);
-        stroke-width: 2.5;
-      }
-    }
+  //     svg {
+  //       stroke: rgb(101, 189, 137);
+  //       stroke-width: 2.5;
+  //     }
+  //   }
 
-    .qr__icon {
-      margin: 0px 8px 0px 0px;
+  //   .qr__icon {
+  //     margin: 0px 8px 0px 0px;
 
-      svg {
-        fill: rgb(89, 89, 89);
-        stroke: none;
-      }
-    }
-  }
+  //     svg {
+  //       fill: rgb(89, 89, 89);
+  //       stroke: none;
+  //     }
+  //   }
+  // }
 
-  .qr__holder {
-    display: flex;
-    justify-content: center;
-    padding: 17px 15px 0px 15px;
-  }
+  // .qr__holder {
+  //   display: flex;
+  //   justify-content: center;
+  //   padding: 17px 15px 0px 15px;
+  // }
 }

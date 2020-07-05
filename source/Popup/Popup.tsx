@@ -10,8 +10,9 @@ import {
   ApiBodyProperties,
 } from '../Background';
 import {SHORTEN_URL} from '../Background/constants';
-
 import messageUtil from '../util/mesageUtil';
+
+import ResponseBody from './ResponseBody';
 
 import {
   ExtensionSettingsActionTypes,
@@ -310,7 +311,10 @@ const Popup: React.FC = () => {
     <BodyWrapper>
       <div id="popup">
         {!requestStatusState.loading ? (
-          <Form handleFormSubmit={handleFormSubmit} />
+          <>
+            {requestStatusState.error !== null && <ResponseBody />}
+            <Form handleFormSubmit={handleFormSubmit} />
+          </>
         ) : (
           <Loader />
         )}
