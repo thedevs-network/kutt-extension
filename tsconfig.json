@@ -11,6 +11,8 @@
 		"skipLibCheck": true,
 	},
 	"include": [
-		"source"
+		"source",
+		"twin.d.ts",
+		"cssprop.d.ts"
 	]
 }
