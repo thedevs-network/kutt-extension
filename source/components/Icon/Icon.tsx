@@ -1,19 +1,23 @@
 import React from 'react';
 
-import Zap from './Zap';
+import ArrowLeft from './ArrowLeft';
+import EyeClosed from './EyeClosed';
+import Settings from './Settings';
+import Refresh from './Refresh';
+import Spinner from './Spinner';
+import QRCode from './QRCode';
+import Cross from './Cross';
 import Copy from './Copy';
 import Tick from './Tick';
-import Cross from './Cross';
-import QRCode from './QRCode';
-import Spinner from './Spinner';
-import Refresh from './Refresh';
-import Settings from './Settings';
-import ArrowLeft from './ArrowLeft';
+import Zap from './Zap';
+import Eye from './Eye';
 
 const icons = {
   arrowleft: ArrowLeft,
   copy: Copy,
   cross: Cross,
+  eye: Eye,
+  'eye-closed': EyeClosed,
   qrcode: QRCode,
   refresh: Refresh,
   settings: Settings,

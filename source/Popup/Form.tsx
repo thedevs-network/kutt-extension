@@ -1,8 +1,10 @@
 import {useFormState} from 'react-use-form-state';
+import React, {useState} from 'react';
 import tw, {css} from 'twin.macro';
-import React from 'react';
 
 import {useExtensionSettings} from '../contexts/extension-settings-context';
+
+import Icon from '../components/Icon';
 
 type Props = {
   handleFormSubmit: (props: {
@@ -18,6 +20,7 @@ export enum CONSTANTS {
 
 const Form: React.FC<Props> = ({handleFormSubmit}) => {
   const extensionSettingsState = useExtensionSettings()[0];
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const {
     domainOptions,
     host: {hostDomain},
@@ -166,26 +169,16 @@ const Form: React.FC<Props> = ({handleFormSubmit}) => {
 
           <div tw="relative">
             <div tw="absolute top-0 right-0 flex w-10 h-full border border-transparent">
-              <div tw="z-10 flex items-center justify-center w-full h-full text-lg text-gray-600 bg-gray-100 rounded-tl rounded-bl">
-                <svg
-                  viewBox="0 0 24 24"
-                  width="24"
-                  height="24"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  tw="w-5 h-5"
-                >
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                  <circle cx="12" cy="7" r="4" />
-                </svg>
-              </div>
+              <Icon
+                tw="z-10 cursor-pointer flex items-center justify-center w-full h-full text-gray-600 rounded-tl rounded-bl"
+                onClick={(): void => setShowPassword(!showPassword)}
+                name={!showPassword ? 'eye-closed' : 'eye'}
+              />
             </div>
 
             <input
               {...passwordProps('password')}
+              type={!showPassword ? 'password' : 'text'}
               onChange={({
                 target: {value},
               }: React.ChangeEvent<HTMLInputElement>): void => {
@@ -214,7 +207,7 @@ const Form: React.FC<Props> = ({handleFormSubmit}) => {
             handleFormSubmit(formState.values);
           }}
           css={[
-            tw`block w-full px-2 py-2 mb-1 text-xs font-semibold text-white bg-purple-700 rounded`,
+            tw`block w-full px-2 py-3 mb-1 text-xs font-semibold text-white bg-purple-700 rounded`,
 
             css`
               background: linear-gradient(

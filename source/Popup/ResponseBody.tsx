@@ -12,14 +12,6 @@ export type ProcessedRequestProperties = {
   message: string;
 };
 
-const StyledH1 = styled.h1`
-  border-bottom: 1px dotted ${({theme}): string => theme.statsTotalUnderline};
-  padding-bottom: 2px;
-  color: rgb(41, 71, 86);
-
-  ${tw`hover:opacity-75 min-w-0 m-0 text-2xl font-light cursor-pointer`}
-`;
-
 const StyledPopupBody = styled.div`
   ${tw`flex justify-center px-4 pt-4 pb-0`}
 
@@ -36,6 +28,14 @@ const StyledPopupBody = styled.div`
       fill: rgb(89, 89, 89);
       stroke: none;
     }
+  }
+
+  h1 {
+    border-bottom: 1px dotted ${({theme}): string => theme.statsTotalUnderline};
+    padding-bottom: 2px;
+    color: rgb(41, 71, 86);
+
+    ${tw`hover:opacity-75 min-w-0 m-0 text-2xl font-light cursor-pointer`}
   }
 `;
 
@@ -90,11 +90,13 @@ const ResponseBody: React.FC = () => {
                 return setCopied(true);
               }}
             >
-              <StyledH1>{removeProtocol(message)}</StyledH1>
+              <h1>{removeProtocol(message)}</h1>
             </CopyToClipboard>
           </>
         ) : (
-          <p tw="pt-1 underline text-lg">{message}</p>
+          <p tw="pt-1 text-lg text-gray-900 border-b border-gray-700 border-dotted">
+            {message}
+          </p>
         )}
       </StyledPopupBody>
 
