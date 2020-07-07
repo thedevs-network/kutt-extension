@@ -1,19 +1,30 @@
 import {useFormState} from 'react-use-form-state';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import tw, {css} from 'twin.macro';
 
 import {useExtensionSettings} from '../contexts/extension-settings-context';
+import {updateExtensionSettings} from '../util/settings';
 import {isValidUrl} from '../util/tabs';
+import {Kutt} from '../Background';
 
 import Icon from '../components/Icon';
 
-const Form: React.FC = () => {
-  const [
-    extensionSettingsState,
-    extensionSettingsDispatch,
-  ] = useExtensionSettings();
-  const [showApiKey, setShowApiKey] = useState<boolean>(false);
+type OptionsFormValuesProperties = {
+  apikey: string;
+  history: boolean;
+  advanced: boolean;
+  host: string;
+};
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const onSave = (values: OptionsFormValuesProperties): Promise<any> => {
+  // should always return a Promise
+  return updateExtensionSettings(values); // update local settings
+};
+
+const Form: React.FC = () => {
+  const extensionSettingsState = useExtensionSettings()[0];
+  const [showApiKey, setShowApiKey] = useState<boolean>(false);
   const [
     formState,
     {
@@ -50,7 +61,13 @@ const Form: React.FC = () => {
     setFieldError: setFormStateFieldError,
   } = formState;
 
-  console.log(formState.values);
+  // on component mount -> save `settings` object
+  useEffect(() => {
+    onSave({
+      ...formStateValues,
+      ...(formStateValues.advanced === false && {host: ''}),
+    });
+  }, [formStateValues]);
 
   function handleApiKeyInputChange(apikey: string): void {
     setFormStateField('apikey', apikey);
@@ -92,8 +109,15 @@ const Form: React.FC = () => {
           <label {...labelProps('apikey')} tw="mb-2 font-bold">
             API Key
             <small tw="tracking-normal lowercase">
-              {/* ToDo: */}
-              <a href="#" tw="ml-2 text-blue-500 no-underline">
+              <a
+                href={`${
+                  (formStateValues.advanced && formStateValues.host) ||
+                  Kutt.hostUrl
+                }/login`}
+                target="blank"
+                rel="nofollow noopener noreferrer"
+                tw="ml-2 text-blue-500 no-underline"
+              >
                 get one?
               </a>
             </small>
