@@ -9,19 +9,19 @@ import {
   FormikErrors,
 } from 'formik';
 
-import Icon from '../components/Icon';
+import Icon from '../../components/Icon';
 import {
   Kutt,
   SuccessfulApiKeyCheckProperties,
   ApiErroredProperties,
   GetUserSettingsBodyProperties,
-} from '../Background';
-import {isValidUrl} from '../util/tabs';
-import messageUtil from '../util/mesageUtil';
+} from '../../Background';
+import {isValidUrl} from '../../util/tabs';
+import messageUtil from '../../util/mesageUtil';
 import {ExtensionConfigProperties} from './Options';
-import {CHECK_API_KEY} from '../Background/constants';
+import {CHECK_API_KEY} from '../../Background/constants';
 // import {TextField, CheckBox} from '../components/Input';
-import {updateExtensionSettings} from '../util/settings';
+import {updateExtensionSettings} from '../../util/settings';
 
 export type OptionsFormValuesProperties = {
   apikey: string;

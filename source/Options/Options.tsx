@@ -1,82 +1,38 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
+import 'twin.macro';
 
-import {getExtensionSettings} from '../util/settings';
 import BodyWrapper from '../components/BodyWrapper';
-import {isValidUrl} from '../util/tabs';
-import Loader from '../components/Loader';
-import OptionsForm from './OptionsForm';
-
-export type ExtensionConfigProperties = {
-  apikey: string;
-  history: boolean;
-  advanced: boolean;
-  customhost: string; // for form values
-};
+import Footer from './Footer';
+import Form from './Form';
 
 const Options: React.FC = () => {
-  const [loading, setLoading] = useState(true);
-  const [extensionConfig, setExtensionConfig] = useState<
-    ExtensionConfigProperties
-  >({
-    apikey: '',
-    history: false,
-    advanced: false,
-    customhost: '',
-  });
-
-  useEffect(() => {
-    async function getSavedSettings(): Promise<void> {
-      const {settings = {}} = await getExtensionSettings();
-      // eslint-disable-next-line no-nested-ternary
-      const customHost: string = settings.customhost
-        ? isValidUrl(settings.customhost)
-          ? settings.customhost
-          : extensionConfig.customhost
-        : extensionConfig.customhost;
-      const advancedSettings: boolean =
-        settings.advanced || extensionConfig.advanced;
-
-      // inject existing keys (if field doesn't exist, use default)
-      const defaultExtensionConfig: ExtensionConfigProperties = {
-        apikey: settings.apikey || extensionConfig.apikey,
-        history: Object.prototype.hasOwnProperty.call(settings, 'history')
-          ? settings.history
-          : extensionConfig.history,
-        advanced:
-          customHost.trim().length > 0
-            ? advancedSettings
-            : extensionConfig.advanced, // disable `advance` if customhost is not set
-        customhost:
-          // eslint-disable-next-line no-nested-ternary
-          advancedSettings === true
-            ? customHost.endsWith('/')
-              ? customHost.slice(0, -1)
-              : customHost.toLowerCase()
-            : extensionConfig.customhost, // drop customhost value if `advanced` is false
-      };
-
-      setExtensionConfig(defaultExtensionConfig);
-      setLoading(false);
-    }
-
-    getSavedSettings();
-  }, [
-    extensionConfig.apikey,
-    extensionConfig.history,
-    extensionConfig.advanced,
-    extensionConfig.customhost,
-  ]); // dependencies
-
   return (
-    <BodyWrapper>
-      <div id="options">
-        {!loading ? (
-          <OptionsForm extensionConfig={extensionConfig} />
-        ) : (
-          <Loader />
-        )}
-      </div>
-    </BodyWrapper>
+    <>
+      <BodyWrapper>
+        <div
+          id="options"
+          tw="h-screen flex justify-center px-6 py-8 bg-gray-200"
+        >
+          <div tw="md:rounded-lg max-w-lg px-16 py-10 my-6 mx-12 bg-white">
+            <header tw="flex items-center justify-center pb-4">
+              <img
+                tw="w-8 h-8"
+                width="32"
+                height="32"
+                src="assets/logo.png"
+                alt="logo"
+              />
+
+              <h1 tw="font-medium text-3xl ml-1 text-center mb-0">Kutt</h1>
+            </header>
+
+            <Form />
+
+            <Footer />
+          </div>
+        </div>
+      </BodyWrapper>
+    </>
   );
 };
 

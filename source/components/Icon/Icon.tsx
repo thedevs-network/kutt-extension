@@ -1,7 +1,9 @@
 import React from 'react';
 
+import StarYellow from './StarYellow';
 import ArrowLeft from './ArrowLeft';
 import EyeClosed from './EyeClosed';
+import StarWhite from './StarWhite';
 import Settings from './Settings';
 import Refresh from './Refresh';
 import Spinner from './Spinner';
@@ -22,6 +24,8 @@ const icons = {
   refresh: Refresh,
   settings: Settings,
   spinner: Spinner,
+  'star-yellow': StarYellow,
+  'star-white': StarWhite,
   tick: Tick,
   zap: Zap,
 };

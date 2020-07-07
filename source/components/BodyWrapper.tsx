@@ -1,4 +1,5 @@
 import React from 'react';
+import 'twin.macro';
 
 type WrapperProperties = {
   children: React.ReactChild;
@@ -10,7 +11,7 @@ const BodyWrapper: React.FC<WrapperProperties> = ({children}) => {
 
   return (
     <>
-      <div>{isLoading ? 'Loading...' : children}</div>
+      <div tw="w-full">{isLoading ? 'Loading...' : children}</div>
     </>
   );
 };
