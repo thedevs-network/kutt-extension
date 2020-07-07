@@ -43,7 +43,7 @@ const Options: React.FC = () => {
 
       // inject existing keys (if field doesn't exist, use default)
       const defaultExtensionConfig = {
-        apikey: settings?.apikey || '',
+        apikey: settings?.apikey?.trim() || '',
         history: (settings?.history && true) || false,
         advanced:
           defaultHost.hostUrl.trim() !== Kutt.hostUrl && advancedSettings, // disable `advanced` if customhost is not set
