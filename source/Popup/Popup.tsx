@@ -12,10 +12,6 @@ import {
 } from '../Background';
 import {SHORTEN_URL} from '../Background/constants';
 import messageUtil from '../util/mesageUtil';
-
-import ResponseBody from './ResponseBody';
-import PopupHeader from './Header';
-
 import {
   ExtensionSettingsActionTypes,
   DomainOptionsProperties,
@@ -33,6 +29,8 @@ import {
 } from '../util/settings';
 
 import BodyWrapper from '../components/BodyWrapper';
+import ResponseBody from './ResponseBody';
+import PopupHeader from './Header';
 import Loader from '../components/Loader';
 import Form, {CONSTANTS} from './Form';
 
@@ -76,8 +74,8 @@ const Popup: React.FC = () => {
         performMigration = true;
       }
       if (host.trim().length > 0 && userOptions.devMode) {
-        // map `host` to `settings.customhost`
-        migrationSettings.customhost = host;
+        // map `host` to `settings.host`
+        migrationSettings.host = host;
         // set `advanced` to true
         migrationSettings.advanced = true;
         performMigration = true;
@@ -134,21 +132,21 @@ const Popup: React.FC = () => {
         Object.prototype.hasOwnProperty.call(settings, 'advanced') &&
         settings.advanced
       ) {
-        // If `customhost` field is set
+        // If `host` field is set
         if (
-          Object.prototype.hasOwnProperty.call(settings, 'customhost') &&
-          settings.customhost.trim().length > 0 &&
-          isValidUrl(settings.customhost)
+          Object.prototype.hasOwnProperty.call(settings, 'host') &&
+          settings.host.trim().length > 0 &&
+          isValidUrl(settings.host)
         ) {
           defaultHost = {
-            hostDomain: settings.customhost
+            hostDomain: settings.host
               .replace('http://', '')
               .replace('https://', '')
               .replace('www.', '')
               .split(/[/?#]/)[0], // extract domain
-            hostUrl: settings.customhost.endsWith('/')
-              ? settings.customhost.slice(0, -1)
-              : settings.customhost, // slice `/` at the end
+            hostUrl: settings.host.endsWith('/')
+              ? settings.host.slice(0, -1)
+              : settings.host, // slice `/` at the end
           };
         }
       }
@@ -192,7 +190,7 @@ const Popup: React.FC = () => {
 
         // update domain list
         extensionSettingsDispatch({
-          type: ExtensionSettingsActionTypes.SET_EXTENSION_SETTINGS,
+          type: ExtensionSettingsActionTypes.HYDRATE_EXTENSION_SETTINGS,
           payload: {
             apikey: settings.apikey.trim(),
             domainOptions: optionsList,
@@ -202,7 +200,7 @@ const Popup: React.FC = () => {
       } else {
         // no `user` but `apikey` exist on storage
         extensionSettingsDispatch({
-          type: ExtensionSettingsActionTypes.SET_EXTENSION_SETTINGS,
+          type: ExtensionSettingsActionTypes.HYDRATE_EXTENSION_SETTINGS,
           payload: {
             apikey: settings.apikey.trim(),
             domainOptions: defaultOptions,

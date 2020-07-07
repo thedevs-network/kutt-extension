@@ -1,7 +1,19 @@
-import React from 'react';
+import {useFormState} from 'react-use-form-state';
 import tw, {css} from 'twin.macro';
+import React from 'react';
 
 const Form: React.FC = () => {
+  const [
+    formState,
+    {text: textProps, password: passwordProps, label: labelProps},
+  ] = useFormState<{
+    domain: string;
+    customurl: string;
+    password: string;
+  }>(null, {
+    withIds: true, // enable automatic creation of id and htmlFor props
+  });
+
   return (
     <>
       <div tw="mt-4">

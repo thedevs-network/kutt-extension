@@ -4,7 +4,7 @@ import React, {createContext, useReducer, useContext} from 'react';
 import {Kutt} from '../Background';
 
 export enum ExtensionSettingsActionTypes {
-  SET_EXTENSION_SETTINGS = 'set-extension-settings',
+  HYDRATE_EXTENSION_SETTINGS = 'set-extension-settings',
   RELOAD_EXTENSION_SETTINGS = 'reload-extension-settings',
 }
 
@@ -20,13 +20,20 @@ export type DomainOptionsProperties = {
   disabled?: boolean;
 };
 
-type SET_EXTENSION_SETTINGS = {
-  type: ExtensionSettingsActionTypes.SET_EXTENSION_SETTINGS;
-  payload: {
-    apikey: string;
-    domainOptions: DomainOptionsProperties[];
-    host: HostProperties;
-  };
+type HYDRATE_EXTENSION_SETTINGS = {
+  type: ExtensionSettingsActionTypes.HYDRATE_EXTENSION_SETTINGS;
+  payload:
+    | {
+        apikey: string;
+        domainOptions: DomainOptionsProperties[];
+        host: HostProperties;
+      }
+    | {
+        apikey: string;
+        host: HostProperties;
+        history: boolean;
+        advanced: boolean;
+      };
 };
 
 type RELOAD_EXTENSION_SETTINGS = {
@@ -34,13 +41,15 @@ type RELOAD_EXTENSION_SETTINGS = {
   payload: boolean;
 };
 
-type Action = SET_EXTENSION_SETTINGS | RELOAD_EXTENSION_SETTINGS;
+type Action = HYDRATE_EXTENSION_SETTINGS | RELOAD_EXTENSION_SETTINGS;
 
 type InitialValues = {
   apikey: string;
   domainOptions: DomainOptionsProperties[];
   host: HostProperties;
   reload: boolean;
+  history: boolean;
+  advanced: boolean;
 };
 
 const initialValues: InitialValues = {
@@ -48,6 +57,8 @@ const initialValues: InitialValues = {
   domainOptions: [],
   host: Kutt,
   reload: false,
+  history: false,
+  advanced: false,
 };
 
 type State = InitialValues;
@@ -62,7 +73,7 @@ const ExtensionSettingsDispatchContext = createContext<Dispatch | undefined>(
 
 function extensionSettingsReducer(state: State, action: Action): State {
   switch (action.type) {
-    case ExtensionSettingsActionTypes.SET_EXTENSION_SETTINGS: {
+    case ExtensionSettingsActionTypes.HYDRATE_EXTENSION_SETTINGS: {
       return {...state, ...action.payload};
     }
 

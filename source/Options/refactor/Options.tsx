@@ -28,9 +28,9 @@ const Options: React.FC = () => {
     async function getSavedSettings(): Promise<void> {
       const {settings = {}} = await getExtensionSettings();
       // eslint-disable-next-line no-nested-ternary
-      const customHost: string = settings.customhost
-        ? isValidUrl(settings.customhost)
-          ? settings.customhost
+      const customHost: string = settings.host
+        ? isValidUrl(settings.host)
+          ? settings.host
           : extensionConfig.customhost
         : extensionConfig.customhost;
       const advancedSettings: boolean =

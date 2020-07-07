@@ -6,6 +6,7 @@ import React from 'react';
 import '../styles/main.scss';
 
 import {ExtensionSettingsProvider} from '../contexts/extension-settings-context';
+import {RequestStatusProvider} from '../contexts/request-status-context';
 import Options from './Options';
 // import OldOptions from './refactor/Options';
 
@@ -16,8 +17,10 @@ const theme = require('sass-extract-loader?{"plugins": ["sass-extract-js"]}!../s
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <ExtensionSettingsProvider>
-      {/* <OldOptions /> */}
-      <Options />
+      <RequestStatusProvider>
+        {/* <OldOptions /> */}
+        <Options />
+      </RequestStatusProvider>
     </ExtensionSettingsProvider>
   </ThemeProvider>,
   document.getElementById('options-root')
