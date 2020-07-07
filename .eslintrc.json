@@ -1,4 +1,7 @@
 {
+	"env": {
+		"webextensions": true
+	},
 	"extends": [
 		"@abhijithvijayan/eslint-config/typescript",
 		"@abhijithvijayan/eslint-config/node",

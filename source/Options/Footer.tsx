@@ -1,9 +1,11 @@
 import React from 'react';
 import 'twin.macro';
 
+import {detectBrowser} from '../util/browser';
+import {StoreLinks} from '../Background';
+
 import Icon from '../components/Icon';
 
-// ToDo: find browser specific store
 const Footer: React.FC = () => {
   return (
     <>
@@ -11,7 +13,11 @@ const Footer: React.FC = () => {
         <div tw="flex items-center text-gray-800">
           <span tw="block w-1/3 mr-2 border border-gray-200" />
           <a
-            href="https://addons.mozilla.org/en-US/firefox/addon/kutt/reviews/"
+            href={
+              detectBrowser() === 'firefox'
+                ? StoreLinks.firefox
+                : StoreLinks.chrome
+            }
             target="_blank"
             rel="nofollow noopener noreferrer"
             tw="flex flex-col items-center justify-center"
@@ -74,4 +80,4 @@ const Footer: React.FC = () => {
   );
 };
 
-export default Footer;
+export default React.memo(Footer);
