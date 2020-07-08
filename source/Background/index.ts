@@ -228,6 +228,7 @@ async function checkApiKey({
  */
 browser.runtime.onMessage.addListener((request, _sender): void | Promise<
   any
+  // eslint-disable-next-line consistent-return
 > => {
   // eslint-disable-next-line default-case
   switch (request.action) {
