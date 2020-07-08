@@ -25,7 +25,9 @@
     "lint:fix": "eslint . --ext .ts,.tsx --fix"
   },
   "husky": {
-    "hooks": {}
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
     "*.{ts,tsx}": [
