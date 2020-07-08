@@ -17,7 +17,7 @@
   <a href="https://david-dm.org/abhijithvijayan/kutt-extension">
     <img src="https://img.shields.io/david/abhijithvijayan/kutt-extension.svg?colorB=orange" alt="DEPENDENCIES" />
   </a>
-  <a href="https://github.com/abhijithvijayan/kutt-extension/blob/master/LICENSE">
+  <a href="https://github.com/abhijithvijayan/kutt-extension/blob/master/license">
     <img src="https://img.shields.io/github/license/abhijithvijayan/kutt-extension.svg" alt="LICENSE" />
   </a>
 </div>
@@ -78,11 +78,11 @@
 
 <br />
 
-## Note:
+## Note
 
 - <a href="https://kutt.it">Kutt.it</a> API permits **50** URLs shortening per day using the API Key.
 - **Enable Custom Host** option to use with self-hosted kutt
-  - Save the self hosted domain in the input (eg: https://mykutt.it)
+  - Save the self hosted domain in the input (eg: <https://mykutt.it>)
     - **Note**: the api endpoint is automatically appended during the api call.
 - _Delay at times while shortening might be the issue with Kutt.it API and not with the extension's._
 
@@ -98,4 +98,4 @@ Give a ⭐️ if this project helped you!
 
 ## Licence
 
-Code released under the [MIT License](LICENSE).
+Code released under the [MIT License](license).

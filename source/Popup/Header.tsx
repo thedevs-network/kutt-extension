@@ -1,130 +1,130 @@
 import React, {useState} from 'react';
+import tw, {styled} from 'twin.macro';
 
-import Icon from '../components/Icon';
-import messageUtil from '../util/mesageUtil';
-import {openExtOptionsPage} from '../util/tabs';
-import {CHECK_API_KEY} from '../Background/constants';
 import {updateExtensionSettings} from '../util/settings';
+import {CHECK_API_KEY} from '../Background/constants';
+import {
+  ExtensionSettingsActionTypes,
+  useExtensionSettings,
+} from '../contexts/extension-settings-context';
+import {openExtOptionsPage} from '../util/tabs';
+import messageUtil from '../util/mesageUtil';
 import {
   SuccessfulApiKeyCheckProperties,
-  ApiErroredProperties,
   GetUserSettingsBodyProperties,
+  ApiErroredProperties,
+  ErrorStateProperties,
 } from '../Background';
-import {UserConfigProperties, SetPageReloadFlagProperties} from './Popup';
 
-type SetLoadingProperties = React.Dispatch<React.SetStateAction<boolean>>;
+import Icon from '../components/Icon';
 
-type ErrorProperties = {
-  error: boolean | null;
-  message: string;
-};
+const StyledIconsHolder = styled.div`
+  ${tw`flex`}
 
-type SetErroredProperties = React.Dispatch<
-  React.SetStateAction<ErrorProperties>
->;
+  .icon {
+    ${tw`hover:opacity-75 bg-transparent shadow-none`}
 
-async function fetchUserDomains({
-  userConfig: {
-    apikey,
-    host: {hostUrl},
-  },
-  setLoading,
-  setErrored,
-  pageReloadFlag,
-  setPageReloadFlag,
-}: {
-  userConfig: UserConfigProperties;
-  setLoading: SetLoadingProperties;
-  setErrored: SetErroredProperties;
-  pageReloadFlag: boolean;
-  setPageReloadFlag: SetPageReloadFlagProperties;
-}): Promise<void> {
-  // show loading spinner
-  setLoading(true);
-
-  const apiKeyValidationBody: GetUserSettingsBodyProperties = {
-    apikey,
-    hostUrl,
-  };
-  // request API
-  const response:
-    | SuccessfulApiKeyCheckProperties
-    | ApiErroredProperties = await messageUtil.send(
-    CHECK_API_KEY,
-    apiKeyValidationBody
-  );
-
-  // stop spinner
-  setLoading(false);
-
-  if (!response.error) {
-    // ---- success ---- //
-    setErrored({error: false, message: 'Fetching domains successful'});
-
-    // Store user account information
-    const {domains, email} = response.data;
-    await updateExtensionSettings({user: {domains, email}});
-  } else {
-    // ---- errored ---- //
-    setErrored({error: true, message: response.message});
-
-    // Delete `user` field from settings
-    await updateExtensionSettings({user: null});
+    height: 34px;
+    width: 34px;
   }
 
-  // reload page
-  setPageReloadFlag(!pageReloadFlag);
+  .refresh__icon {
+    svg {
+      stroke: rgb(187, 187, 187);
+      stroke-width: 2.5;
+    }
+  }
 
-  setTimeout(() => {
-    // Reset status
-    setErrored({error: null, message: ''});
-  }, 1000);
-}
+  .settings__icon {
+    svg {
+      fill: rgb(187, 187, 187);
+      stroke: none;
+    }
+  }
+`;
 
-type HeaderProperties = {
-  userConfig: UserConfigProperties;
-  pageReloadFlag: boolean;
-  setPageReloadFlag: SetPageReloadFlagProperties;
-};
-
-const Header: React.FC<HeaderProperties> = ({
-  userConfig,
-  pageReloadFlag,
-  setPageReloadFlag,
-}) => {
+const Header: React.FC = () => {
+  const [
+    extensionSettingsState,
+    extensionSettingsDispatch,
+  ] = useExtensionSettings();
   const [loading, setLoading] = useState<boolean>(false);
-  const [errored, setErrored] = useState<ErrorProperties>({
+  const [errored, setErrored] = useState<ErrorStateProperties>({
     error: null,
     message: '',
   });
 
+  async function fetchUserDomains(): Promise<void> {
+    // show loading spinner
+    setLoading(true);
+
+    const apiKeyValidationBody: GetUserSettingsBodyProperties = {
+      apikey: extensionSettingsState.apikey,
+      hostUrl: extensionSettingsState.host.hostUrl,
+    };
+    // request API
+    const response:
+      | SuccessfulApiKeyCheckProperties
+      | ApiErroredProperties = await messageUtil.send(
+      CHECK_API_KEY,
+      apiKeyValidationBody
+    );
+
+    // stop spinner
+    setLoading(false);
+
+    if (!response.error) {
+      // ---- success ---- //
+      setErrored({error: false, message: 'Fetching domains successful'});
+
+      // Store user account information
+      const {domains, email} = response.data;
+      await updateExtensionSettings({user: {domains, email}});
+    } else {
+      // ---- errored ---- //
+      setErrored({error: true, message: response.message});
+
+      // Delete `user` field from settings
+      await updateExtensionSettings({user: null});
+    }
+
+    // hot reload page(read from localstorage and update state)
+    extensionSettingsDispatch({
+      type: ExtensionSettingsActionTypes.RELOAD_EXTENSION_SETTINGS,
+      payload: !extensionSettingsState.reload,
+    });
+
+    setTimeout(() => {
+      // Reset status
+      setErrored({error: null, message: ''});
+    }, 1000);
+  }
+
   return (
     <>
-      <header id="header">
-        <div className="logo__holder">
-          <img src="assets/logo.png" alt="logo" />
+      <header tw="flex justify-between items-center p-4">
+        <div>
+          <img
+            tw="w-8 h-8"
+            width="32"
+            height="32"
+            src="assets/logo.png"
+            alt="logo"
+          />
         </div>
-        <div className="action__buttons--holder">
+
+        <StyledIconsHolder>
           <Icon
             className="icon refresh__icon"
             title="Refresh"
             name={
-              // eslint-disable-next-line no-nested-ternary
               loading
                 ? 'spinner'
-                : errored && errored.error !== null
-                ? (errored && !errored.error && 'tick') || 'cross'
-                : 'refresh'
+                : (errored.error !== null &&
+                    ((!errored.error && 'tick') || 'cross')) ||
+                  'refresh'
             }
-            onClick={(): Promise<void> => {
-              return fetchUserDomains({
-                userConfig,
-                setLoading,
-                setErrored,
-                pageReloadFlag,
-                setPageReloadFlag,
-              });
-            }}
+            onClick={fetchUserDomains}
           />
           <Icon
             className="icon settings__icon"
@@ -132,7 +132,7 @@ const Header: React.FC<HeaderProperties> = ({
             title="Settings"
             onClick={openExtOptionsPage}
           />
-        </div>
+        </StyledIconsHolder>
       </header>
     </>
   );

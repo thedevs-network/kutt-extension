@@ -1,8 +1,6 @@
 {
 	"extends": "@abhijithvijayan/tsconfig",
 	"compilerOptions": {
-		/* for manifest/index.js */
-		"allowJs": true,
 		"lib": [
 			"dom",
 			"dom.iterable",
@@ -14,6 +12,7 @@
 	},
 	"include": [
 		"source",
-		"source/manifest/index.js"
+		"twin.d.ts",
+		"cssprop.d.ts"
 	]
 }

@@ -13,6 +13,16 @@ export enum Kutt {
   hostUrl = 'https://kutt.it',
 }
 
+export enum StoreLinks {
+  chrome = 'https://chrome.google.com/webstore/detail/kutt/pklakpjfiegjacoppcodencchehlfnpd/reviews',
+  firefox = 'https://addons.mozilla.org/en-US/firefox/addon/kutt/reviews/',
+}
+
+export type ErrorStateProperties = {
+  error: boolean | null;
+  message: string;
+};
+
 type ShortenUrlBodyProperties = {
   target: string;
   password?: string;

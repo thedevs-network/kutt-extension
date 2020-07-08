@@ -6,7 +6,7 @@ const Settings: React.FC = () => {
       viewBox="-2 -2 24 24"
       width={24}
       height={24}
-      fill="#b8b8b8"
+      fill="currentColor"
       preserveAspectRatio="xMinYMin"
       className="cog_svg__jam cog_svg__jam-cog"
     >

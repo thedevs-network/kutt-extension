@@ -1,62 +1,48 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
+import tw, {css} from 'twin.macro';
 
-import PopupBody, {ProcessedRequestProperties} from './PopupBody';
-import {Kutt, UserSettingsResponseProperties} from '../Background';
+import {openExtOptionsPage, getCurrentTab, isValidUrl} from '../util/tabs';
+import {
+  Kutt,
+  SuccessfulShortenStatusProperties,
+  UserSettingsResponseProperties,
+  ShortUrlActionBodyProperties,
+  ApiErroredProperties,
+  ApiBodyProperties,
+} from '../Background';
+import {SHORTEN_URL} from '../Background/constants';
+import messageUtil from '../util/mesageUtil';
+import {
+  ExtensionSettingsActionTypes,
+  DomainOptionsProperties,
+  useExtensionSettings,
+  HostProperties,
+} from '../contexts/extension-settings-context';
+import {
+  RequestStatusActionTypes,
+  useRequestStatus,
+} from '../contexts/request-status-context';
 import {
   getExtensionSettings,
-  migrateSettings,
   getPreviousSettings,
+  migrateSettings,
 } from '../util/settings';
+
 import BodyWrapper from '../components/BodyWrapper';
-import Loader from '../components/Loader';
-import PopupForm from './PopupForm';
+import ResponseBody from './ResponseBody';
 import PopupHeader from './Header';
-
-import './styles.scss';
-import {openExtOptionsPage, isValidUrl} from '../util/tabs';
-
-type HostProperties = {
-  hostDomain: string;
-  hostUrl: string;
-};
-
-type DomainOptionsProperties = {
-  option: string;
-  value: string;
-  id: string;
-  disabled: boolean;
-};
-
-export type ProcessRequestProperties = React.Dispatch<
-  React.SetStateAction<{
-    error: boolean | null;
-    message: string;
-  }>
->;
-
-export type UserConfigProperties = {
-  apikey: string;
-  domainOptions: DomainOptionsProperties[];
-  host: HostProperties;
-};
-
-export type SetPageReloadFlagProperties = React.Dispatch<
-  React.SetStateAction<boolean>
->;
+import Loader from '../components/Loader';
+import Form, {CONSTANTS} from './Form';
 
 const Popup: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [pageReloadFlag, setPageReloadFlag] = useState<boolean>(false);
-  const [userConfig, setUserConfig] = useState<UserConfigProperties>({
-    apikey: '',
-    domainOptions: [],
-    host: Kutt,
-  });
-  const [requestProcessed, setRequestProcessed] = useState<
-    ProcessedRequestProperties
-  >({error: null, message: ''});
+  const [
+    extensionSettingsState,
+    extensionSettingsDispatch,
+  ] = useExtensionSettings();
+  const [requestStatusState, requestStatusDispatch] = useRequestStatus();
+  const {reload: liveReloadFlag} = extensionSettingsState;
 
-  // re-renders on `pageReloadFlag` change
+  // re-renders on `liveReloadFlag` change
   useEffect((): void => {
     async function getUserSettings(): Promise<void> {
       // -----------------------------------------------------------------------------//
@@ -88,8 +74,8 @@ const Popup: React.FC = () => {
         performMigration = true;
       }
       if (host.trim().length > 0 && userOptions.devMode) {
-        // map `host` to `settings.customhost`
-        migrationSettings.customhost = host;
+        // map `host` to `settings.host`
+        migrationSettings.host = host;
         // set `advanced` to true
         migrationSettings.advanced = true;
         performMigration = true;
@@ -119,11 +105,17 @@ const Popup: React.FC = () => {
         !Object.prototype.hasOwnProperty.call(settings, 'apikey') ||
         settings.apikey === ''
       ) {
-        setRequestProcessed({
-          error: true,
-          message: 'Extension requires an API Key to work',
+        requestStatusDispatch({
+          type: RequestStatusActionTypes.SET_REQUEST_STATUS,
+          payload: {
+            error: true,
+            message: 'Extension requires an API Key to work',
+          },
         });
-        setLoading(false);
+        requestStatusDispatch({
+          type: RequestStatusActionTypes.SET_LOADING,
+          payload: false,
+        });
 
         // Open options page
         setTimeout(() => {
@@ -140,21 +132,21 @@ const Popup: React.FC = () => {
         Object.prototype.hasOwnProperty.call(settings, 'advanced') &&
         settings.advanced
       ) {
-        // If `customhost` field is set
+        // If `host` field is set
         if (
-          Object.prototype.hasOwnProperty.call(settings, 'customhost') &&
-          settings.customhost.trim().length > 0 &&
-          isValidUrl(settings.customhost)
+          Object.prototype.hasOwnProperty.call(settings, 'host') &&
+          settings.host.trim().length > 0 &&
+          isValidUrl(settings.host)
         ) {
           defaultHost = {
-            hostDomain: settings.customhost
+            hostDomain: settings.host
               .replace('http://', '')
               .replace('https://', '')
               .replace('www.', '')
               .split(/[/?#]/)[0], // extract domain
-            hostUrl: settings.customhost.endsWith('/')
-              ? settings.customhost.slice(0, -1)
-              : settings.customhost, // slice `/` at the end
+            hostUrl: settings.host.endsWith('/')
+              ? settings.host.slice(0, -1)
+              : settings.host, // slice `/` at the end
           };
         }
       }
@@ -168,7 +160,7 @@ const Popup: React.FC = () => {
           disabled: true,
         },
         {
-          id: 'default',
+          id: CONSTANTS.DefaultDomainId,
           option: defaultHost.hostDomain,
           value: defaultHost.hostUrl,
           disabled: false,
@@ -182,7 +174,7 @@ const Popup: React.FC = () => {
       ) {
         const {user}: {user: UserSettingsResponseProperties} = settings;
 
-        let optionsArray: DomainOptionsProperties[] = user.domains.map(
+        let optionsList: DomainOptionsProperties[] = user.domains.map(
           ({id, address, homepage, banned}) => {
             return {
               id,
@@ -194,50 +186,145 @@ const Popup: React.FC = () => {
         );
 
         // merge to beginning of array
-        optionsArray = defaultOptions.concat(optionsArray);
+        optionsList = defaultOptions.concat(optionsList);
 
         // update domain list
-        setUserConfig({
-          apikey: settings.apikey.trim(),
-          domainOptions: optionsArray,
-          host: defaultHost,
+        extensionSettingsDispatch({
+          type: ExtensionSettingsActionTypes.HYDRATE_EXTENSION_SETTINGS,
+          payload: {
+            apikey: settings.apikey.trim(),
+            domainOptions: optionsList,
+            host: defaultHost,
+          },
         });
       } else {
         // no `user` but `apikey` exist on storage
-        setUserConfig({
-          apikey: settings.apikey.trim(),
-          domainOptions: defaultOptions,
-          host: defaultHost,
+        extensionSettingsDispatch({
+          type: ExtensionSettingsActionTypes.HYDRATE_EXTENSION_SETTINGS,
+          payload: {
+            apikey: settings.apikey.trim(),
+            domainOptions: defaultOptions,
+            host: defaultHost,
+          },
         });
       }
 
-      setLoading(false);
+      // stop loader
+      requestStatusDispatch({
+        type: RequestStatusActionTypes.SET_LOADING,
+        payload: false,
+      });
     }
 
     getUserSettings();
-  }, [pageReloadFlag]);
+  }, [liveReloadFlag, extensionSettingsDispatch, requestStatusDispatch]);
+
+  async function handleFormSubmit({
+    customurl,
+    password,
+  }: {
+    domain: string;
+    customurl: string;
+    password: string;
+  }): Promise<void> {
+    // enable loading screen
+    requestStatusDispatch({
+      type: RequestStatusActionTypes.SET_LOADING,
+      payload: true,
+    });
+
+    // Get target link to shorten
+    const tabs = await getCurrentTab();
+    const target: string | null = (tabs.length > 0 && tabs[0].url) || null;
+
+    if (!target || !isValidUrl(target)) {
+      requestStatusDispatch({
+        type: RequestStatusActionTypes.SET_LOADING,
+        payload: false,
+      });
+
+      requestStatusDispatch({
+        type: RequestStatusActionTypes.SET_REQUEST_STATUS,
+        payload: {
+          error: true,
+          message: 'Not a valid URL',
+        },
+      });
+
+      return;
+    }
+
+    const apiBody: ApiBodyProperties = {
+      apikey: extensionSettingsState.apikey,
+      target,
+      ...(customurl.trim() !== '' && {customurl: customurl.trim()}), // add this key only if field is not empty
+      ...(password.trim() !== '' && {password: password.trim()}),
+      reuse: false,
+      // ToDo: restore when https://github.com/thedevs-network/kutt/issues/287 is resolved
+      // ...(domain.trim() !== '' && { domain: domain.trim() }),
+    };
+
+    const apiShortenUrlBody: ShortUrlActionBodyProperties = {
+      apiBody,
+      hostUrl: extensionSettingsState.host.hostUrl,
+    };
+    // shorten url in the background
+    const response:
+      | SuccessfulShortenStatusProperties
+      | ApiErroredProperties = await messageUtil.send(
+      SHORTEN_URL,
+      apiShortenUrlBody
+    );
+
+    // disable spinner
+    requestStatusDispatch({
+      type: RequestStatusActionTypes.SET_LOADING,
+      payload: false,
+    });
+
+    if (!response.error) {
+      const {
+        data: {link},
+      } = response;
+      const trimmedLink: string = link.replace('https://', '');
+
+      // show shortened url
+      requestStatusDispatch({
+        type: RequestStatusActionTypes.SET_REQUEST_STATUS,
+        payload: {
+          error: false,
+          message: trimmedLink,
+        },
+      });
+    } else {
+      // errored
+      requestStatusDispatch({
+        type: RequestStatusActionTypes.SET_REQUEST_STATUS,
+        payload: {
+          error: true,
+          message: response.message,
+        },
+      });
+    }
+  }
 
   return (
     <BodyWrapper>
-      <div id="popup">
-        {!loading ? (
+      <div
+        id="popup"
+        css={[
+          tw`text-lg`,
+          css`
+            min-height: 350px;
+            min-width: 250px;
+          `,
+        ]}
+      >
+        {!requestStatusState.loading ? (
           <>
-            <PopupHeader
-              userConfig={userConfig}
-              pageReloadFlag={pageReloadFlag}
-              setPageReloadFlag={setPageReloadFlag}
-            />
-
-            {requestProcessed.error !== null && (
-              <PopupBody requestProcessed={requestProcessed} />
-            )}
-
-            <PopupForm
-              defaultDomainId="default"
-              userConfig={userConfig}
-              setLoading={setLoading}
-              setRequestProcessed={setRequestProcessed}
-            />
+            <PopupHeader />
+            {requestStatusState.error !== null && <ResponseBody />}
+            <Form handleFormSubmit={handleFormSubmit} />
           </>
         ) : (
           <Loader />

@@ -1,13 +1,29 @@
 {
+	"env": {
+		"webextensions": true
+	},
 	"extends": [
 		"@abhijithvijayan/eslint-config/typescript",
+		"@abhijithvijayan/eslint-config/node",
 		"@abhijithvijayan/eslint-config/react"
 	],
+	"parserOptions": {
+		"project": "./tsconfig.json",
+		"sourceType": "module"
+	},
 	"rules": {
 		"no-console": "off",
 		"react/jsx-props-no-spreading": "off",
 		"jsx-a11y/label-has-associated-control": "off",
 		"@typescript-eslint/no-explicit-any": "warn",
-		"react/no-array-index-key": "warn"
+		"react/no-array-index-key": "warn",
+		"node/no-unsupported-features/es-syntax": ["error", {
+			"ignores": ["modules"]
+		}]
+	},
+	"settings": {
+		"node": {
+			"tryExtensions": [".tsx"] // append tsx to the list as well
+		}
 	}
 }
