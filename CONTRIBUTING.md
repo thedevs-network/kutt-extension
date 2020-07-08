@@ -54,7 +54,7 @@ Download latest `Release`
 
 [<img src=".github/assets/direct-download.png"
 alt="Direct download"
-height="50">](https://github.com/abhijithvijayan/kutt-extension/releases)
+height="50">](https://github.com/thedevs-network/kutt-extension/releases)
 
 <hr />
 

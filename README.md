@@ -1,40 +1,27 @@
 <div align="center"><img width="150" src="source/assets/logo.png" /></div>
 <h1 align="center">kutt-extension</h1>
-<p align="center">Browser extension to shorten long URLs based on <a href="https://kutt.it">Kutt.it</a></p>
+<p align="center">Browser extension for <a href="https://kutt.it">Kutt.it</a></p>
 <div align="center">
-  <a href="https://travis-ci.org/abhijithvijayan/kutt-extension">
-    <img src="https://travis-ci.org/abhijithvijayan/kutt-extension.svg?branch=master" alt="Travis Build" />
+  <a href="https://travis-ci.org/thedevs-network/kutt-extension">
+    <img src="https://travis-ci.org/thedevs-network/kutt-extension.svg?branch=master" alt="Travis Build" />
   </a>
-  <a href="https://github.com/abhijithvijayan/kutt-extension/releases/latest">
-    <img src="https://img.shields.io/github/release/abhijithvijayan/kutt-extension.svg?colorB=blue" alt="Releases" />
+  <a href="https://github.com/thedevs-network/kutt-extension/releases/latest">
+    <img src="https://img.shields.io/github/release/thedevs-network/kutt-extension.svg?colorB=blue" alt="Releases" />
   </a>
-  <a href="https://github.com/abhijithvijayan/kutt-extension/issues?q=is%3Aopen+is%3Aissue">
-    <img src="https://img.shields.io/github/issues-raw/abhijithvijayan/kutt-extension.svg?colorB=lightgrey" alt="Open Issues" />
+  <a href="https://github.com/thedevs-network/kutt-extension/issues?q=is%3Aopen+is%3Aissue">
+    <img src="https://img.shields.io/github/issues-raw/thedevs-network/kutt-extension.svg?colorB=lightgrey" alt="Open Issues" />
   </a>
-  <a href="https://github.com/abhijithvijayan/kutt-extension/issues?q=is%3Aissue+is%3Aclosed">
-    <img src="https://img.shields.io/github/issues-closed-raw/abhijithvijayan/kutt-extension.svg?colorB=red" alt="Closed Issues" />
+  <a href="https://github.com/thedevs-network/kutt-extension/issues?q=is%3Aissue+is%3Aclosed">
+    <img src="https://img.shields.io/github/issues-closed-raw/thedevs-network/kutt-extension.svg?colorB=red" alt="Closed Issues" />
   </a>
-  <a href="https://david-dm.org/abhijithvijayan/kutt-extension">
-    <img src="https://img.shields.io/david/abhijithvijayan/kutt-extension.svg?colorB=orange" alt="DEPENDENCIES" />
+  <a href="https://david-dm.org/thedevs-network/kutt-extension">
+    <img src="https://img.shields.io/david/thedevs-network/kutt-extension.svg?colorB=orange" alt="DEPENDENCIES" />
   </a>
-  <a href="https://github.com/abhijithvijayan/kutt-extension/blob/master/license">
-    <img src="https://img.shields.io/github/license/abhijithvijayan/kutt-extension.svg" alt="LICENSE" />
+  <a href="https://github.com/thedevs-network/kutt-extension/blob/master/license">
+    <img src="https://img.shields.io/github/license/thedevs-network/kutt-extension.svg" alt="LICENSE" />
   </a>
 </div>
-<h3 align="center">🙋‍♂️ Made by <a href="https://twitter.com/_abhijithv">@abhijithvijayan</a></h3>
-<p align="center">
-  Donate:
-  <a href="https://www.paypal.me/iamabhijithvijayan" target='_blank'><i><b>PayPal</b></i></a>,
-  <a href="https://www.patreon.com/abhijithvijayan" target='_blank'><i><b>Patreon</b></i></a>
-</p>
-<p align="center">
-  <a href='https://www.buymeacoffee.com/abhijithvijayan' target='_blank'>
-    <img height='36' style='border:0px;height:36px;' src='https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/custom_images/orange_img.png' border='0' alt='Buy Me a Coffee' />
-  </a>
-</p>
 <hr />
-
-### v2 React + TypeScript (🚧 [WIP](https://github.com/abhijithvijayan/kutt-extension/tree/refactor/react-typescript))
 
 ## Features
 

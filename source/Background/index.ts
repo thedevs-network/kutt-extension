@@ -1,5 +1,8 @@
 /**
- *  @author abhijithvijayan <abhijithvijayan.in>
+ *  kutt-extension
+ *
+ *  @author   abhijithvijayan <abhijithvijayan.in>
+ *  @license  MIT License
  */
 
 /* eslint-disable @typescript-eslint/no-explicit-any */

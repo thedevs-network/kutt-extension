@@ -59,7 +59,7 @@ const Footer: React.FC = () => {
             Kutt.it
           </a>
           <a
-            href="https://github.com/abhijithvijayan/kutt-extension/issues/new"
+            href="https://github.com/thedevs-network/kutt-extension/issues/new"
             target="blank"
             rel="nofollow noopener noreferrer"
             tw="w-1/3 py-1 px-2 cursor-pointer"
@@ -67,7 +67,7 @@ const Footer: React.FC = () => {
             Report an issue
           </a>
           <a
-            href="https://github.com/abhijithvijayan/kutt-extension"
+            href="https://github.com/thedevs-network/kutt-extension"
             target="blank"
             rel="nofollow noopener noreferrer"
             tw="w-1/3 p-1 cursor-pointer"

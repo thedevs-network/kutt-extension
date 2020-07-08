@@ -10,7 +10,7 @@
     "48": "assets/favicon-48.png",
     "128": "assets/favicon-128.png"
   },
-  "homepage_url": "https://github.com/abhijithvijayan/kutt-extension.git",
+  "homepage_url": "https://github.com/thedevs-network/kutt-extension.git",
   "__firefox__browser_specific_settings": {
     "gecko": {
       "id": "support@kutt.it",
