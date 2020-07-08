@@ -18,6 +18,11 @@ export enum StoreLinks {
   firefox = 'https://addons.mozilla.org/en-US/firefox/addon/kutt/reviews/',
 }
 
+export type ErrorStateProperties = {
+  error: boolean | null;
+  message: string;
+};
+
 type ShortenUrlBodyProperties = {
   target: string;
   password?: string;

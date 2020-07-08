@@ -1,11 +1,19 @@
 import {useFormState} from 'react-use-form-state';
 import React, {useState, useEffect} from 'react';
-import tw, {css} from 'twin.macro';
+import tw, {styled} from 'twin.macro';
 
 import {useExtensionSettings} from '../contexts/extension-settings-context';
 import {updateExtensionSettings} from '../util/settings';
+import {CHECK_API_KEY} from '../Background/constants';
+import messageUtil from '../util/mesageUtil';
 import {isValidUrl} from '../util/tabs';
-import {Kutt} from '../Background';
+import {
+  SuccessfulApiKeyCheckProperties,
+  GetUserSettingsBodyProperties,
+  ApiErroredProperties,
+  ErrorStateProperties,
+  Kutt,
+} from '../Background';
 
 import Icon from '../components/Icon';
 
@@ -16,6 +24,23 @@ type OptionsFormValuesProperties = {
   host: string;
 };
 
+const StyledValidateButton = styled.button`
+  ${tw`focus:outline-none hover:text-gray-200 inline-flex items-center px-3 py-1 mt-3 mb-1 text-xs font-semibold text-center text-white duration-300 ease-in-out rounded shadow-lg`}
+
+  background: linear-gradient(to right,rgb(126, 87, 194),rgb(98, 0, 234));
+
+  .validate__icon {
+    ${tw`inline-flex px-0 bg-transparent`}
+
+    svg {
+      ${tw`transition-transform duration-300 ease-in-out`}
+
+      stroke: currentColor;
+      stroke-width: 2.5;
+    }
+  }
+`;
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const onSave = (values: OptionsFormValuesProperties): Promise<any> => {
   // should always return a Promise
@@ -24,7 +49,12 @@ const onSave = (values: OptionsFormValuesProperties): Promise<any> => {
 
 const Form: React.FC = () => {
   const extensionSettingsState = useExtensionSettings()[0];
+  const [submitting, setSubmitting] = useState<boolean>(false);
   const [showApiKey, setShowApiKey] = useState<boolean>(false);
+  const [errored, setErrored] = useState<ErrorStateProperties>({
+    error: null,
+    message: '',
+  });
   const [
     formState,
     {
@@ -102,6 +132,48 @@ const Form: React.FC = () => {
     }
   }
 
+  async function handleApiKeyVerification(): Promise<void> {
+    setSubmitting(true);
+    // request API validation request
+    const apiKeyValidationBody: GetUserSettingsBodyProperties = {
+      apikey: formStateValues.apikey.trim(),
+      hostUrl:
+        (formStateValues.advanced &&
+          formStateValues.host.trim().length > 0 &&
+          formStateValues.host.trim()) ||
+        Kutt.hostUrl,
+    };
+    const response:
+      | SuccessfulApiKeyCheckProperties
+      | ApiErroredProperties = await messageUtil.send(
+      CHECK_API_KEY,
+      apiKeyValidationBody
+    );
+
+    if (!response.error) {
+      // set top-level status
+      setErrored({error: false, message: 'Valid API Key'});
+
+      // Store user account information
+      const {domains, email} = response.data;
+      await updateExtensionSettings({user: {domains, email}});
+    } else {
+      // ---- errored ---- //
+      setErrored({error: true, message: response.message});
+
+      // Delete `user` field from settings
+      await updateExtensionSettings({user: null});
+    }
+
+    // enable validate button
+    setSubmitting(false);
+
+    setTimeout(() => {
+      // Reset status
+      setErrored({error: null, message: ''});
+    }, 1000);
+  }
+
   return (
     <>
       <div tw="mt-4">
@@ -159,26 +231,24 @@ const Form: React.FC = () => {
       </div>
 
       <div>
-        <button
+        <StyledValidateButton
           type="submit"
-          disabled={!true}
-          onClick={(): void => {
-            //
-          }}
-          css={[
-            tw`hover:bg-blue-700 focus:outline-none block px-4 py-2 mt-3 mb-1 text-xs font-semibold text-center text-white bg-purple-700 rounded shadow-lg`,
-
-            css`
-              background: linear-gradient(
-                to right,
-                rgb(126, 87, 194),
-                rgb(98, 0, 234)
-              );
-            `,
-          ]}
+          disabled={submitting}
+          onClick={handleApiKeyVerification}
         >
-          Validate
-        </button>
+          <span tw="ml-2">Validate</span>
+
+          <Icon
+            name={
+              submitting
+                ? 'spinner'
+                : (errored.error !== null &&
+                    ((!errored.error && 'tick') || 'cross')) ||
+                  'zap'
+            }
+            className="icon validate__icon"
+          />
+        </StyledValidateButton>
       </div>
 
       <div tw="flex flex-col mt-6">

@@ -4,29 +4,26 @@ import tw, {styled} from 'twin.macro';
 import {updateExtensionSettings} from '../util/settings';
 import {CHECK_API_KEY} from '../Background/constants';
 import {
-  useExtensionSettings,
   ExtensionSettingsActionTypes,
+  useExtensionSettings,
 } from '../contexts/extension-settings-context';
 import {openExtOptionsPage} from '../util/tabs';
 import messageUtil from '../util/mesageUtil';
 import {
   SuccessfulApiKeyCheckProperties,
-  ApiErroredProperties,
   GetUserSettingsBodyProperties,
+  ApiErroredProperties,
+  ErrorStateProperties,
 } from '../Background';
 
 import Icon from '../components/Icon';
-
-type ErrorProperties = {
-  error: boolean | null;
-  message: string;
-};
 
 const StyledIconsHolder = styled.div`
   ${tw`flex`}
 
   .icon {
     ${tw`hover:opacity-75 bg-transparent shadow-none`}
+
     height: 34px;
     width: 34px;
   }
@@ -52,7 +49,7 @@ const Header: React.FC = () => {
     extensionSettingsDispatch,
   ] = useExtensionSettings();
   const [loading, setLoading] = useState<boolean>(false);
-  const [errored, setErrored] = useState<ErrorProperties>({
+  const [errored, setErrored] = useState<ErrorStateProperties>({
     error: null,
     message: '',
   });
@@ -121,12 +118,11 @@ const Header: React.FC = () => {
             className="icon refresh__icon"
             title="Refresh"
             name={
-              // eslint-disable-next-line no-nested-ternary
               loading
                 ? 'spinner'
-                : errored && errored.error !== null
-                ? (errored && !errored.error && 'tick') || 'cross'
-                : 'refresh'
+                : (errored.error !== null &&
+                    ((!errored.error && 'tick') || 'cross')) ||
+                  'refresh'
             }
             onClick={fetchUserDomains}
           />

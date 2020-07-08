@@ -1,7 +1,6 @@
 import React from 'react';
 
 import StarYellow from './StarYellow';
-import ArrowLeft from './ArrowLeft';
 import EyeClosed from './EyeClosed';
 import StarWhite from './StarWhite';
 import Settings from './Settings';
@@ -15,7 +14,6 @@ import Zap from './Zap';
 import Eye from './Eye';
 
 const icons = {
-  arrowleft: ArrowLeft,
   copy: Copy,
   cross: Cross,
   eye: Eye,
