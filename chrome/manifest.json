@@ -10,7 +10,7 @@
     "48": "assets/favicon-48.png",
     "128": "assets/favicon-128.png"
   },
-  "homepage_url": "https://github.com/abhijithvijayan/kutt-extension",
+  "homepage_url": "https://github.com/abhijithvijayan/kutt-extension.git",
   "author": "abhijithvijayan",
   "browser_action": {
     "default_popup": "popup.html",
