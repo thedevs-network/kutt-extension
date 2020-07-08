@@ -2,8 +2,8 @@
 <h1 align="center">kutt-extension</h1>
 <p align="center">Browser extension for <a href="https://kutt.it">Kutt.it</a></p>
 <div align="center">
-  <a href="https://travis-ci.org/thedevs-network/kutt-extension">
-    <img src="https://travis-ci.org/thedevs-network/kutt-extension.svg?branch=master" alt="Travis Build" />
+  <a href="https://travis-ci.com/thedevs-network/kutt-extension">
+    <img src="https://travis-ci.com/thedevs-network/kutt-extension.svg?branch=master" alt="Travis Build" />
   </a>
   <a href="https://github.com/thedevs-network/kutt-extension/releases/latest">
     <img src="https://img.shields.io/github/release/thedevs-network/kutt-extension.svg?colorB=blue" alt="Releases" />
