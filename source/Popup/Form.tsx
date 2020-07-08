@@ -93,7 +93,7 @@ const Form: React.FC<Props> = ({handleFormSubmit}) => {
 
   return (
     <>
-      <div tw="flex flex-col w-full max-w-sm p-4 mx-auto bg-white border border-gray-200 shadow">
+      <div tw="flex flex-col w-full max-w-sm p-4 mx-auto bg-white border border-gray-200 shadow select-none">
         <div tw="flex flex-col mb-4">
           <label
             {...labelProps('domain')}

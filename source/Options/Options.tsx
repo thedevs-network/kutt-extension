@@ -69,7 +69,7 @@ const Options: React.FC = () => {
       <BodyWrapper>
         <div
           id="options"
-          tw="h-screen flex justify-center px-6 py-8 bg-gray-200"
+          tw="h-screen flex justify-center px-6 py-8 bg-gray-200 select-none"
         >
           <div tw="md:rounded-lg max-w-lg px-16 py-10 my-6 mx-12 bg-white">
             <Header />

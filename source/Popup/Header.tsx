@@ -102,7 +102,7 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <header tw="flex justify-between items-center p-4">
+      <header tw="flex items-center justify-between p-4 select-none">
         <div>
           <img
             tw="w-8 h-8"
