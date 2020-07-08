@@ -91,6 +91,7 @@ const Form: React.FC = () => {
     setFieldError: setFormStateFieldError,
   } = formState;
 
+  // ToDo: invalidate if api key is empty
   const isFormValid: boolean =
     ((formStateValidity.apikey === undefined || formStateValidity.apikey) &&
       formStateErrors.apikey === undefined &&

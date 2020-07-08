@@ -3,7 +3,7 @@
 <p align="center">Browser extension for <a href="https://kutt.it">Kutt.it</a></p>
 <div align="center">
   <a href="https://travis-ci.com/thedevs-network/kutt-extension">
-    <img src="https://travis-ci.com/thedevs-network/kutt-extension.svg?branch=main" alt="Travis Build" />
+    <img src="https://travis-ci.com/thedevs-network/kutt-extension.svg?branch=master" alt="Travis Build" />
   </a>
   <a href="https://github.com/thedevs-network/kutt-extension/releases/latest">
     <img src="https://img.shields.io/github/release/thedevs-network/kutt-extension.svg?colorB=blue" alt="Releases" />
@@ -17,7 +17,7 @@
   <a href="https://david-dm.org/thedevs-network/kutt-extension">
     <img src="https://img.shields.io/david/thedevs-network/kutt-extension.svg?colorB=orange" alt="DEPENDENCIES" />
   </a>
-  <a href="https://github.com/thedevs-network/kutt-extension/blob/main/license">
+  <a href="https://github.com/thedevs-network/kutt-extension/blob/master/license">
     <img src="https://img.shields.io/github/license/thedevs-network/kutt-extension.svg" alt="LICENSE" />
   </a>
 </div>
