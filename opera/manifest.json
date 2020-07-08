@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Kutt",
-  "version": "4.0.0.7",
+  "version": "4.0.0.8",
   "short_name": "Kutt",
   "description": "Shorten long URLs with just one click.",
   "icons": {
@@ -10,7 +10,7 @@
     "48": "assets/favicon-48.png",
     "128": "assets/favicon-128.png"
   },
-  "homepage_url": "https://github.com/abhijithvijayan/kutt-extension.git",
+  "homepage_url": "https://github.com/thedevs-network/kutt-extension.git",
   "developer": {
     "name": "abhijithvijayan"
   },
