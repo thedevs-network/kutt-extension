@@ -8,7 +8,6 @@ import '../styles/main.scss';
 import {ExtensionSettingsProvider} from '../contexts/extension-settings-context';
 import {RequestStatusProvider} from '../contexts/request-status-context';
 import Options from './Options';
-// import OldOptions from './refactor/Options';
 
 // eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved,  @typescript-eslint/no-var-requires, node/no-missing-require
 const theme = require('sass-extract-loader?{"plugins": ["sass-extract-js"]}!../styles/base/_variables.scss');
@@ -18,7 +17,6 @@ ReactDOM.render(
   <ThemeProvider theme={theme}>
     <ExtensionSettingsProvider>
       <RequestStatusProvider>
-        {/* <OldOptions /> */}
         <Options />
       </RequestStatusProvider>
     </ExtensionSettingsProvider>

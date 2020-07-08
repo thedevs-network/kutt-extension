@@ -91,6 +91,15 @@ const Form: React.FC = () => {
     setFieldError: setFormStateFieldError,
   } = formState;
 
+  const isFormValid: boolean =
+    ((formStateValidity.apikey === undefined || formStateValidity.apikey) &&
+      formStateErrors.apikey === undefined &&
+      (((formStateValidity.host === undefined || formStateValidity.host) &&
+        formStateErrors.host === undefined) ||
+        // Check if `host` field exhibits validation errors, if `host` field is error but `advanced` field is set to false => form is valid(hence the or condition)
+        !formStateValues.advanced)) ||
+    false;
+
   // on component mount -> save `settings` object
   useEffect(() => {
     onSave({
@@ -233,7 +242,7 @@ const Form: React.FC = () => {
       <div>
         <StyledValidateButton
           type="submit"
-          disabled={submitting}
+          disabled={submitting || !isFormValid}
           onClick={handleApiKeyVerification}
         >
           <span tw="ml-2">Validate</span>
