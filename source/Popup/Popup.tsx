@@ -222,6 +222,7 @@ const Popup: React.FC = () => {
   async function handleFormSubmit({
     customurl,
     password,
+    domain,
   }: {
     domain: string;
     customurl: string;
@@ -260,8 +261,10 @@ const Popup: React.FC = () => {
       ...(customurl.trim() !== '' && {customurl: customurl.trim()}), // add this key only if field is not empty
       ...(password.trim() !== '' && {password: password.trim()}),
       reuse: false,
-      // ToDo: restore when https://github.com/thedevs-network/kutt/issues/287 is resolved
-      // ...(domain.trim() !== '' && { domain: domain.trim() }),
+      // ToDo: remove condition when https://github.com/thedevs-network/kutt/issues/287 is resolved
+      ...(domain.trim() !== extensionSettingsState.host.hostUrl && {
+        domain: domain.trim(),
+      }),
     };
 
     const apiShortenUrlBody: ShortUrlActionBodyProperties = {
