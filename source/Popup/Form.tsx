@@ -93,7 +93,7 @@ const Form: React.FC<Props> = ({handleFormSubmit}) => {
 
   return (
     <>
-      <div tw="flex flex-col w-full max-w-sm p-4 mx-auto bg-white border border-gray-200 shadow select-none">
+      <div tw="flex flex-col w-full max-w-sm p-4 mx-auto bg-white select-none">
         <div tw="flex flex-col mb-4">
           <label
             {...labelProps('domain')}
@@ -128,7 +128,7 @@ const Form: React.FC<Props> = ({handleFormSubmit}) => {
         <div tw="flex flex-col mb-3 relative">
           <label
             {...labelProps('customurl')}
-            tw="sm:text-sm block text-xs tracking-wide cursor-pointer text-gray-600 absolute top-0 bottom-0 left-0 right-0"
+            tw="sm:text-sm block text-xs tracking-wide cursor-text text-gray-600 absolute top-0 bottom-0 left-0 right-0"
           >
             <span>{hostDomain}/</span>
           </label>
@@ -163,17 +163,31 @@ const Form: React.FC<Props> = ({handleFormSubmit}) => {
         <div tw="flex flex-col mb-3 relative">
           <label
             {...labelProps('password')}
-            tw="sm:text-sm absolute top-0 bottom-0 left-0 right-0 z-10 block text-xs tracking-wide text-gray-600 cursor-pointer"
+            tw="sm:text-sm cursor-text absolute top-0 bottom-0 left-0 right-0 z-10 block text-xs tracking-wide text-gray-600"
           >
             <span>Password</span>
           </label>
 
           <div tw="relative">
-            <div tw="absolute top-0 right-0 flex w-10 mt-6 border border-transparent">
+            <div
+              css={[
+                tw`absolute top-0 right-0 flex w-10 mt-6 border border-transparent`,
+
+                css`
+                  margin-top: 1.75rem;
+                `,
+              ]}
+            >
               <Icon
-                tw="z-10 flex items-center justify-center w-full h-full text-gray-600 rounded-tl rounded-bl cursor-pointer"
                 onClick={(): void => setShowPassword(!showPassword)}
                 name={!showPassword ? 'eye-closed' : 'eye'}
+                css={[
+                  tw`z-10 flex items-center justify-center w-full h-full rounded-tl rounded-bl cursor-pointer`,
+
+                  css`
+                    color: rgb(187, 187, 187);
+                  `,
+                ]}
               />
             </div>
 

@@ -18,29 +18,12 @@ import {
 
 import Icon from '../components/Icon';
 
-const StyledIconsHolder = styled.div`
-  ${tw`flex`}
+const StyledIcon = styled(Icon)`
+  ${tw`hover:opacity-75 bg-transparent shadow-none`}
 
-  .icon {
-    ${tw`hover:opacity-75 bg-transparent shadow-none`}
-
-    height: 34px;
-    width: 34px;
-  }
-
-  .refresh__icon {
-    svg {
-      stroke: rgb(187, 187, 187);
-      stroke-width: 2.5;
-    }
-  }
-
-  .settings__icon {
-    svg {
-      fill: rgb(187, 187, 187);
-      stroke: none;
-    }
-  }
+  height: 34px;
+  width: 34px;
+  color: rgb(187, 187, 187);
 `;
 
 const Header: React.FC = () => {
@@ -113,9 +96,9 @@ const Header: React.FC = () => {
           />
         </div>
 
-        <StyledIconsHolder>
-          <Icon
-            className="icon refresh__icon"
+        <div tw="flex">
+          <StyledIcon
+            className="icon"
             title="Refresh"
             name={
               loading
@@ -126,13 +109,13 @@ const Header: React.FC = () => {
             }
             onClick={fetchUserDomains}
           />
-          <Icon
-            className="icon settings__icon"
+          <StyledIcon
+            className="icon"
             name="settings"
             title="Settings"
             onClick={openExtOptionsPage}
           />
-        </StyledIconsHolder>
+        </div>
       </header>
     </>
   );

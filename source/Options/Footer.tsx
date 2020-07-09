@@ -9,7 +9,7 @@ import Icon from '../components/Icon';
 const Footer: React.FC = () => {
   return (
     <>
-      <footer tw="py-4 mt-16">
+      <footer tw="sm:mt-6 xl:mt-16 lg:mt-10 md:mt-8 py-4 mt-4">
         <div tw="flex items-center text-gray-800">
           <span tw="block w-1/3 mr-2 border border-gray-200" />
           <a
@@ -23,26 +23,11 @@ const Footer: React.FC = () => {
             tw="flex flex-col items-center justify-center"
           >
             <div tw="flex items-center mt-1">
-              <Icon
-                tw="w-4 h-4 mx-1 text-yellow-500 fill-current"
-                name="star-yellow"
-              />
-              <Icon
-                tw="w-4 h-4 mx-1 text-yellow-500 fill-current"
-                name="star-yellow"
-              />
-              <Icon
-                tw="w-4 h-4 mx-1 text-yellow-500 fill-current"
-                name="star-yellow"
-              />
-              <Icon
-                tw="w-4 h-4 mx-1 text-yellow-500 fill-current"
-                name="star-yellow"
-              />
-              <Icon
-                tw="w-4 h-4 mx-1 text-gray-400 fill-current"
-                name="star-white"
-              />
+              <Icon tw="mr-1 text-yellow-500 fill-current" name="star-yellow" />
+              <Icon tw="mr-1 text-yellow-500 fill-current" name="star-yellow" />
+              <Icon tw="mr-1 text-yellow-500 fill-current" name="star-yellow" />
+              <Icon tw="mr-1 text-yellow-500 fill-current" name="star-yellow" />
+              <Icon tw="text-gray-400 fill-current" name="star-white" />
             </div>
             <p tw="mb-0 mt-1">Rate on Store</p>
           </a>
@@ -54,7 +39,7 @@ const Footer: React.FC = () => {
             href="https://kutt.it"
             target="blank"
             rel="nofollow noopener noreferrer"
-            tw="w-1/3 p-1 cursor-pointer"
+            tw="w-1/3 p-1 cursor-pointer hover:text-gray-800"
           >
             Kutt.it
           </a>
@@ -62,7 +47,7 @@ const Footer: React.FC = () => {
             href="https://github.com/thedevs-network/kutt-extension/issues/new"
             target="blank"
             rel="nofollow noopener noreferrer"
-            tw="w-1/3 py-1 px-2 cursor-pointer"
+            tw="w-2/3 p-1 cursor-pointer hover:text-gray-800"
           >
             Report an issue
           </a>
@@ -70,7 +55,7 @@ const Footer: React.FC = () => {
             href="https://github.com/thedevs-network/kutt-extension"
             target="blank"
             rel="nofollow noopener noreferrer"
-            tw="w-1/3 p-1 cursor-pointer"
+            tw="w-1/3 p-1 cursor-pointer hover:text-gray-800"
           >
             GitHub
           </a>

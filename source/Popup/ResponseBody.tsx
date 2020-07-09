@@ -15,18 +15,10 @@ export type ProcessedRequestProperties = {
 const StyledPopupBody = styled.div`
   ${tw`flex justify-center px-4 pt-4 pb-0`}
 
-  .copy__icon,
-  .check__icon {
+  .icon {
     svg {
       stroke: rgb(101, 189, 137);
       stroke-width: 2.5;
-    }
-  }
-
-  .qr__icon {
-    svg {
-      fill: rgb(89, 89, 89);
-      stroke: none;
     }
   }
 
@@ -58,7 +50,7 @@ const ResponseBody: React.FC = () => {
           <>
             <Icon
               tw="my-0 ml-0 mr-2"
-              className="icon qr__icon"
+              className="icon"
               name="qrcode"
               onClick={(): void => {
                 return setQRView(!QRView);
@@ -71,18 +63,10 @@ const ResponseBody: React.FC = () => {
                   return setCopied(true);
                 }}
               >
-                <Icon
-                  tw="my-0 ml-0 mr-4"
-                  className="icon copy__icon"
-                  name="copy"
-                />
+                <Icon tw="my-0 ml-0 mr-4" className="icon" name="copy" />
               </CopyToClipboard>
             ) : (
-              <Icon
-                tw="my-0 ml-0 mr-4"
-                className="icon check__icon"
-                name="tick"
-              />
+              <Icon tw="my-0 ml-0 mr-4" className="icon" name="tick" />
             )}
             <CopyToClipboard
               text={message}

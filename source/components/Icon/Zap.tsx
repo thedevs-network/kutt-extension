@@ -3,18 +3,17 @@ import React from 'react';
 const Zap: React.FC = () => {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
+      width={20}
+      height={20}
+      viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
+      strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth="2"
-      className="feather feather-zap"
-      viewBox="0 0 24 24"
+      className="zap_svg__feather zap_svg__feather-zap"
     >
-      <path d="M13 2L3 14 12 14 11 22 21 10 12 10 13 2z" />
+      <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
     </svg>
   );
 };

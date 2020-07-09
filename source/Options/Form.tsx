@@ -272,7 +272,7 @@ const Form: React.FC = () => {
             <span tw="block w-10 h-6 bg-gray-400 rounded-full shadow-inner" />
             <span
               css={[
-                tw`focus-within:shadow-outline absolute inset-y-0 left-0 block w-4 h-4 mt-1 ml-1 transition-transform duration-300 ease-in-out rounded-full shadow`,
+                tw`absolute inset-y-0 left-0 block w-4 h-4 mt-1 ml-1 transition-transform duration-300 ease-in-out rounded-full shadow`,
 
                 !formStateValues.history
                   ? tw`bg-white`
@@ -297,7 +297,7 @@ const Form: React.FC = () => {
             <span tw="block w-10 h-6 bg-gray-400 rounded-full shadow-inner" />
             <span
               css={[
-                tw`focus-within:shadow-outline absolute inset-y-0 left-0 block w-4 h-4 mt-1 ml-1 transition-transform duration-300 ease-in-out rounded-full shadow`,
+                tw`absolute inset-y-0 left-0 block w-4 h-4 mt-1 ml-1 transition-transform duration-300 ease-in-out rounded-full shadow`,
 
                 !formStateValues.advanced
                   ? tw`bg-white`

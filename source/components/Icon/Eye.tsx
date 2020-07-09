@@ -3,8 +3,9 @@ import React from 'react';
 const Eye: React.FC = () => {
   return (
     <svg
-      width={24}
-      height={24}
+      width={16}
+      height={16}
+      viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       strokeWidth={2}

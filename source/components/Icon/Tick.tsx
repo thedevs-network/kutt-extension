@@ -3,17 +3,17 @@ import React from 'react';
 const Tick: React.FC = () => {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="48"
-      height="48"
+      width={20}
+      height={20}
+      viewBox="0 0 24 24"
       fill="none"
-      stroke="#000"
+      stroke="currentColor"
+      strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth="2"
-      viewBox="0 0 24 24"
+      className="check_svg__feather check_svg__feather-check"
     >
-      <path d="M20 6L9 17 4 12" />
+      <path d="M20 6L9 17l-5-5" />
     </svg>
   );
 };
