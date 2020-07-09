@@ -1,6 +1,6 @@
 import {useFormState} from 'react-use-form-state';
-import React, {useState} from 'react';
 import tw, {css} from 'twin.macro';
+import React, {useState} from 'react';
 
 import {useExtensionSettings} from '../contexts/extension-settings-context';
 
@@ -125,52 +125,53 @@ const Form: React.FC<Props> = ({handleFormSubmit}) => {
           </div>
         </div>
 
-        <div tw="flex flex-col mb-4">
+        <div tw="flex flex-col mb-3 relative">
           <label
             {...labelProps('customurl')}
-            tw="sm:text-sm mb-1 text-xs tracking-wide text-gray-600"
+            tw="sm:text-sm block text-xs tracking-wide cursor-pointer text-gray-600 absolute top-0 bottom-0 left-0 right-0"
           >
-            {hostDomain}/
+            <span>{hostDomain}/</span>
           </label>
 
-          <div tw="relative">
-            <input
-              {...textProps('customurl')}
-              onChange={({
-                target: {value},
-              }: React.ChangeEvent<HTMLInputElement>): void => {
-                // NOTE: overriding onChange to show errors
-                handleCustomUrlInputChange(value.trim());
-              }}
-              spellCheck="false"
-              css={[
-                tw`sm:text-base focus:border-indigo-400 focus:outline-none relative w-full py-2 pl-2 pr-12 text-sm placeholder-gray-400 bg-gray-200 border rounded`,
+          <input
+            {...textProps('customurl')}
+            onChange={({
+              target: {value},
+            }: React.ChangeEvent<HTMLInputElement>): void => {
+              // NOTE: overriding onChange to show errors
+              handleCustomUrlInputChange(value.trim());
+            }}
+            spellCheck="false"
+            css={[
+              tw`focus:outline-none sm:text-base focus:border-indigo-400 w-full px-2 py-2 text-sm placeholder-gray-400 bg-gray-200 border rounded`,
 
-                formStateValidity.customurl !== undefined &&
-                  !formStateValidity.customurl &&
-                  tw`border-red-500`,
-              ]}
-            />
-          </div>
+              css`
+                margin-top: 1.2rem;
+              `,
+
+              formStateValidity.customurl !== undefined &&
+                !formStateValidity.customurl &&
+                tw`border-red-500`,
+            ]}
+          />
 
           <span tw="flex items-center mt-1 ml-1 text-xs font-medium tracking-wide text-red-500">
             {formStateErrors.customurl}
           </span>
         </div>
 
-        <div tw="flex flex-col mb-4">
+        <div tw="flex flex-col mb-3 relative">
           <label
             {...labelProps('password')}
-            spellCheck="false"
-            tw="sm:text-sm mb-1 text-xs tracking-wide text-gray-600"
+            tw="sm:text-sm absolute top-0 bottom-0 left-0 right-0 z-10 block text-xs tracking-wide text-gray-600 cursor-pointer"
           >
-            Password
+            <span>Password</span>
           </label>
 
           <div tw="relative">
-            <div tw="absolute top-0 right-0 flex w-10 h-full border border-transparent">
+            <div tw="absolute top-0 right-0 flex w-10 mt-6 border border-transparent">
               <Icon
-                tw="z-10 cursor-pointer flex items-center justify-center w-full h-full text-gray-600 rounded-tl rounded-bl"
+                tw="z-10 flex items-center justify-center w-full h-full text-gray-600 rounded-tl rounded-bl cursor-pointer"
                 onClick={(): void => setShowPassword(!showPassword)}
                 name={!showPassword ? 'eye-closed' : 'eye'}
               />
@@ -179,6 +180,7 @@ const Form: React.FC<Props> = ({handleFormSubmit}) => {
             <input
               {...passwordProps('password')}
               type={!showPassword ? 'password' : 'text'}
+              spellCheck="false"
               onChange={({
                 target: {value},
               }: React.ChangeEvent<HTMLInputElement>): void => {
@@ -186,7 +188,11 @@ const Form: React.FC<Props> = ({handleFormSubmit}) => {
                 handlePasswordInputChange(value.trim());
               }}
               css={[
-                tw`sm:text-base focus:border-indigo-400 focus:outline-none relative w-full py-2 pl-2 pr-12 text-sm placeholder-gray-400 bg-gray-200 border rounded`,
+                tw`focus:outline-none sm:text-base focus:border-indigo-400 w-full px-2 py-2 text-sm placeholder-gray-400 bg-gray-200 border rounded`,
+
+                css`
+                  margin-top: 1.2rem;
+                `,
 
                 formStateValidity.password !== undefined &&
                   !formStateValidity.password &&
