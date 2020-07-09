@@ -60,7 +60,8 @@
 ## Screenshots
 
 <div>
-  <img width="250" src="./.github/assets/popup.png" alt="image1" />
+  <img width="250" src="./.github/assets/popup-v4-1.png" alt="popup" />
+  <img width="350" src="./.github/assets/options-v4-1.png" alt="options" />
 </div>
 
 <br />
