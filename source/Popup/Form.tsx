@@ -128,7 +128,7 @@ const Form: React.FC<Props> = ({handleFormSubmit}) => {
         <div tw="flex flex-col mb-3 relative">
           <label
             {...labelProps('customurl')}
-            tw="sm:text-sm block text-xs tracking-wide cursor-text text-gray-600 absolute top-0 bottom-0 left-0 right-0"
+            tw="sm:text-sm absolute top-0 bottom-0 left-0 right-0 z-10 block text-xs tracking-wide text-gray-600 cursor-pointer"
           >
             <span>{hostDomain}/</span>
           </label>
@@ -163,7 +163,7 @@ const Form: React.FC<Props> = ({handleFormSubmit}) => {
         <div tw="flex flex-col mb-3 relative">
           <label
             {...labelProps('password')}
-            tw="sm:text-sm cursor-text absolute top-0 bottom-0 left-0 right-0 z-10 block text-xs tracking-wide text-gray-600"
+            tw="sm:text-sm absolute top-0 bottom-0 left-0 right-0 z-10 block text-xs tracking-wide text-gray-600 cursor-pointer"
           >
             <span>Password</span>
           </label>
