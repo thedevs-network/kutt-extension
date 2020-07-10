@@ -85,7 +85,7 @@ const ResponseBody: React.FC = () => {
       </StyledPopupBody>
 
       {!error && QRView && (
-        <div tw="flex justify-center px-4 pt-4 pb-0">
+        <div tw="flex justify-center max-w-full pt-4 pb-0">
           <QRCode size={128} value={message} />
         </div>
       )}

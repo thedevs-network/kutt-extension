@@ -319,7 +319,7 @@ const Popup: React.FC = () => {
           tw`text-lg`,
           css`
             min-height: 350px;
-            min-width: 250px;
+            min-width: 270px;
           `,
         ]}
       >
