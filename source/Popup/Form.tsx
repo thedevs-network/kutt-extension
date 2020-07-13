@@ -336,9 +336,9 @@ const Form: React.FC = () => {
             handleFormSubmit(formState.values);
           }}
         >
-          <span tw="ml-2">Create</span>
-
-          {isSubmitting && (
+          {!isSubmitting ? (
+            <span>Create</span>
+          ) : (
             <Icon className="icon create__icon" name="spinner" />
           )}
         </StyledValidateButton>
