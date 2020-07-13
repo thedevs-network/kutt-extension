@@ -25,7 +25,7 @@ type OptionsFormValuesProperties = {
 };
 
 const StyledValidateButton = styled.button`
-  ${tw`focus:outline-none hover:text-gray-200 inline-flex items-center px-3 py-1 mt-3 mb-1 text-xs font-semibold text-center text-white duration-300 ease-in-out rounded shadow-lg`}
+  ${tw`focus:outline-none hover:text-gray-200 inline-flex items-center justify-center px-3 py-2 mt-3 mb-1 text-xs font-semibold text-center text-white duration-300 ease-in-out rounded shadow-lg`}
 
   background: linear-gradient(to right,rgb(126, 87, 194),rgb(98, 0, 234));
 
@@ -36,7 +36,7 @@ const StyledValidateButton = styled.button`
       ${tw`transition-transform duration-300 ease-in-out`}
 
       stroke: currentColor;
-      stroke-width: 2.5;
+      stroke-width: 2;
     }
   }
 `;

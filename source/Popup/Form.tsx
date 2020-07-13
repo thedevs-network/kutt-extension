@@ -1,26 +1,51 @@
 import {useFormState} from 'react-use-form-state';
-import tw, {css} from 'twin.macro';
+import tw, {css, styled} from 'twin.macro';
 import React, {useState} from 'react';
 
 import {useExtensionSettings} from '../contexts/extension-settings-context';
+import {getCurrentTab, isValidUrl} from '../util/tabs';
+import {SHORTEN_URL} from '../Background/constants';
+import messageUtil from '../util/mesageUtil';
+import {
+  RequestStatusActionTypes,
+  useRequestStatus,
+} from '../contexts/request-status-context';
+import {
+  SuccessfulShortenStatusProperties,
+  ShortUrlActionBodyProperties,
+  ApiErroredProperties,
+  ApiBodyProperties,
+} from '../Background';
 
 import Icon from '../components/Icon';
-
-type Props = {
-  handleFormSubmit: (props: {
-    domain: string;
-    customurl: string;
-    password: string;
-  }) => Promise<void>;
-};
 
 export enum CONSTANTS {
   DefaultDomainId = 'default',
 }
 
-const Form: React.FC<Props> = ({handleFormSubmit}) => {
+const StyledValidateButton = styled.button`
+  ${tw`focus:outline-none hover:text-gray-200 inline-flex items-center justify-center w-full px-3 py-1 mb-1 text-xs font-semibold text-center text-white duration-300 ease-in-out rounded shadow-lg`}
+
+  background: linear-gradient(to right,rgb(126, 87, 194),rgb(98, 0, 234));
+  min-height: 36px;
+
+  .create__icon {
+    ${tw`inline-flex px-0 bg-transparent`}
+
+    svg {
+      ${tw`transition-transform duration-300 ease-in-out`}
+
+      stroke: currentColor;
+      stroke-width: 2;
+    }
+  }
+`;
+
+const Form: React.FC = () => {
   const extensionSettingsState = useExtensionSettings()[0];
+  const requestStatusDispatch = useRequestStatus()[1];
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const {
     domainOptions,
     host: {hostDomain},
@@ -66,6 +91,90 @@ const Form: React.FC<Props> = ({handleFormSubmit}) => {
       formStateErrors.customurl === undefined &&
       formStateErrors.password === undefined) ||
     false;
+
+  async function handleFormSubmit({
+    customurl,
+    password,
+    domain,
+  }: {
+    domain: string;
+    customurl: string;
+    password: string;
+  }): Promise<void> {
+    // enable loading screen
+    setIsSubmitting(true);
+
+    // Get target link to shorten
+    const tabs = await getCurrentTab();
+    const target: string | null = (tabs.length > 0 && tabs[0].url) || null;
+
+    if (!target || !isValidUrl(target)) {
+      requestStatusDispatch({
+        type: RequestStatusActionTypes.SET_LOADING,
+        payload: false,
+      });
+
+      requestStatusDispatch({
+        type: RequestStatusActionTypes.SET_REQUEST_STATUS,
+        payload: {
+          error: true,
+          message: 'Not a valid URL',
+        },
+      });
+
+      return;
+    }
+
+    const apiBody: ApiBodyProperties = {
+      apikey: extensionSettingsState.apikey,
+      target,
+      ...(customurl.trim() !== '' && {customurl: customurl.trim()}), // add this key only if field is not empty
+      ...(password.trim() !== '' && {password: password.trim()}),
+      reuse: false,
+      // ToDo: remove condition when https://github.com/thedevs-network/kutt/issues/287 is resolved
+      ...(domain.trim() !== extensionSettingsState.host.hostUrl && {
+        domain: domain.trim(),
+      }),
+    };
+
+    const apiShortenUrlBody: ShortUrlActionBodyProperties = {
+      apiBody,
+      hostUrl: extensionSettingsState.host.hostUrl,
+    };
+    // shorten url in the background
+    const response:
+      | SuccessfulShortenStatusProperties
+      | ApiErroredProperties = await messageUtil.send(
+      SHORTEN_URL,
+      apiShortenUrlBody
+    );
+
+    // disable spinner
+    setIsSubmitting(false);
+
+    if (!response.error) {
+      const {
+        data: {link},
+      } = response;
+      // show shortened url
+      requestStatusDispatch({
+        type: RequestStatusActionTypes.SET_REQUEST_STATUS,
+        payload: {
+          error: false,
+          message: link,
+        },
+      });
+    } else {
+      // errored
+      requestStatusDispatch({
+        type: RequestStatusActionTypes.SET_REQUEST_STATUS,
+        payload: {
+          error: true,
+          message: response.message,
+        },
+      });
+    }
+  }
 
   function handleCustomUrlInputChange(url: string): void {
     setFormStateField('customurl', url);
@@ -220,26 +329,19 @@ const Form: React.FC<Props> = ({handleFormSubmit}) => {
           </span>
         </div>
 
-        <button
+        <StyledValidateButton
           type="submit"
-          disabled={!isFormValid}
+          disabled={!isFormValid || isSubmitting}
           onClick={(): void => {
             handleFormSubmit(formState.values);
           }}
-          css={[
-            tw`block w-full px-2 py-3 mb-1 text-xs font-semibold text-white bg-purple-700 rounded`,
-
-            css`
-              background: linear-gradient(
-                to right,
-                rgb(126, 87, 194),
-                rgb(98, 0, 234)
-              );
-            `,
-          ]}
         >
-          Create
-        </button>
+          <span tw="ml-2">Create</span>
+
+          {isSubmitting && (
+            <Icon className="icon create__icon" name="spinner" />
+          )}
+        </StyledValidateButton>
       </div>
     </>
   );
