@@ -1,7 +1,7 @@
 import CopyToClipboard from 'react-copy-to-clipboard';
 import React, {useState, useEffect} from 'react';
 import QRCode from 'qrcode.react';
-import tw, {styled} from 'twin.macro';
+import tw, {styled, css} from 'twin.macro';
 
 import {useRequestStatus} from '../contexts/request-status-context';
 import {removeProtocol} from '../util/link';
@@ -13,12 +13,12 @@ export type ProcessedRequestProperties = {
 };
 
 const StyledPopupBody = styled.div`
-  ${tw`flex justify-center px-4 pt-4 pb-0`}
+  ${tw`flex items-center justify-center px-4 pt-4 pb-0`}
 
   .icon {
     svg {
       stroke: rgb(101, 189, 137);
-      stroke-width: 2.5;
+      stroke-width: 2;
     }
   }
 
@@ -49,8 +49,14 @@ const ResponseBody: React.FC = () => {
         {!error ? (
           <>
             <Icon
-              tw="my-0 ml-0 mr-2"
               className="icon"
+              css={[
+                tw`my-0 ml-0`,
+
+                css`
+                  margin-right: 0.4rem;
+                `,
+              ]}
               name="qrcode"
               onClick={(): void => {
                 return setQRView(!QRView);
@@ -63,10 +69,10 @@ const ResponseBody: React.FC = () => {
                   return setCopied(true);
                 }}
               >
-                <Icon tw="my-0 ml-0 mr-4" className="icon" name="copy" />
+                <Icon tw="my-0 ml-0 mr-3" className="icon" name="copy" />
               </CopyToClipboard>
             ) : (
-              <Icon tw="my-0 ml-0 mr-4" className="icon" name="tick" />
+              <Icon tw="my-0 ml-0 mr-3" className="icon" name="tick" />
             )}
             <CopyToClipboard
               text={message}

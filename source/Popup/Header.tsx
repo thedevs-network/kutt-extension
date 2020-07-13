@@ -21,8 +21,6 @@ import Icon from '../components/Icon';
 const StyledIcon = styled(Icon)`
   ${tw`hover:opacity-75 bg-transparent shadow-none`}
 
-  height: 34px;
-  width: 34px;
   color: rgb(187, 187, 187);
 `;
 
