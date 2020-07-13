@@ -289,14 +289,12 @@ const Popup: React.FC = () => {
       const {
         data: {link},
       } = response;
-      const trimmedLink: string = link.replace('https://', '');
-
       // show shortened url
       requestStatusDispatch({
         type: RequestStatusActionTypes.SET_REQUEST_STATUS,
         payload: {
           error: false,
-          message: trimmedLink,
+          message: link,
         },
       });
     } else {
