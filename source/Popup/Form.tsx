@@ -128,13 +128,10 @@ const Form: React.FC = () => {
     const apiBody: ApiBodyProperties = {
       apikey: extensionSettingsState.apikey,
       target,
-      ...(customurl.trim() !== '' && {customurl: customurl.trim()}), // add this key only if field is not empty
+      ...(customurl.trim() !== '' && {customurl: customurl.trim()}), // add key only if field is not empty
       ...(password.trim() !== '' && {password: password.trim()}),
       reuse: false,
-      // ToDo: remove condition when https://github.com/thedevs-network/kutt/issues/287 is resolved
-      ...(domain.trim() !== extensionSettingsState.host.hostUrl && {
-        domain: domain.trim(),
-      }),
+      ...(domain.trim() !== '' && {domain: domain.trim()}),
     };
 
     const apiShortenUrlBody: ShortUrlActionBodyProperties = {
