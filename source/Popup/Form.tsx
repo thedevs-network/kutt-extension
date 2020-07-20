@@ -109,10 +109,7 @@ const Form: React.FC = () => {
     const target: string | null = (tabs.length > 0 && tabs[0].url) || null;
 
     if (!target || !isValidUrl(target)) {
-      requestStatusDispatch({
-        type: RequestStatusActionTypes.SET_LOADING,
-        payload: false,
-      });
+      setIsSubmitting(false);
 
       requestStatusDispatch({
         type: RequestStatusActionTypes.SET_REQUEST_STATUS,
