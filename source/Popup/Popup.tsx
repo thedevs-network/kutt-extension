@@ -60,19 +60,22 @@ const Popup: React.FC = () => {
       const migrationSettings: any = {};
       let performMigration = false;
 
-      if (key.trim().length > 0) {
+      if ((key as string).trim().length > 0) {
         // map it to `settings.apikey`
         migrationSettings.apikey = key;
         performMigration = true;
       }
-      if (host.trim().length > 0 && userOptions.devMode) {
+      if (
+        (host as string).trim().length > 0 &&
+        (userOptions.devMode as boolean)
+      ) {
         // map `host` to `settings.host`
         migrationSettings.host = host;
         // set `advanced` to true
         migrationSettings.advanced = true;
         performMigration = true;
       }
-      if (userOptions.keepHistory) {
+      if (userOptions.keepHistory as boolean) {
         // set `settings.history` to true
         migrationSettings.history = true;
         performMigration = true;
@@ -95,7 +98,7 @@ const Popup: React.FC = () => {
       // No API Key set
       if (
         !Object.prototype.hasOwnProperty.call(settings, 'apikey') ||
-        settings.apikey === ''
+        (settings.apikey as string) === ''
       ) {
         requestStatusDispatch({
           type: RequestStatusActionTypes.SET_REQUEST_STATUS,
@@ -122,23 +125,23 @@ const Popup: React.FC = () => {
       // If `advanced` field is true
       if (
         Object.prototype.hasOwnProperty.call(settings, 'advanced') &&
-        settings.advanced
+        (settings.advanced as boolean)
       ) {
         // If `host` field is set
         if (
           Object.prototype.hasOwnProperty.call(settings, 'host') &&
-          settings.host.trim().length > 0 &&
-          isValidUrl(settings.host)
+          (settings.host as string)?.trim().length > 0 &&
+          isValidUrl(settings.host as string)
         ) {
           defaultHost = {
-            hostDomain: settings.host
+            hostDomain: (settings.host as string)
               .replace('http://', '')
               .replace('https://', '')
               .replace('www.', '')
               .split(/[/?#]/)[0], // extract domain
-            hostUrl: settings.host.endsWith('/')
-              ? settings.host.slice(0, -1)
-              : settings.host, // slice `/` at the end
+            hostUrl: (settings.host as string).endsWith('/')
+              ? (settings.host as string).slice(0, -1)
+              : (settings.host as string), // slice `/` at the end
           };
         }
       }
@@ -162,7 +165,7 @@ const Popup: React.FC = () => {
       // `user` & `apikey` fields exist on storage
       if (
         Object.prototype.hasOwnProperty.call(settings, 'user') &&
-        settings.user
+        (settings.user as UserSettingsResponseProperties)
       ) {
         const {user}: {user: UserSettingsResponseProperties} = settings;
 
@@ -184,7 +187,7 @@ const Popup: React.FC = () => {
         extensionSettingsDispatch({
           type: ExtensionSettingsActionTypes.HYDRATE_EXTENSION_SETTINGS,
           payload: {
-            apikey: settings.apikey.trim(),
+            apikey: (settings.apikey as string)?.trim(),
             domainOptions: optionsList,
             host: defaultHost,
           },
@@ -194,7 +197,7 @@ const Popup: React.FC = () => {
         extensionSettingsDispatch({
           type: ExtensionSettingsActionTypes.HYDRATE_EXTENSION_SETTINGS,
           payload: {
-            apikey: settings.apikey.trim(),
+            apikey: (settings.apikey as string)?.trim(),
             domainOptions: defaultOptions,
             host: defaultHost,
           },

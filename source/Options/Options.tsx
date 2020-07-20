@@ -26,26 +26,28 @@ const Options: React.FC = () => {
   useEffect(() => {
     async function getSavedSettings(): Promise<void> {
       const {settings = {}} = await getExtensionSettings();
-      const advancedSettings: boolean = (settings?.advanced && true) || false;
+      const advancedSettings: boolean =
+        (settings?.advanced as boolean) || false;
+
       const defaultHost: HostProperties =
         (advancedSettings &&
-          settings?.host &&
-          isValidUrl(`${settings.host}`) && {
-            hostDomain: settings.host
+          (settings?.host as string) &&
+          isValidUrl(settings.host as string) && {
+            hostDomain: (settings.host as string)
               .replace('http://', '')
               .replace('https://', '')
               .replace('www.', '')
               .split(/[/?#]/)[0], // extract domain
-            hostUrl: settings.host.endsWith('/')
-              ? settings.host.slice(0, -1)
-              : settings.host, // slice `/` at the end
+            hostUrl: (settings.host as string).endsWith('/')
+              ? (settings.host as string).slice(0, -1)
+              : (settings.host as string), // slice `/` at the end
           }) ||
         Kutt;
 
       // inject existing keys (if field doesn't exist, use default)
       const defaultExtensionConfig = {
-        apikey: settings?.apikey?.trim() || '',
-        history: (settings?.history && true) || false,
+        apikey: (settings?.apikey as string)?.trim() || '',
+        history: (settings?.history as boolean) || false,
         advanced:
           defaultHost.hostUrl.trim() !== Kutt.hostUrl && advancedSettings, // disable `advanced` if customhost is not set
         host: defaultHost,

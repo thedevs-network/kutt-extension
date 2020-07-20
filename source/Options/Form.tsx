@@ -153,6 +153,8 @@ const Form: React.FC = () => {
           formStateValues.host.trim()) ||
         Kutt.hostUrl,
     };
+
+    // API call
     const response:
       | SuccessfulApiKeyCheckProperties
       | ApiErroredProperties = await messageUtil.send(

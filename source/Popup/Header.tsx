@@ -43,6 +43,7 @@ const Header: React.FC = () => {
       apikey: extensionSettingsState.apikey,
       hostUrl: extensionSettingsState.host.hostUrl,
     };
+
     // request API
     const response:
       | SuccessfulApiKeyCheckProperties
