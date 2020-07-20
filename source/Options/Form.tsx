@@ -93,7 +93,7 @@ const Form: React.FC = () => {
 
   const isFormValid: boolean =
     ((formStateValidity.apikey === undefined || formStateValidity.apikey) &&
-    formStateValues.apikey !== '' && // invalidate if api key is empty
+    formStateValues.apikey.trim().length === 40 && // invalidate if api key is empty
       formStateErrors.apikey === undefined &&
       (((formStateValidity.host === undefined || formStateValidity.host) &&
         formStateErrors.host === undefined) ||
