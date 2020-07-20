@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import 'twin.macro';
+
 import {getExtensionSettings} from '../util/settings';
 import {
   HostProperties,
