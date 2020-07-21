@@ -77,34 +77,41 @@ const History: React.FC = () => {
       //   payload: defaultExtensionConfig,
       // });
 
-      // ****************************************************** //
-      // **************** FETCH URLS HISTORY ****************** //
-      // ****************************************************** //
-      const urlsHistoryFetchRequetBody: AuthRequestBodyProperties = {
-        apikey: defaultExtensionConfig.apikey,
-        hostUrl: defaultExtensionConfig.host.hostUrl,
-      };
+      if (defaultExtensionConfig.history) {
+        // ****************************************************** //
+        // **************** FETCH URLS HISTORY ****************** //
+        // ****************************************************** //
+        const urlsHistoryFetchRequetBody: AuthRequestBodyProperties = {
+          apikey: defaultExtensionConfig.apikey,
+          hostUrl: defaultExtensionConfig.host.hostUrl,
+        };
 
-      // call api
-      const response:
-        | SuccessfulUrlsHistoryFetchProperties
-        | ApiErroredProperties = await messageUtil.send(
-        FETCH_URLS_HISTORY,
-        urlsHistoryFetchRequetBody
-      );
+        // call api
+        const response:
+          | SuccessfulUrlsHistoryFetchProperties
+          | ApiErroredProperties = await messageUtil.send(
+          FETCH_URLS_HISTORY,
+          urlsHistoryFetchRequetBody
+        );
 
-      if (!response.error) {
-        setErrored({error: false, message: 'Fetch successful'});
+        if (!response.error) {
+          setErrored({error: false, message: 'Fetch successful'});
 
-        shortenedLinksDispatch({
-          type: ShortenedLinksActionTypes.HYDRATE_SHORTENED_LINKS,
-          payload: {
-            items: response.data.data,
-            total: response.data.total,
-          },
-        });
+          shortenedLinksDispatch({
+            type: ShortenedLinksActionTypes.HYDRATE_SHORTENED_LINKS,
+            payload: {
+              items: response.data.data,
+              total: response.data.total,
+            },
+          });
+        } else {
+          setErrored({error: true, message: response.message});
+        }
       } else {
-        setErrored({error: true, message: response.message});
+        setErrored({
+          error: true,
+          message: 'History page disabled. Please enable it from settings.',
+        });
       }
 
       requestStatusDispatch({
