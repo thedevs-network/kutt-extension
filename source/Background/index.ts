@@ -21,9 +21,34 @@ export enum StoreLinks {
   firefox = 'https://addons.mozilla.org/en-US/firefox/addon/kutt/reviews/',
 }
 
+// **** ------------------ **** //
+
 export type ErrorStateProperties = {
   error: boolean | null;
   message: string;
+};
+
+export type ApiErroredProperties = {
+  error: true;
+  message: string;
+};
+
+export type AuthRequestBodyProperties = {
+  apikey: string;
+  hostUrl: HostUrlProperties;
+};
+
+// **** ------------------ **** //
+
+type HostUrlProperties = string;
+
+export type DomainEntryProperties = {
+  address: string;
+  banned: boolean;
+  created_at: string;
+  id: string;
+  homepage: string;
+  updated_at: string;
 };
 
 type ShortenUrlBodyProperties = {
@@ -33,10 +58,6 @@ type ShortenUrlBodyProperties = {
   reuse: boolean;
   domain?: string;
 };
-
-export interface ApiBodyProperties extends ShortenUrlBodyProperties {
-  apikey: string;
-}
 
 type ShortenLinkResponseProperties = {
   id: string;
@@ -50,9 +71,13 @@ type ShortenLinkResponseProperties = {
   link: string;
 };
 
-export type ApiErroredProperties = {
-  error: true;
-  message: string;
+export interface ApiBodyProperties extends ShortenUrlBodyProperties {
+  apikey: string;
+}
+
+export type ShortUrlActionBodyProperties = {
+  apiBody: ApiBodyProperties;
+  hostUrl: HostUrlProperties;
 };
 
 export type SuccessfulShortenStatusProperties = {
@@ -60,38 +85,9 @@ export type SuccessfulShortenStatusProperties = {
   data: ShortenLinkResponseProperties;
 };
 
-type HostUrlProperties = string;
-
-export type DomainEntryProperties = {
-  address: string;
-  banned: boolean;
-  created_at: string;
-  id: string;
-  homepage: string;
-  updated_at: string;
-};
-
-export type UserSettingsResponseProperties = {
-  apikey: string;
-  email: string;
-  domains: DomainEntryProperties[];
-};
-
-export type SuccessfulApiKeyCheckProperties = {
-  error: false;
-  data: UserSettingsResponseProperties;
-};
-
-export type ShortUrlActionBodyProperties = {
-  apiBody: ApiBodyProperties;
-  hostUrl: HostUrlProperties;
-};
-
-export type GetUserSettingsBodyProperties = {
-  apikey: string;
-  hostUrl: HostUrlProperties;
-};
-
+/**
+ *  Shorten URL using v2 API
+ */
 async function shortenUrl({
   apiBody,
   hostUrl,
@@ -99,7 +95,6 @@ async function shortenUrl({
   SuccessfulShortenStatusProperties | ApiErroredProperties
 > {
   try {
-    // extract `apikey` from body
     const {apikey, ...otherParams} = apiBody;
 
     const {data}: {data: ShortenLinkResponseProperties} = await axios({
@@ -162,10 +157,23 @@ async function shortenUrl({
   }
 }
 
+// **** ------------------ **** //
+
+export type UserSettingsResponseProperties = {
+  apikey: string;
+  email: string;
+  domains: DomainEntryProperties[];
+};
+
+export type SuccessfulApiKeyCheckProperties = {
+  error: false;
+  data: UserSettingsResponseProperties;
+};
+
 function getUserSettings({
   apikey,
   hostUrl,
-}: GetUserSettingsBodyProperties): AxiosPromise<any> {
+}: AuthRequestBodyProperties): AxiosPromise<any> {
   return axios({
     method: 'GET',
     url: `${hostUrl}/api/v2/users`,
@@ -179,7 +187,7 @@ function getUserSettings({
 async function checkApiKey({
   apikey,
   hostUrl,
-}: GetUserSettingsBodyProperties): Promise<
+}: AuthRequestBodyProperties): Promise<
   SuccessfulApiKeyCheckProperties | ApiErroredProperties
 > {
   try {
@@ -218,13 +226,97 @@ async function checkApiKey({
 
     return {
       error: true,
-      message: 'Error: Please check your internet connection',
+      message: 'Error: Requesting to server failed.',
     };
   }
 }
 
+// **** ------------------ **** //
+
+export type SuccessfulUrlsHistoryFetchProperties = {
+  error: false;
+  data: UserShortenedLinksHistoryResponseBody;
+};
+
+type UserShortenedLinksHistoryResponseBody = {
+  limit: number;
+  skip: number;
+  total: number;
+  data: UserShortenedLinkStats[];
+};
+
+export type UserShortenedLinkStats = {
+  address: string;
+  banned: boolean;
+  created_at: string;
+  id: string;
+  link: string;
+  password: boolean;
+  target: string;
+  updated_at: string;
+  visit_count: number;
+};
+
 /**
- *  Listen for messages from UI
+ *  Fetch User's recent 15 shortened urls
+ */
+
+async function fetchUrlsHistory({
+  apikey,
+  hostUrl,
+}: AuthRequestBodyProperties): Promise<
+  SuccessfulUrlsHistoryFetchProperties | ApiErroredProperties
+> {
+  try {
+    const {data}: {data: UserShortenedLinksHistoryResponseBody} = await axios({
+      method: 'GET',
+      timeout: constants.SHORTEN_URL_TIMEOUT,
+      url: `${hostUrl}/api/v2/links`,
+      params: {
+        limit: constants.MAX_HISTORY_ITEMS,
+      },
+      headers: {
+        'X-API-Key': apikey,
+      },
+    });
+
+    return {
+      error: false,
+      data,
+    };
+  } catch (err) {
+    if (err.response) {
+      if (err.response.status === 401) {
+        return {
+          error: true,
+          message: 'Error: Invalid API Key',
+        };
+      }
+
+      return {
+        error: true,
+        message: 'Error: Something went wrong.',
+      };
+    }
+
+    if (err.code === 'ECONNABORTED') {
+      return {
+        error: true,
+        message: 'Error: Timed out',
+      };
+    }
+
+    return {
+      error: true,
+      message: 'Error: Requesting to server failed.',
+    };
+  }
+}
+
+// **** ------------------ **** //
+
+/**
+ *  Listen for messages from UI pages
  */
 browser.runtime.onMessage.addListener((request, _sender): void | Promise<
   any
@@ -238,6 +330,10 @@ browser.runtime.onMessage.addListener((request, _sender): void | Promise<
 
     case constants.SHORTEN_URL: {
       return shortenUrl(request.params);
+    }
+
+    case constants.FETCH_URLS_HISTORY: {
+      return fetchUrlsHistory(request.params);
     }
   }
 });
