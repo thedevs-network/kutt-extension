@@ -1,5 +1,6 @@
-import tw, {css, styled} from 'twin.macro';
+import CopyToClipboard from 'react-copy-to-clipboard';
 import React, {useEffect, useState} from 'react';
+import tw, {css, styled} from 'twin.macro';
 
 import {
   useShortenedLinks,
@@ -38,10 +39,28 @@ const StyledIcon = styled(Icon)`
 const Table: React.FC = () => {
   const [shortenedLinksState, shortenedLinksDispatch] = useShortenedLinks();
   const [QRView, setQRView] = useState<boolean>(false);
+  const [copied, setCopied] = useState<boolean>(false);
+
+  // reset copy message
+  useEffect(() => {
+    setTimeout(() => {
+      setCopied(false);
+      // reset selected id from context
+    }, 1300);
+  }, [copied]);
+
+  function handleCopyToClipboard(selectedItemId: string): void {
+    shortenedLinksDispatch({
+      type: ShortenedLinksActionTypes.SET_CURRENT_SELECTED,
+      payload: selectedItemId,
+    });
+
+    setCopied(true);
+  }
 
   function handleQRCodeViewToggle(selectedItemId: string): void {
     shortenedLinksDispatch({
-      type: ShortenedLinksActionTypes.TOGGLE_QRCODE_MODAL,
+      type: ShortenedLinksActionTypes.SET_CURRENT_SELECTED,
       payload: selectedItemId,
     });
 
@@ -72,7 +91,7 @@ const Table: React.FC = () => {
           <div tw="flex items-center justify-center">
             <h2
               css={[
-                tw`mx-0 text-2xl`,
+                tw`mx-0 text-xl`,
 
                 css`
                   margin-right: 0.8rem;
@@ -214,17 +233,22 @@ const Table: React.FC = () => {
                           `,
                         ]}
                       >
-                        <div
-                          css={[
-                            tw`absolute top-0 left-0 text-xs text-green-900`,
+                        {copied &&
+                          shortenedLinksState.selected !== null &&
+                          shortenedLinksState.selected.id === item.id && (
+                            <div
+                              css={[
+                                tw`absolute top-0 left-0 text-xs text-green-900`,
 
-                            css`
-                              font-size: 11px;
-                            `,
-                          ]}
-                        >
-                          Copied to clipboard!
-                        </div>
+                                css`
+                                  font-size: 11px;
+                                `,
+                              ]}
+                            >
+                              Copied to clipboard!
+                            </div>
+                          )}
+
                         <div tw="flex items-center">
                           <a
                             css={[
@@ -245,7 +269,23 @@ const Table: React.FC = () => {
 
                       <StyledTd>
                         <div tw="flex items-center justify-end">
-                          <StyledIcon className="icon" name="copy" />
+                          {/* // **** COPY TO CLIPBOARD **** // */}
+
+                          {copied &&
+                          shortenedLinksState.selected !== null &&
+                          shortenedLinksState.selected.id === item.id ? (
+                            <StyledIcon name="tick" className="icon" />
+                          ) : (
+                            <CopyToClipboard
+                              text={item.link}
+                              onCopy={(): void => {
+                                return handleCopyToClipboard(item.id);
+                              }}
+                            >
+                              <StyledIcon name="copy" className="icon" />
+                            </CopyToClipboard>
+                          )}
+
                           <StyledIcon
                             onClick={(): void =>
                               handleQRCodeViewToggle(item.id)
@@ -254,6 +294,8 @@ const Table: React.FC = () => {
                             name="qrcode"
                           />
                         </div>
+
+                        {/* // **** QR CODE MODAL **** // */}
                         {QRView &&
                           shortenedLinksState.selected !== null &&
                           shortenedLinksState.selected.id === item.id && (

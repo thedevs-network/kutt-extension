@@ -5,7 +5,7 @@ import {UserShortenedLinkStats} from '../Background';
 
 export enum ShortenedLinksActionTypes {
   HYDRATE_SHORTENED_LINKS = 'hydrate-shortened-links',
-  TOGGLE_QRCODE_MODAL = 'toggle-qrcode-modal',
+  SET_CURRENT_SELECTED = 'toggle-qrcode-modal',
 }
 
 type HYDRATE_SHORTENED_LINKS = {
@@ -16,12 +16,12 @@ type HYDRATE_SHORTENED_LINKS = {
   };
 };
 
-type TOGGLE_QRCODE_MODAL = {
-  type: ShortenedLinksActionTypes.TOGGLE_QRCODE_MODAL;
+type SET_CURRENT_SELECTED = {
+  type: ShortenedLinksActionTypes.SET_CURRENT_SELECTED;
   payload: string;
 };
 
-type Action = HYDRATE_SHORTENED_LINKS | TOGGLE_QRCODE_MODAL;
+type Action = HYDRATE_SHORTENED_LINKS | SET_CURRENT_SELECTED;
 
 type InitialValues = {
   items: UserShortenedLinkStats[];
@@ -52,7 +52,7 @@ const shortenedLinksReducer = (state: State, action: Action): State => {
       };
     }
 
-    case ShortenedLinksActionTypes.TOGGLE_QRCODE_MODAL: {
+    case ShortenedLinksActionTypes.SET_CURRENT_SELECTED: {
       const selected: null | UserShortenedLinkStats =
         state.items.filter((item) => item.id === action.payload)[0] || null;
 

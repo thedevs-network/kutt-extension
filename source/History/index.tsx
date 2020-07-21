@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // Common styles
-import '../styles/main.scss';
+import './styles.scss';
 
 import History from './History';
 import {ExtensionSettingsProvider} from '../contexts/extension-settings-context';
