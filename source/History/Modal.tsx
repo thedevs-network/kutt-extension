@@ -2,7 +2,12 @@ import tw, {css} from 'twin.macro';
 import QRCode from 'qrcode.react';
 import React from 'react';
 
-const Modal: React.FC = () => {
+type Props = {
+  link: string;
+  setModalView: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const Modal: React.FC<Props> = ({link, setModalView}) => {
   return (
     <>
       <div
@@ -25,11 +30,12 @@ const Modal: React.FC = () => {
           ]}
         >
           <div>
-            <QRCode size={196} value="%link%" />
+            <QRCode size={196} value={link} />
           </div>
 
           <div tw="flex justify-center mt-10">
             <button
+              onClick={(): void => setModalView(false)}
               css={[
                 tw`relative flex items-center justify-center h-10 px-8 py-0 mx-4 my-0 overflow-hidden text-sm leading-none text-center text-black transition-all ease-out cursor-pointer`,
 

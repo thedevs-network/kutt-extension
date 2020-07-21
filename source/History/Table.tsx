@@ -1,11 +1,14 @@
 import tw, {css, styled} from 'twin.macro';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
-import {useShortenedLinks} from '../contexts/shortened-links-context';
+import {
+  useShortenedLinks,
+  ShortenedLinksActionTypes,
+} from '../contexts/shortened-links-context';
 import {MAX_HISTORY_ITEMS} from '../Background/constants';
 
 import Icon from '../components/Icon';
-// import Modal from './Modal';
+import Modal from './Modal';
 
 const StyledTd = styled.td`
   ${tw`relative flex items-center px-0 py-4`}
@@ -33,7 +36,17 @@ const StyledIcon = styled(Icon)`
 `;
 
 const Table: React.FC = () => {
-  const [state] = useShortenedLinks();
+  const [shortenedLinksState, shortenedLinksDispatch] = useShortenedLinks();
+  const [QRView, setQRView] = useState<boolean>(false);
+
+  function handleQRCodeViewToggle(selectedItemId: string): void {
+    shortenedLinksDispatch({
+      type: ShortenedLinksActionTypes.TOGGLE_QRCODE_MODAL,
+      payload: selectedItemId,
+    });
+
+    setQRView(true);
+  }
 
   return (
     <>
@@ -124,8 +137,8 @@ const Table: React.FC = () => {
               </tr>
             </thead>
             <tbody tw="flex flex-col flex-auto">
-              {!(state.total === 0) ? (
-                state.items.map((item) => {
+              {!(shortenedLinksState.total === 0) ? (
+                shortenedLinksState.items.map((item) => {
                   return (
                     <tr
                       key={item.id}
@@ -233,9 +246,19 @@ const Table: React.FC = () => {
                       <StyledTd>
                         <div tw="flex items-center justify-end">
                           <StyledIcon className="icon" name="copy" />
-                          <StyledIcon className="icon" name="qrcode" />
+                          <StyledIcon
+                            onClick={(): void =>
+                              handleQRCodeViewToggle(item.id)
+                            }
+                            className="icon"
+                            name="qrcode"
+                          />
                         </div>
-                        {/* <Modal /> */}
+                        {QRView &&
+                          shortenedLinksState.selected !== null &&
+                          shortenedLinksState.selected.id === item.id && (
+                            <Modal link={item.link} setModalView={setQRView} />
+                          )}
                       </StyledTd>
                     </tr>
                   );
