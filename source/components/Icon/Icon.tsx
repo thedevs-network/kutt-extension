@@ -1,31 +1,33 @@
 import React from 'react';
 
-import StarYellow from './StarYellow';
-import EyeClosed from './EyeClosed';
-import StarWhite from './StarWhite';
-import Settings from './Settings';
-import Refresh from './Refresh';
-import Spinner from './Spinner';
-import QRCode from './QRCode';
-import Cross from './Cross';
-import Copy from './Copy';
-import Tick from './Tick';
-import Zap from './Zap';
-import Eye from './Eye';
+import StarYellowIcon from './StarYellow';
+import EyeClosedIcon from './EyeClosed';
+import StarWhiteIcon from './StarWhite';
+import SettingsIcon from './Settings';
+import RefreshIcon from './Refresh';
+import SpinnerIcon from './Spinner';
+import QRCodeIcon from './QRCode';
+import CrossIcon from './Cross';
+import ClockIcon from './Clock';
+import CopyIcon from './Copy';
+import TickIcon from './Tick';
+import ZapIcon from './Zap';
+import EyeIcon from './Eye';
 
 const icons = {
-  copy: Copy,
-  cross: Cross,
-  eye: Eye,
-  'eye-closed': EyeClosed,
-  qrcode: QRCode,
-  refresh: Refresh,
-  settings: Settings,
-  spinner: Spinner,
-  'star-yellow': StarYellow,
-  'star-white': StarWhite,
-  tick: Tick,
-  zap: Zap,
+  clock: ClockIcon,
+  copy: CopyIcon,
+  cross: CrossIcon,
+  eye: EyeIcon,
+  'eye-closed': EyeClosedIcon,
+  qrcode: QRCodeIcon,
+  refresh: RefreshIcon,
+  settings: SettingsIcon,
+  spinner: SpinnerIcon,
+  'star-yellow': StarYellowIcon,
+  'star-white': StarWhiteIcon,
+  tick: TickIcon,
+  zap: ZapIcon,
 };
 
 export type Icons = keyof typeof icons;

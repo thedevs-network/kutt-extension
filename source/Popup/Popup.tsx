@@ -146,6 +146,15 @@ const Popup: React.FC = () => {
         }
       }
 
+      let historyEnabled = false;
+      // `history` field set
+      if (
+        Object.prototype.hasOwnProperty.call(settings, 'history') &&
+        (settings.history as boolean)
+      ) {
+        historyEnabled = settings.history as boolean;
+      }
+
       // options menu
       const defaultOptions: DomainOptionsProperties[] = [
         {
@@ -190,6 +199,7 @@ const Popup: React.FC = () => {
             apikey: (settings.apikey as string)?.trim(),
             domainOptions: optionsList,
             host: defaultHost,
+            history: historyEnabled,
           },
         });
       } else {
@@ -200,6 +210,7 @@ const Popup: React.FC = () => {
             apikey: (settings.apikey as string)?.trim(),
             domainOptions: defaultOptions,
             host: defaultHost,
+            history: historyEnabled,
           },
         });
       }

@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import tw, {styled} from 'twin.macro';
 
+import {openExtOptionsPage, openHistoryPage} from '../util/tabs';
 import {updateExtensionSettings} from '../util/settings';
 import {CHECK_API_KEY} from '../Background/constants';
 import {
   ExtensionSettingsActionTypes,
   useExtensionSettings,
 } from '../contexts/extension-settings-context';
-import {openExtOptionsPage} from '../util/tabs';
 import messageUtil from '../util/mesageUtil';
 import {
   SuccessfulApiKeyCheckProperties,
@@ -97,8 +97,7 @@ const Header: React.FC = () => {
 
         <div tw="flex">
           <StyledIcon
-            className="icon"
-            title="Refresh"
+            onClick={fetchUserDomains}
             name={
               loading
                 ? 'spinner'
@@ -106,13 +105,22 @@ const Header: React.FC = () => {
                     ((!errored.error && 'tick') || 'cross')) ||
                   'refresh'
             }
-            onClick={fetchUserDomains}
-          />
-          <StyledIcon
+            title="Refresh"
             className="icon"
-            name="settings"
-            title="Settings"
+          />
+          {extensionSettingsState.history && (
+            <StyledIcon
+              onClick={openHistoryPage}
+              name="clock"
+              className="icon"
+              title="History"
+            />
+          )}
+          <StyledIcon
             onClick={openExtOptionsPage}
+            name="settings"
+            className="icon"
+            title="Settings"
           />
         </div>
       </header>
