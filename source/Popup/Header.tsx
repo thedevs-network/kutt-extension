@@ -11,7 +11,7 @@ import {openExtOptionsPage} from '../util/tabs';
 import messageUtil from '../util/mesageUtil';
 import {
   SuccessfulApiKeyCheckProperties,
-  GetUserSettingsBodyProperties,
+  AuthRequestBodyProperties,
   ApiErroredProperties,
   ErrorStateProperties,
 } from '../Background';
@@ -39,7 +39,7 @@ const Header: React.FC = () => {
     // show loading spinner
     setLoading(true);
 
-    const apiKeyValidationBody: GetUserSettingsBodyProperties = {
+    const apiKeyValidationBody: AuthRequestBodyProperties = {
       apikey: extensionSettingsState.apikey,
       hostUrl: extensionSettingsState.host.hostUrl,
     };

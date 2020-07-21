@@ -9,7 +9,7 @@ import messageUtil from '../util/mesageUtil';
 import {isValidUrl} from '../util/tabs';
 import {
   SuccessfulApiKeyCheckProperties,
-  GetUserSettingsBodyProperties,
+  AuthRequestBodyProperties,
   ApiErroredProperties,
   ErrorStateProperties,
   Kutt,
@@ -145,7 +145,7 @@ const Form: React.FC = () => {
   async function handleApiKeyVerification(): Promise<void> {
     setSubmitting(true);
     // request API validation request
-    const apiKeyValidationBody: GetUserSettingsBodyProperties = {
+    const apiKeyValidationBody: AuthRequestBodyProperties = {
       apikey: formStateValues.apikey.trim(),
       hostUrl:
         (formStateValues.advanced &&
