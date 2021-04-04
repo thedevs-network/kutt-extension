@@ -43,10 +43,18 @@ const Table: React.FC = () => {
 
   // reset copy message
   useEffect(() => {
-    setTimeout(() => {
+    let timer: NodeJS.Timeout | null = null;
+
+    timer = setTimeout(() => {
       setCopied(false);
       // reset selected id from context
     }, 1300);
+
+    return (): void => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
   }, [copied]);
 
   function handleCopyToClipboard(selectedItemId: string): void {
