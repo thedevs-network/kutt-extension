@@ -234,8 +234,7 @@ const Table: React.FC = () => {
                         ]}
                       >
                         {copied &&
-                          shortenedLinksState.selected !== null &&
-                          shortenedLinksState.selected.id === item.id && (
+                          shortenedLinksState.selected?.id === item.id && (
                             <div
                               css={[
                                 tw`absolute top-0 left-0 text-xs text-green-900`,
@@ -272,8 +271,7 @@ const Table: React.FC = () => {
                           {/* // **** COPY TO CLIPBOARD **** // */}
 
                           {copied &&
-                          shortenedLinksState.selected !== null &&
-                          shortenedLinksState.selected.id === item.id ? (
+                          shortenedLinksState.selected?.id === item.id ? (
                             <StyledIcon name="tick" className="icon" />
                           ) : (
                             <CopyToClipboard
@@ -297,8 +295,7 @@ const Table: React.FC = () => {
 
                         {/* // **** QR CODE MODAL **** // */}
                         {QRView &&
-                          shortenedLinksState.selected !== null &&
-                          shortenedLinksState.selected.id === item.id && (
+                          shortenedLinksState.selected?.id === item.id && (
                             <Modal link={item.link} setModalView={setQRView} />
                           )}
                       </StyledTd>

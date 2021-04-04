@@ -31,8 +31,8 @@ import Header from '../Options/Header';
 import Table from './Table';
 
 const History: React.FC = () => {
-  const shortenedLinksDispatch = useShortenedLinks()[1];
-  const extensionSettingsDispatch = useExtensionSettings()[1];
+  const [, shortenedLinksDispatch] = useShortenedLinks();
+  const [, extensionSettingsDispatch] = useExtensionSettings();
   const [requestStatusState, requestStatusDispatch] = useRequestStatus();
   const [errored, setErrored] = useState<ErrorStateProperties>({
     error: null,

@@ -82,6 +82,11 @@ const Header: React.FC = () => {
     }, 1000);
   }
 
+  const iconToShow = loading
+    ? 'spinner'
+    : (errored.error !== null && (!errored.error ? 'tick' : 'cross')) ||
+      'refresh';
+
   return (
     <>
       <header tw="flex items-center justify-between p-4 select-none">
@@ -98,13 +103,7 @@ const Header: React.FC = () => {
         <div tw="flex">
           <StyledIcon
             onClick={fetchUserDomains}
-            name={
-              loading
-                ? 'spinner'
-                : (errored.error !== null &&
-                    ((!errored.error && 'tick') || 'cross')) ||
-                  'refresh'
-            }
+            name={iconToShow}
             title="Refresh"
             className="icon"
           />

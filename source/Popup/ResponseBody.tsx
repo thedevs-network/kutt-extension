@@ -1,7 +1,7 @@
 import CopyToClipboard from 'react-copy-to-clipboard';
 import React, {useState, useEffect} from 'react';
-import QRCode from 'qrcode.react';
 import tw, {styled, css} from 'twin.macro';
+import QRCode from 'qrcode.react';
 
 import {useRequestStatus} from '../contexts/request-status-context';
 import {removeProtocol} from '../util/link';
@@ -32,7 +32,7 @@ const StyledPopupBody = styled.div`
 `;
 
 const ResponseBody: React.FC = () => {
-  const {error, message} = useRequestStatus()[0];
+  const [{error, message}] = useRequestStatus();
   const [copied, setCopied] = useState<boolean>(false);
   const [QRView, setQRView] = useState<boolean>(false);
 
@@ -62,6 +62,7 @@ const ResponseBody: React.FC = () => {
                 return setQRView(!QRView);
               }}
             />
+
             {!copied ? (
               <CopyToClipboard
                 text={message}
@@ -74,6 +75,7 @@ const ResponseBody: React.FC = () => {
             ) : (
               <Icon tw="my-0 ml-0 mr-3" className="icon" name="tick" />
             )}
+
             <CopyToClipboard
               text={message}
               onCopy={(): void => {
