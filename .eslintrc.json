@@ -13,6 +13,11 @@
 	},
 	"rules": {
 		"no-console": "off",
+		"no-shadow": ["error", {
+			"builtinGlobals": false,
+			"hoist": "functions",
+			"allow": []
+		}],
 		"react/jsx-props-no-spreading": "off",
 		"jsx-a11y/label-has-associated-control": "off",
 		"@typescript-eslint/no-explicit-any": "warn",
