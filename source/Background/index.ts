@@ -318,22 +318,22 @@ async function fetchUrlsHistory({
 /**
  *  Listen for messages from UI pages
  */
-browser.runtime.onMessage.addListener((request, _sender): void | Promise<
-  any
-  // eslint-disable-next-line consistent-return
-> => {
-  // eslint-disable-next-line default-case
-  switch (request.action) {
-    case constants.CHECK_API_KEY: {
-      return checkApiKey(request.params);
-    }
+browser.runtime.onMessage.addListener(
+  (request, _sender): void | Promise<any> => {
+    // eslint-disable-next-line consistent-return
+    // eslint-disable-next-line default-case
+    switch (request.action) {
+      case constants.CHECK_API_KEY: {
+        return checkApiKey(request.params);
+      }
 
-    case constants.SHORTEN_URL: {
-      return shortenUrl(request.params);
-    }
+      case constants.SHORTEN_URL: {
+        return shortenUrl(request.params);
+      }
 
-    case constants.FETCH_URLS_HISTORY: {
-      return fetchUrlsHistory(request.params);
+      case constants.FETCH_URLS_HISTORY: {
+        return fetchUrlsHistory(request.params);
+      }
     }
   }
-});
+);
