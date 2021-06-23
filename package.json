@@ -44,6 +44,7 @@
   ],
   "private": true,
   "dependencies": {
+    "@abhijithvijayan/ts-utils": "^1.2.0",
     "@babel/runtime": "^7.13.10",
     "advanced-css-reset": "^1.2.2",
     "axios": "^0.21.1",

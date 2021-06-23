@@ -15,6 +15,11 @@
   resolved "https://registry.yarnpkg.com/@abhijithvijayan/eslint-config/-/eslint-config-2.6.2.tgz#5c63ccd250f6ada314030edff1f925ac7bd9f52b"
   integrity sha512-Qtvia2YjoOI9aHTbXB5DHaEkb0gc02zJ5jb7VtE5uoLCxQpgpBbHTxJkKW5jaAswjaAgHYaG+oR7+MXuxs1yaA==
 
+"@abhijithvijayan/ts-utils@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@abhijithvijayan/ts-utils/-/ts-utils-1.2.0.tgz#02039878cb3e4076f10c9778cb1ef7ea0b3ca8a9"
+  integrity sha512-QffTfSs79xBj/B7BJGX6V+TQJWSbw8FFvFiPn9NaA1ZNYc8icEvBC1VBb1f/2MGG2OtIklx/DPlfjK7ZKzVhaA==
+
 "@abhijithvijayan/tsconfig@^1.3.0":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@abhijithvijayan/tsconfig/-/tsconfig-1.3.0.tgz#cbf70537884dbf61872a1e1645f73f5e6f347edc"
