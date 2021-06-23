@@ -1,3 +1,4 @@
+import {isNull, isUndefined} from '@abhijithvijayan/ts-utils';
 import {useFormState} from 'react-use-form-state';
 import React, {useState, useEffect} from 'react';
 import tw, {styled} from 'twin.macro';
@@ -92,11 +93,11 @@ const Form: React.FC = () => {
   } = formState;
 
   const isFormValid: boolean =
-    ((formStateValidity.apikey === undefined || formStateValidity.apikey) &&
+    ((isUndefined(formStateValidity.apikey) || formStateValidity.apikey) &&
       formStateValues.apikey.trim().length === 40 && // invalidate if api key is empty
-      formStateErrors.apikey === undefined &&
-      (((formStateValidity.host === undefined || formStateValidity.host) &&
-        formStateErrors.host === undefined) ||
+      isUndefined(formStateErrors.apikey) &&
+      (((isUndefined(formStateValidity.host) || formStateValidity.host) &&
+        isUndefined(formStateErrors.host)) ||
         // Check if `host` field exhibits validation errors, if `host` field is error but `advanced` field is set to false => form is valid(hence the or condition)
         !formStateValues.advanced)) ||
     false;
@@ -229,7 +230,7 @@ const Form: React.FC = () => {
               css={[
                 tw`sm:text-base focus:border-indigo-400 focus:outline-none relative w-full py-2 pl-2 pr-12 text-sm placeholder-gray-400 bg-gray-200 border rounded`,
 
-                formStateValidity.apikey !== undefined &&
+                !isUndefined(formStateValidity.apikey) &&
                   !formStateValidity.apikey &&
                   tw`border-red-500`,
               ]}
@@ -254,7 +255,7 @@ const Form: React.FC = () => {
             name={
               submitting
                 ? 'spinner'
-                : (errored.error !== null &&
+                : (!isNull(errored.error) &&
                     ((!errored.error && 'tick') || 'cross')) ||
                   'zap'
             }
@@ -333,7 +334,7 @@ const Form: React.FC = () => {
                 css={[
                   tw`sm:text-base focus:border-indigo-400 focus:outline-none relative w-full py-2 pl-2 pr-12 text-sm placeholder-gray-400 bg-gray-200 border rounded`,
 
-                  formStateValidity.host !== undefined &&
+                  !isUndefined(formStateValidity.host) &&
                     !formStateValidity.host &&
                     tw`border-red-500`,
                 ]}

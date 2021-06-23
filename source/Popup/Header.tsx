@@ -1,3 +1,4 @@
+import {isNull} from '@abhijithvijayan/ts-utils';
 import React, {useState} from 'react';
 import tw, {styled} from 'twin.macro';
 
@@ -84,7 +85,7 @@ const Header: React.FC = () => {
 
   const iconToShow = loading
     ? 'spinner'
-    : (errored.error !== null && (!errored.error ? 'tick' : 'cross')) ||
+    : (!isNull(errored.error) && (!errored.error ? 'tick' : 'cross')) ||
       'refresh';
 
   return (

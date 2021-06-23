@@ -1,3 +1,4 @@
+import {isNull} from '@abhijithvijayan/ts-utils';
 import React, {useEffect} from 'react';
 import tw, {css} from 'twin.macro';
 
@@ -241,7 +242,7 @@ const Popup: React.FC = () => {
         {!requestStatusState.loading ? (
           <>
             <PopupHeader />
-            {requestStatusState.error !== null && <ResponseBody />}
+            {!isNull(requestStatusState.error) && <ResponseBody />}
             <Form />
           </>
         ) : (

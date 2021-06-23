@@ -1,7 +1,12 @@
-import {get, isNull} from '@abhijithvijayan/ts-utils';
 import {useFormState} from 'react-use-form-state';
 import tw, {css, styled} from 'twin.macro';
 import React, {useState} from 'react';
+import {
+  EMPTY_STRING,
+  isUndefined,
+  isNull,
+  get,
+} from '@abhijithvijayan/ts-utils';
 
 import {useExtensionSettings} from '../contexts/extension-settings-context';
 import {SHORTEN_URL} from '../Background/constants';
@@ -72,7 +77,7 @@ const Form: React.FC = () => {
           .find(({id}) => {
             return id === CONSTANTS.DefaultDomainId;
           })
-          ?.value?.trim() || '', // empty string will map to disabled entry
+          ?.value?.trim() || EMPTY_STRING, // empty string will map to disabled entry
     },
     {
       withIds: true, // enable automatic creation of id and htmlFor props
@@ -86,12 +91,11 @@ const Form: React.FC = () => {
   } = formState;
 
   const isFormValid: boolean =
-    ((formStateValidity.customurl === undefined ||
+    ((isUndefined(formStateValidity.customurl) ||
       formStateValidity.customurl) &&
-      (formStateValidity.password === undefined ||
-        formStateValidity.password) &&
-      formStateErrors.customurl === undefined &&
-      formStateErrors.password === undefined) ||
+      (isUndefined(formStateValidity.password) || formStateValidity.password) &&
+      isUndefined(formStateErrors.customurl) &&
+      isUndefined(formStateErrors.password)) ||
     false;
 
   async function handleFormSubmit({
@@ -128,10 +132,10 @@ const Form: React.FC = () => {
     const apiBody: ApiBodyProperties = {
       apikey: extensionSettingsState.apikey,
       target: (target as unknown) as string,
-      ...(customurl.trim() !== '' && {customurl: customurl.trim()}), // add key only if field is not empty
-      ...(password.trim() !== '' && {password: password.trim()}),
+      ...(customurl.trim() !== EMPTY_STRING && {customurl: customurl.trim()}), // add key only if field is not empty
+      ...(password.trim() !== EMPTY_STRING && {password: password.trim()}),
       reuse: false,
-      ...(domain.trim() !== '' && {domain: domain.trim()}),
+      ...(domain.trim() !== EMPTY_STRING && {domain: domain.trim()}),
     };
 
     const apiShortenUrlBody: ShortUrlActionBodyProperties = {
@@ -255,7 +259,7 @@ const Form: React.FC = () => {
                 margin-top: 1.2rem;
               `,
 
-              formStateValidity.customurl !== undefined &&
+              !isUndefined(formStateValidity.customurl) &&
                 !formStateValidity.customurl &&
                 tw`border-red-500`,
             ]}
@@ -314,7 +318,7 @@ const Form: React.FC = () => {
                   margin-top: 1.2rem;
                 `,
 
-                formStateValidity.password !== undefined &&
+                !isUndefined(formStateValidity.password) &&
                   !formStateValidity.password &&
                   tw`border-red-500`,
               ]}
