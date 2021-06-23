@@ -1,3 +1,4 @@
+import {get, isNull} from '@abhijithvijayan/ts-utils';
 import {useFormState} from 'react-use-form-state';
 import tw, {css, styled} from 'twin.macro';
 import React, {useState} from 'react';
@@ -10,6 +11,7 @@ import {
   RequestStatusActionTypes,
   useRequestStatus,
 } from '../contexts/request-status-context';
+import {isValidUrl} from '../util/link';
 import {
   SuccessfulShortenStatusProperties,
   ShortUrlActionBodyProperties,
@@ -18,7 +20,6 @@ import {
 } from '../Background';
 
 import Icon from '../components/Icon';
-import {isValidUrl} from '../util/link';
 
 export enum CONSTANTS {
   DefaultDomainId = 'default',
@@ -107,9 +108,10 @@ const Form: React.FC = () => {
 
     // Get target link to shorten
     const tabs = await getCurrentTab();
-    const target: string | null = (tabs.length > 0 && tabs[0].url) || null;
+    const target: string | null = get(tabs, '[0].url', null);
+    const shouldSubmit: boolean = !isNull(target) && isValidUrl(target);
 
-    if (!target || !isValidUrl(target)) {
+    if (!shouldSubmit) {
       setIsSubmitting(false);
 
       requestStatusDispatch({
@@ -125,7 +127,7 @@ const Form: React.FC = () => {
 
     const apiBody: ApiBodyProperties = {
       apikey: extensionSettingsState.apikey,
-      target,
+      target: (target as unknown) as string,
       ...(customurl.trim() !== '' && {customurl: customurl.trim()}), // add key only if field is not empty
       ...(password.trim() !== '' && {password: password.trim()}),
       reuse: false,
