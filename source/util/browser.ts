@@ -1,5 +1,6 @@
-// Custom fork of https://github.com/DamonOehlman/detect-browser/blob/master/src/index.ts
+import {EMPTY_STRING} from '@abhijithvijayan/ts-utils';
 
+// Custom fork of https://github.com/DamonOehlman/detect-browser/blob/master/src/index.ts
 type Browser = 'edge-chromium' | 'chrome' | 'firefox' | 'opera';
 type UserAgentRule = [Browser, RegExp];
 type UserAgentMatch = [Browser, RegExpExecArray] | false;
@@ -14,7 +15,7 @@ const userAgentRules: UserAgentRule[] = [
 
 function matchUserAgent(ua: string): UserAgentMatch {
   return (
-    ua !== '' &&
+    ua !== EMPTY_STRING &&
     userAgentRules.reduce<UserAgentMatch>(
       (matched: UserAgentMatch, [browser, regex]) => {
         if (matched) {

@@ -1,4 +1,4 @@
-import {isNull} from '@abhijithvijayan/ts-utils';
+import {isNull, EMPTY_STRING} from '@abhijithvijayan/ts-utils';
 import React, {useEffect} from 'react';
 import tw, {css} from 'twin.macro';
 
@@ -48,8 +48,8 @@ const Popup: React.FC = () => {
 
       const {
         // old keys from extension v3.x.x
-        key = '',
-        host = '',
+        key = EMPTY_STRING,
+        host = EMPTY_STRING,
         userOptions = {
           autoCopy: false,
           devMode: false,
@@ -100,7 +100,7 @@ const Popup: React.FC = () => {
       // No API Key set
       if (
         !Object.prototype.hasOwnProperty.call(settings, 'apikey') ||
-        (settings.apikey as string) === ''
+        (settings.apikey as string) === EMPTY_STRING
       ) {
         requestStatusDispatch({
           type: RequestStatusActionTypes.SET_REQUEST_STATUS,
@@ -137,9 +137,9 @@ const Popup: React.FC = () => {
         ) {
           defaultHost = {
             hostDomain: (settings.host as string)
-              .replace('http://', '')
-              .replace('https://', '')
-              .replace('www.', '')
+              .replace('http://', EMPTY_STRING)
+              .replace('https://', EMPTY_STRING)
+              .replace('www.', EMPTY_STRING)
               .split(/[/?#]/)[0], // extract domain
             hostUrl: (settings.host as string).endsWith('/')
               ? (settings.host as string).slice(0, -1)
@@ -160,9 +160,9 @@ const Popup: React.FC = () => {
       // options menu
       const defaultOptions: DomainOptionsProperties[] = [
         {
-          id: '',
+          id: EMPTY_STRING,
           option: '-- Choose Domain --',
-          value: '',
+          value: EMPTY_STRING,
           disabled: true,
         },
         {

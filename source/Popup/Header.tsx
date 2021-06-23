@@ -1,4 +1,4 @@
-import {isNull} from '@abhijithvijayan/ts-utils';
+import {isNull, EMPTY_STRING} from '@abhijithvijayan/ts-utils';
 import React, {useState} from 'react';
 import tw, {styled} from 'twin.macro';
 
@@ -33,7 +33,7 @@ const Header: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [errored, setErrored] = useState<ErrorStateProperties>({
     error: null,
-    message: '',
+    message: EMPTY_STRING,
   });
 
   async function fetchUserDomains(): Promise<void> {
@@ -79,7 +79,7 @@ const Header: React.FC = () => {
 
     setTimeout(() => {
       // Reset status
-      setErrored({error: null, message: ''});
+      setErrored({error: null, message: EMPTY_STRING});
     }, 1000);
   }
 
