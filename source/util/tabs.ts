@@ -17,10 +17,3 @@ export function getCurrentTab(): Promise<Tabs.Tab[]> {
     lastFocusedWindow: true,
   });
 }
-
-export function isValidUrl(url: string): boolean {
-  // https://regex101.com/r/iXVlNL/1/
-  const re = /^(http[s]?:\/\/)(www\.){0,1}[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}[.]{0,1}/;
-
-  return re.test(url);
-}

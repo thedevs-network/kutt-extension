@@ -11,7 +11,7 @@ import {
   useRequestStatus,
   RequestStatusActionTypes,
 } from '../contexts/request-status-context';
-import {isValidUrl} from '../util/tabs';
+import {isValidUrl} from '../util/link';
 import {Kutt} from '../Background';
 
 import BodyWrapper from '../components/BodyWrapper';

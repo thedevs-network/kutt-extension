@@ -3,9 +3,9 @@ import tw, {css, styled} from 'twin.macro';
 import React, {useState} from 'react';
 
 import {useExtensionSettings} from '../contexts/extension-settings-context';
-import {getCurrentTab, isValidUrl} from '../util/tabs';
 import {SHORTEN_URL} from '../Background/constants';
 import messageUtil from '../util/mesageUtil';
+import {getCurrentTab} from '../util/tabs';
 import {
   RequestStatusActionTypes,
   useRequestStatus,
@@ -18,6 +18,7 @@ import {
 } from '../Background';
 
 import Icon from '../components/Icon';
+import {isValidUrl} from '../util/link';
 
 export enum CONSTANTS {
   DefaultDomainId = 'default',

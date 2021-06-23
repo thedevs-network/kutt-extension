@@ -6,7 +6,7 @@ import {useExtensionSettings} from '../contexts/extension-settings-context';
 import {updateExtensionSettings} from '../util/settings';
 import {CHECK_API_KEY} from '../Background/constants';
 import messageUtil from '../util/mesageUtil';
-import {isValidUrl} from '../util/tabs';
+import {isValidUrl} from '../util/link';
 import {
   SuccessfulApiKeyCheckProperties,
   AuthRequestBodyProperties,
@@ -93,7 +93,7 @@ const Form: React.FC = () => {
 
   const isFormValid: boolean =
     ((formStateValidity.apikey === undefined || formStateValidity.apikey) &&
-    formStateValues.apikey.trim().length === 40 && // invalidate if api key is empty
+      formStateValues.apikey.trim().length === 40 && // invalidate if api key is empty
       formStateErrors.apikey === undefined &&
       (((formStateValidity.host === undefined || formStateValidity.host) &&
         formStateErrors.host === undefined) ||

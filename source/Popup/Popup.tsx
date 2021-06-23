@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react';
 import tw, {css} from 'twin.macro';
 
-import {openExtOptionsPage, isValidUrl} from '../util/tabs';
 import {Kutt, UserSettingsResponseProperties} from '../Background';
+import {openExtOptionsPage} from '../util/tabs';
+import {isValidUrl} from '../util/link';
 
 import {
   ExtensionSettingsActionTypes,

@@ -23,7 +23,7 @@ import {
   ErrorStateProperties,
   Kutt,
 } from '../Background';
-import {isValidUrl} from '../util/tabs';
+import {isValidUrl} from '../util/link';
 
 import BodyWrapper from '../components/BodyWrapper';
 import Loader from '../components/Loader';
