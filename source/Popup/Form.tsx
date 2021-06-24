@@ -143,12 +143,8 @@ const Form: React.FC = () => {
       hostUrl: extensionSettingsState.host.hostUrl,
     };
     // shorten url in the background
-    const response:
-      | SuccessfulShortenStatusProperties
-      | ApiErroredProperties = await messageUtil.send(
-      SHORTEN_URL,
-      apiShortenUrlBody
-    );
+    const response: SuccessfulShortenStatusProperties | ApiErroredProperties =
+      await messageUtil.send(SHORTEN_URL, apiShortenUrlBody);
 
     // disable spinner
     setIsSubmitting(false);
@@ -184,7 +180,7 @@ const Form: React.FC = () => {
     if (url.length > 0 && url.length < 3) {
       setFormStateFieldError(
         'customurl',
-        'Custom URL must be atleast 3 characters'
+        'Custom URL must be at-least 3 characters'
       );
     }
   }
@@ -196,7 +192,7 @@ const Form: React.FC = () => {
     if (password.length > 0 && password.length < 3) {
       setFormStateFieldError(
         'password',
-        'Password must be atleast 3 characters'
+        'Password must be at-least 3 characters'
       );
     }
   }
