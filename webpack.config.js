@@ -172,9 +172,9 @@ module.exports = {
     // write css file(s) to build folder
     new MiniCssExtractPlugin({filename: 'css/[name].css'}),
     // copy static assets
-    new CopyWebpackPlugin([
-      {from: path.join(sourcePath, 'assets'), to: 'assets'},
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [{from: path.join(sourcePath, 'assets'), to: 'assets'}],
+    }),
     // plugin to enable browser reloading in development mode
     extensionReloader,
   ],
