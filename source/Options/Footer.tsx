@@ -44,7 +44,7 @@ const Footer: React.FC = () => {
             Kutt.it
           </a>
           <a
-            href="https://github.com/thedevs-network/kutt-extension/issues/new"
+            href={'https://git.io/Jn5hS'}
             target="blank"
             rel="nofollow noopener noreferrer"
             tw="w-2/3 p-1 cursor-pointer hover:text-gray-800"
