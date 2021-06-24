@@ -104,7 +104,7 @@ module.exports = {
           {
             loader: 'css-loader', // Takes the CSS files and returns the CSS with imports and url(...) for Webpack
             options: {
-              sourceMap: nodeEnv === 'development',
+              sourceMap: true,
             },
           },
           {
@@ -151,20 +151,23 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.join(viewsPath, 'popup.html'),
       inject: 'body',
-      filename: 'popup.html',
       chunks: ['popup'],
+      hash: true,
+      filename: 'popup.html',
     }),
     new HtmlWebpackPlugin({
       template: path.join(viewsPath, 'options.html'),
       inject: 'body',
-      filename: 'options.html',
       chunks: ['options'],
+      hash: true,
+      filename: 'options.html',
     }),
     new HtmlWebpackPlugin({
       template: path.join(viewsPath, 'history.html'),
       inject: 'body',
-      filename: 'history.html',
       chunks: ['history'],
+      hash: true,
+      filename: 'history.html',
     }),
     // write css file(s) to build folder
     new MiniCssExtractPlugin({filename: 'css/[name].css'}),
@@ -177,12 +180,12 @@ module.exports = {
   ],
 
   optimization: {
+    minimize: true,
     minimizer: [
       new TerserPlugin({
-        cache: true,
         parallel: true,
         terserOptions: {
-          output: {
+          format: {
             comments: false,
           },
         },
