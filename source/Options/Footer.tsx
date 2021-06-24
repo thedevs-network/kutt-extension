@@ -9,7 +9,7 @@ import Icon from '../components/Icon';
 const Footer: React.FC = () => {
   return (
     <>
-      <footer tw="sm:mt-6 xl:mt-16 lg:mt-10 md:mt-8 py-4 mt-4">
+      <footer tw="sm:mt-6 xl:mt-16 lg:mt-10 md:mt-8 py-4 mt-4 font-normal text-xs">
         <div tw="flex items-center text-gray-800">
           <span tw="block w-1/3 mr-2 border border-gray-200" />
           <a
