@@ -4,6 +4,7 @@ import React, {useState} from 'react';
 import {
   EMPTY_STRING,
   isUndefined,
+  isEmpty,
   isNull,
   get,
 } from '@abhijithvijayan/ts-utils';
@@ -133,7 +134,7 @@ const Form: React.FC = () => {
       apikey: extensionSettingsState.apikey,
       target: (target as unknown) as string,
       ...(customurl.trim() !== EMPTY_STRING && {customurl: customurl.trim()}), // add key only if field is not empty
-      ...(password.trim() !== EMPTY_STRING && {password: password.trim()}),
+      ...(!isEmpty(password) && {password}),
       reuse: false,
       ...(domain.trim() !== EMPTY_STRING && {domain: domain.trim()}),
     };
@@ -305,7 +306,7 @@ const Form: React.FC = () => {
                 target: {value},
               }: React.ChangeEvent<HTMLInputElement>): void => {
                 // NOTE: overriding onChange to show errors
-                handlePasswordInputChange(value.trim());
+                handlePasswordInputChange(value);
               }}
               css={[
                 tw`focus:outline-none sm:text-base focus:border-indigo-400 w-full px-2 py-2 text-sm placeholder-gray-400 bg-gray-200 border rounded`,
