@@ -79,7 +79,7 @@ const Table: React.FC = () => {
     <>
       <div
         css={[
-          tw` flex flex-col items-center w-full min-h-screen`,
+          tw` flex flex-col items-center w-full min-h-screen mt-5 mb-3`,
 
           css`
             flex: 0 0 auto;
@@ -88,7 +88,7 @@ const Table: React.FC = () => {
       >
         <div
           css={[
-            tw`flex flex-col mx-0 mt-10 mb-32`,
+            tw`flex flex-col mx-0`,
 
             css`
               width: 1200px;
@@ -97,15 +97,7 @@ const Table: React.FC = () => {
           ]}
         >
           <div tw="flex items-center justify-center">
-            <h2
-              css={[
-                tw`mx-0 text-xl`,
-
-                css`
-                  margin-right: 0.8rem;
-                `,
-              ]}
-            >
+            <h2 css={[tw`mx-0 text-xl mb-5`]}>
               Recent shortened links. (last {MAX_HISTORY_ITEMS} results)
             </h2>
           </div>
@@ -170,7 +162,7 @@ const Table: React.FC = () => {
                     <tr
                       key={item.id}
                       css={[
-                        tw`flex justify-between flex-auto px-6 py-0`,
+                        tw`flex justify-between flex-auto px-5 py-0`,
 
                         css`
                           border-bottom: 1px solid rgb(234, 234, 234);

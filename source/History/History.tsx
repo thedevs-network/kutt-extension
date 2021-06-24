@@ -129,8 +129,8 @@ const History: React.FC = () => {
 
   return (
     <BodyWrapper>
-      <div id="history" tw="h-screen flex justify-center px-6 py-8 bg-gray-200">
-        <div>
+      <div id="history" tw="h-screen bg-gray-200">
+        <div tw={'overflow-x-hidden px-6 py-8'}>
           <Header />
 
           {/* eslint-disable-next-line no-nested-ternary */}
