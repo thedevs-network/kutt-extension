@@ -108,11 +108,18 @@ module.exports = {
             },
           },
           {
-            loader: 'postcss-loader', // For autoprefixer
+            loader: 'postcss-loader',
             options: {
-              ident: 'postcss',
-              // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
-              plugins: [require('autoprefixer')()],
+              postcssOptions: {
+                plugins: [
+                  [
+                    'autoprefixer',
+                    {
+                      // Options
+                    },
+                  ],
+                ],
+              },
             },
           },
           'resolve-url-loader', // Rewrites relative paths in url() statements
