@@ -212,6 +212,7 @@ const Form: React.FC = () => {
           <div tw="relative">
             <select
               {...selectProps('domain')}
+              disabled={isSubmitting}
               css={[
                 tw`sm:text-base focus:border-indigo-400 focus:outline-none relative w-full px-2 py-2 text-sm placeholder-gray-400 bg-gray-200 border rounded`,
               ]}
@@ -248,6 +249,7 @@ const Form: React.FC = () => {
               // NOTE: overriding onChange to show errors
               handleCustomUrlInputChange(value.trim());
             }}
+            disabled={isSubmitting}
             spellCheck="false"
             css={[
               tw`focus:outline-none sm:text-base focus:border-indigo-400 w-full px-2 py-2 text-sm placeholder-gray-400 bg-gray-200 border rounded`,
@@ -286,7 +288,11 @@ const Form: React.FC = () => {
               ]}
             >
               <Icon
-                onClick={(): void => setShowPassword(!showPassword)}
+                onClick={(): void => {
+                  if (!isSubmitting) {
+                    setShowPassword(!showPassword);
+                  }
+                }}
                 name={!showPassword ? 'eye-closed' : 'eye'}
                 css={[
                   tw`z-10 flex items-center justify-center w-full h-full rounded-tl rounded-bl cursor-pointer`,
@@ -308,6 +314,7 @@ const Form: React.FC = () => {
                 // NOTE: overriding onChange to show errors
                 handlePasswordInputChange(value);
               }}
+              disabled={isSubmitting}
               css={[
                 tw`focus:outline-none sm:text-base focus:border-indigo-400 w-full px-2 py-2 text-sm placeholder-gray-400 bg-gray-200 border rounded`,
 
