@@ -26,10 +26,8 @@ const StyledIcon = styled(Icon)`
 `;
 
 const Header: React.FC = () => {
-  const [
-    extensionSettingsState,
-    extensionSettingsDispatch,
-  ] = useExtensionSettings();
+  const [extensionSettingsState, extensionSettingsDispatch] =
+    useExtensionSettings();
   const [loading, setLoading] = useState<boolean>(false);
   const [errored, setErrored] = useState<ErrorStateProperties>({
     error: null,
@@ -46,12 +44,8 @@ const Header: React.FC = () => {
     };
 
     // request API
-    const response:
-      | SuccessfulApiKeyCheckProperties
-      | ApiErroredProperties = await messageUtil.send(
-      CHECK_API_KEY,
-      apiKeyValidationBody
-    );
+    const response: SuccessfulApiKeyCheckProperties | ApiErroredProperties =
+      await messageUtil.send(CHECK_API_KEY, apiKeyValidationBody);
 
     // stop spinner
     setLoading(false);

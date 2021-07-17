@@ -29,10 +29,8 @@ import Loader from '../components/Loader';
 import Form, {CONSTANTS} from './Form';
 
 const Popup: React.FC = () => {
-  const [
-    extensionSettingsState,
-    extensionSettingsDispatch,
-  ] = useExtensionSettings();
+  const [extensionSettingsState, extensionSettingsDispatch] =
+    useExtensionSettings();
   const [requestStatusState, requestStatusDispatch] = useRequestStatus();
   const {reload: liveReloadFlag} = extensionSettingsState;
 

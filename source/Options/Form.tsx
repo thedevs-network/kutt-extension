@@ -156,12 +156,8 @@ const Form: React.FC = () => {
     };
 
     // API call
-    const response:
-      | SuccessfulApiKeyCheckProperties
-      | ApiErroredProperties = await messageUtil.send(
-      CHECK_API_KEY,
-      apiKeyValidationBody
-    );
+    const response: SuccessfulApiKeyCheckProperties | ApiErroredProperties =
+      await messageUtil.send(CHECK_API_KEY, apiKeyValidationBody);
 
     if (!response.error) {
       // set top-level status

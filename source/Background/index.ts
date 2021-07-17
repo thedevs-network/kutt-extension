@@ -191,12 +191,11 @@ async function checkApiKey({
   SuccessfulApiKeyCheckProperties | ApiErroredProperties
 > {
   try {
-    const {
-      data,
-    }: {data: UserSettingsResponseProperties} = await getUserSettings({
-      apikey,
-      hostUrl,
-    });
+    const {data}: {data: UserSettingsResponseProperties} =
+      await getUserSettings({
+        apikey,
+        hostUrl,
+      });
 
     return {
       error: false,

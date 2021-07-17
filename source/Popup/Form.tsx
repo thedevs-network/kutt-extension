@@ -132,7 +132,7 @@ const Form: React.FC = () => {
 
     const apiBody: ApiBodyProperties = {
       apikey: extensionSettingsState.apikey,
-      target: (target as unknown) as string,
+      target: target as unknown as string,
       ...(customurl.trim() !== EMPTY_STRING && {customurl: customurl.trim()}), // add key only if field is not empty
       ...(!isEmpty(password) && {password}),
       reuse: false,
