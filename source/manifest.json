@@ -13,8 +13,7 @@
   "homepage_url": "https://github.com/thedevs-network/kutt-extension.git",
   "__firefox__browser_specific_settings": {
     "gecko": {
-      "id": "support@kutt.it",
-      "strict_min_version": "52.0"
+      "id": "support@kutt.it"
     }
   },
   "__chrome|firefox__author": "abhijithvijayan",
@@ -56,7 +55,7 @@
     "http://*/*",
     "https://*/*"
   ],
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "content_security_policy": "script-src 'self'; object-src 'self'",
   "__chrome|opera__options_page": "options.html",
   "options_ui": {
     "page": "options.html",
