@@ -29,15 +29,12 @@
     "browser_style": false
   },
   "background": {
-    "scripts": [
-      "js/background.bundle.js"
-    ]
+    "scripts": ["js/background.bundle.js"]
   },
   "permissions": [
     "activeTab",
     "storage",
     "clipboardWrite",
-    "clipboardRead",
     "http://*/*",
     "https://*/*"
   ],
