@@ -1,0 +1,50 @@
+{
+  "manifest_version": 2,
+  "name": "Kutt",
+  "version": "4.3.1",
+  "short_name": "Kutt",
+  "description": "Shorten long URLs with just one click.",
+  "icons": {
+    "16": "assets/favicon-16.png",
+    "32": "assets/favicon-32.png",
+    "48": "assets/favicon-48.png",
+    "128": "assets/favicon-128.png"
+  },
+  "homepage_url": "https://github.com/thedevs-network/kutt-extension.git",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "support@kutt.it"
+    }
+  },
+  "author": "abhijithvijayan",
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "assets/favicon-16.png",
+      "32": "assets/favicon-32.png",
+      "48": "assets/favicon-48.png",
+      "128": "assets/favicon-128.png"
+    },
+    "default_title": "Shorten this URL",
+    "browser_style": false
+  },
+  "background": {
+    "scripts": [
+      "js/background.bundle.js"
+    ]
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "clipboardWrite",
+    "clipboardRead",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true,
+    "browser_style": false
+  }
+}

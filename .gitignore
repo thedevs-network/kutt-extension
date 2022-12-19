@@ -65,7 +65,6 @@ typings/
 .DS_Store
 
 ## scripts build
-extension/
 dist/
 
 # awesome-ts-loader cache
