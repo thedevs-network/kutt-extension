@@ -130,6 +130,9 @@ function Form() {
           message: link,
         },
       });
+      // reset form fields (keep domain selection)
+      setFormState((prev) => ({...prev, customurl: '', password: ''}));
+      setFormErrors({});
     } else {
       // errored
       requestStatusDispatch({
