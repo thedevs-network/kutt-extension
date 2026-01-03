@@ -1,4 +1,4 @@
-import {useState, type ChangeEvent} from 'react';
+import {useState, useRef, useEffect, type ChangeEvent} from 'react';
 import {
   EMPTY_STRING,
   isEmpty,
@@ -35,10 +35,24 @@ function Form() {
   const requestStatusDispatch = useRequestStatus()[1];
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const {
     domainOptions,
     host: {hostDomain},
   } = extensionSettingsState;
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent): void {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const [formState, setFormState] = useState({
     domain:
@@ -159,32 +173,45 @@ function Form() {
   return (
     <div className={styles.formContainer}>
       <div className={styles.formGroup}>
-        <label htmlFor="domain" className={styles.label}>
+        <label className={styles.label}>
           Domain
         </label>
 
-        <div className={styles.selectWrapper}>
-          <select
-            id="domain"
-            name="domain"
-            value={formState.domain}
-            onChange={(e) =>
-              setFormState((prev) => ({...prev, domain: e.target.value}))
-            }
+        <div className={styles.dropdown} ref={dropdownRef}>
+          <button
+            type="button"
+            className={clsx(styles.dropdownTrigger, isDropdownOpen && styles.open)}
+            onClick={() => !isSubmitting && setIsDropdownOpen(!isDropdownOpen)}
             disabled={isSubmitting}
-            className={styles.select}
           >
-            {domainOptions.map(({id, option, value, disabled = false}) => (
-              <option
-                className={styles.selectOption}
-                value={value}
-                disabled={disabled}
-                key={id}
-              >
-                {option}
-              </option>
-            ))}
-          </select>
+            <span className={clsx(styles.dropdownValue, formState.domain && styles.hasValue)}>
+              {domainOptions.find(({value}) => value === formState.domain)?.option || 'Select domain'}
+            </span>
+            <Icon name="chevron-down" className={clsx(styles.dropdownIcon, isDropdownOpen && styles.open)} />
+          </button>
+
+          {isDropdownOpen && (
+            <div className={styles.dropdownMenu}>
+              {domainOptions
+                .filter(({disabled}) => !disabled)
+                .map(({id, option, value}) => (
+                  <button
+                    type="button"
+                    key={id}
+                    className={clsx(
+                      styles.dropdownItem,
+                      formState.domain === value && styles.selected
+                    )}
+                    onClick={() => {
+                      setFormState((prev) => ({...prev, domain: value}));
+                      setIsDropdownOpen(false);
+                    }}
+                  >
+                    {option}
+                  </button>
+                ))}
+            </div>
+          )}
         </div>
       </div>
 

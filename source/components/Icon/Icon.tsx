@@ -1,5 +1,6 @@
 import React from 'react';
 
+import ChevronDownIcon from './ChevronDown';
 import StarYellowIcon from './StarYellow';
 import EyeClosedIcon from './EyeClosed';
 import StarWhiteIcon from './StarWhite';
@@ -16,6 +17,7 @@ import ZapIcon from './Zap';
 import EyeIcon from './Eye';
 
 const icons = {
+  'chevron-down': ChevronDownIcon,
   clock: ClockIcon,
   copy: CopyIcon,
   cross: CrossIcon,
