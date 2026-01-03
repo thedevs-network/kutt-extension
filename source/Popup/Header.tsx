@@ -84,26 +84,32 @@ function Header() {
       </a>
 
       <div className={styles.actions}>
-        <Icon
-          onClick={fetchUserDomains}
-          name={iconToShow}
-          title="Refresh"
-          className={clsx('icon', styles.styledIcon)}
-        />
-        {extensionSettingsState.history && (
+        <span className={styles.iconWrapper}>
           <Icon
-            onClick={openHistoryPage}
-            name="clock"
+            onClick={fetchUserDomains}
+            name={iconToShow}
             className={clsx('icon', styles.styledIcon)}
-            title="History"
           />
+          <span className={styles.tooltip}>Sync account</span>
+        </span>
+        {extensionSettingsState.history && (
+          <span className={styles.iconWrapper}>
+            <Icon
+              onClick={openHistoryPage}
+              name="clock"
+              className={clsx('icon', styles.styledIcon)}
+            />
+            <span className={styles.tooltip}>History</span>
+          </span>
         )}
-        <Icon
-          onClick={openExtOptionsPage}
-          name="settings"
-          className={clsx('icon', styles.styledIcon)}
-          title="Settings"
-        />
+        <span className={styles.iconWrapper}>
+          <Icon
+            onClick={openExtOptionsPage}
+            name="settings"
+            className={clsx('icon', styles.styledIcon)}
+          />
+          <span className={styles.tooltip}>Settings</span>
+        </span>
       </div>
     </header>
   );
