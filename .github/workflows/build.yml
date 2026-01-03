@@ -1,12 +1,23 @@
 name: Build and Deploy
-
+run-name: ${{ github.actor }} started build action
 on:
   push:
     branches:
       - master
+    tags:
+      - 'v*.*.*'
   pull_request:
     branches:
       - master
+
+  # Allows to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: '${{ github.workflow }}-${{ github.ref }}'
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -49,7 +60,8 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    # Only deploy when a tag is pushed (e.g., v1.0.0)
+    if: startsWith(github.ref, 'refs/tags/v')
 
     steps:
       - name: Checkout repository
