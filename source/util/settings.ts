@@ -1,4 +1,4 @@
-import {browser} from 'webextension-polyfill-ts';
+import browser from 'webextension-polyfill';
 
 import {DomainEntryProperties} from '../Background';
 
@@ -24,7 +24,6 @@ export function getExtensionSettings(): Promise<{[s: string]: any}> {
   return browser.storage.local.get('settings');
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function updateExtensionSettings(newFields?: {
   [s: string]: any;
 }): Promise<void> {
@@ -33,18 +32,7 @@ export async function updateExtensionSettings(newFields?: {
   return saveExtensionSettings({...settings, ...newFields});
 }
 
-// ToDo: Remove in the next major release
-export function migrateSettings(settings: any): Promise<void> {
-  // clear all keys
-  browser.storage.local.clear();
-
-  return browser.storage.local.set({
-    settings,
-  });
-}
-
-// ToDo: Remove in the next major release
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function getPreviousSettings(): Promise<{[s: string]: any}> {
-  return browser.storage.local.get(null);
+// Clear all extension settings
+export function clearExtensionSettings(): Promise<void> {
+  return browser.storage.local.clear();
 }

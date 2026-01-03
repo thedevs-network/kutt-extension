@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import 'twin.macro';
+import type {JSX} from 'react';
+import {useEffect, useState} from 'react';
 
 import {
   useShortenedLinks,
@@ -13,7 +13,7 @@ import {
   useRequestStatus,
   RequestStatusActionTypes,
 } from '../contexts/request-status-context';
-import messageUtil from '../util/mesageUtil';
+import messageUtil from '../util/messageUtil';
 import {FETCH_URLS_HISTORY} from '../Background/constants';
 import {getExtensionSettings} from '../util/settings';
 import {
@@ -30,7 +30,9 @@ import Loader from '../components/Loader';
 import Header from '../Options/Header';
 import Table from './Table';
 
-const History: React.FC = () => {
+import styles from './History.module.scss';
+
+function History(): JSX.Element {
   const [, shortenedLinksDispatch] = useShortenedLinks();
   const [, extensionSettingsDispatch] = useExtensionSettings();
   const [requestStatusState, requestStatusDispatch] = useRequestStatus();
@@ -38,6 +40,7 @@ const History: React.FC = () => {
     error: null,
     message: '',
   });
+  const [hostUrl, setHostUrl] = useState<string>(Kutt.hostUrl);
 
   useEffect(() => {
     async function getUrlsHistoryStats(): Promise<void> {
@@ -52,11 +55,12 @@ const History: React.FC = () => {
         (advancedSettings &&
           (settings?.host as string) &&
           isValidUrl(settings.host as string) && {
-            hostDomain: (settings.host as string)
-              .replace('http://', '')
-              .replace('https://', '')
-              .replace('www.', '')
-              .split(/[/?#]/)[0], // extract domain
+            hostDomain:
+              (settings.host as string)
+                .replace('http://', '')
+                .replace('https://', '')
+                .replace('www.', '')
+                .split(/[/?#]/)[0] || '', // extract domain
             hostUrl: (settings.host as string).endsWith('/')
               ? (settings.host as string).slice(0, -1)
               : (settings.host as string), // slice `/` at the end
@@ -71,6 +75,8 @@ const History: React.FC = () => {
           defaultHost.hostUrl.trim() !== Kutt.hostUrl && advancedSettings, // disable `advanced` if customhost is not set
         host: defaultHost,
       };
+
+      setHostUrl(defaultExtensionConfig.host.hostUrl);
 
       // extensionSettingsDispatch({
       //   type: ExtensionSettingsActionTypes.HYDRATE_EXTENSION_SETTINGS,
@@ -129,19 +135,19 @@ const History: React.FC = () => {
 
   return (
     <BodyWrapper>
-      <div id="history" tw="h-screen bg-gray-200">
-        <div tw={'overflow-x-hidden px-6 py-8'}>
-          <Header />
+      <div id="history" className={styles.historyPage}>
+        <div className={styles.historyContent}>
+          <Header subtitle="Recent Links" hostUrl={hostUrl} />
 
-          {/* eslint-disable-next-line no-nested-ternary */}
+          {}
           {!requestStatusState.loading ? (
             !errored.error ? (
               <Table />
             ) : (
-              <h2>{errored.message}</h2>
+              <h2 className={styles.errorMessage}>{errored.message}</h2>
             )
           ) : (
-            <div tw="h-10">
+            <div className={styles.loaderContainer}>
               <Loader />
             </div>
           )}
@@ -149,6 +155,6 @@ const History: React.FC = () => {
       </div>
     </BodyWrapper>
   );
-};
+}
 
 export default History;

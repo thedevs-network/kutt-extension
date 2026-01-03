@@ -1,0 +1,108 @@
+@use '../styles/variables' as *;
+
+.footer {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  font-weight: $regular;
+  font-size: 0.75rem;
+}
+
+.ratingSection {
+  display: flex;
+  align-items: center;
+  color: $gray-800;
+}
+
+.dividerLine {
+  display: block;
+  width: 33.333%;
+  border: 1px solid $gray-200;
+
+  &.left {
+    margin-right: 0.5rem;
+  }
+
+  &.right {
+    margin-left: 0.5rem;
+  }
+}
+
+.ratingLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.starsContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 0.25rem;
+
+  &:hover .starIcon {
+    transform: scale(1.1);
+  }
+}
+
+.starIcon {
+  margin-right: 0.25rem;
+  fill: currentColor;
+  transition: transform $transition-normal, color $transition-normal;
+
+  &.yellow {
+    color: $yellow-500;
+  }
+
+  &.gray {
+    color: $gray-400;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .ratingLink:hover &.gray {
+    color: $yellow-500;
+  }
+}
+
+.ratingText {
+  margin-bottom: 0;
+  margin-top: 0.25rem;
+}
+
+.linksSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.linkItem {
+  padding: 0.25rem;
+  cursor: pointer;
+  color: $gray-500;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $blue-500;
+  }
+
+  &.narrow {
+    width: 33.333%;
+  }
+
+  &.wide {
+    width: 66.666%;
+  }
+}
+
+.linkDivider {
+  width: 1px;
+  height: 1rem;
+  background-color: $gray-300;
+}

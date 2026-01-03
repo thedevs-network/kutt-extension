@@ -1,11 +1,11 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-import React, {createContext, useContext, useReducer} from 'react';
+import type {JSX} from 'react';
+import {createContext, useContext, useReducer, type ReactNode} from 'react';
 
 import {UserShortenedLinkStats} from '../Background';
 
 export enum ShortenedLinksActionTypes {
   HYDRATE_SHORTENED_LINKS = 'hydrate-shortened-links',
-  SET_CURRENT_SELECTED = 'toggle-qrcode-modal',
+  SET_CURRENT_SELECTED = 'set-current-selected',
 }
 
 type HYDRATE_SHORTENED_LINKS = {
@@ -92,7 +92,13 @@ function useShortenedLinks(): [State, Dispatch] {
   return [useShortenedLinksContextState(), useShortenedLinksContextDispatch()];
 }
 
-const ShortenedLinksProvider: React.FC = ({children}) => {
+type ShortenedLinksProviderProps = {
+  children: ReactNode;
+};
+
+function ShortenedLinksProvider({
+  children,
+}: ShortenedLinksProviderProps): JSX.Element {
   const [state, dispatch] = useReducer(shortenedLinksReducer, initialValues);
 
   return (
@@ -104,6 +110,6 @@ const ShortenedLinksProvider: React.FC = ({children}) => {
       </ShortenedLinksStateContext.Provider>
     </>
   );
-};
+}
 
 export {useShortenedLinks, ShortenedLinksProvider};

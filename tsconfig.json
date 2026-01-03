@@ -1,23 +1,15 @@
 {
-	"extends": "@abhijithvijayan/tsconfig",
-	"compilerOptions": {
-		"target": "es5", // ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'.
-		"module": "esnext", // Module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'.
-		"lib": [
-			"dom",
-			"dom.iterable",
-			"esnext"
-		],
-		"declaration": false,
-		"isolatedModules": true,
-		/* Additional Checks */
-		"useDefineForClassFields": true,
-		"skipLibCheck": true,
-	},
-	"include": [
-		"source",
-		"twin.d.ts",
-		"cssprop.d.ts",
-		"webpack.config.js"
-	]
+  "extends": "@abhijithvijayan/tsconfig",
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "noEmit": true,
+    "lib": ["dom", "dom.iterable", "ES2023"],
+    "moduleResolution": "bundler",
+    "isolatedModules": true,
+    "declaration": false,
+    "jsx": "react-jsx",
+    "skipLibCheck": true
+  },
+  "include": ["source"]
 }

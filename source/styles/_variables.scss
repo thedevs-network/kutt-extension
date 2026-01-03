@@ -1,0 +1,48 @@
+// Colors
+$black: #111111;
+$light-black: #0f0f0f;
+$grey-white: #f3f3f3;
+$white: #ffffff;
+
+// Tailwind-like colors
+$gray-200: #e5e7eb;
+$gray-300: #d1d5db;
+$gray-400: #9ca3af;
+$gray-500: #6b7280;
+$gray-600: #4b5563;
+$gray-700: #374151;
+$gray-800: #1f2937;
+$gray-900: #111827;
+$red-500: #ef4444;
+$green-500: #22c55e;
+$green-900: #14532d;
+$blue-500: #3b82f6;
+$indigo-400: #818cf8;
+$purple-600: #9333ea;
+$yellow-500: #eab308;
+
+// Custom colors
+$copy-icon-bg: hsl(144, 100%, 96%);
+$stats-total-underline: hsl(200, 35%, 65%);
+$primary-gradient: linear-gradient(to right, rgb(126, 87, 194), rgb(98, 0, 234));
+
+// Font weights
+$thin: 100;
+$exlight: 200;
+$light: 300;
+$regular: 400;
+$medium: 500;
+$semibold: 600;
+$bold: 700;
+$exbold: 800;
+$exblack: 900;
+
+// Transitions
+$transition-fast: 200ms ease-out;
+$transition-normal: 300ms ease-in-out;
+
+// Border radius
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 12px;
+$radius-full: 9999px;

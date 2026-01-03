@@ -1,5 +1,6 @@
 import React from 'react';
 
+import ChevronDownIcon from './ChevronDown';
 import StarYellowIcon from './StarYellow';
 import EyeClosedIcon from './EyeClosed';
 import StarWhiteIcon from './StarWhite';
@@ -11,15 +12,18 @@ import CrossIcon from './Cross';
 import ClockIcon from './Clock';
 import CopyIcon from './Copy';
 import TickIcon from './Tick';
+import InfoIcon from './Info';
 import ZapIcon from './Zap';
 import EyeIcon from './Eye';
 
 const icons = {
+  'chevron-down': ChevronDownIcon,
   clock: ClockIcon,
   copy: CopyIcon,
   cross: CrossIcon,
   eye: EyeIcon,
   'eye-closed': EyeClosedIcon,
+  info: InfoIcon,
   qrcode: QRCodeIcon,
   refresh: RefreshIcon,
   settings: SettingsIcon,
@@ -44,8 +48,8 @@ type Props = {
   onClick?: () => void;
 };
 
-const Icon: React.FC<Props> = ({name, ...rest}) => {
-  return <div {...rest}>{React.createElement(icons[name])}</div>;
-};
+const Icon: React.FC<Props> = ({name, ...rest}) => (
+  <div {...rest}>{React.createElement(icons[name])}</div>
+);
 
 export default Icon;

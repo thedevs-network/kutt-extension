@@ -1,0 +1,540 @@
+@use '../styles/variables' as *;
+
+.formSection {
+  margin-top: 1.25rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.875rem;
+}
+
+.label {
+  margin-bottom: 0.5rem;
+  font-weight: $semibold;
+  color: $gray-700;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.labelLink {
+  margin-left: 0.5rem;
+  color: $blue-500;
+  text-decoration: none;
+  text-transform: lowercase;
+  letter-spacing: normal;
+  font-weight: $medium;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.labelLinkWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+
+  &:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.labelWithInfo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.inputIconWrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  width: 2.5rem;
+  height: 100%;
+  border: 1px solid transparent;
+}
+
+.inputIcon {
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: $gray-600;
+  border-radius: $radius-sm 0 0 $radius-sm;
+}
+
+.input {
+  position: relative;
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  padding-right: 3rem;
+  font-size: 0.875rem;
+  background-color: $white;
+  border: 1.5px solid $gray-300;
+  border-radius: $radius-md;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
+
+  &::placeholder {
+    color: $gray-400;
+  }
+
+  &:hover {
+    border-color: $gray-500;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $indigo-400;
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.2);
+  }
+
+  @media (min-width: 640px) {
+    font-size: 0.9375rem;
+  }
+}
+
+.inputError {
+  border-color: $red-500;
+}
+
+.errorText {
+  display: flex;
+  align-items: center;
+  margin-top: 0.25rem;
+  margin-left: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: $medium;
+  letter-spacing: 0.025em;
+  color: $red-500;
+}
+
+.validateSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.validateButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  margin-top: 1rem;
+  font-size: 0.8125rem;
+  font-weight: $semibold;
+  text-align: center;
+  color: $white;
+  background: $primary-gradient;
+  border: none;
+  border-radius: $radius-md;
+  box-shadow: 0 4px 6px -1px rgba(126, 87, 194, 0.3);
+  cursor: pointer;
+  transition: transform $transition-fast, box-shadow $transition-fast, opacity $transition-fast;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 10px -1px rgba(126, 87, 194, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(126, 87, 194, 0.3);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+.validateText {}
+
+.validateIcon {
+  display: inline-flex;
+  padding: 0;
+  background-color: transparent;
+
+  svg {
+    stroke: currentColor;
+    stroke-width: 2;
+    transition: transform $transition-normal;
+  }
+}
+
+.validationFeedback {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 0.875rem;
+  border-radius: $radius-md;
+  animation: slideIn $transition-normal ease-out;
+
+  &.error {
+    background-color: rgba($red-500, 0.1);
+    border: 1px solid rgba($red-500, 0.2);
+  }
+
+  &.success {
+    background-color: rgba($green-500, 0.1);
+    border: 1px solid rgba($green-500, 0.2);
+  }
+}
+
+.feedbackIcon {
+  flex-shrink: 0;
+
+  svg {
+    stroke-width: 2;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .error & svg {
+    stroke: $red-500;
+  }
+
+  .success & svg {
+    stroke: $green-500;
+  }
+}
+
+.feedbackMessage {
+  font-size: 0.8125rem;
+  font-weight: $medium;
+  line-height: 1.4;
+
+  .error & {
+    color: $red-500;
+  }
+
+  .success & {
+    color: $green-500;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.toggleSection {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid $gray-200;
+}
+
+.toggleLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.625rem 0;
+  cursor: pointer;
+  border-radius: $radius-sm;
+  transition: background-color $transition-fast;
+
+  &:hover {
+    background-color: rgba($gray-200, 0.5);
+    margin: 0 -0.5rem;
+    padding: 0.625rem 0.5rem;
+  }
+}
+
+.toggleText {
+  font-size: 0.875rem;
+}
+
+.toggleTextWithInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.infoIcon {
+  position: relative;
+  display: inline-flex;
+  color: $gray-500;
+  cursor: help;
+
+  &:hover {
+    color: $gray-700;
+  }
+
+  &:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.tooltip {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.5rem);
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 200px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: $regular;
+  line-height: 1.4;
+  color: $white;
+  background-color: $gray-800;
+  border-radius: $radius-sm;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: opacity $transition-normal, visibility $transition-normal;
+  z-index: 100;
+  pointer-events: none;
+  text-transform: none;
+  letter-spacing: normal;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 0.375rem;
+    border-style: solid;
+    border-color: $gray-800 transparent transparent transparent;
+  }
+}
+
+.toggleWrapper {
+  position: relative;
+  width: 2.5rem;
+  height: 1.5rem;
+  margin-left: 0.75rem;
+  flex-shrink: 0;
+}
+
+.toggleTrack {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $gray-400;
+  border-radius: 9999px;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  transition: background-color $transition-normal;
+}
+
+.toggleKnob {
+  position: absolute;
+  top: 0.25rem;
+  left: 0.25rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 9999px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  transition: transform $transition-normal;
+  background-color: $white;
+
+  &.active {
+    transform: translateX(1rem);
+  }
+}
+
+.toggleWrapper:has(.toggleKnob.active) .toggleTrack {
+  background-color: $purple-600;
+}
+
+.toggleInput {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.advancedSection {
+  margin-top: 0.75rem;
+  padding: 1rem;
+  background-color: rgba($gray-200, 0.5);
+  border-radius: $radius-md;
+  border: 1px solid $gray-200;
+  max-height: 200px;
+  opacity: 1;
+  overflow: visible;
+  transition: max-height $transition-normal, opacity $transition-normal, margin-top $transition-normal, padding $transition-normal;
+
+  &.hidden {
+    max-height: 0;
+    opacity: 0;
+    margin-top: 0;
+    padding: 0 1rem;
+    border-color: transparent;
+    overflow: hidden;
+  }
+}
+
+.resetSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid $gray-200;
+}
+
+.resetButton {
+  padding: 0.5rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: $medium;
+  color: $red-500;
+  background-color: transparent;
+  border: 1.5px solid $red-500;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: background-color $transition-fast, color $transition-fast;
+
+  &:hover {
+    background-color: $red-500;
+    color: $white;
+  }
+}
+
+.resetHint {
+  font-size: 0.75rem;
+  color: $gray-500;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn $transition-fast ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal {
+  background-color: $white;
+  border-radius: $radius-lg;
+  padding: 1.5rem;
+  max-width: 320px;
+  width: 90%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  animation: modalSlideIn $transition-fast ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.modalIcon {
+  color: $red-500;
+
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    stroke-width: 2;
+  }
+}
+
+.modalTitle {
+  font-size: 1rem;
+  font-weight: $semibold;
+  color: $gray-800;
+}
+
+.modalText {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: $gray-600;
+  margin: 0 0 1.25rem 0;
+}
+
+.modalActions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.modalCancelButton {
+  padding: 0.5rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: $medium;
+  color: $gray-600;
+  background-color: $gray-200;
+  border: none;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: background-color $transition-fast;
+
+  &:hover {
+    background-color: $gray-300;
+  }
+}
+
+.modalConfirmButton {
+  padding: 0.5rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: $medium;
+  color: $white;
+  background-color: $red-500;
+  border: none;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: background-color $transition-fast;
+
+  &:hover {
+    background-color: darken($red-500, 10%);
+  }
+}

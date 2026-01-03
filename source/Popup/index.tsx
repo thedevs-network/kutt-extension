@@ -1,25 +1,24 @@
-import {ThemeProvider} from 'styled-components';
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-// Common styles
-import '../styles/main.scss';
+import {StrictMode} from 'react';
+import {createRoot} from 'react-dom/client';
 
 import {ExtensionSettingsProvider} from '../contexts/extension-settings-context';
 import {RequestStatusProvider} from '../contexts/request-status-context';
 import Popup from './Popup';
 
-// eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved,  @typescript-eslint/no-var-requires, node/no-missing-require
-const theme = require('sass-extract-loader?{"plugins": ["sass-extract-js"]}!../styles/base/_variables.scss');
-// Require sass variables using sass-extract-loader and specify the plugin
+import '../styles/main.scss';
 
-ReactDOM.render(
-  <ThemeProvider theme={theme}>
+const container = document.getElementById('popup-root');
+if (!container) {
+  throw new Error('Could not find popup-root container');
+}
+
+const root = createRoot(container);
+root.render(
+  <StrictMode>
     <ExtensionSettingsProvider>
       <RequestStatusProvider>
         <Popup />
       </RequestStatusProvider>
     </ExtensionSettingsProvider>
-  </ThemeProvider>,
-  document.getElementById('popup-root')
+  </StrictMode>
 );

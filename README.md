@@ -1,9 +1,9 @@
-<div align="center"><img width="150" src="source/assets/logo.png" /></div>
+<div align="center"><img width="150" src="source/public/assets/logo.png" /></div>
 <h1 align="center">kutt-extension</h1>
 <p align="center">Browser extension for <a href="https://kutt.it">Kutt.it</a></p>
 <div align="center">
-  <a href="https://travis-ci.com/thedevs-network/kutt-extension">
-    <img src="https://travis-ci.com/thedevs-network/kutt-extension.svg?branch=master" alt="Travis Build" />
+  <a href="https://github.com/thedevs-network/kutt-extension/actions/workflows/build.yml">
+    <img src="https://github.com/thedevs-network/kutt-extension/actions/workflows/build.yml/badge.svg?branch=master" alt="Build" />
   </a>
   <a href="https://github.com/thedevs-network/kutt-extension/releases/latest">
     <img src="https://img.shields.io/github/release/thedevs-network/kutt-extension.svg?colorB=blue" alt="Releases" />
@@ -13,9 +13,6 @@
   </a>
   <a href="https://github.com/thedevs-network/kutt-extension/issues?q=is%3Aissue+is%3Aclosed">
     <img src="https://img.shields.io/github/issues-closed-raw/thedevs-network/kutt-extension.svg?colorB=red" alt="Closed Issues" />
-  </a>
-  <a href="https://david-dm.org/thedevs-network/kutt-extension">
-    <img src="https://img.shields.io/david/thedevs-network/kutt-extension.svg?colorB=orange" alt="DEPENDENCIES" />
   </a>
   <a href="https://github.com/thedevs-network/kutt-extension/blob/master/license">
     <img src="https://img.shields.io/github/license/thedevs-network/kutt-extension.svg" alt="LICENSE" />

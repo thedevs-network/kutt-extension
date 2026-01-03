@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-import React, {createContext, useReducer, useContext} from 'react';
+import type {JSX} from 'react';
+import {createContext, useReducer, useContext, type ReactNode} from 'react';
 
 export enum RequestStatusActionTypes {
   SET_REQUEST_STATUS = 'set-request-status',
@@ -86,12 +86,12 @@ function useRequestStatus(): [State, Dispatch] {
 }
 
 type RequestStatusProviderProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
-const RequestStatusProvider: React.FC<RequestStatusProviderProps> = ({
+function RequestStatusProvider({
   children,
-}) => {
+}: RequestStatusProviderProps): JSX.Element {
   const [state, dispatch] = useReducer(requestStatusReducer, initialValues);
 
   return (
@@ -103,6 +103,6 @@ const RequestStatusProvider: React.FC<RequestStatusProviderProps> = ({
       </RequestStatusStateContext.Provider>
     </>
   );
-};
+}
 
 export {RequestStatusProvider, useRequestStatus};

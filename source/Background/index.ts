@@ -6,9 +6,8 @@
  */
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {browser} from 'webextension-polyfill-ts';
-
-import axios, {AxiosPromise} from 'axios';
+import browser, {Runtime} from 'webextension-polyfill';
+import axios, {AxiosPromise, AxiosError} from 'axios';
 import * as constants from './constants';
 
 export enum Kutt {
@@ -107,13 +106,16 @@ async function shortenUrl({
       data: {
         ...otherParams,
       },
+      // Prevent cookies from being sent to avoid session-based auth conflicts
+      withCredentials: false,
     });
 
     return {
       error: false,
       data,
     };
-  } catch (err) {
+  } catch (error) {
+    const err = error as AxiosError<{error?: string}>;
     if (err.response) {
       if (err.response.status === 401) {
         return {
@@ -129,7 +131,7 @@ async function shortenUrl({
       ) {
         return {
           error: true,
-          message: `Error: ${err.response.data.error}`,
+          message: `Error: ${err.response.data?.error}`,
         };
       }
 
@@ -181,6 +183,8 @@ function getUserSettings({
     headers: {
       'X-API-Key': apikey,
     },
+    // Prevent cookies from being sent to avoid session-based auth conflicts
+    withCredentials: false,
   });
 }
 
@@ -201,7 +205,8 @@ async function checkApiKey({
       error: false,
       data,
     };
-  } catch (err) {
+  } catch (error) {
+    const err = error as AxiosError;
     if (err.response) {
       if (err.response.status === 401) {
         return {
@@ -277,13 +282,16 @@ async function fetchUrlsHistory({
       headers: {
         'X-API-Key': apikey,
       },
+      // Prevent cookies from being sent to avoid session-based auth conflicts
+      withCredentials: false,
     });
 
     return {
       error: false,
       data,
     };
-  } catch (err) {
+  } catch (error) {
+    const err = error as AxiosError;
     if (err.response) {
       if (err.response.status === 401) {
         return {
@@ -315,12 +323,24 @@ async function fetchUrlsHistory({
 // **** ------------------ **** //
 
 /**
+ *  Service worker installation listener (MV3)
+ */
+browser.runtime.onInstalled.addListener((): void => {
+  console.log('Kutt extension installed');
+});
+
+type MessageRequest = {
+  action: string;
+  params: any;
+};
+
+/**
  *  Listen for messages from UI pages
  */
 browser.runtime.onMessage.addListener(
-  (request, _sender): void | Promise<any> => {
-    // eslint-disable-next-line consistent-return
-    // eslint-disable-next-line default-case
+  (message: unknown, _sender: Runtime.MessageSender): void | Promise<any> => {
+    const request = message as MessageRequest;
+
     switch (request.action) {
       case constants.CHECK_API_KEY: {
         return checkApiKey(request.params);

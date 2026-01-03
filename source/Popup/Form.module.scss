@@ -1,0 +1,298 @@
+@use '../styles/variables' as *;
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 24rem;
+  padding: 1rem;
+  margin: 0 auto;
+  background-color: $white;
+  user-select: none;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.formGroupRelative {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.75rem;
+  position: relative;
+}
+
+.label {
+  margin-bottom: 0.25rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.025em;
+  color: $gray-600;
+
+  @media (min-width: 640px) {
+    font-size: 0.875rem;
+  }
+}
+
+.labelAbsolute {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.025em;
+  color: $gray-600;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdownTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  text-align: left;
+  background-color: $white;
+  border: 1.5px solid $gray-300;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
+
+  &:hover {
+    border-color: $gray-400;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $blue-500;
+    box-shadow: 0 0 0 3px rgba($blue-500, 0.1);
+  }
+
+  &.open {
+    border-color: $blue-500;
+    box-shadow: 0 0 0 3px rgba($blue-500, 0.1);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: $gray-200;
+  }
+}
+
+.dropdownValue {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: $gray-500;
+
+  &.hasValue {
+    color: $gray-700;
+  }
+}
+
+.dropdownIcon {
+  display: flex;
+  align-items: center;
+  margin-left: 0.5rem;
+  color: $gray-400;
+  transition: transform $transition-fast, color $transition-fast;
+
+  &.open {
+    transform: rotate(180deg);
+  }
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  z-index: 50;
+  max-height: 180px;
+  overflow-y: auto;
+  background-color: $white;
+  border-radius: $radius-md;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  animation: dropdownFade $transition-fast ease-out;
+}
+
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdownItem {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  text-align: left;
+  color: $gray-700;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color $transition-fast;
+
+  &:first-child {
+    border-top-left-radius: $radius-md;
+    border-top-right-radius: $radius-md;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: $radius-md;
+    border-bottom-right-radius: $radius-md;
+  }
+
+  &:hover {
+    background-color: $gray-200;
+  }
+
+  &.selected {
+    color: $gray-700;
+    font-weight: $medium;
+  }
+}
+
+.input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  background-color: $white;
+  border: 1.5px solid $gray-300;
+  border-radius: $radius-md;
+  margin-top: 1.2rem;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
+
+  &::placeholder {
+    color: $gray-400;
+  }
+
+  &:hover {
+    border-color: $gray-400;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $blue-500;
+    box-shadow: 0 0 0 3px rgba($blue-500, 0.1);
+  }
+
+  @media (min-width: 640px) {
+    font-size: 1rem;
+  }
+}
+
+.inputError {
+  border-color: $red-500;
+}
+
+.errorText {
+  display: flex;
+  align-items: center;
+  margin-top: 0.25rem;
+  margin-left: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: $medium;
+  letter-spacing: 0.025em;
+  color: $red-500;
+}
+
+.passwordWrapper {
+  position: relative;
+}
+
+.passwordToggle {
+  position: absolute;
+  top: 1.2rem;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  width: 2.5rem;
+}
+
+.passwordToggleIcon {
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px 0 0 4px;
+  cursor: pointer;
+  color: $gray-400;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $gray-600;
+  }
+}
+
+.submitButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.8125rem;
+  font-weight: $semibold;
+  text-align: center;
+  color: $white;
+  background: $primary-gradient;
+  border: none;
+  border-radius: $radius-md;
+  box-shadow: 0 4px 6px -1px rgba(126, 87, 194, 0.3);
+  min-height: 36px;
+  cursor: pointer;
+  transition: transform $transition-fast, box-shadow $transition-fast;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 10px -1px rgba(126, 87, 194, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.createIcon {
+  display: inline-flex;
+  padding: 0;
+  background-color: transparent;
+
+  svg {
+    stroke: currentColor;
+    stroke-width: 2;
+    transition: transform $transition-normal;
+  }
+}

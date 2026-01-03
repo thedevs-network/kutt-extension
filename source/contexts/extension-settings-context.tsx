@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-import React, {createContext, useReducer, useContext} from 'react';
+import type {JSX} from 'react';
+import {createContext, useReducer, useContext, type ReactNode} from 'react';
 
 import {Kutt} from '../Background';
 
@@ -27,12 +27,15 @@ type HYDRATE_EXTENSION_SETTINGS = {
         apikey: string;
         domainOptions: DomainOptionsProperties[];
         host: HostProperties;
+        history: boolean;
+        reuse: boolean;
       }
     | {
         apikey: string;
         host: HostProperties;
         history: boolean;
         advanced: boolean;
+        reuse: boolean;
       };
 };
 
@@ -50,6 +53,7 @@ type InitialValues = {
   reload: boolean;
   history: boolean;
   advanced: boolean;
+  reuse: boolean;
 };
 
 const initialValues: InitialValues = {
@@ -57,8 +61,9 @@ const initialValues: InitialValues = {
   domainOptions: [],
   host: Kutt,
   reload: false,
-  history: false,
+  history: true,
   advanced: false,
+  reuse: false,
 };
 
 type State = InitialValues;
@@ -116,12 +121,12 @@ function useExtensionSettings(): [State, Dispatch] {
 }
 
 type ExtensionSettingsProviderProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
-const ExtensionSettingsProvider: React.FC<ExtensionSettingsProviderProps> = ({
+function ExtensionSettingsProvider({
   children,
-}) => {
+}: ExtensionSettingsProviderProps): JSX.Element {
   const [state, dispatch] = useReducer(extensionSettingsReducer, initialValues);
 
   return (
@@ -133,6 +138,6 @@ const ExtensionSettingsProvider: React.FC<ExtensionSettingsProviderProps> = ({
       </ExtensionSettingsStateContext.Provider>
     </>
   );
-};
+}
 
 export {ExtensionSettingsProvider, useExtensionSettings};

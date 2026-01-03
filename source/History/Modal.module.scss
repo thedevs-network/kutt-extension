@@ -1,0 +1,63 @@
+@use '../styles/variables' as *;
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+}
+
+.modalContent {
+  padding: 2.5rem 3rem;
+  text-align: center;
+  background-color: $white;
+  border-radius: $radius-lg;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.qrCodeWrapper {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  background-color: $white;
+  border-radius: $radius-md;
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.closeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  padding: 0 1.5rem;
+  font-size: 0.875rem;
+  font-weight: $medium;
+  color: $white;
+  cursor: pointer;
+  border-radius: $radius-md;
+  border: none;
+  background: $primary-gradient;
+  box-shadow: 0 4px 6px -1px rgba(126, 87, 194, 0.3);
+  transition: transform $transition-fast, box-shadow $transition-fast;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 10px -1px rgba(126, 87, 194, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}

@@ -1,6 +1,6 @@
 import {isNull, EMPTY_STRING} from '@abhijithvijayan/ts-utils';
-import React, {useEffect} from 'react';
-import tw, {css} from 'twin.macro';
+import type {JSX} from 'react';
+import {useEffect} from 'react';
 
 import {Kutt, UserSettingsResponseProperties} from '../Background';
 import {openExtOptionsPage} from '../util/tabs';
@@ -16,11 +16,7 @@ import {
   RequestStatusActionTypes,
   useRequestStatus,
 } from '../contexts/request-status-context';
-import {
-  getExtensionSettings,
-  getPreviousSettings,
-  migrateSettings,
-} from '../util/settings';
+import {getExtensionSettings} from '../util/settings';
 
 import BodyWrapper from '../components/BodyWrapper';
 import ResponseBody from './ResponseBody';
@@ -28,7 +24,9 @@ import PopupHeader from './Header';
 import Loader from '../components/Loader';
 import Form, {CONSTANTS} from './Form';
 
-const Popup: React.FC = () => {
+import styles from './Popup.module.scss';
+
+function Popup(): JSX.Element {
   const [extensionSettingsState, extensionSettingsDispatch] =
     useExtensionSettings();
   const [requestStatusState, requestStatusDispatch] = useRequestStatus();
@@ -37,62 +35,6 @@ const Popup: React.FC = () => {
   // re-renders on `liveReloadFlag` change
   useEffect((): void => {
     async function getUserSettings(): Promise<void> {
-      // -----------------------------------------------------------------------------//
-      // -----------------------------------------------------------------------------//
-      // -----            // ToDo: remove in next major release //              ----- //
-      // ----- Ref: https://github.com/thedevs-network/kutt-extension/issues/78 ----- //
-      // -----------------------------------------------------------------------------//
-      // -----------------------------------------------------------------------------//
-
-      const {
-        // old keys from extension v3.x.x
-        key = EMPTY_STRING,
-        host = EMPTY_STRING,
-        userOptions = {
-          autoCopy: false,
-          devMode: false,
-          keepHistory: false,
-          pwdForUrls: false,
-        },
-      } = await getPreviousSettings();
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const migrationSettings: any = {};
-      let performMigration = false;
-
-      if ((key as string).trim().length > 0) {
-        // map it to `settings.apikey`
-        migrationSettings.apikey = key;
-        performMigration = true;
-      }
-      if (
-        (host as string).trim().length > 0 &&
-        (userOptions.devMode as boolean)
-      ) {
-        // map `host` to `settings.host`
-        migrationSettings.host = host;
-        // set `advanced` to true
-        migrationSettings.advanced = true;
-        performMigration = true;
-      }
-      if (userOptions.keepHistory as boolean) {
-        // set `settings.history` to true
-        migrationSettings.history = true;
-        performMigration = true;
-      }
-      if (performMigration) {
-        // perform migration
-        await migrateSettings(migrationSettings);
-      }
-
-      // -----------------------------------------------------------------------------//
-      // -----------------------------------------------------------------------------//
-      // -----------------------------------------------------------------------------//
-      // -----------------------------------------------------------------------------//
-      // -----------------------------------------------------------------------------//
-      // -----------------------------------------------------------------------------//
-
-      // ToDo: set types: refer https://kutt.it/jITyIU
       const {settings = {}} = await getExtensionSettings();
 
       // No API Key set
@@ -113,9 +55,7 @@ const Popup: React.FC = () => {
         });
 
         // Open options page
-        setTimeout(() => {
-          return openExtOptionsPage();
-        }, 1300);
+        setTimeout(() => openExtOptionsPage(), 1300);
 
         return;
       }
@@ -134,24 +74,22 @@ const Popup: React.FC = () => {
           isValidUrl(settings.host as string)
         ) {
           defaultHost = {
-            hostDomain: (settings.host as string)
-              .replace('http://', EMPTY_STRING)
-              .replace('https://', EMPTY_STRING)
-              .replace('www.', EMPTY_STRING)
-              .split(/[/?#]/)[0], // extract domain
+            hostDomain:
+              (settings.host as string)
+                .replace('http://', EMPTY_STRING)
+                .replace('https://', EMPTY_STRING)
+                .replace('www.', EMPTY_STRING)
+                .split(/[/?#]/)[0] || EMPTY_STRING,
             hostUrl: (settings.host as string).endsWith('/')
               ? (settings.host as string).slice(0, -1)
-              : (settings.host as string), // slice `/` at the end
+              : (settings.host as string),
           };
         }
       }
 
-      let historyEnabled = false;
-      // `history` field set
-      if (
-        Object.prototype.hasOwnProperty.call(settings, 'history') &&
-        (settings.history as boolean)
-      ) {
+      // `history` field set - default to true for new users
+      let historyEnabled = true;
+      if (Object.prototype.hasOwnProperty.call(settings, 'history')) {
         historyEnabled = settings.history as boolean;
       }
 
@@ -166,7 +104,7 @@ const Popup: React.FC = () => {
         {
           id: CONSTANTS.DefaultDomainId,
           option: defaultHost.hostDomain,
-          value: defaultHost.hostUrl,
+          value: defaultHost.hostDomain,
           disabled: false,
         },
       ];
@@ -200,6 +138,7 @@ const Popup: React.FC = () => {
             domainOptions: optionsList,
             host: defaultHost,
             history: historyEnabled,
+            reuse: (settings.reuse as boolean) || false,
           },
         });
       } else {
@@ -211,6 +150,7 @@ const Popup: React.FC = () => {
             domainOptions: defaultOptions,
             host: defaultHost,
             history: historyEnabled,
+            reuse: (settings.reuse as boolean) || false,
           },
         });
       }
@@ -227,16 +167,7 @@ const Popup: React.FC = () => {
 
   return (
     <BodyWrapper>
-      <div
-        id="popup"
-        css={[
-          tw`text-lg`,
-          css`
-            min-height: 350px;
-            min-width: 270px;
-          `,
-        ]}
-      >
+      <div id="popup" className={styles.popup}>
         {!requestStatusState.loading ? (
           <>
             <PopupHeader />
@@ -249,6 +180,6 @@ const Popup: React.FC = () => {
       </div>
     </BodyWrapper>
   );
-};
+}
 
 export default Popup;

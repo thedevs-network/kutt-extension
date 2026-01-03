@@ -1,22 +1,39 @@
-import React from 'react';
-import 'twin.macro';
+import type {JSX} from 'react';
+import {memo} from 'react';
 
-const Header: React.FC = () => {
-  return (
-    <>
-      <header tw="flex items-center justify-center pb-4">
-        <img
-          tw="w-8 h-8"
-          width="32"
-          height="32"
-          src="assets/logo.png"
-          alt="logo"
-        />
+import {Kutt} from '../Background';
 
-        <h1 tw="font-medium text-3xl ml-1 text-center mb-0">Kutt</h1>
-      </header>
-    </>
-  );
+import styles from './Header.module.scss';
+
+type Props = {
+  subtitle?: string;
+  hostUrl?: string;
 };
 
-export default React.memo(Header);
+function Header({
+  subtitle = 'Extension Settings',
+  hostUrl = Kutt.hostUrl,
+}: Props): JSX.Element {
+  return (
+    <header className={styles.header}>
+      <a
+        href={hostUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={styles.logoContainer}
+      >
+        <img
+          className={styles.logo}
+          width="40"
+          height="40"
+          src="../assets/logo.png"
+          alt="logo"
+        />
+        <h1 className={styles.title}>Kutt</h1>
+      </a>
+      <p className={styles.subtitle}>{subtitle}</p>
+    </header>
+  );
+}
+
+export default memo(Header);

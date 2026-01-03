@@ -1,44 +1,23 @@
 import CopyToClipboard from 'react-copy-to-clipboard';
-import React, {useState, useEffect} from 'react';
-import tw, {styled, css} from 'twin.macro';
-import QRCode from 'qrcode.react';
+import type {JSX} from 'react';
+import {useState, useEffect} from 'react';
+import {QRCodeSVG} from 'qrcode.react';
+import clsx from 'clsx';
 
 import {useRequestStatus} from '../contexts/request-status-context';
 import {removeProtocol} from '../util/link';
 import Icon from '../components/Icon';
 
-export type ProcessedRequestProperties = {
-  error: boolean | null;
-  message: string;
-};
+import styles from './ResponseBody.module.scss';
 
-const StyledPopupBody = styled.div`
-  ${tw`flex items-center justify-center px-4 pt-4 pb-0`}
-
-  .icon {
-    svg {
-      stroke: rgb(101, 189, 137);
-      stroke-width: 2;
-    }
-  }
-
-  h1 {
-    border-bottom: 1px dotted ${({theme}): string => theme.statsTotalUnderline};
-    padding-bottom: 2px;
-    color: rgb(41, 71, 86);
-
-    ${tw`hover:opacity-75 min-w-0 m-0 text-2xl font-light cursor-pointer`}
-  }
-`;
-
-const ResponseBody: React.FC = () => {
+function ResponseBody(): JSX.Element {
   const [{error, message}] = useRequestStatus();
   const [copied, setCopied] = useState<boolean>(false);
   const [QRView, setQRView] = useState<boolean>(false);
 
   // reset copy message
   useEffect(() => {
-    let timer: NodeJS.Timeout | null = null;
+    let timer: ReturnType<typeof setTimeout> | null = null;
 
     timer = setTimeout(() => {
       setCopied(false);
@@ -53,60 +32,51 @@ const ResponseBody: React.FC = () => {
 
   return (
     <>
-      <StyledPopupBody>
+      <div className={styles.popupBody}>
         {!error ? (
           <>
             <Icon
-              className="icon"
-              css={[
-                tw`my-0 ml-0`,
-
-                css`
-                  margin-right: 0.4rem;
-                `,
-              ]}
+              className={clsx(styles.icon, styles.qrIcon)}
               name="qrcode"
-              onClick={(): void => {
-                return setQRView(!QRView);
-              }}
+              onClick={(): void => setQRView(!QRView)}
             />
 
             {!copied ? (
               <CopyToClipboard
                 text={message}
-                onCopy={(): void => {
-                  return setCopied(true);
-                }}
+                onCopy={(): void => setCopied(true)}
               >
-                <Icon tw="my-0 ml-0 mr-3" className="icon" name="copy" />
+                <Icon
+                  className={clsx(styles.icon, styles.copyIcon)}
+                  name="copy"
+                />
               </CopyToClipboard>
             ) : (
-              <Icon tw="my-0 ml-0 mr-3" className="icon" name="tick" />
+              <Icon
+                className={clsx(styles.icon, styles.copyIcon)}
+                name="tick"
+              />
             )}
 
             <CopyToClipboard
               text={message}
-              onCopy={(): void => {
-                return setCopied(true);
-              }}
+              onCopy={(): void => setCopied(true)}
             >
-              <h1>{removeProtocol(message)}</h1>
+              <h1 className={styles.link}>{removeProtocol(message)}</h1>
             </CopyToClipboard>
           </>
         ) : (
-          <p tw="pt-1 text-lg text-gray-900 border-b border-gray-700 border-dotted">
-            {message}
-          </p>
+          <p className={styles.errorMessage}>{message}</p>
         )}
-      </StyledPopupBody>
+      </div>
 
       {!error && QRView && (
-        <div tw="flex justify-center max-w-full pt-4 pb-0">
-          <QRCode size={128} value={message} />
+        <div className={styles.qrCodeContainer}>
+          <QRCodeSVG size={128} value={message} />
         </div>
       )}
     </>
   );
-};
+}
 
 export default ResponseBody;

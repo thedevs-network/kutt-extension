@@ -1,19 +1,12 @@
-import React from 'react';
-import 'twin.macro';
+import type {JSX, ReactNode} from 'react';
+import styles from './BodyWrapper.module.scss';
 
 type WrapperProperties = {
-  children: React.ReactChild;
+  children: ReactNode;
 };
 
-const BodyWrapper: React.FC<WrapperProperties> = ({children}) => {
-  // ToDo: get from props
-  const isLoading = false;
-
-  return (
-    <>
-      <div tw="w-full">{isLoading ? 'Loading...' : children}</div>
-    </>
-  );
-};
+function BodyWrapper({children}: WrapperProperties): JSX.Element {
+  return <div className={styles.wrapper}>{children}</div>;
+}
 
 export default BodyWrapper;

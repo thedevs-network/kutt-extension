@@ -1,0 +1,30 @@
+@use '../styles/variables' as *;
+
+.optionsPage {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1.5rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+  user-select: none;
+}
+
+.optionsContainer {
+  width: 100%;
+  max-width: 28rem;
+  padding: 2rem 2.5rem;
+  margin: 1rem;
+  background-color: $white;
+  height: max-content;
+  border-radius: $radius-lg;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  @media (min-width: 640px) {
+    padding: 2.5rem 3rem;
+  }
+}
+
+.loaderContainer {
+  height: 16rem;
+}

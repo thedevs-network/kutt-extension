@@ -1,12 +1,15 @@
 import {isNull, isUndefined} from '@abhijithvijayan/ts-utils';
-import {useFormState} from 'react-use-form-state';
-import React, {useState, useEffect} from 'react';
-import tw, {styled} from 'twin.macro';
+import type {JSX} from 'react';
+import {useState, useEffect, useRef, ChangeEvent} from 'react';
+import clsx from 'clsx';
 
 import {useExtensionSettings} from '../contexts/extension-settings-context';
-import {updateExtensionSettings} from '../util/settings';
+import {
+  updateExtensionSettings,
+  clearExtensionSettings,
+} from '../util/settings';
 import {CHECK_API_KEY} from '../Background/constants';
-import messageUtil from '../util/mesageUtil';
+import messageUtil from '../util/messageUtil';
 import {isValidUrl} from '../util/link';
 import {
   SuccessfulApiKeyCheckProperties,
@@ -18,128 +21,150 @@ import {
 
 import Icon from '../components/Icon';
 
+import styles from './Form.module.scss';
+
 type OptionsFormValuesProperties = {
   apikey: string;
   history: boolean;
   advanced: boolean;
   host: string;
+  reuse: boolean;
 };
 
-const StyledValidateButton = styled.button`
-  ${tw`focus:outline-none hover:text-gray-200 inline-flex items-center justify-center px-3 py-2 mt-3 mb-1 text-xs font-semibold text-center text-white duration-300 ease-in-out rounded shadow-lg`}
+type FormErrors = {
+  apikey?: string;
+  host?: string;
+};
 
-  background: linear-gradient(to right,rgb(126, 87, 194),rgb(98, 0, 234));
-
-  .validate__icon {
-    ${tw`inline-flex px-0 bg-transparent`}
-
-    svg {
-      ${tw`transition-transform duration-300 ease-in-out`}
-
-      stroke: currentColor;
-      stroke-width: 2;
-    }
-  }
-`;
+type FormValidity = {
+  apikey?: boolean;
+  host?: boolean;
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const onSave = (values: OptionsFormValuesProperties): Promise<any> => {
+const onSave = (values: OptionsFormValuesProperties): Promise<any> =>
   // should always return a Promise
-  return updateExtensionSettings(values); // update local settings
-};
-
-const Form: React.FC = () => {
+  updateExtensionSettings(values); // update local settings
+function Form(): JSX.Element {
   const extensionSettingsState = useExtensionSettings()[0];
+  const hostInputRef = useRef<HTMLInputElement>(null);
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [showApiKey, setShowApiKey] = useState<boolean>(false);
+  const [showResetConfirm, setShowResetConfirm] = useState<boolean>(false);
   const [errored, setErrored] = useState<ErrorStateProperties>({
     error: null,
     message: '',
   });
-  const [
-    formState,
-    {
-      text: textProps,
-      checkbox: checkboxProps,
-      password: passwordProps,
-      label: labelProps,
-    },
-  ] = useFormState<{
-    apikey: string;
-    history: boolean;
-    advanced: boolean;
-    host: string;
-  }>(
-    {
-      apikey: extensionSettingsState.apikey,
-      history: extensionSettingsState.history,
-      advanced: extensionSettingsState.advanced,
-      host:
-        (extensionSettingsState.advanced &&
-          extensionSettingsState.host.hostUrl) ||
-        '',
-    },
-    {
-      withIds: true, // enable automatic creation of id and htmlFor props
-    }
-  );
 
-  const {
-    errors: formStateErrors,
-    values: formStateValues,
-    validity: formStateValidity,
-    setField: setFormStateField,
-    setFieldError: setFormStateFieldError,
-  } = formState;
+  const [formValues, setFormValues] = useState<OptionsFormValuesProperties>({
+    apikey: extensionSettingsState.apikey,
+    history: extensionSettingsState.history,
+    advanced: extensionSettingsState.advanced,
+    host:
+      (extensionSettingsState.advanced &&
+        extensionSettingsState.host.hostUrl) ||
+      '',
+    reuse: extensionSettingsState.reuse,
+  });
+
+  const [formErrors, setFormErrors] = useState<FormErrors>({});
+  const [formValidity, setFormValidity] = useState<FormValidity>({});
 
   const isFormValid: boolean =
-    ((isUndefined(formStateValidity.apikey) || formStateValidity.apikey) &&
-      formStateValues.apikey.trim().length === 40 && // invalidate if api key is empty
-      isUndefined(formStateErrors.apikey) &&
-      (((isUndefined(formStateValidity.host) || formStateValidity.host) &&
-        isUndefined(formStateErrors.host)) ||
-        // Check if `host` field exhibits validation errors, if `host` field is error but `advanced` field is set to false => form is valid(hence the or condition)
-        !formStateValues.advanced)) ||
+    ((isUndefined(formValidity.apikey) || formValidity.apikey) &&
+      formValues.apikey.trim().length === 40 &&
+      isUndefined(formErrors.apikey) &&
+      (((isUndefined(formValidity.host) || formValidity.host) &&
+        isUndefined(formErrors.host)) ||
+        !formValues.advanced)) ||
     false;
 
   // on component mount -> save `settings` object
   useEffect(() => {
     onSave({
-      ...formStateValues,
-      ...(formStateValues.advanced === false && {host: ''}),
+      ...formValues,
+      ...(formValues.advanced === false && {host: ''}),
     });
-  }, [formStateValues]);
+  }, [formValues]);
 
   function handleApiKeyInputChange(apikey: string): void {
-    setFormStateField('apikey', apikey);
+    setFormValues((prev) => {
+      return {...prev, apikey};
+    });
     // ToDo: Remove special symbols
 
     if (!(apikey.trim().length > 0)) {
-      setFormStateFieldError('apikey', 'API key missing');
+      setFormErrors((prev) => {
+        return {...prev, apikey: 'API key missing'};
+      });
+      setFormValidity((prev) => {
+        return {...prev, apikey: false};
+      });
     } else if (apikey && apikey.trim().length < 40) {
-      setFormStateFieldError('apikey', 'API key must be 40 characters');
+      setFormErrors((prev) => {
+        return {...prev, apikey: 'API key must be 40 characters'};
+      });
+      setFormValidity((prev) => {
+        return {...prev, apikey: false};
+      });
     } else if (apikey && apikey.trim().length > 40) {
-      setFormStateFieldError('apikey', 'API key cannot exceed 40 characters');
+      setFormErrors((prev) => {
+        return {...prev, apikey: 'API key cannot exceed 40 characters'};
+      });
+      setFormValidity((prev) => {
+        return {...prev, apikey: false};
+      });
+    } else {
+      setFormErrors((prev) => {
+        const {apikey: _, ...rest} = prev;
+        return rest;
+      });
+      setFormValidity((prev) => {
+        return {...prev, apikey: true};
+      });
     }
   }
 
   function handleHostUrlInputChange(host: string): void {
-    if (!formStateValues.advanced) {
-      setFormStateFieldError('host', 'Enable Advanced Options first');
-
+    if (!formValues.advanced) {
+      setFormErrors((prev) => {
+        return {...prev, host: 'Enable Advanced Options first'};
+      });
+      setFormValidity((prev) => {
+        return {...prev, host: false};
+      });
       return;
     }
 
-    setFormStateField('host', host);
+    setFormValues((prev) => {
+      return {...prev, host};
+    });
 
     if (!(host.trim().length > 0)) {
-      setFormStateFieldError('host', 'Custom URL cannot be empty');
-
+      setFormErrors((prev) => {
+        return {...prev, host: 'Custom URL cannot be empty'};
+      });
+      setFormValidity((prev) => {
+        return {...prev, host: false};
+      });
       return;
     }
 
     if (!isValidUrl(host.trim()) || host.trim().length < 10) {
-      setFormStateFieldError('host', 'Please enter a valid url');
+      setFormErrors((prev) => {
+        return {...prev, host: 'Please enter a valid url'};
+      });
+      setFormValidity((prev) => {
+        return {...prev, host: false};
+      });
+    } else {
+      setFormErrors((prev) => {
+        const {host: _, ...rest} = prev;
+        return rest;
+      });
+      setFormValidity((prev) => {
+        return {...prev, host: true};
+      });
     }
   }
 
@@ -147,11 +172,11 @@ const Form: React.FC = () => {
     setSubmitting(true);
     // request API validation request
     const apiKeyValidationBody: AuthRequestBodyProperties = {
-      apikey: formStateValues.apikey.trim(),
+      apikey: formValues.apikey.trim(),
       hostUrl:
-        (formStateValues.advanced &&
-          formStateValues.host.trim().length > 0 &&
-          formStateValues.host.trim()) ||
+        (formValues.advanced &&
+          formValues.host.trim().length > 0 &&
+          formValues.host.trim()) ||
         Kutt.hostUrl,
     };
 
@@ -180,72 +205,78 @@ const Form: React.FC = () => {
     setTimeout(() => {
       // Reset status
       setErrored({error: null, message: ''});
-    }, 1000);
+    }, 3000);
+  }
+
+  async function handleResetSettings(): Promise<void> {
+    await clearExtensionSettings();
+    setShowResetConfirm(false);
+    // Reload the page to reflect cleared settings
+    window.location.reload();
   }
 
   return (
     <>
-      <div tw="mt-4">
-        <div tw="flex flex-col text-sm">
-          <label {...labelProps('apikey')} tw="mb-2 font-bold">
+      <div className={styles.formSection}>
+        <div className={styles.inputGroup}>
+          <label htmlFor="apikey" className={styles.label}>
             API Key
-            <small tw="tracking-normal lowercase">
+            <span className={styles.labelLinkWrapper}>
               <a
                 href={`${
-                  (formStateValues.advanced && formStateValues.host) ||
-                  Kutt.hostUrl
+                  (formValues.advanced && formValues.host) || Kutt.hostUrl
                 }/login`}
                 target="blank"
                 rel="nofollow noopener noreferrer"
-                tw="ml-2 text-blue-500 no-underline"
+                className={styles.labelLink}
               >
                 get one?
               </a>
-            </small>
+              <span className={styles.tooltip}>
+                Get your API key from your Kutt account settings page
+              </span>
+            </span>
           </label>
 
-          <div tw="relative">
-            <div tw="absolute top-0 right-0 flex w-10 h-full border border-transparent">
+          <div className={styles.inputWrapper}>
+            <div className={styles.inputIconWrapper}>
               <Icon
-                tw="z-10 cursor-pointer flex items-center justify-center w-full h-full text-gray-600 rounded-tl rounded-bl"
+                className={styles.inputIcon}
                 onClick={(): void => setShowApiKey(!showApiKey)}
                 name={!showApiKey ? 'eye-closed' : 'eye'}
               />
             </div>
 
             <input
-              {...passwordProps('apikey')}
+              id="apikey"
+              name="apikey"
               type={!showApiKey ? 'password' : 'text'}
-              onChange={({
-                target: {value},
-              }: React.ChangeEvent<HTMLInputElement>): void => {
-                // NOTE: overriding onChange to show errors
-                handleApiKeyInputChange(value.trim());
+              value={formValues.apikey}
+              onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+                handleApiKeyInputChange(e.target.value.trim());
               }}
               spellCheck="false"
-              css={[
-                tw`sm:text-base focus:border-indigo-400 focus:outline-none relative w-full py-2 pl-2 pr-12 text-sm placeholder-gray-400 bg-gray-200 border rounded`,
-
-                !isUndefined(formStateValidity.apikey) &&
-                  !formStateValidity.apikey &&
-                  tw`border-red-500`,
-              ]}
+              className={clsx(
+                styles.input,
+                !isUndefined(formValidity.apikey) &&
+                  !formValidity.apikey &&
+                  styles.inputError
+              )}
             />
           </div>
 
-          <span tw="flex items-center mt-1 ml-1 text-xs font-medium tracking-wide text-red-500">
-            {formStateErrors.apikey}
-          </span>
+          <span className={styles.errorText}>{formErrors.apikey}</span>
         </div>
       </div>
 
-      <div>
-        <StyledValidateButton
-          type="submit"
+      <div className={styles.validateSection}>
+        <button
+          type="button"
           disabled={submitting || !isFormValid}
           onClick={handleApiKeyVerification}
+          className={styles.validateButton}
         >
-          <span tw="ml-2">Validate</span>
+          <span className={styles.validateText}>Validate</span>
 
           <Icon
             name={
@@ -255,96 +286,240 @@ const Form: React.FC = () => {
                     ((!errored.error && 'tick') || 'cross')) ||
                   'zap'
             }
-            className="icon validate__icon"
+            className={styles.validateIcon}
           />
-        </StyledValidateButton>
+        </button>
+
+        {!isNull(errored.error) && (
+          <div
+            className={clsx(
+              styles.validationFeedback,
+              errored.error ? styles.error : styles.success
+            )}
+          >
+            <Icon
+              className={styles.feedbackIcon}
+              name={errored.error ? 'cross' : 'tick'}
+            />
+            <span className={styles.feedbackMessage}>{errored.message}</span>
+          </div>
+        )}
       </div>
 
-      <div tw="flex flex-col mt-6">
-        <label
-          {...labelProps('history')}
-          tw="flex justify-between items-center mt-3 cursor-pointer"
-        >
-          <span tw="text-sm">Keep History</span>
+      <div className={styles.toggleSection}>
+        <label htmlFor="history" className={styles.toggleLabel}>
+          <span className={styles.toggleTextWithInfo}>
+            <span className={styles.toggleText}>Show Recent Links</span>
+            <span className={styles.infoIcon}>
+              <Icon name="info" />
+              <span className={styles.tooltip}>
+                Enables the History page to view your recent shortened links
+              </span>
+            </span>
+          </span>
 
-          <span tw="relative ml-3">
-            <span tw="block w-10 h-6 bg-gray-400 rounded-full shadow-inner" />
+          <span className={styles.toggleWrapper}>
+            <span className={styles.toggleTrack} />
             <span
-              css={[
-                tw`absolute inset-y-0 left-0 block w-4 h-4 mt-1 ml-1 transition-transform duration-300 ease-in-out rounded-full shadow`,
-
-                !formStateValues.history
-                  ? tw`bg-white`
-                  : tw`transform translate-x-full bg-purple-600`,
-              ]}
+              className={clsx(
+                styles.toggleKnob,
+                formValues.history && styles.active
+              )}
             >
               <input
-                {...checkboxProps('history')}
-                tw="absolute w-0 h-0 opacity-0"
+                id="history"
+                name="history"
+                type="checkbox"
+                checked={formValues.history}
+                onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+                  setFormValues((prev) => {
+                    return {...prev, history: e.target.checked};
+                  });
+                }}
+                className={styles.toggleInput}
               />
             </span>
           </span>
         </label>
 
-        <label
-          {...labelProps('advanced')}
-          tw="flex justify-between items-center mt-3 cursor-pointer"
-        >
-          <span tw="text-sm">Show Advanced Options</span>
+        <label htmlFor="reuse" className={styles.toggleLabel}>
+          <span className={styles.toggleTextWithInfo}>
+            <span className={styles.toggleText}>Reuse Existing URLs</span>
+            <span className={styles.infoIcon}>
+              <Icon name="info" />
+              <span className={styles.tooltip}>
+                Returns the existing short link if the same URL was shortened
+                before
+              </span>
+            </span>
+          </span>
 
-          <span tw="relative ml-3">
-            <span tw="block w-10 h-6 bg-gray-400 rounded-full shadow-inner" />
+          <span className={styles.toggleWrapper}>
+            <span className={styles.toggleTrack} />
             <span
-              css={[
-                tw`absolute inset-y-0 left-0 block w-4 h-4 mt-1 ml-1 transition-transform duration-300 ease-in-out rounded-full shadow`,
-
-                !formStateValues.advanced
-                  ? tw`bg-white`
-                  : tw`transform translate-x-full bg-purple-600`,
-              ]}
+              className={clsx(
+                styles.toggleKnob,
+                formValues.reuse && styles.active
+              )}
             >
               <input
-                {...checkboxProps('advanced')}
-                tw="absolute w-0 h-0 opacity-0"
+                id="reuse"
+                name="reuse"
+                type="checkbox"
+                checked={formValues.reuse}
+                onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+                  setFormValues((prev) => {
+                    return {...prev, reuse: e.target.checked};
+                  });
+                }}
+                className={styles.toggleInput}
               />
             </span>
           </span>
         </label>
 
-        <div css={[tw`mt-4`, !formStateValues.advanced && tw`invisible`]}>
-          <div tw="flex flex-col text-sm">
-            <label {...labelProps('host')} tw="mb-2 font-bold">
-              Custom Host
+        <label htmlFor="advanced" className={styles.toggleLabel}>
+          <span className={styles.toggleTextWithInfo}>
+            <span className={styles.toggleText}>Show Advanced Options</span>
+            <span className={styles.infoIcon}>
+              <Icon name="info" />
+              <span className={styles.tooltip}>
+                Configure a custom self-hosted Kutt instance URL
+              </span>
+            </span>
+          </span>
+
+          <span className={styles.toggleWrapper}>
+            <span className={styles.toggleTrack} />
+            <span
+              className={clsx(
+                styles.toggleKnob,
+                formValues.advanced && styles.active
+              )}
+            >
+              <input
+                id="advanced"
+                name="advanced"
+                type="checkbox"
+                checked={formValues.advanced}
+                onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+                  setFormValues((prev) => {
+                    return {...prev, advanced: e.target.checked};
+                  });
+                  if (e.target.checked) {
+                    setTimeout(() => hostInputRef.current?.focus(), 350);
+                  }
+                }}
+                className={styles.toggleInput}
+              />
+            </span>
+          </span>
+        </label>
+
+        <div
+          className={clsx(
+            styles.advancedSection,
+            !formValues.advanced && styles.hidden
+          )}
+        >
+          <div className={styles.inputGroup}>
+            <label htmlFor="host" className={styles.label}>
+              <span className={styles.labelWithInfo}>
+                Custom Host
+                <span className={styles.infoIcon}>
+                  <Icon name="info" />
+                  <span className={styles.tooltip}>
+                    URL of your self-hosted Kutt instance (e.g.,
+                    https://kutt.example.com)
+                  </span>
+                </span>
+              </span>
             </label>
 
-            <div tw="relative">
+            <div className={styles.inputWrapper}>
               <input
-                {...textProps('host')}
-                onChange={({
-                  target: {value},
-                }: React.ChangeEvent<HTMLInputElement>): void => {
-                  // NOTE: overriding onChange to show errors
-                  handleHostUrlInputChange(value.trim());
+                ref={hostInputRef}
+                id="host"
+                name="host"
+                type="text"
+                value={formValues.host}
+                onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+                  handleHostUrlInputChange(e.target.value.trim());
                 }}
                 spellCheck="false"
-                css={[
-                  tw`sm:text-base focus:border-indigo-400 focus:outline-none relative w-full py-2 pl-2 pr-12 text-sm placeholder-gray-400 bg-gray-200 border rounded`,
-
-                  !isUndefined(formStateValidity.host) &&
-                    !formStateValidity.host &&
-                    tw`border-red-500`,
-                ]}
+                className={clsx(
+                  styles.input,
+                  !isUndefined(formValidity.host) &&
+                    !formValidity.host &&
+                    styles.inputError
+                )}
               />
             </div>
 
-            <span tw="flex items-center mt-1 ml-1 text-xs font-medium tracking-wide text-red-500">
-              {formStateErrors.host}
-            </span>
+            <span className={styles.errorText}>{formErrors.host}</span>
           </div>
         </div>
       </div>
+
+      <div className={styles.resetSection}>
+        <button
+          type="button"
+          onClick={() => setShowResetConfirm(true)}
+          className={styles.resetButton}
+        >
+          Reset All Settings
+        </button>
+        <span className={styles.resetHint}>
+          This will clear all your settings and reload the extension
+        </span>
+      </div>
+
+      {showResetConfirm && (
+        <div
+          className={styles.modalOverlay}
+          onClick={() => setShowResetConfirm(false)}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') setShowResetConfirm(false);
+          }}
+          role="button"
+          tabIndex={0}
+        >
+          <div
+            className={styles.modal}
+            onClick={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
+            role="button"
+            tabIndex={0}
+          >
+            <div className={styles.modalHeader}>
+              <Icon name="info" className={styles.modalIcon} />
+              <span className={styles.modalTitle}>Reset Settings?</span>
+            </div>
+            <p className={styles.modalText}>
+              This will permanently delete your API key and all preferences. You
+              will need to reconfigure the extension.
+            </p>
+            <div className={styles.modalActions}>
+              <button
+                type="button"
+                onClick={() => setShowResetConfirm(false)}
+                className={styles.modalCancelButton}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleResetSettings}
+                className={styles.modalConfirmButton}
+              >
+                Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
-};
+}
 
 export default Form;

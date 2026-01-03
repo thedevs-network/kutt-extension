@@ -1,0 +1,36 @@
+@use '../styles/variables' as *;
+
+.historyPage {
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+}
+
+.historyContent {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 2rem 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.errorMessage {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: $medium;
+  color: $gray-600;
+  padding: 2rem;
+  background-color: $white;
+  border-radius: $radius-lg;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  margin-top: 1.5rem;
+}
+
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10rem;
+  margin-top: 1.5rem;
+}
