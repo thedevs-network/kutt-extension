@@ -132,7 +132,7 @@ function History() {
     <BodyWrapper>
       <div id="history" className={styles.historyPage}>
         <div className={styles.historyContent}>
-          <Header />
+          <Header subtitle="Recent Links" />
 
           {/* eslint-disable-next-line no-nested-ternary */}
           {!requestStatusState.loading ? (

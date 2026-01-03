@@ -1,21 +1,36 @@
 @use '../styles/variables' as *;
 
 .historyPage {
-  min-height: 100vh;
-  background-color: $gray-200;
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
 }
 
 .historyContent {
-  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   padding: 2rem 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .errorMessage {
-  font-size: 1.25rem;
+  text-align: center;
+  font-size: 1rem;
   font-weight: $medium;
-  color: $gray-800;
+  color: $gray-600;
+  padding: 2rem;
+  background-color: $white;
+  border-radius: $radius-lg;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  margin-top: 1.5rem;
 }
 
 .loaderContainer {
-  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10rem;
+  margin-top: 1.5rem;
 }

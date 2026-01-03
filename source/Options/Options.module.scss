@@ -1,24 +1,27 @@
 @use '../styles/variables' as *;
 
 .optionsPage {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 2rem 1.5rem;
-  background-color: $gray-200;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
   user-select: none;
 }
 
 .optionsContainer {
-  max-width: 32rem;
-  padding: 2.5rem 4rem;
-  margin: 1.5rem 3rem;
+  width: 100%;
+  max-width: 28rem;
+  padding: 2rem 2.5rem;
+  margin: 1rem;
   background-color: $white;
   height: max-content;
+  border-radius: $radius-lg;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
-  @media (min-width: 768px) {
-    border-radius: $radius-lg;
+  @media (min-width: 640px) {
+    padding: 2.5rem 3rem;
   }
 }
 

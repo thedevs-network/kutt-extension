@@ -1,26 +1,10 @@
 @use '../styles/variables' as *;
 
 .footer {
-  margin-top: 1rem;
-  padding: 1rem 0;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
   font-weight: $regular;
   font-size: 0.75rem;
-
-  @media (min-width: 640px) {
-    margin-top: 1.5rem;
-  }
-
-  @media (min-width: 768px) {
-    margin-top: 2rem;
-  }
-
-  @media (min-width: 1024px) {
-    margin-top: 2.5rem;
-  }
-
-  @media (min-width: 1280px) {
-    margin-top: 4rem;
-  }
 }
 
 .ratingSection {
@@ -48,6 +32,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
+  color: inherit;
 }
 
 .starsContainer {
@@ -92,15 +78,18 @@
   align-items: center;
   justify-content: space-around;
   text-align: center;
-  margin: 1rem 0;
+  margin-top: 1rem;
 }
 
 .linkItem {
   padding: 0.25rem;
   cursor: pointer;
+  color: $gray-500;
+  text-decoration: none;
+  transition: color $transition-fast;
 
   &:hover {
-    color: $gray-800;
+    color: $blue-500;
   }
 
   &.narrow {

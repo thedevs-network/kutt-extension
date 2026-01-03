@@ -2,21 +2,30 @@ import {memo} from 'react';
 
 import styles from './Header.module.scss';
 
-function Header() {
+type Props = {
+  subtitle?: string;
+};
+
+function Header({subtitle = 'Extension Settings'}: Props) {
   return (
-    <>
-      <header className={styles.header}>
+    <header className={styles.header}>
+      <a
+        href="https://kutt.it"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={styles.logoContainer}
+      >
         <img
           className={styles.logo}
-          width="32"
-          height="32"
+          width="40"
+          height="40"
           src="../assets/logo.png"
           alt="logo"
         />
-
         <h1 className={styles.title}>Kutt</h1>
-      </header>
-    </>
+      </a>
+      <p className={styles.subtitle}>{subtitle}</p>
+    </header>
   );
 }
 

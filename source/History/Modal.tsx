@@ -11,8 +11,14 @@ type Props = {
 function Modal({link, setModalView}: Props) {
   return (
     <>
-      <div className={styles.modalOverlay}>
-        <div className={styles.modalContent}>
+      <div
+        className={styles.modalOverlay}
+        onClick={(): void => setModalView(false)}
+      >
+        <div
+          className={styles.modalContent}
+          onClick={(e): void => e.stopPropagation()}
+        >
           <div className={styles.qrCodeWrapper}>
             <QRCodeSVG size={196} value={link} />
           </div>
