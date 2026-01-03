@@ -106,6 +106,8 @@ async function shortenUrl({
       data: {
         ...otherParams,
       },
+      // Prevent cookies from being sent to avoid session-based auth conflicts
+      withCredentials: false,
     });
 
     return {
@@ -181,6 +183,8 @@ function getUserSettings({
     headers: {
       'X-API-Key': apikey,
     },
+    // Prevent cookies from being sent to avoid session-based auth conflicts
+    withCredentials: false,
   });
 }
 
@@ -278,6 +282,8 @@ async function fetchUrlsHistory({
       headers: {
         'X-API-Key': apikey,
       },
+      // Prevent cookies from being sent to avoid session-based auth conflicts
+      withCredentials: false,
     });
 
     return {
