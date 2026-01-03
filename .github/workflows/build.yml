@@ -51,12 +51,6 @@ jobs:
           name: firefox-extension
           path: extension/firefox.xpi
 
-      - name: Upload Opera extension artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: opera-extension
-          path: extension/opera.crx
-
   deploy:
     needs: build
     runs-on: ubuntu-latest

@@ -18,9 +18,6 @@
     }
   },
   "__chrome|firefox__author": "abhijithvijayan",
-  "__opera__developer": {
-    "name": "abhijithvijayan"
-  },
   "action": {
     "default_popup": "Popup/popup.html",
     "default_icon": {
@@ -32,13 +29,12 @@
     "default_title": "Shorten this URL"
   },
   "background": {
-    "__chrome|opera__service_worker": "assets/js/background.bundle.js",
-    "__chrome|opera__type": "module",
+    "__chrome__service_worker": "assets/js/background.bundle.js",
+    "__chrome__type": "module",
     "__firefox__scripts": ["assets/js/background.bundle.js"],
     "__firefox__type": "module"
   },
   "__chrome__minimum_chrome_version": "88",
-  "__opera__minimum_opera_version": "74",
   "permissions": [
     "activeTab",
     "storage"
@@ -50,7 +46,7 @@
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self';"
   },
-  "__chrome|opera__options_page": "Options/options.html",
+  "__chrome__options_page": "Options/options.html",
   "options_ui": {
     "page": "Options/options.html",
     "open_in_tab": true

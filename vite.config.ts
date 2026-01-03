@@ -16,10 +16,6 @@ export default defineConfig(({mode}) => {
 
   const getExtensionZipFileName = () => {
     switch (targetBrowser) {
-      case 'opera': {
-        return `${targetBrowser}.crx`;
-      }
-
       case 'firefox': {
         return `${targetBrowser}.xpi`;
       }

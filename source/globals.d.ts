@@ -1,5 +1,5 @@
 declare const __DEV__: boolean;
-declare const __TARGET_BROWSER__: 'chrome' | 'firefox' | 'opera';
+declare const __TARGET_BROWSER__: 'chrome' | 'firefox';
 
 declare module '*.module.scss' {
   const classes: {readonly [key: string]: string};
