@@ -1,5 +1,5 @@
 import {isNull, isUndefined} from '@abhijithvijayan/ts-utils';
-import {useState, useEffect, ChangeEvent} from 'react';
+import {useState, useEffect, useRef, ChangeEvent} from 'react';
 import clsx from 'clsx';
 
 import {useExtensionSettings} from '../contexts/extension-settings-context';
@@ -45,6 +45,7 @@ const onSave = (values: OptionsFormValuesProperties): Promise<any> => {
 
 function Form() {
   const extensionSettingsState = useExtensionSettings()[0];
+  const hostInputRef = useRef<HTMLInputElement>(null);
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [showApiKey, setShowApiKey] = useState<boolean>(false);
   const [errored, setErrored] = useState<ErrorStateProperties>({
@@ -178,7 +179,7 @@ function Form() {
         <div className={styles.inputGroup}>
           <label htmlFor="apikey" className={styles.label}>
             API Key
-            <small>
+            <span className={styles.labelLinkWrapper}>
               <a
                 href={`${
                   (formValues.advanced && formValues.host) ||
@@ -190,7 +191,10 @@ function Form() {
               >
                 get one?
               </a>
-            </small>
+              <span className={styles.tooltip}>
+                Get your API key from your Kutt account settings page
+              </span>
+            </span>
           </label>
 
           <div className={styles.inputWrapper}>
@@ -339,6 +343,9 @@ function Form() {
                 checked={formValues.advanced}
                 onChange={(e: ChangeEvent<HTMLInputElement>): void => {
                   setFormValues((prev) => ({...prev, advanced: e.target.checked}));
+                  if (e.target.checked) {
+                    setTimeout(() => hostInputRef.current?.focus(), 350);
+                  }
                 }}
                 className={styles.toggleInput}
               />
@@ -349,11 +356,20 @@ function Form() {
         <div className={clsx(styles.advancedSection, !formValues.advanced && styles.hidden)}>
           <div className={styles.inputGroup}>
             <label htmlFor="host" className={styles.label}>
-              Custom Host
+              <span className={styles.labelWithInfo}>
+                Custom Host
+                <span className={styles.infoIcon}>
+                  <Icon name="info" />
+                  <span className={styles.tooltip}>
+                    URL of your self-hosted Kutt instance (e.g., https://kutt.example.com)
+                  </span>
+                </span>
+              </span>
             </label>
 
             <div className={styles.inputWrapper}>
               <input
+                ref={hostInputRef}
                 id="host"
                 name="host"
                 type="text"
