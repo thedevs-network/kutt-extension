@@ -1,6 +1,6 @@
 import {isNull, EMPTY_STRING} from '@abhijithvijayan/ts-utils';
-import React, {useState} from 'react';
-import tw, {styled} from 'twin.macro';
+import {useState} from 'react';
+import clsx from 'clsx';
 
 import {openExtOptionsPage, openHistoryPage} from '../util/tabs';
 import {updateExtensionSettings} from '../util/settings';
@@ -18,14 +18,9 @@ import {
 } from '../Background';
 
 import Icon from '../components/Icon';
+import styles from './Header.module.scss';
 
-const StyledIcon = styled(Icon)`
-  ${tw`hover:opacity-75 bg-transparent shadow-none`}
-
-  color: rgb(187, 187, 187);
-`;
-
-const Header: React.FC = () => {
+function Header() {
   const [extensionSettingsState, extensionSettingsDispatch] =
     useExtensionSettings();
   const [loading, setLoading] = useState<boolean>(false);
@@ -35,7 +30,6 @@ const Header: React.FC = () => {
   });
 
   async function fetchUserDomains(): Promise<void> {
-    // show loading spinner
     setLoading(true);
 
     const apiKeyValidationBody: AuthRequestBodyProperties = {
@@ -43,36 +37,26 @@ const Header: React.FC = () => {
       hostUrl: extensionSettingsState.host.hostUrl,
     };
 
-    // request API
     const response: SuccessfulApiKeyCheckProperties | ApiErroredProperties =
       await messageUtil.send(CHECK_API_KEY, apiKeyValidationBody);
 
-    // stop spinner
     setLoading(false);
 
     if (!response.error) {
-      // ---- success ---- //
       setErrored({error: false, message: 'Fetching domains successful'});
-
-      // Store user account information
       const {domains, email} = response.data;
       await updateExtensionSettings({user: {domains, email}});
     } else {
-      // ---- errored ---- //
       setErrored({error: true, message: response.message});
-
-      // Delete `user` field from settings
       await updateExtensionSettings({user: null});
     }
 
-    // hot reload page(read from localstorage and update state)
     extensionSettingsDispatch({
       type: ExtensionSettingsActionTypes.RELOAD_EXTENSION_SETTINGS,
       payload: !extensionSettingsState.reload,
     });
 
     setTimeout(() => {
-      // Reset status
       setErrored({error: null, message: EMPTY_STRING});
     }, 1000);
   }
@@ -83,43 +67,41 @@ const Header: React.FC = () => {
       'refresh';
 
   return (
-    <>
-      <header tw="flex items-center justify-between p-4 select-none">
-        <div>
-          <img
-            tw="w-8 h-8"
-            width="32"
-            height="32"
-            src="assets/logo.png"
-            alt="logo"
-          />
-        </div>
+    <header className={styles.header}>
+      <div>
+        <img
+          className={styles.logo}
+          width="32"
+          height="32"
+          src="../assets/logo.png"
+          alt="logo"
+        />
+      </div>
 
-        <div tw="flex">
-          <StyledIcon
-            onClick={fetchUserDomains}
-            name={iconToShow}
-            title="Refresh"
-            className="icon"
+      <div className={styles.actions}>
+        <Icon
+          onClick={fetchUserDomains}
+          name={iconToShow}
+          title="Refresh"
+          className={clsx('icon', styles.styledIcon)}
+        />
+        {extensionSettingsState.history && (
+          <Icon
+            onClick={openHistoryPage}
+            name="clock"
+            className={clsx('icon', styles.styledIcon)}
+            title="History"
           />
-          {extensionSettingsState.history && (
-            <StyledIcon
-              onClick={openHistoryPage}
-              name="clock"
-              className="icon"
-              title="History"
-            />
-          )}
-          <StyledIcon
-            onClick={openExtOptionsPage}
-            name="settings"
-            className="icon"
-            title="Settings"
-          />
-        </div>
-      </header>
-    </>
+        )}
+        <Icon
+          onClick={openExtOptionsPage}
+          name="settings"
+          className={clsx('icon', styles.styledIcon)}
+          title="Settings"
+        />
+      </div>
+    </header>
   );
-};
+}
 
 export default Header;

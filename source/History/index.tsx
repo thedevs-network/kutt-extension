@@ -1,21 +1,21 @@
-import {ThemeProvider} from 'styled-components';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import {StrictMode} from 'react';
+import {createRoot} from 'react-dom/client';
 
-// Common styles
+import {ExtensionSettingsProvider} from '../contexts/extension-settings-context';
+import {RequestStatusProvider} from '../contexts/request-status-context';
+import {ShortenedLinksProvider} from '../contexts/shortened-links-context';
+import History from './History';
+
 import './styles.scss';
 
-import History from './History';
-import {ExtensionSettingsProvider} from '../contexts/extension-settings-context';
-import {ShortenedLinksProvider} from '../contexts/shortened-links-context';
-import {RequestStatusProvider} from '../contexts/request-status-context';
+const container = document.getElementById('history-root');
+if (!container) {
+  throw new Error('Could not find history-root container');
+}
 
-// eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved,  @typescript-eslint/no-var-requires, node/no-missing-require
-const theme = require('sass-extract-loader?{"plugins": ["sass-extract-js"]}!../styles/base/_variables.scss');
-// Require sass variables using sass-extract-loader and specify the plugin
-
-ReactDOM.render(
-  <ThemeProvider theme={theme}>
+const root = createRoot(container);
+root.render(
+  <StrictMode>
     <ExtensionSettingsProvider>
       <RequestStatusProvider>
         <ShortenedLinksProvider>
@@ -23,6 +23,5 @@ ReactDOM.render(
         </ShortenedLinksProvider>
       </RequestStatusProvider>
     </ExtensionSettingsProvider>
-  </ThemeProvider>,
-  document.getElementById('history-root')
+  </StrictMode>
 );

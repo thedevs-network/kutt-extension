@@ -1,25 +1,12 @@
-import React from 'react';
-import tw, {css} from 'twin.macro';
-
 import Icon from './Icon';
+import styles from './Loader.module.scss';
 
-const Loader: React.FC = (props) => {
+function Loader() {
   return (
-    <div
-      css={[
-        tw`fixed flex items-center justify-center h-full`,
-
-        css`
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-        `,
-      ]}
-      {...props}
-    >
+    <div className={styles.loader}>
       <Icon name="spinner" />
     </div>
   );
-};
+}
 
 export default Loader;

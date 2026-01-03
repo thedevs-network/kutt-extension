@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react';
-import 'twin.macro';
+import {useEffect, useState} from 'react';
 
 import {
   useShortenedLinks,
@@ -30,7 +29,9 @@ import Loader from '../components/Loader';
 import Header from '../Options/Header';
 import Table from './Table';
 
-const History: React.FC = () => {
+import styles from './History.module.scss';
+
+function History() {
   const [, shortenedLinksDispatch] = useShortenedLinks();
   const [, extensionSettingsDispatch] = useExtensionSettings();
   const [requestStatusState, requestStatusDispatch] = useRequestStatus();
@@ -56,7 +57,7 @@ const History: React.FC = () => {
               .replace('http://', '')
               .replace('https://', '')
               .replace('www.', '')
-              .split(/[/?#]/)[0], // extract domain
+              .split(/[/?#]/)[0] || '', // extract domain
             hostUrl: (settings.host as string).endsWith('/')
               ? (settings.host as string).slice(0, -1)
               : (settings.host as string), // slice `/` at the end
@@ -129,8 +130,8 @@ const History: React.FC = () => {
 
   return (
     <BodyWrapper>
-      <div id="history" tw="h-screen bg-gray-200">
-        <div tw={'overflow-x-hidden px-6 py-8'}>
+      <div id="history" className={styles.historyPage}>
+        <div className={styles.historyContent}>
           <Header />
 
           {/* eslint-disable-next-line no-nested-ternary */}
@@ -138,10 +139,10 @@ const History: React.FC = () => {
             !errored.error ? (
               <Table />
             ) : (
-              <h2>{errored.message}</h2>
+              <h2 className={styles.errorMessage}>{errored.message}</h2>
             )
           ) : (
-            <div tw="h-10">
+            <div className={styles.loaderContainer}>
               <Loader />
             </div>
           )}
@@ -149,6 +150,6 @@ const History: React.FC = () => {
       </div>
     </BodyWrapper>
   );
-};
+}
 
 export default History;

@@ -1,0 +1,27 @@
+@use '../styles/variables' as *;
+
+.optionsPage {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1.5rem;
+  background-color: $gray-200;
+  user-select: none;
+}
+
+.optionsContainer {
+  max-width: 32rem;
+  padding: 2.5rem 4rem;
+  margin: 1.5rem 3rem;
+  background-color: $white;
+  height: max-content;
+
+  @media (min-width: 768px) {
+    border-radius: $radius-lg;
+  }
+}
+
+.loaderContainer {
+  height: 16rem;
+}

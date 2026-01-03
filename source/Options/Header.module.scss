@@ -1,0 +1,21 @@
+@use '../styles/variables' as *;
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 1rem;
+}
+
+.logo {
+  width: 2rem;
+  height: 2rem;
+}
+
+.title {
+  font-weight: $medium;
+  font-size: 1.875rem;
+  margin-left: 0.25rem;
+  text-align: center;
+  margin-bottom: 0;
+}

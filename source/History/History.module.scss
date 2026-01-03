@@ -1,0 +1,21 @@
+@use '../styles/variables' as *;
+
+.historyPage {
+  min-height: 100vh;
+  background-color: $gray-200;
+}
+
+.historyContent {
+  overflow-x: hidden;
+  padding: 2rem 1.5rem;
+}
+
+.errorMessage {
+  font-size: 1.25rem;
+  font-weight: $medium;
+  color: $gray-800;
+}
+
+.loaderContainer {
+  height: 2.5rem;
+}

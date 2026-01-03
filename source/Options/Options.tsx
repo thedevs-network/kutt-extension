@@ -1,5 +1,4 @@
-import React, {useEffect} from 'react';
-import 'twin.macro';
+import {useEffect} from 'react';
 
 import {getExtensionSettings} from '../util/settings';
 import {
@@ -20,7 +19,9 @@ import Header from './Header';
 import Footer from './Footer';
 import Form from './Form';
 
-const Options: React.FC = () => {
+import styles from './Options.module.scss';
+
+function Options() {
   const extensionSettingsDispatch = useExtensionSettings()[1];
   const [requestStatusState, requestStatusDispatch] = useRequestStatus();
 
@@ -38,7 +39,7 @@ const Options: React.FC = () => {
               .replace('http://', '')
               .replace('https://', '')
               .replace('www.', '')
-              .split(/[/?#]/)[0], // extract domain
+              .split(/[/?#]/)[0] || '', // extract domain
             hostUrl: (settings.host as string).endsWith('/')
               ? (settings.host as string).slice(0, -1)
               : (settings.host as string), // slice `/` at the end
@@ -70,20 +71,14 @@ const Options: React.FC = () => {
   return (
     <>
       <BodyWrapper>
-        <div
-          id="options"
-          tw="h-screen flex justify-center px-6 py-8 bg-gray-200 select-none items-center"
-        >
-          <div
-            tw="md:rounded-lg max-w-lg px-16 py-10 my-6 mx-12 bg-white"
-            className={'h-max'}
-          >
+        <div id="options" className={styles.optionsPage}>
+          <div className={styles.optionsContainer}>
             <Header />
 
             {!requestStatusState.loading ? (
               <Form />
             ) : (
-              <div tw="h-64">
+              <div className={styles.loaderContainer}>
                 <Loader />
               </div>
             )}
@@ -94,6 +89,6 @@ const Options: React.FC = () => {
       </BodyWrapper>
     </>
   );
-};
+}
 
 export default Options;

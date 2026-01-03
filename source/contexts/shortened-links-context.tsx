@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import React, {createContext, useContext, useReducer} from 'react';
+import {createContext, useContext, useReducer, type ReactNode} from 'react';
 
 import {UserShortenedLinkStats} from '../Background';
 
@@ -92,7 +92,11 @@ function useShortenedLinks(): [State, Dispatch] {
   return [useShortenedLinksContextState(), useShortenedLinksContextDispatch()];
 }
 
-const ShortenedLinksProvider: React.FC = ({children}) => {
+type ShortenedLinksProviderProps = {
+  children: ReactNode;
+};
+
+function ShortenedLinksProvider({children}: ShortenedLinksProviderProps) {
   const [state, dispatch] = useReducer(shortenedLinksReducer, initialValues);
 
   return (

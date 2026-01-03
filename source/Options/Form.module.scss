@@ -1,0 +1,211 @@
+@use '../styles/variables' as *;
+
+.formSection {
+  margin-top: 1rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.875rem;
+}
+
+.label {
+  margin-bottom: 0.5rem;
+  font-weight: $bold;
+}
+
+.labelLink {
+  margin-left: 0.5rem;
+  color: $blue-500;
+  text-decoration: none;
+  text-transform: lowercase;
+  letter-spacing: normal;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.inputIconWrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  width: 2.5rem;
+  height: 100%;
+  border: 1px solid transparent;
+}
+
+.inputIcon {
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: $gray-600;
+  border-radius: $radius-sm 0 0 $radius-sm;
+}
+
+.input {
+  position: relative;
+  width: 100%;
+  padding: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 3rem;
+  font-size: 0.875rem;
+  background-color: $gray-200;
+  border: 1px solid transparent;
+  border-radius: $radius-sm;
+
+  &::placeholder {
+    color: $gray-400;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $indigo-400;
+  }
+
+  @media (min-width: 640px) {
+    font-size: 1rem;
+  }
+}
+
+.inputError {
+  border-color: $red-500;
+}
+
+.errorText {
+  display: flex;
+  align-items: center;
+  margin-top: 0.25rem;
+  margin-left: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: $medium;
+  letter-spacing: 0.025em;
+  color: $red-500;
+}
+
+.validateButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.75rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: $semibold;
+  text-align: center;
+  color: $white;
+  background: $primary-gradient;
+  border: none;
+  border-radius: $radius-sm;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: color $transition-normal;
+
+  &:hover {
+    color: $gray-200;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.validateText {
+  margin-left: 0.5rem;
+}
+
+.validateIcon {
+  display: inline-flex;
+  padding: 0;
+  background-color: transparent;
+
+  svg {
+    stroke: currentColor;
+    stroke-width: 2;
+    transition: transform $transition-normal;
+  }
+}
+
+.toggleSection {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.5rem;
+}
+
+.toggleLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.75rem;
+  cursor: pointer;
+}
+
+.toggleText {
+  font-size: 0.875rem;
+}
+
+.toggleWrapper {
+  position: relative;
+  width: 2.5rem;
+  height: 1.5rem;
+  margin-left: 0.75rem;
+  flex-shrink: 0;
+}
+
+.toggleTrack {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $gray-400;
+  border-radius: 9999px;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  transition: background-color $transition-normal;
+}
+
+.toggleKnob {
+  position: absolute;
+  top: 0.25rem;
+  left: 0.25rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 9999px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  transition: transform $transition-normal;
+  background-color: $white;
+
+  &.active {
+    transform: translateX(1rem);
+  }
+}
+
+.toggleWrapper:has(.toggleKnob.active) .toggleTrack {
+  background-color: $purple-600;
+}
+
+.toggleInput {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.advancedSection {
+  margin-top: 1rem;
+
+  &.hidden {
+    visibility: hidden;
+  }
+}

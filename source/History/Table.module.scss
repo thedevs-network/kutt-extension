@@ -1,0 +1,199 @@
+@use '../styles/variables' as *;
+
+.tableContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  margin-top: 1.25rem;
+  margin-bottom: 0.75rem;
+  flex: 0 0 auto;
+}
+
+.tableWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-left: 0;
+  margin-right: 0;
+  width: 1200px;
+  max-width: 95%;
+}
+
+.tableHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tableTitle {
+  margin-left: 0;
+  margin-right: 0;
+  font-size: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  flex: auto;
+  background-color: $white;
+  border-radius: 12px;
+  box-shadow: rgba(50, 50, 50, 0.2) 0px 6px 30px;
+}
+
+.thead {
+  display: flex;
+  flex-direction: column;
+  flex: auto;
+  background-color: rgb(241, 241, 241);
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+}
+
+.theadRow {
+  display: flex;
+  justify-content: space-between;
+  flex: auto;
+  padding: 0 1.5rem;
+  border-bottom: 1px solid rgb(234, 234, 234);
+}
+
+.th {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 1rem 0;
+  font-size: 1rem;
+  line-height: normal;
+}
+
+.thOriginal {
+  flex: 2 2 0px;
+}
+
+.thShort {
+  flex: 1 1 0px;
+}
+
+.tbody {
+  display: flex;
+  flex-direction: column;
+  flex: auto;
+}
+
+.tr {
+  display: flex;
+  justify-content: space-between;
+  flex: auto;
+  padding: 0 1.25rem;
+  border-bottom: 1px solid rgb(234, 234, 234);
+}
+
+.td {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.tdOriginal {
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  flex: 2 2 0px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 100%;
+    width: 56px;
+    background: linear-gradient(to left, white, white, transparent);
+  }
+}
+
+.tdShort {
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  flex: 1 1 23px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 100%;
+    width: 56px;
+    background: linear-gradient(to left, white, white, transparent);
+  }
+}
+
+.link {
+  font-size: 1rem;
+  line-height: normal;
+  text-decoration: none;
+  color: rgb(33, 150, 243);
+  border: 1px solid transparent;
+  border-style: dotted;
+  transition: all 0.2s ease-out;
+
+  &:hover {
+    border-color: black;
+  }
+}
+
+.copiedNotification {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 11px;
+  color: $green-900;
+}
+
+.shortUrlWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.actionsWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.actionIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  margin-right: 2px;
+  margin-left: 12px;
+  width: 26px;
+  height: 26px;
+  box-shadow: rgba(100, 100, 100, 0.1) 0px 2px 4px;
+  background-color: rgb(222, 222, 222);
+  border-radius: 100%;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+
+  svg {
+    stroke: rgb(101, 189, 137);
+    stroke-width: 2;
+  }
+}
+
+.emptyRow {
+  padding: 1rem;
+  color: $gray-600;
+}

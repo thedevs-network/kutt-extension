@@ -1,22 +1,23 @@
-import React from 'react';
-import 'twin.macro';
+import {memo} from 'react';
 
-const Header: React.FC = () => {
+import styles from './Header.module.scss';
+
+function Header() {
   return (
     <>
-      <header tw="flex items-center justify-center pb-4">
+      <header className={styles.header}>
         <img
-          tw="w-8 h-8"
+          className={styles.logo}
           width="32"
           height="32"
-          src="assets/logo.png"
+          src="../assets/logo.png"
           alt="logo"
         />
 
-        <h1 tw="font-medium text-3xl ml-1 text-center mb-0">Kutt</h1>
+        <h1 className={styles.title}>Kutt</h1>
       </header>
     </>
   );
-};
+}
 
-export default React.memo(Header);
+export default memo(Header);

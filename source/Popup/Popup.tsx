@@ -1,6 +1,5 @@
 import {isNull, EMPTY_STRING} from '@abhijithvijayan/ts-utils';
-import React, {useEffect} from 'react';
-import tw, {css} from 'twin.macro';
+import {useEffect} from 'react';
 
 import {Kutt, UserSettingsResponseProperties} from '../Background';
 import {openExtOptionsPage} from '../util/tabs';
@@ -28,7 +27,9 @@ import PopupHeader from './Header';
 import Loader from '../components/Loader';
 import Form, {CONSTANTS} from './Form';
 
-const Popup: React.FC = () => {
+import styles from './Popup.module.scss';
+
+function Popup() {
   const [extensionSettingsState, extensionSettingsDispatch] =
     useExtensionSettings();
   const [requestStatusState, requestStatusDispatch] = useRequestStatus();
@@ -38,10 +39,8 @@ const Popup: React.FC = () => {
   useEffect((): void => {
     async function getUserSettings(): Promise<void> {
       // -----------------------------------------------------------------------------//
-      // -----------------------------------------------------------------------------//
       // -----            // ToDo: remove in next major release //              ----- //
       // ----- Ref: https://github.com/thedevs-network/kutt-extension/issues/78 ----- //
-      // -----------------------------------------------------------------------------//
       // -----------------------------------------------------------------------------//
 
       const {
@@ -61,7 +60,6 @@ const Popup: React.FC = () => {
       let performMigration = false;
 
       if ((key as string).trim().length > 0) {
-        // map it to `settings.apikey`
         migrationSettings.apikey = key;
         performMigration = true;
       }
@@ -69,30 +67,20 @@ const Popup: React.FC = () => {
         (host as string).trim().length > 0 &&
         (userOptions.devMode as boolean)
       ) {
-        // map `host` to `settings.host`
         migrationSettings.host = host;
-        // set `advanced` to true
         migrationSettings.advanced = true;
         performMigration = true;
       }
       if (userOptions.keepHistory as boolean) {
-        // set `settings.history` to true
         migrationSettings.history = true;
         performMigration = true;
       }
       if (performMigration) {
-        // perform migration
         await migrateSettings(migrationSettings);
       }
 
       // -----------------------------------------------------------------------------//
-      // -----------------------------------------------------------------------------//
-      // -----------------------------------------------------------------------------//
-      // -----------------------------------------------------------------------------//
-      // -----------------------------------------------------------------------------//
-      // -----------------------------------------------------------------------------//
 
-      // ToDo: set types: refer https://kutt.it/jITyIU
       const {settings = {}} = await getExtensionSettings();
 
       // No API Key set
@@ -138,16 +126,15 @@ const Popup: React.FC = () => {
               .replace('http://', EMPTY_STRING)
               .replace('https://', EMPTY_STRING)
               .replace('www.', EMPTY_STRING)
-              .split(/[/?#]/)[0], // extract domain
+              .split(/[/?#]/)[0] || EMPTY_STRING,
             hostUrl: (settings.host as string).endsWith('/')
               ? (settings.host as string).slice(0, -1)
-              : (settings.host as string), // slice `/` at the end
+              : (settings.host as string),
           };
         }
       }
 
       let historyEnabled = false;
-      // `history` field set
       if (
         Object.prototype.hasOwnProperty.call(settings, 'history') &&
         (settings.history as boolean)
@@ -189,10 +176,8 @@ const Popup: React.FC = () => {
           }
         );
 
-        // merge to beginning of array
         optionsList = defaultOptions.concat(optionsList);
 
-        // update domain list
         extensionSettingsDispatch({
           type: ExtensionSettingsActionTypes.HYDRATE_EXTENSION_SETTINGS,
           payload: {
@@ -203,7 +188,6 @@ const Popup: React.FC = () => {
           },
         });
       } else {
-        // no `user` but `apikey` exist on storage
         extensionSettingsDispatch({
           type: ExtensionSettingsActionTypes.HYDRATE_EXTENSION_SETTINGS,
           payload: {
@@ -215,7 +199,6 @@ const Popup: React.FC = () => {
         });
       }
 
-      // stop loader
       requestStatusDispatch({
         type: RequestStatusActionTypes.SET_LOADING,
         payload: false,
@@ -227,16 +210,7 @@ const Popup: React.FC = () => {
 
   return (
     <BodyWrapper>
-      <div
-        id="popup"
-        css={[
-          tw`text-lg`,
-          css`
-            min-height: 350px;
-            min-width: 270px;
-          `,
-        ]}
-      >
+      <div id="popup" className={styles.popup}>
         {!requestStatusState.loading ? (
           <>
             <PopupHeader />
@@ -249,6 +223,6 @@ const Popup: React.FC = () => {
       </div>
     </BodyWrapper>
   );
-};
+}
 
 export default Popup;

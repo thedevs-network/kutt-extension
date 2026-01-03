@@ -1,0 +1,54 @@
+@use '../styles/variables' as *;
+
+.popupBody {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1rem 0;
+
+  .icon {
+    svg {
+      stroke: rgb(101, 189, 137);
+      stroke-width: 2;
+    }
+  }
+}
+
+.qrIcon {
+  margin: 0;
+  margin-right: 0.4rem;
+}
+
+.copyIcon {
+  margin: 0;
+  margin-right: 0.75rem;
+}
+
+.link {
+  border-bottom: 1px dotted $stats-total-underline;
+  padding-bottom: 2px;
+  color: rgb(41, 71, 86);
+  min-width: 0;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: $light;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.75;
+  }
+}
+
+.errorMessage {
+  padding-top: 0.25rem;
+  font-size: 1.125rem;
+  color: $gray-900;
+  border-bottom: 1px dotted $gray-700;
+}
+
+.qrCodeContainer {
+  display: flex;
+  justify-content: center;
+  max-width: 100%;
+  padding: 1rem 0 0;
+}

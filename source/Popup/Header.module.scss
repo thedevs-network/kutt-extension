@@ -1,0 +1,28 @@
+@use '../styles/variables' as *;
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  user-select: none;
+}
+
+.logo {
+  width: 2rem;
+  height: 2rem;
+}
+
+.actions {
+  display: flex;
+}
+
+.styledIcon {
+  background-color: transparent;
+  box-shadow: none;
+  color: rgb(187, 187, 187);
+
+  &:hover {
+    opacity: 0.75;
+  }
+}

@@ -1,0 +1,25 @@
+@use 'variables' as *;
+
+.icon {
+  width: 26px;
+  height: 26px;
+  background-color: rgb(235, 255, 243);
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  position: relative;
+  cursor: pointer;
+  box-shadow: rgba(138, 158, 168, 0.12) 0px 2px 1px;
+  padding: 4px;
+  outline: none;
+  transition: transform 0.4s ease-out 0s;
+  border-radius: 100%;
+
+  svg {
+    transition: all 0.2s ease-out 0s;
+  }
+}
+
+.d-none {
+  display: none !important;
+}

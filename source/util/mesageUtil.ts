@@ -1,4 +1,4 @@
-import {browser} from 'webextension-polyfill-ts';
+import browser from 'webextension-polyfill';
 
 const messageUtil = {
   send(name: string, params?: unknown): Promise<any> {
