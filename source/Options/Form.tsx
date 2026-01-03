@@ -24,6 +24,7 @@ type OptionsFormValuesProperties = {
   history: boolean;
   advanced: boolean;
   host: string;
+  reuse: boolean;
 };
 
 type FormErrors = {
@@ -59,6 +60,7 @@ function Form() {
       (extensionSettingsState.advanced &&
         extensionSettingsState.host.hostUrl) ||
       '',
+    reuse: extensionSettingsState.reuse,
   });
 
   const [formErrors, setFormErrors] = useState<FormErrors>({});
@@ -246,7 +248,15 @@ function Form() {
 
       <div className={styles.toggleSection}>
         <label htmlFor="history" className={styles.toggleLabel}>
-          <span className={styles.toggleText}>Keep History</span>
+          <span className={styles.toggleTextWithInfo}>
+            <span className={styles.toggleText}>Show Recent Links</span>
+            <span className={styles.infoIcon}>
+              <Icon name="info" />
+              <span className={styles.tooltip}>
+                Enables the History page to view your recent shortened links
+              </span>
+            </span>
+          </span>
 
           <span className={styles.toggleWrapper}>
             <span className={styles.toggleTrack} />
@@ -270,8 +280,49 @@ function Form() {
           </span>
         </label>
 
+        <label htmlFor="reuse" className={styles.toggleLabel}>
+          <span className={styles.toggleTextWithInfo}>
+            <span className={styles.toggleText}>Reuse Existing URLs</span>
+            <span className={styles.infoIcon}>
+              <Icon name="info" />
+              <span className={styles.tooltip}>
+                Returns the existing short link if the same URL was shortened before
+              </span>
+            </span>
+          </span>
+
+          <span className={styles.toggleWrapper}>
+            <span className={styles.toggleTrack} />
+            <span
+              className={clsx(
+                styles.toggleKnob,
+                formValues.reuse && styles.active
+              )}
+            >
+              <input
+                id="reuse"
+                name="reuse"
+                type="checkbox"
+                checked={formValues.reuse}
+                onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+                  setFormValues((prev) => ({...prev, reuse: e.target.checked}));
+                }}
+                className={styles.toggleInput}
+              />
+            </span>
+          </span>
+        </label>
+
         <label htmlFor="advanced" className={styles.toggleLabel}>
-          <span className={styles.toggleText}>Show Advanced Options</span>
+          <span className={styles.toggleTextWithInfo}>
+            <span className={styles.toggleText}>Show Advanced Options</span>
+            <span className={styles.infoIcon}>
+              <Icon name="info" />
+              <span className={styles.tooltip}>
+                Configure a custom self-hosted Kutt instance URL
+              </span>
+            </span>
+          </span>
 
           <span className={styles.toggleWrapper}>
             <span className={styles.toggleTrack} />

@@ -86,7 +86,7 @@ function Form() {
         customurl: formState.customurl.trim(),
       }),
       ...(!isEmpty(formState.password) && {password: formState.password}),
-      reuse: false,
+      reuse: extensionSettingsState.reuse,
       ...(formState.domain.trim() !== EMPTY_STRING && {
         domain: formState.domain.trim(),
       }),

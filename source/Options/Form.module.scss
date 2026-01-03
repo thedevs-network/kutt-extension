@@ -155,6 +155,60 @@
   font-size: 0.875rem;
 }
 
+.toggleTextWithInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.infoIcon {
+  position: relative;
+  display: inline-flex;
+  color: $gray-500;
+  cursor: help;
+
+  &:hover {
+    color: $gray-700;
+  }
+
+  &:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.tooltip {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.5rem);
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 200px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: $regular;
+  line-height: 1.4;
+  color: $white;
+  background-color: $gray-800;
+  border-radius: $radius-sm;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: opacity $transition-normal, visibility $transition-normal;
+  z-index: 100;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 0.375rem;
+    border-style: solid;
+    border-color: $gray-800 transparent transparent transparent;
+  }
+}
+
 .toggleWrapper {
   position: relative;
   width: 2.5rem;

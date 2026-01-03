@@ -11,6 +11,7 @@ import CrossIcon from './Cross';
 import ClockIcon from './Clock';
 import CopyIcon from './Copy';
 import TickIcon from './Tick';
+import InfoIcon from './Info';
 import ZapIcon from './Zap';
 import EyeIcon from './Eye';
 
@@ -20,6 +21,7 @@ const icons = {
   cross: CrossIcon,
   eye: EyeIcon,
   'eye-closed': EyeClosedIcon,
+  info: InfoIcon,
   qrcode: QRCodeIcon,
   refresh: RefreshIcon,
   settings: SettingsIcon,

@@ -53,6 +53,7 @@ function Options() {
         advanced:
           defaultHost.hostUrl.trim() !== Kutt.hostUrl && advancedSettings, // disable `advanced` if customhost is not set
         host: defaultHost,
+        reuse: (settings?.reuse as boolean) || false,
       };
 
       extensionSettingsDispatch({

@@ -193,6 +193,7 @@ function Popup() {
             domainOptions: optionsList,
             host: defaultHost,
             history: historyEnabled,
+            reuse: (settings.reuse as boolean) || false,
           },
         });
       } else {
@@ -204,6 +205,7 @@ function Popup() {
             domainOptions: defaultOptions,
             host: defaultHost,
             history: historyEnabled,
+            reuse: (settings.reuse as boolean) || false,
           },
         });
       }

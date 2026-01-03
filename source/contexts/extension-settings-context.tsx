@@ -27,12 +27,15 @@ type HYDRATE_EXTENSION_SETTINGS = {
         apikey: string;
         domainOptions: DomainOptionsProperties[];
         host: HostProperties;
+        history: boolean;
+        reuse: boolean;
       }
     | {
         apikey: string;
         host: HostProperties;
         history: boolean;
         advanced: boolean;
+        reuse: boolean;
       };
 };
 
@@ -50,6 +53,7 @@ type InitialValues = {
   reload: boolean;
   history: boolean;
   advanced: boolean;
+  reuse: boolean;
 };
 
 const initialValues: InitialValues = {
@@ -59,6 +63,7 @@ const initialValues: InitialValues = {
   reload: false,
   history: false,
   advanced: false,
+  reuse: false,
 };
 
 type State = InitialValues;
