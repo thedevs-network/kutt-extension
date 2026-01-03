@@ -55,7 +55,7 @@ function Footer(): JSX.Element {
         <div className={styles.linksSection}>
           <a
             href="https://kutt.it"
-            target="blank"
+            target="_blank"
             rel="nofollow noopener noreferrer"
             className={clsx(styles.linkItem, styles.narrow)}
           >
@@ -63,8 +63,8 @@ function Footer(): JSX.Element {
           </a>
           <span className={styles.linkDivider} />
           <a
-            href={'https://git.io/Jn5hS'}
-            target="blank"
+            href="https://git.io/Jn5hS"
+            target="_blank"
             rel="nofollow noopener noreferrer"
             className={clsx(styles.linkItem, styles.wide)}
           >
@@ -73,7 +73,7 @@ function Footer(): JSX.Element {
           <span className={styles.linkDivider} />
           <a
             href="https://github.com/thedevs-network/kutt-extension"
-            target="blank"
+            target="_blank"
             rel="nofollow noopener noreferrer"
             className={clsx(styles.linkItem, styles.narrow)}
           >

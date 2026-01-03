@@ -13,7 +13,7 @@ import {
   useRequestStatus,
   RequestStatusActionTypes,
 } from '../contexts/request-status-context';
-import messageUtil from '../util/mesageUtil';
+import messageUtil from '../util/messageUtil';
 import {FETCH_URLS_HISTORY} from '../Background/constants';
 import {getExtensionSettings} from '../util/settings';
 import {

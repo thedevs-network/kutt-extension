@@ -5,7 +5,7 @@ import {UserShortenedLinkStats} from '../Background';
 
 export enum ShortenedLinksActionTypes {
   HYDRATE_SHORTENED_LINKS = 'hydrate-shortened-links',
-  SET_CURRENT_SELECTED = 'toggle-qrcode-modal',
+  SET_CURRENT_SELECTED = 'set-current-selected',
 }
 
 type HYDRATE_SHORTENED_LINKS = {

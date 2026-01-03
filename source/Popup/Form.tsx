@@ -5,7 +5,7 @@ import clsx from 'clsx';
 
 import {useExtensionSettings} from '../contexts/extension-settings-context';
 import {SHORTEN_URL} from '../Background/constants';
-import messageUtil from '../util/mesageUtil';
+import messageUtil from '../util/messageUtil';
 import {getCurrentTab} from '../util/tabs';
 import {
   RequestStatusActionTypes,
@@ -93,7 +93,7 @@ function Form(): JSX.Element {
 
     const apiBody: ApiBodyProperties = {
       apikey: extensionSettingsState.apikey,
-      target: target as unknown as string,
+      target: target!,
       ...(formState.customurl.trim() !== EMPTY_STRING && {
         customurl: formState.customurl.trim(),
       }),
@@ -149,7 +149,6 @@ function Form(): JSX.Element {
     setFormState((prev) => {
       return {...prev, customurl: url};
     });
-    // ToDo: Remove special symbols
 
     if (url.length > 0 && url.length < 3) {
       setFormErrors((prev) => {
@@ -169,7 +168,6 @@ function Form(): JSX.Element {
     setFormState((prev) => {
       return {...prev, password};
     });
-    // ToDo: Remove special symbols
 
     if (password.length > 0 && password.length < 3) {
       setFormErrors((prev) => {

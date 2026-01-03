@@ -10,11 +10,6 @@ import Icon from '../components/Icon';
 
 import styles from './ResponseBody.module.scss';
 
-export type ProcessedRequestProperties = {
-  error: boolean | null;
-  message: string;
-};
-
 function ResponseBody(): JSX.Element {
   const [{error, message}] = useRequestStatus();
   const [copied, setCopied] = useState<boolean>(false);

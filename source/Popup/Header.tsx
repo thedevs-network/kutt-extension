@@ -1,6 +1,6 @@
 import {isNull, EMPTY_STRING} from '@abhijithvijayan/ts-utils';
 import type {JSX} from 'react';
-import {useState} from 'react';
+import {useState, useRef, useEffect} from 'react';
 import clsx from 'clsx';
 
 import {openExtOptionsPage, openHistoryPage} from '../util/tabs';
@@ -10,7 +10,7 @@ import {
   ExtensionSettingsActionTypes,
   useExtensionSettings,
 } from '../contexts/extension-settings-context';
-import messageUtil from '../util/mesageUtil';
+import messageUtil from '../util/messageUtil';
 import {
   SuccessfulApiKeyCheckProperties,
   AuthRequestBodyProperties,
@@ -29,6 +29,17 @@ function Header(): JSX.Element {
     error: null,
     message: EMPTY_STRING,
   });
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Cleanup timer on unmount
+  useEffect(
+    () => (): void => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    },
+    []
+  );
 
   async function fetchUserDomains(): Promise<void> {
     setLoading(true);
@@ -57,7 +68,11 @@ function Header(): JSX.Element {
       payload: !extensionSettingsState.reload,
     });
 
-    setTimeout(() => {
+    // Clear any existing timer before setting a new one
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    timerRef.current = setTimeout(() => {
       setErrored({error: null, message: EMPTY_STRING});
     }, 1000);
   }

@@ -9,7 +9,7 @@ import {
   clearExtensionSettings,
 } from '../util/settings';
 import {CHECK_API_KEY} from '../Background/constants';
-import messageUtil from '../util/mesageUtil';
+import messageUtil from '../util/messageUtil';
 import {isValidUrl} from '../util/link';
 import {
   SuccessfulApiKeyCheckProperties,
