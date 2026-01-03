@@ -271,7 +271,7 @@ function Form(): JSX.Element {
 
       <div className={styles.validateSection}>
         <button
-          type="submit"
+          type="button"
           disabled={submitting || !isFormValid}
           onClick={handleApiKeyVerification}
           className={styles.validateButton}

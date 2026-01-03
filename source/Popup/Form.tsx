@@ -316,7 +316,7 @@ function Form(): JSX.Element {
       </div>
 
       <button
-        type="submit"
+        type="button"
         disabled={!isFormValid || isSubmitting}
         onClick={handleFormSubmit}
         className={styles.submitButton}
