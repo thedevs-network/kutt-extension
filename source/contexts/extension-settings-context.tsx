@@ -61,7 +61,7 @@ const initialValues: InitialValues = {
   domainOptions: [],
   host: Kutt,
   reload: false,
-  history: false,
+  history: true,
   advanced: false,
   reuse: false,
 };

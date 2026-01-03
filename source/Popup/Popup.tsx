@@ -139,12 +139,9 @@ function Popup() {
         }
       }
 
-      // `history` field set
-      let historyEnabled = false;
-      if (
-        Object.prototype.hasOwnProperty.call(settings, 'history') &&
-        (settings.history as boolean)
-      ) {
+      // `history` field set - default to true for new users
+      let historyEnabled = true;
+      if (Object.prototype.hasOwnProperty.call(settings, 'history')) {
         historyEnabled = settings.history as boolean;
       }
 

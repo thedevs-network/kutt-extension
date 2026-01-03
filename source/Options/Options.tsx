@@ -48,9 +48,14 @@ function Options() {
         Kutt;
 
       // inject existing keys (if field doesn't exist, use default)
+      // For history: default to true for new users, but respect existing user preference
+      const historyEnabled = Object.prototype.hasOwnProperty.call(settings, 'history')
+        ? (settings.history as boolean)
+        : true;
+
       const defaultExtensionConfig = {
         apikey: (settings?.apikey as string)?.trim() || '',
-        history: (settings?.history as boolean) || false,
+        history: historyEnabled,
         advanced:
           defaultHost.hostUrl.trim() !== Kutt.hostUrl && advancedSettings, // disable `advanced` if customhost is not set
         host: defaultHost,
