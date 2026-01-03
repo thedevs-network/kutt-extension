@@ -8,7 +8,7 @@ export function openExtOptionsPage(): Promise<void> {
 export function openHistoryPage(): Promise<Tabs.Tab> {
   return browser.tabs.create({
     active: true,
-    url: 'History/history.html',
+    url: '/History/history.html',
   });
 }
 
