@@ -3,7 +3,7 @@ import {useState, useEffect, useRef, ChangeEvent} from 'react';
 import clsx from 'clsx';
 
 import {useExtensionSettings} from '../contexts/extension-settings-context';
-import {updateExtensionSettings} from '../util/settings';
+import {updateExtensionSettings, clearExtensionSettings} from '../util/settings';
 import {CHECK_API_KEY} from '../Background/constants';
 import messageUtil from '../util/mesageUtil';
 import {isValidUrl} from '../util/link';
@@ -48,6 +48,7 @@ function Form() {
   const hostInputRef = useRef<HTMLInputElement>(null);
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [showApiKey, setShowApiKey] = useState<boolean>(false);
+  const [showResetConfirm, setShowResetConfirm] = useState<boolean>(false);
   const [errored, setErrored] = useState<ErrorStateProperties>({
     error: null,
     message: '',
@@ -171,6 +172,13 @@ function Form() {
       // Reset status
       setErrored({error: null, message: ''});
     }, 3000);
+  }
+
+  async function handleResetSettings(): Promise<void> {
+    await clearExtensionSettings();
+    setShowResetConfirm(false);
+    // Reload the page to reflect cleared settings
+    window.location.reload();
   }
 
   return (
@@ -401,6 +409,49 @@ function Form() {
           </div>
         </div>
       </div>
+
+      <div className={styles.resetSection}>
+        <button
+          type="button"
+          onClick={() => setShowResetConfirm(true)}
+          className={styles.resetButton}
+        >
+          Reset All Settings
+        </button>
+        <span className={styles.resetHint}>
+          This will clear all your settings and reload the extension
+        </span>
+      </div>
+
+      {showResetConfirm && (
+        <div className={styles.modalOverlay} onClick={() => setShowResetConfirm(false)}>
+          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <Icon name="info" className={styles.modalIcon} />
+              <span className={styles.modalTitle}>Reset Settings?</span>
+            </div>
+            <p className={styles.modalText}>
+              This will permanently delete your API key and all preferences. You will need to reconfigure the extension.
+            </p>
+            <div className={styles.modalActions}>
+              <button
+                type="button"
+                onClick={() => setShowResetConfirm(false)}
+                className={styles.modalCancelButton}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleResetSettings}
+                className={styles.modalConfirmButton}
+              >
+                Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

@@ -33,6 +33,11 @@ export async function updateExtensionSettings(newFields?: {
   return saveExtensionSettings({...settings, ...newFields});
 }
 
+// Clear all extension settings
+export function clearExtensionSettings(): Promise<void> {
+  return browser.storage.local.clear();
+}
+
 // ToDo: Remove in the next major release
 export function migrateSettings(settings: any): Promise<void> {
   // clear all keys
