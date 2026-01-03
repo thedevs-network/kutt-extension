@@ -59,8 +59,10 @@ function Form() {
     true;
 
   async function handleFormSubmit(): Promise<void> {
+    // enable loading screen
     setIsSubmitting(true);
 
+    // Get target link to shorten
     const tabs = await getCurrentTab();
     const target: string | null = get(tabs, '[0].url', null);
     const shouldSubmit: boolean = !isNull(target) && isValidUrl(target);
@@ -95,15 +97,18 @@ function Form() {
       hostUrl: extensionSettingsState.host.hostUrl,
     };
 
+    // shorten url in the background
     const response: SuccessfulShortenStatusProperties | ApiErroredProperties =
       await messageUtil.send(SHORTEN_URL, apiShortenUrlBody);
 
+    // disable spinner
     setIsSubmitting(false);
 
     if (!response.error) {
       const {
         data: {link},
       } = response;
+      // show shortened url
       requestStatusDispatch({
         type: RequestStatusActionTypes.SET_REQUEST_STATUS,
         payload: {
@@ -112,6 +117,7 @@ function Form() {
         },
       });
     } else {
+      // errored
       requestStatusDispatch({
         type: RequestStatusActionTypes.SET_REQUEST_STATUS,
         payload: {
@@ -124,6 +130,8 @@ function Form() {
 
   function handleCustomUrlInputChange(url: string): void {
     setFormState((prev) => ({...prev, customurl: url}));
+    // ToDo: Remove special symbols
+
     if (url.length > 0 && url.length < 3) {
       setFormErrors((prev) => ({
         ...prev,
@@ -136,6 +144,8 @@ function Form() {
 
   function handlePasswordInputChange(password: string): void {
     setFormState((prev) => ({...prev, password}));
+    // ToDo: Remove special symbols
+
     if (password.length > 0 && password.length < 3) {
       setFormErrors((prev) => ({
         ...prev,

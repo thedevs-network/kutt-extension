@@ -60,6 +60,7 @@ function Popup() {
       let performMigration = false;
 
       if ((key as string).trim().length > 0) {
+        // map it to `settings.apikey`
         migrationSettings.apikey = key;
         performMigration = true;
       }
@@ -67,15 +68,19 @@ function Popup() {
         (host as string).trim().length > 0 &&
         (userOptions.devMode as boolean)
       ) {
+        // map `host` to `settings.host`
         migrationSettings.host = host;
+        // set `advanced` to true
         migrationSettings.advanced = true;
         performMigration = true;
       }
       if (userOptions.keepHistory as boolean) {
+        // set `settings.history` to true
         migrationSettings.history = true;
         performMigration = true;
       }
       if (performMigration) {
+        // perform migration
         await migrateSettings(migrationSettings);
       }
 
@@ -134,6 +139,7 @@ function Popup() {
         }
       }
 
+      // `history` field set
       let historyEnabled = false;
       if (
         Object.prototype.hasOwnProperty.call(settings, 'history') &&
@@ -176,8 +182,10 @@ function Popup() {
           }
         );
 
+        // merge to beginning of array
         optionsList = defaultOptions.concat(optionsList);
 
+        // update domain list
         extensionSettingsDispatch({
           type: ExtensionSettingsActionTypes.HYDRATE_EXTENSION_SETTINGS,
           payload: {
@@ -188,6 +196,7 @@ function Popup() {
           },
         });
       } else {
+        // no `user` but `apikey` exist on storage
         extensionSettingsDispatch({
           type: ExtensionSettingsActionTypes.HYDRATE_EXTENSION_SETTINGS,
           payload: {
@@ -199,6 +208,7 @@ function Popup() {
         });
       }
 
+      // stop loader
       requestStatusDispatch({
         type: RequestStatusActionTypes.SET_LOADING,
         payload: false,

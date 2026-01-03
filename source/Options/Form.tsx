@@ -83,6 +83,7 @@ function Form() {
 
   function handleApiKeyInputChange(apikey: string): void {
     setFormValues((prev) => ({...prev, apikey}));
+    // ToDo: Remove special symbols
 
     if (!(apikey.trim().length > 0)) {
       setFormErrors((prev) => ({...prev, apikey: 'API key missing'}));
