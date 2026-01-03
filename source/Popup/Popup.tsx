@@ -15,11 +15,7 @@ import {
   RequestStatusActionTypes,
   useRequestStatus,
 } from '../contexts/request-status-context';
-import {
-  getExtensionSettings,
-  getPreviousSettings,
-  migrateSettings,
-} from '../util/settings';
+import {getExtensionSettings} from '../util/settings';
 
 import BodyWrapper from '../components/BodyWrapper';
 import ResponseBody from './ResponseBody';
@@ -38,55 +34,7 @@ function Popup() {
   // re-renders on `liveReloadFlag` change
   useEffect((): void => {
     async function getUserSettings(): Promise<void> {
-      // -----------------------------------------------------------------------------//
-      // -----            // ToDo: remove in next major release //              ----- //
-      // ----- Ref: https://github.com/thedevs-network/kutt-extension/issues/78 ----- //
-      // -----------------------------------------------------------------------------//
-
-      const {
-        // old keys from extension v3.x.x
-        key = EMPTY_STRING,
-        host = EMPTY_STRING,
-        userOptions = {
-          autoCopy: false,
-          devMode: false,
-          keepHistory: false,
-          pwdForUrls: false,
-        },
-      } = await getPreviousSettings();
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const migrationSettings: any = {};
-      let performMigration = false;
-
-      if ((key as string).trim().length > 0) {
-        // map it to `settings.apikey`
-        migrationSettings.apikey = key;
-        performMigration = true;
-      }
-      if (
-        (host as string).trim().length > 0 &&
-        (userOptions.devMode as boolean)
-      ) {
-        // map `host` to `settings.host`
-        migrationSettings.host = host;
-        // set `advanced` to true
-        migrationSettings.advanced = true;
-        performMigration = true;
-      }
-      if (userOptions.keepHistory as boolean) {
-        // set `settings.history` to true
-        migrationSettings.history = true;
-        performMigration = true;
-      }
-      if (performMigration) {
-        // perform migration
-        await migrateSettings(migrationSettings);
-      }
-
-      // -----------------------------------------------------------------------------//
-
-      const { settings = {} } = await getExtensionSettings();
+      const {settings = {}} = await getExtensionSettings();
 
       // No API Key set
       if (
