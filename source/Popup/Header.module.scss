@@ -80,3 +80,16 @@
     border-color: transparent transparent $gray-800 transparent;
   }
 }
+
+// Position the last tooltip (Settings) to the right to prevent overflow
+.iconWrapper:last-child .tooltip {
+  left: auto;
+  right: 0;
+  transform: none;
+
+  &::before {
+    left: auto;
+    right: 0.5rem;
+    transform: none;
+  }
+}
