@@ -1,47 +1,46 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Kutt",
-  "version": "4.3.0.2",
+  "version": "4.4.0",
   "short_name": "Kutt",
   "description": "Shorten long URLs with just one click.",
   "icons": {
-    "16": "assets/favicon-16.png",
-    "32": "assets/favicon-32.png",
-    "48": "assets/favicon-48.png",
-    "128": "assets/favicon-128.png"
+    "16": "assets/icons/favicon-16.png",
+    "32": "assets/icons/favicon-32.png",
+    "48": "assets/icons/favicon-48.png",
+    "128": "assets/icons/favicon-128.png"
   },
   "homepage_url": "https://github.com/thedevs-network/kutt-extension.git",
   "author": "abhijithvijayan",
-  "browser_action": {
-    "default_popup": "popup.html",
+  "action": {
+    "default_popup": "Popup/popup.html",
     "default_icon": {
-      "16": "assets/favicon-16.png",
-      "32": "assets/favicon-32.png",
-      "48": "assets/favicon-48.png",
-      "128": "assets/favicon-128.png"
+      "16": "assets/icons/favicon-16.png",
+      "32": "assets/icons/favicon-32.png",
+      "48": "assets/icons/favicon-48.png",
+      "128": "assets/icons/favicon-128.png"
     },
-    "default_title": "Shorten this URL",
-    "chrome_style": false
+    "default_title": "Shorten this URL"
   },
   "background": {
-    "persistent": false,
-    "scripts": [
-      "js/background.bundle.js"
-    ]
+    "service_worker": "assets/js/background.bundle.js",
+    "type": "module"
   },
-  "minimum_chrome_version": "49",
+  "minimum_chrome_version": "88",
   "permissions": [
     "activeTab",
-    "storage",
-    "clipboardRead",
+    "storage"
+  ],
+  "host_permissions": [
     "http://*/*",
     "https://*/*"
   ],
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-  "options_page": "options.html",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "options_page": "Options/options.html",
   "options_ui": {
-    "page": "options.html",
-    "open_in_tab": true,
-    "chrome_style": false
+    "page": "Options/options.html",
+    "open_in_tab": true
   }
 }
