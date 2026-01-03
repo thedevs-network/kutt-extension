@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention */
+import type {JSX} from 'react';
 import {createContext, useReducer, useContext, type ReactNode} from 'react';
 
 import {Kutt} from '../Background';
@@ -126,7 +126,7 @@ type ExtensionSettingsProviderProps = {
 
 function ExtensionSettingsProvider({
   children,
-}: ExtensionSettingsProviderProps) {
+}: ExtensionSettingsProviderProps): JSX.Element {
   const [state, dispatch] = useReducer(extensionSettingsReducer, initialValues);
 
   return (
@@ -138,6 +138,6 @@ function ExtensionSettingsProvider({
       </ExtensionSettingsStateContext.Provider>
     </>
   );
-};
+}
 
 export {ExtensionSettingsProvider, useExtensionSettings};

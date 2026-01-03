@@ -1,3 +1,4 @@
+import type {JSX} from 'react';
 import {memo} from 'react';
 import clsx from 'clsx';
 
@@ -8,7 +9,7 @@ import Icon from '../components/Icon';
 
 import styles from './Footer.module.scss';
 
-function Footer() {
+function Footer(): JSX.Element {
   return (
     <>
       <footer className={styles.footer}>
@@ -25,11 +26,26 @@ function Footer() {
             className={styles.ratingLink}
           >
             <div className={styles.starsContainer}>
-              <Icon className={clsx(styles.starIcon, styles.gray)} name="star-white" />
-              <Icon className={clsx(styles.starIcon, styles.gray)} name="star-white" />
-              <Icon className={clsx(styles.starIcon, styles.gray)} name="star-white" />
-              <Icon className={clsx(styles.starIcon, styles.gray)} name="star-white" />
-              <Icon className={clsx(styles.starIcon, styles.gray)} name="star-white" />
+              <Icon
+                className={clsx(styles.starIcon, styles.gray)}
+                name="star-white"
+              />
+              <Icon
+                className={clsx(styles.starIcon, styles.gray)}
+                name="star-white"
+              />
+              <Icon
+                className={clsx(styles.starIcon, styles.gray)}
+                name="star-white"
+              />
+              <Icon
+                className={clsx(styles.starIcon, styles.gray)}
+                name="star-white"
+              />
+              <Icon
+                className={clsx(styles.starIcon, styles.gray)}
+                name="star-white"
+              />
             </div>
             <p className={styles.ratingText}>Rate on Store</p>
           </a>

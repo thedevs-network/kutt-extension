@@ -1,3 +1,4 @@
+import type {JSX} from 'react';
 import {useEffect, useState} from 'react';
 
 import {getExtensionSettings} from '../util/settings';
@@ -21,7 +22,7 @@ import Form from './Form';
 
 import styles from './Options.module.scss';
 
-function Options() {
+function Options(): JSX.Element {
   const [, extensionSettingsDispatch] = useExtensionSettings();
   const [requestStatusState, requestStatusDispatch] = useRequestStatus();
   const [hostUrl, setHostUrl] = useState<string>(Kutt.hostUrl);
@@ -36,11 +37,12 @@ function Options() {
         (advancedSettings &&
           (settings?.host as string) &&
           isValidUrl(settings.host as string) && {
-            hostDomain: (settings.host as string)
-              .replace('http://', '')
-              .replace('https://', '')
-              .replace('www.', '')
-              .split(/[/?#]/)[0] || '', // extract domain
+            hostDomain:
+              (settings.host as string)
+                .replace('http://', '')
+                .replace('https://', '')
+                .replace('www.', '')
+                .split(/[/?#]/)[0] || '', // extract domain
             hostUrl: (settings.host as string).endsWith('/')
               ? (settings.host as string).slice(0, -1)
               : (settings.host as string), // slice `/` at the end
@@ -49,7 +51,10 @@ function Options() {
 
       // inject existing keys (if field doesn't exist, use default)
       // For history: default to true for new users, but respect existing user preference
-      const historyEnabled = Object.prototype.hasOwnProperty.call(settings, 'history')
+      const historyEnabled = Object.prototype.hasOwnProperty.call(
+        settings,
+        'history'
+      )
         ? (settings.history as boolean)
         : true;
 

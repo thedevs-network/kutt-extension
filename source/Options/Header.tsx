@@ -1,3 +1,4 @@
+import type {JSX} from 'react';
 import {memo} from 'react';
 
 import {Kutt} from '../Background';
@@ -9,7 +10,10 @@ type Props = {
   hostUrl?: string;
 };
 
-function Header({subtitle = 'Extension Settings', hostUrl = Kutt.hostUrl}: Props) {
+function Header({
+  subtitle = 'Extension Settings',
+  hostUrl = Kutt.hostUrl,
+}: Props): JSX.Element {
   return (
     <header className={styles.header}>
       <a

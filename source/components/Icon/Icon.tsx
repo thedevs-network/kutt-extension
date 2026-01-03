@@ -48,8 +48,8 @@ type Props = {
   onClick?: () => void;
 };
 
-const Icon: React.FC<Props> = ({name, ...rest}) => {
-  return <div {...rest}>{React.createElement(icons[name])}</div>;
-};
+const Icon: React.FC<Props> = ({name, ...rest}) => (
+  <div {...rest}>{React.createElement(icons[name])}</div>
+);
 
 export default Icon;

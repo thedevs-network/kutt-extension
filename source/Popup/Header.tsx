@@ -1,4 +1,5 @@
 import {isNull, EMPTY_STRING} from '@abhijithvijayan/ts-utils';
+import type {JSX} from 'react';
 import {useState} from 'react';
 import clsx from 'clsx';
 
@@ -20,7 +21,7 @@ import {
 import Icon from '../components/Icon';
 import styles from './Header.module.scss';
 
-function Header() {
+function Header(): JSX.Element {
   const [extensionSettingsState, extensionSettingsDispatch] =
     useExtensionSettings();
   const [loading, setLoading] = useState<boolean>(false);

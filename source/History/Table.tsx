@@ -1,4 +1,5 @@
 import CopyToClipboard from 'react-copy-to-clipboard';
+import type {JSX} from 'react';
 import {useEffect, useState} from 'react';
 import clsx from 'clsx';
 
@@ -13,7 +14,7 @@ import Modal from './Modal';
 
 import styles from './Table.module.scss';
 
-function Table() {
+function Table(): JSX.Element {
   const [shortenedLinksState, shortenedLinksDispatch] = useShortenedLinks();
   const [QRView, setQRView] = useState<boolean>(false);
   const [copied, setCopied] = useState<boolean>(false);
@@ -72,76 +73,70 @@ function Table() {
             </thead>
             <tbody className={styles.tbody}>
               {!(shortenedLinksState.total === 0) ? (
-                shortenedLinksState.items.map((item) => {
-                  return (
-                    <tr key={item.id} className={styles.tr}>
-                      <td className={clsx(styles.td, styles.tdOriginal)}>
+                shortenedLinksState.items.map((item) => (
+                  <tr key={item.id} className={styles.tr}>
+                    <td className={clsx(styles.td, styles.tdOriginal)}>
+                      <a
+                        className={styles.link}
+                        href={item.target}
+                        target="_blank"
+                        rel="noopener noreferrer nofollow"
+                      >
+                        {item.target}
+                      </a>
+                    </td>
+
+                    <td className={clsx(styles.td, styles.tdShort)}>
+                      {copied &&
+                        shortenedLinksState.selected?.id === item.id && (
+                          <div className={styles.copiedNotification}>
+                            Copied to clipboard!
+                          </div>
+                        )}
+
+                      <div className={styles.shortUrlWrapper}>
                         <a
                           className={styles.link}
-                          href={item.target}
+                          href={item.link}
                           target="_blank"
                           rel="noopener noreferrer nofollow"
                         >
-                          {item.target}
+                          {item.link}
                         </a>
-                      </td>
+                      </div>
+                    </td>
 
-                      <td className={clsx(styles.td, styles.tdShort)}>
+                    <td className={styles.td}>
+                      <div className={styles.actionsWrapper}>
+                        {/* // **** COPY TO CLIPBOARD **** // */}
+
                         {copied &&
-                          shortenedLinksState.selected?.id === item.id && (
-                            <div className={styles.copiedNotification}>
-                              Copied to clipboard!
-                            </div>
-                          )}
-
-                        <div className={styles.shortUrlWrapper}>
-                          <a
-                            className={styles.link}
-                            href={item.link}
-                            target="_blank"
-                            rel="noopener noreferrer nofollow"
+                        shortenedLinksState.selected?.id === item.id ? (
+                          <Icon name="tick" className={styles.actionIcon} />
+                        ) : (
+                          <CopyToClipboard
+                            text={item.link}
+                            onCopy={(): void => handleCopyToClipboard(item.id)}
                           >
-                            {item.link}
-                          </a>
-                        </div>
-                      </td>
+                            <Icon name="copy" className={styles.actionIcon} />
+                          </CopyToClipboard>
+                        )}
 
-                      <td className={styles.td}>
-                        <div className={styles.actionsWrapper}>
-                          {/* // **** COPY TO CLIPBOARD **** // */}
+                        <Icon
+                          onClick={(): void => handleQRCodeViewToggle(item.id)}
+                          className={styles.actionIcon}
+                          name="qrcode"
+                        />
+                      </div>
 
-                          {copied &&
-                          shortenedLinksState.selected?.id === item.id ? (
-                            <Icon name="tick" className={styles.actionIcon} />
-                          ) : (
-                            <CopyToClipboard
-                              text={item.link}
-                              onCopy={(): void => {
-                                return handleCopyToClipboard(item.id);
-                              }}
-                            >
-                              <Icon name="copy" className={styles.actionIcon} />
-                            </CopyToClipboard>
-                          )}
-
-                          <Icon
-                            onClick={(): void =>
-                              handleQRCodeViewToggle(item.id)
-                            }
-                            className={styles.actionIcon}
-                            name="qrcode"
-                          />
-                        </div>
-
-                        {/* // **** QR CODE MODAL **** // */}
-                        {QRView &&
-                          shortenedLinksState.selected?.id === item.id && (
-                            <Modal link={item.link} setModalView={setQRView} />
-                          )}
-                      </td>
-                    </tr>
-                  );
-                })
+                      {/* // **** QR CODE MODAL **** // */}
+                      {QRView &&
+                        shortenedLinksState.selected?.id === item.id && (
+                          <Modal link={item.link} setModalView={setQRView} />
+                        )}
+                    </td>
+                  </tr>
+                ))
               ) : (
                 <tr>
                   <td className={styles.emptyRow}>No URLs History</td>

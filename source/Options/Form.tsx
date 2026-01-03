@@ -1,9 +1,13 @@
 import {isNull, isUndefined} from '@abhijithvijayan/ts-utils';
+import type {JSX} from 'react';
 import {useState, useEffect, useRef, ChangeEvent} from 'react';
 import clsx from 'clsx';
 
 import {useExtensionSettings} from '../contexts/extension-settings-context';
-import {updateExtensionSettings, clearExtensionSettings} from '../util/settings';
+import {
+  updateExtensionSettings,
+  clearExtensionSettings,
+} from '../util/settings';
 import {CHECK_API_KEY} from '../Background/constants';
 import messageUtil from '../util/mesageUtil';
 import {isValidUrl} from '../util/link';
@@ -38,12 +42,10 @@ type FormValidity = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const onSave = (values: OptionsFormValuesProperties): Promise<any> => {
+const onSave = (values: OptionsFormValuesProperties): Promise<any> =>
   // should always return a Promise
-  return updateExtensionSettings(values); // update local settings
-};
-
-function Form() {
+  updateExtensionSettings(values); // update local settings
+function Form(): JSX.Element {
   const extensionSettingsState = useExtensionSettings()[0];
   const hostInputRef = useRef<HTMLInputElement>(null);
   const [submitting, setSubmitting] = useState<boolean>(false);
@@ -86,51 +88,83 @@ function Form() {
   }, [formValues]);
 
   function handleApiKeyInputChange(apikey: string): void {
-    setFormValues((prev) => ({...prev, apikey}));
+    setFormValues((prev) => {
+      return {...prev, apikey};
+    });
     // ToDo: Remove special symbols
 
     if (!(apikey.trim().length > 0)) {
-      setFormErrors((prev) => ({...prev, apikey: 'API key missing'}));
-      setFormValidity((prev) => ({...prev, apikey: false}));
+      setFormErrors((prev) => {
+        return {...prev, apikey: 'API key missing'};
+      });
+      setFormValidity((prev) => {
+        return {...prev, apikey: false};
+      });
     } else if (apikey && apikey.trim().length < 40) {
-      setFormErrors((prev) => ({...prev, apikey: 'API key must be 40 characters'}));
-      setFormValidity((prev) => ({...prev, apikey: false}));
+      setFormErrors((prev) => {
+        return {...prev, apikey: 'API key must be 40 characters'};
+      });
+      setFormValidity((prev) => {
+        return {...prev, apikey: false};
+      });
     } else if (apikey && apikey.trim().length > 40) {
-      setFormErrors((prev) => ({...prev, apikey: 'API key cannot exceed 40 characters'}));
-      setFormValidity((prev) => ({...prev, apikey: false}));
+      setFormErrors((prev) => {
+        return {...prev, apikey: 'API key cannot exceed 40 characters'};
+      });
+      setFormValidity((prev) => {
+        return {...prev, apikey: false};
+      });
     } else {
       setFormErrors((prev) => {
         const {apikey: _, ...rest} = prev;
         return rest;
       });
-      setFormValidity((prev) => ({...prev, apikey: true}));
+      setFormValidity((prev) => {
+        return {...prev, apikey: true};
+      });
     }
   }
 
   function handleHostUrlInputChange(host: string): void {
     if (!formValues.advanced) {
-      setFormErrors((prev) => ({...prev, host: 'Enable Advanced Options first'}));
-      setFormValidity((prev) => ({...prev, host: false}));
+      setFormErrors((prev) => {
+        return {...prev, host: 'Enable Advanced Options first'};
+      });
+      setFormValidity((prev) => {
+        return {...prev, host: false};
+      });
       return;
     }
 
-    setFormValues((prev) => ({...prev, host}));
+    setFormValues((prev) => {
+      return {...prev, host};
+    });
 
     if (!(host.trim().length > 0)) {
-      setFormErrors((prev) => ({...prev, host: 'Custom URL cannot be empty'}));
-      setFormValidity((prev) => ({...prev, host: false}));
+      setFormErrors((prev) => {
+        return {...prev, host: 'Custom URL cannot be empty'};
+      });
+      setFormValidity((prev) => {
+        return {...prev, host: false};
+      });
       return;
     }
 
     if (!isValidUrl(host.trim()) || host.trim().length < 10) {
-      setFormErrors((prev) => ({...prev, host: 'Please enter a valid url'}));
-      setFormValidity((prev) => ({...prev, host: false}));
+      setFormErrors((prev) => {
+        return {...prev, host: 'Please enter a valid url'};
+      });
+      setFormValidity((prev) => {
+        return {...prev, host: false};
+      });
     } else {
       setFormErrors((prev) => {
         const {host: _, ...rest} = prev;
         return rest;
       });
-      setFormValidity((prev) => ({...prev, host: true}));
+      setFormValidity((prev) => {
+        return {...prev, host: true};
+      });
     }
   }
 
@@ -190,8 +224,7 @@ function Form() {
             <span className={styles.labelLinkWrapper}>
               <a
                 href={`${
-                  (formValues.advanced && formValues.host) ||
-                  Kutt.hostUrl
+                  (formValues.advanced && formValues.host) || Kutt.hostUrl
                 }/login`}
                 target="blank"
                 rel="nofollow noopener noreferrer"
@@ -258,7 +291,12 @@ function Form() {
         </button>
 
         {!isNull(errored.error) && (
-          <div className={clsx(styles.validationFeedback, errored.error ? styles.error : styles.success)}>
+          <div
+            className={clsx(
+              styles.validationFeedback,
+              errored.error ? styles.error : styles.success
+            )}
+          >
             <Icon
               className={styles.feedbackIcon}
               name={errored.error ? 'cross' : 'tick'}
@@ -294,7 +332,9 @@ function Form() {
                 type="checkbox"
                 checked={formValues.history}
                 onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-                  setFormValues((prev) => ({...prev, history: e.target.checked}));
+                  setFormValues((prev) => {
+                    return {...prev, history: e.target.checked};
+                  });
                 }}
                 className={styles.toggleInput}
               />
@@ -308,7 +348,8 @@ function Form() {
             <span className={styles.infoIcon}>
               <Icon name="info" />
               <span className={styles.tooltip}>
-                Returns the existing short link if the same URL was shortened before
+                Returns the existing short link if the same URL was shortened
+                before
               </span>
             </span>
           </span>
@@ -327,7 +368,9 @@ function Form() {
                 type="checkbox"
                 checked={formValues.reuse}
                 onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-                  setFormValues((prev) => ({...prev, reuse: e.target.checked}));
+                  setFormValues((prev) => {
+                    return {...prev, reuse: e.target.checked};
+                  });
                 }}
                 className={styles.toggleInput}
               />
@@ -360,7 +403,9 @@ function Form() {
                 type="checkbox"
                 checked={formValues.advanced}
                 onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-                  setFormValues((prev) => ({...prev, advanced: e.target.checked}));
+                  setFormValues((prev) => {
+                    return {...prev, advanced: e.target.checked};
+                  });
                   if (e.target.checked) {
                     setTimeout(() => hostInputRef.current?.focus(), 350);
                   }
@@ -371,7 +416,12 @@ function Form() {
           </span>
         </label>
 
-        <div className={clsx(styles.advancedSection, !formValues.advanced && styles.hidden)}>
+        <div
+          className={clsx(
+            styles.advancedSection,
+            !formValues.advanced && styles.hidden
+          )}
+        >
           <div className={styles.inputGroup}>
             <label htmlFor="host" className={styles.label}>
               <span className={styles.labelWithInfo}>
@@ -379,7 +429,8 @@ function Form() {
                 <span className={styles.infoIcon}>
                   <Icon name="info" />
                   <span className={styles.tooltip}>
-                    URL of your self-hosted Kutt instance (e.g., https://kutt.example.com)
+                    URL of your self-hosted Kutt instance (e.g.,
+                    https://kutt.example.com)
                   </span>
                 </span>
               </span>
@@ -424,14 +475,29 @@ function Form() {
       </div>
 
       {showResetConfirm && (
-        <div className={styles.modalOverlay} onClick={() => setShowResetConfirm(false)}>
-          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+        <div
+          className={styles.modalOverlay}
+          onClick={() => setShowResetConfirm(false)}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') setShowResetConfirm(false);
+          }}
+          role="button"
+          tabIndex={0}
+        >
+          <div
+            className={styles.modal}
+            onClick={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
+            role="button"
+            tabIndex={0}
+          >
             <div className={styles.modalHeader}>
               <Icon name="info" className={styles.modalIcon} />
               <span className={styles.modalTitle}>Reset Settings?</span>
             </div>
             <p className={styles.modalText}>
-              This will permanently delete your API key and all preferences. You will need to reconfigure the extension.
+              This will permanently delete your API key and all preferences. You
+              will need to reconfigure the extension.
             </p>
             <div className={styles.modalActions}>
               <button

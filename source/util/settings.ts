@@ -24,7 +24,6 @@ export function getExtensionSettings(): Promise<{[s: string]: any}> {
   return browser.storage.local.get('settings');
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function updateExtensionSettings(newFields?: {
   [s: string]: any;
 }): Promise<void> {

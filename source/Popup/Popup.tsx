@@ -1,9 +1,10 @@
-import { isNull, EMPTY_STRING } from '@abhijithvijayan/ts-utils';
-import { useEffect } from 'react';
+import {isNull, EMPTY_STRING} from '@abhijithvijayan/ts-utils';
+import type {JSX} from 'react';
+import {useEffect} from 'react';
 
-import { Kutt, UserSettingsResponseProperties } from '../Background';
-import { openExtOptionsPage } from '../util/tabs';
-import { isValidUrl } from '../util/link';
+import {Kutt, UserSettingsResponseProperties} from '../Background';
+import {openExtOptionsPage} from '../util/tabs';
+import {isValidUrl} from '../util/link';
 
 import {
   ExtensionSettingsActionTypes,
@@ -21,15 +22,15 @@ import BodyWrapper from '../components/BodyWrapper';
 import ResponseBody from './ResponseBody';
 import PopupHeader from './Header';
 import Loader from '../components/Loader';
-import Form, { CONSTANTS } from './Form';
+import Form, {CONSTANTS} from './Form';
 
 import styles from './Popup.module.scss';
 
-function Popup() {
+function Popup(): JSX.Element {
   const [extensionSettingsState, extensionSettingsDispatch] =
     useExtensionSettings();
   const [requestStatusState, requestStatusDispatch] = useRequestStatus();
-  const { reload: liveReloadFlag } = extensionSettingsState;
+  const {reload: liveReloadFlag} = extensionSettingsState;
 
   // re-renders on `liveReloadFlag` change
   useEffect((): void => {
@@ -54,9 +55,7 @@ function Popup() {
         });
 
         // Open options page
-        setTimeout(() => {
-          return openExtOptionsPage();
-        }, 1300);
+        setTimeout(() => openExtOptionsPage(), 1300);
 
         return;
       }
@@ -75,11 +74,12 @@ function Popup() {
           isValidUrl(settings.host as string)
         ) {
           defaultHost = {
-            hostDomain: (settings.host as string)
-              .replace('http://', EMPTY_STRING)
-              .replace('https://', EMPTY_STRING)
-              .replace('www.', EMPTY_STRING)
-              .split(/[/?#]/)[0] || EMPTY_STRING,
+            hostDomain:
+              (settings.host as string)
+                .replace('http://', EMPTY_STRING)
+                .replace('https://', EMPTY_STRING)
+                .replace('www.', EMPTY_STRING)
+                .split(/[/?#]/)[0] || EMPTY_STRING,
             hostUrl: (settings.host as string).endsWith('/')
               ? (settings.host as string).slice(0, -1)
               : (settings.host as string),
@@ -114,10 +114,10 @@ function Popup() {
         Object.prototype.hasOwnProperty.call(settings, 'user') &&
         (settings.user as UserSettingsResponseProperties)
       ) {
-        const { user }: { user: UserSettingsResponseProperties } = settings;
+        const {user}: {user: UserSettingsResponseProperties} = settings;
 
         let optionsList: DomainOptionsProperties[] = user.domains.map(
-          ({ id, address, homepage, banned }) => {
+          ({id, address, homepage, banned}) => {
             return {
               id,
               option: homepage,

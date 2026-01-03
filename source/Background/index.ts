@@ -340,8 +340,7 @@ type MessageRequest = {
 browser.runtime.onMessage.addListener(
   (message: unknown, _sender: Runtime.MessageSender): void | Promise<any> => {
     const request = message as MessageRequest;
-    // eslint-disable-next-line consistent-return
-    // eslint-disable-next-line default-case
+
     switch (request.action) {
       case constants.CHECK_API_KEY: {
         return checkApiKey(request.params);

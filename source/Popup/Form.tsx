@@ -1,10 +1,6 @@
+import type {JSX} from 'react';
 import {useState, useRef, useEffect, type ChangeEvent} from 'react';
-import {
-  EMPTY_STRING,
-  isEmpty,
-  isNull,
-  get,
-} from '@abhijithvijayan/ts-utils';
+import {EMPTY_STRING, isEmpty, isNull, get} from '@abhijithvijayan/ts-utils';
 import clsx from 'clsx';
 
 import {useExtensionSettings} from '../contexts/extension-settings-context';
@@ -30,7 +26,7 @@ export enum CONSTANTS {
   DefaultDomainId = 'default',
 }
 
-function Form() {
+function Form(): JSX.Element {
   const extensionSettingsState = useExtensionSettings()[0];
   const requestStatusDispatch = useRequestStatus()[1];
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -45,13 +41,17 @@ function Form() {
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent): void {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsDropdownOpen(false);
       }
     }
 
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    return (): void =>
+      document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const [formState, setFormState] = useState({
@@ -68,9 +68,7 @@ function Form() {
   }>({});
 
   const isFormValid: boolean =
-    !formErrors.customurl &&
-    !formErrors.password &&
-    true;
+    !formErrors.customurl && !formErrors.password && true;
 
   async function handleFormSubmit(): Promise<void> {
     // enable loading screen
@@ -131,7 +129,9 @@ function Form() {
         },
       });
       // reset form fields (keep domain selection)
-      setFormState((prev) => ({...prev, customurl: '', password: ''}));
+      setFormState((prev) => {
+        return {...prev, customurl: '', password: ''};
+      });
       setFormErrors({});
     } else {
       // errored
@@ -146,51 +146,76 @@ function Form() {
   }
 
   function handleCustomUrlInputChange(url: string): void {
-    setFormState((prev) => ({...prev, customurl: url}));
+    setFormState((prev) => {
+      return {...prev, customurl: url};
+    });
     // ToDo: Remove special symbols
 
     if (url.length > 0 && url.length < 3) {
-      setFormErrors((prev) => ({
-        ...prev,
-        customurl: 'Custom URL must be at-least 3 characters',
-      }));
+      setFormErrors((prev) => {
+        return {
+          ...prev,
+          customurl: 'Custom URL must be at-least 3 characters',
+        };
+      });
     } else {
-      setFormErrors((prev) => ({...prev, customurl: undefined}));
+      setFormErrors((prev) => {
+        return {...prev, customurl: undefined};
+      });
     }
   }
 
   function handlePasswordInputChange(password: string): void {
-    setFormState((prev) => ({...prev, password}));
+    setFormState((prev) => {
+      return {...prev, password};
+    });
     // ToDo: Remove special symbols
 
     if (password.length > 0 && password.length < 3) {
-      setFormErrors((prev) => ({
-        ...prev,
-        password: 'Password must be at-least 3 characters',
-      }));
+      setFormErrors((prev) => {
+        return {
+          ...prev,
+          password: 'Password must be at-least 3 characters',
+        };
+      });
     } else {
-      setFormErrors((prev) => ({...prev, password: undefined}));
+      setFormErrors((prev) => {
+        return {...prev, password: undefined};
+      });
     }
   }
 
   return (
     <div className={styles.formContainer}>
       <div className={styles.formGroup}>
-        <label className={styles.label}>
-          Domain
-        </label>
+        <label className={styles.label}>Domain</label>
 
         <div className={styles.dropdown} ref={dropdownRef}>
           <button
             type="button"
-            className={clsx(styles.dropdownTrigger, isDropdownOpen && styles.open)}
+            className={clsx(
+              styles.dropdownTrigger,
+              isDropdownOpen && styles.open
+            )}
             onClick={() => !isSubmitting && setIsDropdownOpen(!isDropdownOpen)}
             disabled={isSubmitting}
           >
-            <span className={clsx(styles.dropdownValue, formState.domain && styles.hasValue)}>
-              {domainOptions.find(({value}) => value === formState.domain)?.option || 'Select domain'}
+            <span
+              className={clsx(
+                styles.dropdownValue,
+                formState.domain && styles.hasValue
+              )}
+            >
+              {domainOptions.find(({value}) => value === formState.domain)
+                ?.option || 'Select domain'}
             </span>
-            <Icon name="chevron-down" className={clsx(styles.dropdownIcon, isDropdownOpen && styles.open)} />
+            <Icon
+              name="chevron-down"
+              className={clsx(
+                styles.dropdownIcon,
+                isDropdownOpen && styles.open
+              )}
+            />
           </button>
 
           {isDropdownOpen && (
@@ -206,7 +231,9 @@ function Form() {
                       formState.domain === value && styles.selected
                     )}
                     onClick={() => {
-                      setFormState((prev) => ({...prev, domain: value}));
+                      setFormState((prev) => {
+                        return {...prev, domain: value};
+                      });
                       setIsDropdownOpen(false);
                     }}
                   >
@@ -233,7 +260,10 @@ function Form() {
           }}
           disabled={isSubmitting}
           spellCheck="false"
-          className={clsx(styles.input, formErrors.customurl && styles.inputError)}
+          className={clsx(
+            styles.input,
+            formErrors.customurl && styles.inputError
+          )}
         />
 
         <span className={styles.errorText}>{formErrors.customurl}</span>
@@ -267,7 +297,10 @@ function Form() {
               handlePasswordInputChange(e.target.value);
             }}
             disabled={isSubmitting}
-            className={clsx(styles.input, formErrors.password && styles.inputError)}
+            className={clsx(
+              styles.input,
+              formErrors.password && styles.inputError
+            )}
           />
         </div>
 

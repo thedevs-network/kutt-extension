@@ -1,3 +1,4 @@
+import type {JSX} from 'react';
 import {useEffect, useState} from 'react';
 
 import {
@@ -31,7 +32,7 @@ import Table from './Table';
 
 import styles from './History.module.scss';
 
-function History() {
+function History(): JSX.Element {
   const [, shortenedLinksDispatch] = useShortenedLinks();
   const [, extensionSettingsDispatch] = useExtensionSettings();
   const [requestStatusState, requestStatusDispatch] = useRequestStatus();
@@ -54,11 +55,12 @@ function History() {
         (advancedSettings &&
           (settings?.host as string) &&
           isValidUrl(settings.host as string) && {
-            hostDomain: (settings.host as string)
-              .replace('http://', '')
-              .replace('https://', '')
-              .replace('www.', '')
-              .split(/[/?#]/)[0] || '', // extract domain
+            hostDomain:
+              (settings.host as string)
+                .replace('http://', '')
+                .replace('https://', '')
+                .replace('www.', '')
+                .split(/[/?#]/)[0] || '', // extract domain
             hostUrl: (settings.host as string).endsWith('/')
               ? (settings.host as string).slice(0, -1)
               : (settings.host as string), // slice `/` at the end
@@ -137,7 +139,7 @@ function History() {
         <div className={styles.historyContent}>
           <Header subtitle="Recent Links" hostUrl={hostUrl} />
 
-          {/* eslint-disable-next-line no-nested-ternary */}
+          {}
           {!requestStatusState.loading ? (
             !errored.error ? (
               <Table />

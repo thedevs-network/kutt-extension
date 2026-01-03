@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention */
+import type {JSX} from 'react';
 import {createContext, useReducer, useContext, type ReactNode} from 'react';
 
 export enum RequestStatusActionTypes {
@@ -89,7 +89,9 @@ type RequestStatusProviderProps = {
   children: ReactNode;
 };
 
-function RequestStatusProvider({children}: RequestStatusProviderProps) {
+function RequestStatusProvider({
+  children,
+}: RequestStatusProviderProps): JSX.Element {
   const [state, dispatch] = useReducer(requestStatusReducer, initialValues);
 
   return (
@@ -101,6 +103,6 @@ function RequestStatusProvider({children}: RequestStatusProviderProps) {
       </RequestStatusStateContext.Provider>
     </>
   );
-};
+}
 
 export {RequestStatusProvider, useRequestStatus};

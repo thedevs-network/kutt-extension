@@ -37,7 +37,7 @@ export function detectBrowser(): Browser | null {
   }
 
   const [name, match] = matchedRule;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   let versionParts = match[1] && match[1].split(/[._]/).slice(0, 3);
   if (!versionParts) {
     versionParts = [];

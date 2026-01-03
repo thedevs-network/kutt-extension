@@ -1,4 +1,5 @@
 import CopyToClipboard from 'react-copy-to-clipboard';
+import type {JSX} from 'react';
 import {useState, useEffect} from 'react';
 import {QRCodeSVG} from 'qrcode.react';
 import clsx from 'clsx';
@@ -14,7 +15,7 @@ export type ProcessedRequestProperties = {
   message: string;
 };
 
-function ResponseBody() {
+function ResponseBody(): JSX.Element {
   const [{error, message}] = useRequestStatus();
   const [copied, setCopied] = useState<boolean>(false);
   const [QRView, setQRView] = useState<boolean>(false);
@@ -42,29 +43,29 @@ function ResponseBody() {
             <Icon
               className={clsx(styles.icon, styles.qrIcon)}
               name="qrcode"
-              onClick={(): void => {
-                return setQRView(!QRView);
-              }}
+              onClick={(): void => setQRView(!QRView)}
             />
 
             {!copied ? (
               <CopyToClipboard
                 text={message}
-                onCopy={(): void => {
-                  return setCopied(true);
-                }}
+                onCopy={(): void => setCopied(true)}
               >
-                <Icon className={clsx(styles.icon, styles.copyIcon)} name="copy" />
+                <Icon
+                  className={clsx(styles.icon, styles.copyIcon)}
+                  name="copy"
+                />
               </CopyToClipboard>
             ) : (
-              <Icon className={clsx(styles.icon, styles.copyIcon)} name="tick" />
+              <Icon
+                className={clsx(styles.icon, styles.copyIcon)}
+                name="tick"
+              />
             )}
 
             <CopyToClipboard
               text={message}
-              onCopy={(): void => {
-                return setCopied(true);
-              }}
+              onCopy={(): void => setCopied(true)}
             >
               <h1 className={styles.link}>{removeProtocol(message)}</h1>
             </CopyToClipboard>
