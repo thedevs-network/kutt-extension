@@ -25,10 +25,10 @@ function Footer() {
             className={styles.ratingLink}
           >
             <div className={styles.starsContainer}>
-              <Icon className={clsx(styles.starIcon, styles.yellow)} name="star-yellow" />
-              <Icon className={clsx(styles.starIcon, styles.yellow)} name="star-yellow" />
-              <Icon className={clsx(styles.starIcon, styles.yellow)} name="star-yellow" />
-              <Icon className={clsx(styles.starIcon, styles.yellow)} name="star-yellow" />
+              <Icon className={clsx(styles.starIcon, styles.gray)} name="star-white" />
+              <Icon className={clsx(styles.starIcon, styles.gray)} name="star-white" />
+              <Icon className={clsx(styles.starIcon, styles.gray)} name="star-white" />
+              <Icon className={clsx(styles.starIcon, styles.gray)} name="star-white" />
               <Icon className={clsx(styles.starIcon, styles.gray)} name="star-white" />
             </div>
             <p className={styles.ratingText}>Rate on Store</p>

@@ -54,11 +54,16 @@
   display: flex;
   align-items: center;
   margin-top: 0.25rem;
+
+  &:hover .starIcon {
+    transform: scale(1.1);
+  }
 }
 
 .starIcon {
   margin-right: 0.25rem;
   fill: currentColor;
+  transition: transform $transition-normal, color $transition-normal;
 
   &.yellow {
     color: $yellow-500;
@@ -66,7 +71,14 @@
 
   &.gray {
     color: $gray-400;
-    margin-right: 0;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .ratingLink:hover &.gray {
+    color: $yellow-500;
   }
 }
 
