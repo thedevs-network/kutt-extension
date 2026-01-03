@@ -1,7 +1,7 @@
 import {IPV4_REGEX} from '@abhijithvijayan/ts-utils';
 
 export const removeProtocol = (link: string): string =>
-  link.replace(/^https?:\/\//, '');
+  link.replace(/^https?:\/\//i, '').replace(/^www\./i, '');
 
 export function isValidUrl(url: string): boolean {
   // https://regex101.com/r/BzoIRR/1

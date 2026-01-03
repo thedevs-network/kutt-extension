@@ -11,7 +11,7 @@ import {
   RequestStatusActionTypes,
   useRequestStatus,
 } from '../contexts/request-status-context';
-import {isValidUrl} from '../util/link';
+import {isValidUrl, removeProtocol} from '../util/link';
 import {
   SuccessfulShortenStatusProperties,
   ShortUrlActionBodyProperties,
@@ -207,7 +207,9 @@ function Form(): JSX.Element {
               )}
             >
               {domainOptions.find(({value}) => value === formState.domain)
-                ?.option || 'Select domain'}
+                ?.option ||
+                (formState.domain && removeProtocol(formState.domain)) ||
+                'Select domain'}
             </span>
             <Icon
               name="chevron-down"
@@ -220,26 +222,32 @@ function Form(): JSX.Element {
 
           {isDropdownOpen && (
             <div className={styles.dropdownMenu}>
-              {domainOptions
-                .filter(({disabled}) => !disabled)
-                .map(({id, option, value}) => (
-                  <button
-                    type="button"
-                    key={id}
-                    className={clsx(
-                      styles.dropdownItem,
-                      formState.domain === value && styles.selected
-                    )}
-                    onClick={() => {
-                      setFormState((prev) => {
-                        return {...prev, domain: value};
-                      });
-                      setIsDropdownOpen(false);
-                    }}
-                  >
-                    {option}
-                  </button>
-                ))}
+              {domainOptions.filter(({disabled}) => !disabled).length > 0 ? (
+                domainOptions
+                  .filter(({disabled}) => !disabled)
+                  .map(({id, option, value}) => (
+                    <button
+                      type="button"
+                      key={id}
+                      className={clsx(
+                        styles.dropdownItem,
+                        formState.domain === value && styles.selected
+                      )}
+                      onClick={() => {
+                        setFormState((prev) => {
+                          return {...prev, domain: value};
+                        });
+                        setIsDropdownOpen(false);
+                      }}
+                    >
+                      {option || removeProtocol(value)}
+                    </button>
+                  ))
+              ) : (
+                <span className={styles.dropdownItem}>
+                  No domains available
+                </span>
+              )}
             </div>
           )}
         </div>
