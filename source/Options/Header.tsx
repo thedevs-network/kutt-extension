@@ -1,16 +1,19 @@
 import {memo} from 'react';
 
+import {Kutt} from '../Background';
+
 import styles from './Header.module.scss';
 
 type Props = {
   subtitle?: string;
+  hostUrl?: string;
 };
 
-function Header({subtitle = 'Extension Settings'}: Props) {
+function Header({subtitle = 'Extension Settings', hostUrl = Kutt.hostUrl}: Props) {
   return (
     <header className={styles.header}>
       <a
-        href="https://kutt.it"
+        href={hostUrl}
         target="_blank"
         rel="noopener noreferrer"
         className={styles.logoContainer}

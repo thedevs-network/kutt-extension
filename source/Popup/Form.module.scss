@@ -61,6 +61,11 @@
   background-color: $gray-200;
   border: 1px solid transparent;
   border-radius: $radius-sm;
+  transition: border-color $transition-fast;
+
+  &:hover {
+    border-color: $gray-300;
+  }
 
   &:focus {
     outline: none;
@@ -84,9 +89,14 @@
   border: 1px solid transparent;
   border-radius: $radius-sm;
   margin-top: 1.2rem;
+  transition: border-color $transition-fast;
 
   &::placeholder {
     color: $gray-400;
+  }
+
+  &:hover {
+    border-color: $gray-300;
   }
 
   &:focus {
@@ -137,7 +147,12 @@
   height: 100%;
   border-radius: 4px 0 0 4px;
   cursor: pointer;
-  color: rgb(187, 187, 187);
+  color: $gray-400;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $gray-600;
+  }
 }
 
 .submitButton {
@@ -145,22 +160,27 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 0.25rem 0.75rem;
+  padding: 0.5rem 0.75rem;
   margin-bottom: 0.25rem;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-weight: $semibold;
   text-align: center;
   color: $white;
   background: $primary-gradient;
   border: none;
-  border-radius: $radius-sm;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border-radius: $radius-md;
+  box-shadow: 0 4px 6px -1px rgba(126, 87, 194, 0.3);
   min-height: 36px;
   cursor: pointer;
-  transition: color $transition-normal;
+  transition: transform $transition-fast, box-shadow $transition-fast;
 
   &:hover {
-    color: $gray-200;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 10px -1px rgba(126, 87, 194, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 
   &:focus {
@@ -170,6 +190,7 @@
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    transform: none;
   }
 }
 

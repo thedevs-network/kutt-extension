@@ -39,6 +39,7 @@ function History() {
     error: null,
     message: '',
   });
+  const [hostUrl, setHostUrl] = useState<string>(Kutt.hostUrl);
 
   useEffect(() => {
     async function getUrlsHistoryStats(): Promise<void> {
@@ -72,6 +73,8 @@ function History() {
           defaultHost.hostUrl.trim() !== Kutt.hostUrl && advancedSettings, // disable `advanced` if customhost is not set
         host: defaultHost,
       };
+
+      setHostUrl(defaultExtensionConfig.host.hostUrl);
 
       // extensionSettingsDispatch({
       //   type: ExtensionSettingsActionTypes.HYDRATE_EXTENSION_SETTINGS,
@@ -132,7 +135,7 @@ function History() {
     <BodyWrapper>
       <div id="history" className={styles.historyPage}>
         <div className={styles.historyContent}>
-          <Header subtitle="Recent Links" />
+          <Header subtitle="Recent Links" hostUrl={hostUrl} />
 
           {/* eslint-disable-next-line no-nested-ternary */}
           {!requestStatusState.loading ? (

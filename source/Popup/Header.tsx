@@ -68,7 +68,12 @@ function Header() {
 
   return (
     <header className={styles.header}>
-      <div>
+      <a
+        href={extensionSettingsState.host.hostUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={styles.logoLink}
+      >
         <img
           className={styles.logo}
           width="32"
@@ -76,7 +81,7 @@ function Header() {
           src="../assets/logo.png"
           alt="logo"
         />
-      </div>
+      </a>
 
       <div className={styles.actions}>
         <Icon

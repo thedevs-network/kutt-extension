@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 
 import {getExtensionSettings} from '../util/settings';
 import {
@@ -22,8 +22,9 @@ import Form from './Form';
 import styles from './Options.module.scss';
 
 function Options() {
-  const extensionSettingsDispatch = useExtensionSettings()[1];
+  const [, extensionSettingsDispatch] = useExtensionSettings();
   const [requestStatusState, requestStatusDispatch] = useRequestStatus();
+  const [hostUrl, setHostUrl] = useState<string>(Kutt.hostUrl);
 
   useEffect(() => {
     async function getSavedSettings(): Promise<void> {
@@ -56,6 +57,8 @@ function Options() {
         reuse: (settings?.reuse as boolean) || false,
       };
 
+      setHostUrl(defaultExtensionConfig.host.hostUrl);
+
       extensionSettingsDispatch({
         type: ExtensionSettingsActionTypes.HYDRATE_EXTENSION_SETTINGS,
         payload: defaultExtensionConfig,
@@ -74,7 +77,7 @@ function Options() {
       <BodyWrapper>
         <div id="options" className={styles.optionsPage}>
           <div className={styles.optionsContainer}>
-            <Header />
+            <Header hostUrl={hostUrl} />
 
             {!requestStatusState.loading ? (
               <Form />

@@ -8,6 +8,17 @@
   user-select: none;
 }
 
+.logoLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: opacity $transition-fast;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
 .logo {
   width: 2rem;
   height: 2rem;
@@ -15,14 +26,16 @@
 
 .actions {
   display: flex;
+  gap: 0.25rem;
 }
 
 .styledIcon {
   background-color: transparent;
   box-shadow: none;
-  color: rgb(187, 187, 187);
+  color: $gray-400;
+  transition: color $transition-fast;
 
   &:hover {
-    opacity: 0.75;
+    color: $gray-600;
   }
 }
