@@ -159,7 +159,7 @@ function Popup() {
         {
           id: CONSTANTS.DefaultDomainId,
           option: defaultHost.hostDomain,
-          value: defaultHost.hostUrl,
+          value: defaultHost.hostDomain,
           disabled: false,
         },
       ];
