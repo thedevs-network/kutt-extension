@@ -170,7 +170,7 @@ function Form() {
     setTimeout(() => {
       // Reset status
       setErrored({error: null, message: ''});
-    }, 1000);
+    }, 3000);
   }
 
   return (
@@ -228,7 +228,7 @@ function Form() {
         </div>
       </div>
 
-      <div>
+      <div className={styles.validateSection}>
         <button
           type="submit"
           disabled={submitting || !isFormValid}
@@ -248,6 +248,16 @@ function Form() {
             className={styles.validateIcon}
           />
         </button>
+
+        {!isNull(errored.error) && (
+          <div className={clsx(styles.validationFeedback, errored.error ? styles.error : styles.success)}>
+            <Icon
+              className={styles.feedbackIcon}
+              name={errored.error ? 'cross' : 'tick'}
+            />
+            <span className={styles.feedbackMessage}>{errored.message}</span>
+          </div>
+        )}
       </div>
 
       <div className={styles.toggleSection}>

@@ -120,6 +120,12 @@
   color: $red-500;
 }
 
+.validateSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
 .validateButton {
   display: inline-flex;
   align-items: center;
@@ -127,7 +133,6 @@
   gap: 0.5rem;
   padding: 0.625rem 1rem;
   margin-top: 1rem;
-  margin-bottom: 0.25rem;
   font-size: 0.8125rem;
   font-weight: $semibold;
   text-align: center;
@@ -172,6 +177,68 @@
     stroke: currentColor;
     stroke-width: 2;
     transition: transform $transition-normal;
+  }
+}
+
+.validationFeedback {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 0.875rem;
+  border-radius: $radius-md;
+  animation: slideIn $transition-normal ease-out;
+
+  &.error {
+    background-color: rgba($red-500, 0.1);
+    border: 1px solid rgba($red-500, 0.2);
+  }
+
+  &.success {
+    background-color: rgba($green-500, 0.1);
+    border: 1px solid rgba($green-500, 0.2);
+  }
+}
+
+.feedbackIcon {
+  flex-shrink: 0;
+
+  svg {
+    stroke-width: 2;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .error & svg {
+    stroke: $red-500;
+  }
+
+  .success & svg {
+    stroke: $green-500;
+  }
+}
+
+.feedbackMessage {
+  font-size: 0.8125rem;
+  font-weight: $medium;
+  line-height: 1.4;
+
+  .error & {
+    color: $red-500;
+  }
+
+  .success & {
+    color: $green-500;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
