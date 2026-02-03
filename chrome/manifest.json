@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Kutt",
-  "version": "4.4.0",
+  "version": "4.4.1",
   "short_name": "Kutt",
   "description": "Shorten long URLs with just one click.",
   "icons": {

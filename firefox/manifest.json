@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Kutt",
-  "version": "4.4.0",
+  "version": "4.4.1",
   "short_name": "Kutt",
   "description": "Shorten long URLs with just one click.",
   "icons": {
@@ -14,7 +14,8 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "support@kutt.it",
-      "strict_min_version": "109.0"
+      "strict_min_version": "112.0",
+      "data_collection_permissions": false
     }
   },
   "author": "abhijithvijayan",
