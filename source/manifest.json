@@ -15,7 +15,10 @@
     "gecko": {
       "id": "support@kutt.it",
       "strict_min_version": "112.0",
-      "data_collection_permissions": false
+      "data_collection_permissions": {
+        "required": ["none"],
+        "optional": []
+      }
     }
   },
   "__chrome|firefox__author": "abhijithvijayan",
@@ -36,14 +39,8 @@
     "__firefox__type": "module"
   },
   "__chrome__minimum_chrome_version": "88",
-  "permissions": [
-    "activeTab",
-    "storage"
-  ],
-  "host_permissions": [
-    "http://*/*",
-    "https://*/*"
-  ],
+  "permissions": ["activeTab", "storage"],
+  "host_permissions": ["http://*/*", "https://*/*"],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self';"
   },
