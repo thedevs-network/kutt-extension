@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Kutt",
-  "version": "4.4.1",
+  "version": "4.4.2",
   "short_name": "Kutt",
   "description": "Shorten long URLs with just one click.",
   "icons": {
@@ -17,7 +17,7 @@
       "strict_min_version": "112.0",
       "data_collection_permissions": {
         "required": [
-          "none"
+          "websiteActivity"
         ],
         "optional": []
       }
