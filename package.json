@@ -34,7 +34,7 @@
   "dependencies": {
     "@abhijithvijayan/ts-utils": "^1.2.2",
     "advanced-css-reset": "^2.1.3",
-    "axios": "^1.7.9",
+    "axios": "^1.13.5",
     "clsx": "^2.1.1",
     "qrcode.react": "^4.2.0",
     "react": "^19.0.0",
